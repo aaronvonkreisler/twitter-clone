@@ -11,6 +11,7 @@ import { BsPerson } from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaTwitter } from 'react-icons/fa';
 import { FaFeatherAlt } from 'react-icons/fa';
+import './styles/Sidebar.css';
 
 const SmallSidebar = () => {
    return (

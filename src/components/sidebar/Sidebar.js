@@ -10,7 +10,7 @@ import { RiFileListLine } from 'react-icons/ri';
 import { BsPerson } from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaTwitter } from 'react-icons/fa';
-import './Sidebar.css';
+import './styles/Sidebar.css';
 
 const Sidebar = () => {
    return (

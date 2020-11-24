@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
-import './SidebarItems.css';
+import './styles/SidebarItems.css';
 const SidebarItem = ({ active, text, Icon, mobile }) => {
    return (
       <React.Fragment>
