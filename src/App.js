@@ -1,10 +1,10 @@
 import React from 'react';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/sidebar/Sidebar';
+import './App.css';
 
 const App = () => {
    return (
-      <div>
-         <h1>Twitter Clone</h1>
+      <div className="app">
          <Sidebar />
       </div>
    );

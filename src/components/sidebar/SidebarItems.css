@@ -1,0 +1,32 @@
+.sidebar-option {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+}
+
+.sidebar-option > svg {
+   padding: 20px;
+   font-size: 25px;
+}
+
+.sidebar-option:hover {
+   background-color: #e8f5fe;
+   border-radius: 30px;
+   color: var(--twitter-color);
+   transition: color 130ms ease-out;
+}
+
+.sidebar-option > svg:hover {
+   color: var(--twitter-color);
+}
+
+.sidebar-option > span {
+   font-weight: 700;
+   font-size: 19px;
+   margin-right: 20px;
+   line-height: 1.3125;
+}
+
+.sidebar-option--active {
+   color: var(--twitter-color);
+}
