@@ -4,7 +4,6 @@
    margin-top: 20px;
    padding-left: 20px;
    padding-right: 20px;
-   height: 100vh;
 }
 
 .tweet-btn {
@@ -32,14 +31,13 @@
 }
 .smallSidebar {
    flex: 0.07;
-   border-right: 1px solid var(--twitter-background);
+   flex-basis: auto;
    margin-top: 20px;
    padding-left: 20px;
    padding-right: 20px;
    display: flex;
    flex-direction: column;
    align-items: flex-end;
-   height: 100vh;
 }
 
 .MuiFab-root {
