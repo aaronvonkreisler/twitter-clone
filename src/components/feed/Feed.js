@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMediaQuery } from '@material-ui/core';
 import Header from './Header';
+import TweetForm from './TweetForm';
 import './styles/Feed.css';
 
 const Feed = () => {
@@ -8,7 +9,7 @@ const Feed = () => {
    return (
       <div className={largeDevice ? 'feed' : 'feed-small-screen'}>
          <Header />
-         <h2> asdf;lkjasdf;lkj ;kjasdf;lkjasdf;lkjasf ;lkjasdf;lkjasdf;lkja</h2>
+         <TweetForm />
       </div>
    );
 };
