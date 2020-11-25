@@ -1,13 +1,19 @@
 .feed {
-   flex: 0.4;
    border-right: 1px solid var(--twitter-background);
-   min-width: fit-content;
+   max-width: 600px;
+
    overflow-y: scroll;
+   display: flex;
+   flex-basis: auto;
+   flex-direction: column;
+   flex-shrink: 0;
+   position: relative;
+   width: 100%;
 }
 .feed-small-screen {
-   flex: 0.63;
    border-right: 1px solid var(--twitter-background);
-   min-width: fit-content;
+   max-width: 600px;
+   min-width: 600px;
    overflow-y: scroll;
 }
 
