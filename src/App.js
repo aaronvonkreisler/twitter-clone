@@ -1,16 +1,22 @@
-import React from 'react';
-import SidebarUtil from './components/sidebar/SidebarUtil';
-import Feed from './components/feed/Feed';
-import Widgets from './components/widgets/Widgets';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
+
+import Routes from './routes/Routes';
+import Landing from './components/pages/Landing';
 import './App.css';
 
 const App = () => {
    return (
-      <div className="app">
-         <SidebarUtil />
-         <Feed />
-         <Widgets />
-      </div>
+      <Router>
+         <React.Fragment>
+            <CssBaseline />
+            <Switch>
+               <Route exact path="/" component={Landing} />
+               <Route component={Routes} />
+            </Switch>
+         </React.Fragment>
+      </Router>
    );
 };
 
