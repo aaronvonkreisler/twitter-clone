@@ -38,7 +38,7 @@
 .label-container {
    padding-bottom: 10px;
    padding-top: 10px;
-   padding-left: 15px;
+
    padding-right: 15px;
    display: flex;
    flex-basis: auto;
@@ -98,6 +98,10 @@
    width: 100%;
 }
 
+.label-sub3 .label-sub4 option {
+   background-color: var(--background-dark);
+}
+
 .email-input {
    display: block;
    text-align: left;
@@ -123,7 +127,7 @@
    align-items: stretch;
    padding-bottom: 10px;
    padding-top: 10px;
-   padding-left: 15px;
+
    padding-right: 15px;
 }
 

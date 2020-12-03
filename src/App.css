@@ -2,12 +2,15 @@ body {
    --twitter-color: rgb(29, 161, 242);
    --twitter-background: #e6ecf0;
    --button-hover-color: #228dcf;
+   --background-dark: rgb(22, 32, 42);
+   --text-gray: rgb(136, 153, 166);
    margin: 0;
    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
       'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
       'Helvetica Neue', sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+   background-color: var(--background-dark);
 }
 
 button:hover {

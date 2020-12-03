@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/design/login.css';
-const TextBox = ({
+
+const SelectBox = ({
    value,
    onChange,
    label,
    inputName,
    inputType,
+   children,
    ...props
 }) => {
    return (
@@ -17,14 +19,15 @@ const TextBox = ({
                   <span>{label}</span>
                   <div className="label-sub3">
                      <div className="label-sub4">
-                        <input
-                           type={inputType}
+                        <select
                            className="email-input"
                            name={inputName}
                            value={value}
                            onChange={onChange}
                            {...props}
-                        />
+                        >
+                           {children}
+                        </select>
                      </div>
                   </div>
                </div>
@@ -34,11 +37,11 @@ const TextBox = ({
    );
 };
 
-TextBox.propTypes = {
+SelectBox.propTypes = {
    value: PropTypes.string.isRequired,
    onChange: PropTypes.func.isRequired,
    label: PropTypes.string.isRequired,
    inputName: PropTypes.string.isRequired,
 };
 
-export default TextBox;
+export default SelectBox;

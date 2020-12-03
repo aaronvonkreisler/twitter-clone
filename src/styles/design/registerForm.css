@@ -1,0 +1,20 @@
+.dateofbirth {
+   margin-top: 30px;
+}
+
+.dateofbirth .dateofbirth__title {
+   font-size: 17px;
+   font-weight: 700;
+   overflow-wrap: break-word;
+   line-height: 1.3125;
+}
+
+.dateofbirth__subtitle {
+   margin-top: 10px;
+}
+.dateofbirth__subtitle span {
+   font-size: 15px;
+   font-weight: 400;
+   line-height: 1.3125;
+   overflow-wrap: break-word;
+}
