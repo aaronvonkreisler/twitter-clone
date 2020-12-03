@@ -34,6 +34,32 @@
    margin-bottom: 15px;
 }
 
+.ml-15 {
+   margin-left: 15px;
+}
+
+.mr-15 {
+   margin-right: 15px;
+}
+
+.my-15 {
+   margin-top: 15px;
+   margin-bottom: 15px;
+}
+
+.my-10 {
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+.my-5 {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+.mx-15 {
+   margin-right: 15px;
+   margin-left: 15px;
+}
 .h-30 {
    height: 30px;
 }
@@ -48,6 +74,10 @@
 
 .flex-row {
    flex-direction: row;
+}
+
+.flex-row-reverse {
+   flex-direction: row-reverse;
 }
 
 .flex-col {

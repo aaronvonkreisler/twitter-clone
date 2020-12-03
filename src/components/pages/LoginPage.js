@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/design/login.css';
 import { FaTwitter } from 'react-icons/fa';
-import { Button } from '@material-ui/core';
-
-import TextBox from '../layout/TextBox';
+import LoginForm from '../forms/LoginForm';
 
 const LoginPage = () => {
    const [loginValues, setLoginValues] = useState({
@@ -11,10 +10,6 @@ const LoginPage = () => {
       password: '',
    });
 
-   const handleChange = (e) => {
-      console.log(loginValues);
-      setLoginValues({ ...loginValues, [e.target.name]: e.target.value });
-   };
    return (
       <div className="view-container">
          <div className="container">
@@ -23,34 +18,11 @@ const LoginPage = () => {
 
                <h1>Log in to Tweeter</h1>
             </div>
-            <form>
-               <TextBox
-                  value={loginValues.email}
-                  onChange={handleChange}
-                  inputName="email"
-                  inputType="email"
-                  label="Email"
-               />
-               <TextBox
-                  value={loginValues.password}
-                  onChange={handleChange}
-                  inputName="password"
-                  inputType="password"
-                  label="Password"
-               />
-
-               <div className="button-wrapper">
-                  <div className="button-subWrapper">
-                     <Button className="tweet-button" fullWidth>
-                        Log in
-                     </Button>
-                  </div>
-               </div>
-            </form>
+            <LoginForm />
             <div className="register-container">
                <div className="register">
                   <p>Don't have an account?</p>
-                  <a href="!#">Sign up</a>
+                  <Link to="/">Sign up</Link>
                </div>
             </div>
          </div>
