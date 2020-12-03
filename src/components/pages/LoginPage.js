@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import '../../styles/design/login.css';
+import { setAlert } from '../../actions/alerts';
 import { FaTwitter } from 'react-icons/fa';
 import LoginForm from '../forms/LoginForm';
+import '../../styles/design/login.css';
 
-const LoginPage = () => {
-   const [loginValues, setLoginValues] = useState({
-      email: '',
-      password: '',
-   });
-
+const LoginPage = ({ setAlert }) => {
    return (
       <div className="view-container">
          <div className="container">
@@ -30,4 +27,4 @@ const LoginPage = () => {
    );
 };
 
-export default LoginPage;
+export default connect(null, { setAlert })(LoginPage);
