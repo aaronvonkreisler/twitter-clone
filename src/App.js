@@ -6,17 +6,23 @@ import Routes from './routes/Routes';
 import Landing from './components/pages/Landing';
 import './App.css';
 
+// Redux
+import { Provider } from 'react-redux';
+import store from './store/store';
+
 const App = () => {
    return (
-      <Router>
-         <React.Fragment>
-            <CssBaseline />
-            <Switch>
-               <Route exact path="/" component={Landing} />
-               <Route component={Routes} />
-            </Switch>
-         </React.Fragment>
-      </Router>
+      <Provider store={store}>
+         <Router>
+            <React.Fragment>
+               <CssBaseline />
+               <Switch>
+                  <Route exact path="/" component={Landing} />
+                  <Route component={Routes} />
+               </Switch>
+            </React.Fragment>
+         </Router>
+      </Provider>
    );
 };
 
