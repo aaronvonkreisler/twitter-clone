@@ -1,17 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import { Formik, ErrorMessage } from 'formik';
 import { Button } from '@material-ui/core';
 import TextBox from '../layout/TextBox';
-
+import { register } from '../../actions/auth';
+import { setAlert } from '../../actions/alerts';
 import '../../styles/design/registerForm.css';
 import '../../styles/design/utils.css';
 
-const RegisterForm = (props) => {
+const RegisterForm = ({ register }) => {
    const initialValues = {
       name: '',
       email: '',
       screen_name: '',
+      date_of_birth: '6/6/1966',
       password: '',
       password2: '',
    };
@@ -44,7 +48,8 @@ const RegisterForm = (props) => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-               alert(JSON.stringify(values, null, 2));
+               const { name, email, password, screen_name } = values;
+               register({ name, email, password, screen_name });
                setSubmitting(false);
             }}
          >
@@ -60,6 +65,7 @@ const RegisterForm = (props) => {
                   <TextBox
                      value={values.name}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputType="text"
                      inputName="name"
                      label="Name"
@@ -73,6 +79,7 @@ const RegisterForm = (props) => {
                   <TextBox
                      value={values.email}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputType="email"
                      inputName="email"
                      label="Email"
@@ -87,6 +94,7 @@ const RegisterForm = (props) => {
                   <TextBox
                      value={values.screen_name}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputType="text"
                      inputName="screen_name"
                      label="Username"
@@ -101,6 +109,7 @@ const RegisterForm = (props) => {
                   <TextBox
                      value={values.password}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputType="password"
                      inputName="password"
                      label="Password"
@@ -115,6 +124,7 @@ const RegisterForm = (props) => {
                   <TextBox
                      value={values.password2}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputType="password"
                      inputName="password2"
                      label="Confirm Password"
@@ -138,4 +148,8 @@ const RegisterForm = (props) => {
    );
 };
 
-export default RegisterForm;
+RegisterForm.propTypes = {
+   register: PropTypes.func.isRequired,
+};
+
+export default connect(null, { register, setAlert })(RegisterForm);

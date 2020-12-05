@@ -174,8 +174,9 @@ form {
    padding-right: 5px;
 }
 
-.register a {
+.register .sign-up-link {
    padding-left: 10px;
    text-decoration: none;
    color: var(--twitter-color);
+   cursor: pointer;
 }

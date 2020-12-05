@@ -1,11 +1,13 @@
 import React from 'react';
 import { Formik, ErrorMessage } from 'formik';
+import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import * as Yup from 'yup';
 import TextBox from '../layout/TextBox';
+import { loginUser } from '../../actions/auth';
 import '../../styles/design/login.css';
 
-const LoginForm = () => {
+const LoginForm = ({ loginUser }) => {
    const initialValues = {
       email: '',
       password: '',
@@ -23,7 +25,8 @@ const LoginForm = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-               alert(JSON.stringify(values, null, 2));
+               const { email, password } = values;
+               loginUser(email, password);
                setSubmitting(false);
             }}
          >
@@ -39,6 +42,7 @@ const LoginForm = () => {
                   <TextBox
                      value={values.email}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputName="email"
                      inputType="text"
                      label="Email"
@@ -53,6 +57,7 @@ const LoginForm = () => {
                   <TextBox
                      value={values.password}
                      onChange={handleChange}
+                     onBlur={handleBlur}
                      inputName="password"
                      inputType="password"
                      label="Password"
@@ -81,4 +86,4 @@ const LoginForm = () => {
    );
 };
 
-export default LoginForm;
+export default connect(null, { loginUser })(LoginForm);
