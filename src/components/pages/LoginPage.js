@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FaTwitter } from 'react-icons/fa';
 import LoginForm from '../forms/LoginForm';
 import RegisterModal from './RegisterModal';
@@ -9,6 +9,10 @@ import '../../styles/design/login.css';
 
 const LoginPage = ({ isAuthenticated }) => {
    const [modalOpen, setModalOpen] = useState(false);
+
+   if (isAuthenticated) {
+      return <Redirect to="/home" />;
+   }
    return (
       <React.Fragment>
          <RegisterModal open={modalOpen} setOpen={setModalOpen} />

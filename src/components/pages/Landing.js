@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { Grid, Button } from '@material-ui/core';
 import { FaTwitter } from 'react-icons/fa';
 import { BsSearch, BsPeople, BsChat } from 'react-icons/bs';
@@ -8,8 +9,11 @@ import RegisterModal from './RegisterModal';
 
 import '../../styles/design/landing.css';
 
-const Landing = (props) => {
+const Landing = ({ isAuthenticated }) => {
    const [modalOpen, setModalOpen] = useState(false);
+   if (isAuthenticated) {
+      return <Redirect to="/home" />;
+   }
    return (
       <React.Fragment>
          <RegisterModal open={modalOpen} setOpen={setModalOpen} />
@@ -93,4 +97,7 @@ const Landing = (props) => {
    );
 };
 
-export default Landing;
+const mapStateToProps = (state) => ({
+   isAuthenticated: state.auth.isAuthenticated,
+});
+export default connect(mapStateToProps)(Landing);

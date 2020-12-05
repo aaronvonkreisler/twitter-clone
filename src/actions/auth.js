@@ -6,6 +6,7 @@ import {
    LOGIN_SUCCESS,
    USER_LOADED,
    AUTH_ERROR,
+   LOG_OUT,
 } from './types';
 import { setAlert } from './alerts';
 
@@ -64,4 +65,8 @@ export const loginUser = (email, password) => async (dispatch) => {
          type: LOGIN_FAIL,
       });
    }
+};
+
+export const logout = () => (dispatch) => {
+   dispatch({ type: LOG_OUT });
 };
