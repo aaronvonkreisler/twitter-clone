@@ -1,49 +1,41 @@
-.sidebar {
-   flex: 0.3;
-   border-right: 1px solid var(--twitter-background);
-   margin-top: 20px;
-   padding-left: 20px;
-   padding-right: 20px;
+.sidebar__root {
+   width: 88px;
+   position: relative;
 }
 
-.tweet-btn {
-   background-color: var(--twitter-color) !important;
-   color: white !important;
-   border: none !important;
-   font-weight: 900;
-   text-transform: inherit !important;
-   border-radius: 30px !important;
-   height: 50px !important;
-   margin-top: 20px !important;
+@media (min-width: 1920px) {
+   .sidebar__root {
+      width: 275px;
+   }
+}
+.sidebar__items__wrapper .actions {
+   margin-left: 6px;
+   margin-top: 5px;
+   margin-bottom: 10px;
 }
 
-.sidebar__twitterIcon {
-   color: var(--twitter-color);
-   font-size: 35px;
-   margin-left: 20px;
-   margin-bottom: 20px;
+.actions .MuiFab-root {
+   background: var(--twitter-color);
+   font-size: 22px;
+   color: #fff;
+}
+.actions .MuiFab-root:hover {
+   background-color: var(--twitter-button-darken);
 }
 
-.mobile-sidebar__twitterIcon > .MuiIconButton-root {
-   color: var(--twitter-color) !important ;
-   font-size: 30px;
-   margin-right: 10px;
-}
-.smallSidebar {
-   flex: 0.07;
+.sidebar__root .sidebar__wrapper {
+   height: 100%;
 
-   margin-top: 20px;
-   padding-left: 20px;
-   padding-right: 20px;
+   top: 0px;
+   backface-visibility: hidden;
+}
+.sidebar__root .sidebar__wrapper .sidebar__items__wrapper {
+   overflow-y: auto;
    display: flex;
+   flex-basis: auto;
    flex-direction: column;
-   align-items: flex-end;
-}
-
-.MuiFab-root {
-   color: white !important;
-   background-color: var(--twitter-color) !important;
-   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.1),
-      0px 6px 10px 0px rgba(0, 0, 0, 0.08), 0px 1px 18px 0px rgba(0, 0, 0, 0.06) !important;
-   margin-top: 30px !important;
+   height: 100%;
+   justify-content: space-between;
+   padding-left: 10px;
+   padding-right: 10px;
 }

@@ -3,7 +3,6 @@
    color: #fff;
    font-size: 22px;
    font-weight: 700;
-   width: 100%;
 }
 
 .menu-button__root {
@@ -12,24 +11,32 @@
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   border-radius: 9999px;
+   border-radius: 50%;
    padding: 10px;
+   max-width: 100%;
+}
+@media (min-width: 1920px) {
+   .menu-button__root {
+      border-radius: 9999px;
+      justify-content: flex-start;
+   }
 }
 .menu-button__root:hover {
    background-color: var(--twitter-button-hover);
    transition-property: background-color, box-shadow;
    transition-duration: 0.2s;
    color: var(--twitter-color);
-}
-.menu-button__link .menu-button__icon {
-   height: 1.75rem;
-   vertical-align: text-bottom;
-   max-width: 100%;
-   display: inline-block;
+   fill: var(--twitter-color);
 }
 
 .menu-button__link .menu-button__icon > svg {
    overflow: hidden;
+   height: 1.75rem;
+   font-size: 30px;
+   vertical-align: text-bottom;
+   display: inline-block;
+   color: currentColor;
+   max-width: 100%;
 }
 
 .menu-button__link .menu-button__root .menu-button__text {

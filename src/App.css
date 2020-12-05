@@ -2,7 +2,7 @@ body {
    --twitter-color: rgb(29, 161, 242, 1);
    --twitter-background: #e6ecf0;
    --twitter-button-hover: rgb(29, 161, 242, 0.1);
-
+   --twitter-button-darken: rgb(26, 145, 218);
    --background-dark: rgb(22, 32, 42);
    --text-gray: rgb(136, 153, 166);
    margin: 0;

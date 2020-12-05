@@ -1,0 +1,8 @@
+.user-menu__avatar {
+   padding: 10px;
+}
+
+.user-menu__avatar .MuiAvatar-root {
+   height: 39px;
+   width: 39px;
+}

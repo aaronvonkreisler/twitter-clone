@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, makeStyles } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
+import UserMenu from '../sidebar/UserMenu';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -13,10 +14,17 @@ const useStyles = makeStyles((theme) => ({
       borderRight: '1px solid rgb(56,68,77)',
       borderLeft: '1px solid rgb(56,68,77)',
    },
-   sidebar: {
+   sidebarRoot: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      height: '100%',
+   },
+   userMenu: {
+      marginRight: '12px',
+      marginBottom: '10px',
+      marginTop: '10px',
    },
 }));
 
@@ -25,8 +33,14 @@ const Main = ({ children }) => {
    return (
       <Grid container className={classes.root}>
          <Grid item xs={false} sm={2} md={2} lg={2} xl={4}>
-            <Sidebar />
+            <div className={classes.sidebarRoot}>
+               <Sidebar />
+               <div className={classes.userMenu}>
+                  <UserMenu />
+               </div>
+            </div>
          </Grid>
+
          <Grid
             item
             xs={12}
