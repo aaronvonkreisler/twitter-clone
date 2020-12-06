@@ -81,7 +81,7 @@ const Sidebar = (props) => {
                               type="submit"
                               fullWidth
                            >
-                              Log in
+                              Tweet
                            </Button>
                         </div>
                      </div>

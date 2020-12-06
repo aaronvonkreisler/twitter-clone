@@ -143,11 +143,9 @@
    color: #fff;
    min-height: 49px;
    margin-bottom: 15px;
+   font-weight: 700;
+   font-size: 17;
 }
-
-/* .label
-
-.label-sub1 */
 
 form {
    display: flex;
