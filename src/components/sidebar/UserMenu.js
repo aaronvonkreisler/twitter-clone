@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Avatar, Menu, MenuItem, ClickAwayListener } from '@material-ui/core';
+import { Avatar, Menu, MenuItem } from '@material-ui/core';
 import { BsCheck } from 'react-icons/bs';
 import { MdMoreHoriz } from 'react-icons/md';
 import { logout } from '../../actions/auth';
