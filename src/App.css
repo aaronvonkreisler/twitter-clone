@@ -4,6 +4,7 @@ body {
    --twitter-button-hover: rgb(29, 161, 242, 0.1);
    --twitter-button-darken: rgb(26, 145, 218);
    --background-dark: rgb(22, 32, 42);
+   --border-color: rgb(56, 68, 78);
    --text-gray: rgb(136, 153, 166);
    margin: 0;
    font-family: 'Roboto', sans-serif;
