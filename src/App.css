@@ -28,4 +28,4 @@ button:hover {
    background-color: var(--background-dark);
 } */
 
-@import './styles//design/utils.css';
+@import './styles/design/utils.css';

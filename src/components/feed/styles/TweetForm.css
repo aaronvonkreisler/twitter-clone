@@ -52,3 +52,22 @@
 .tweetForm .tweetForm_actions {
    padding: 10px;
 }
+
+.DraftEditor-root {
+   height: 40px;
+   font-size: 20px;
+   margin-left: 20px;
+   width: 100%;
+}
+.DraftEditor-editorContainer {
+   height: 100%;
+}
+
+.public-DraftEditorPlaceholder-root {
+   color: var(--text-gray);
+}
+
+.public-DraftEditorPlaceholder-inner {
+   position: absolute;
+   pointer-events: none;
+}
