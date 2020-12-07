@@ -54,13 +54,9 @@
 }
 
 .DraftEditor-root {
-   height: 40px;
    font-size: 20px;
-   margin-left: 20px;
-   width: 100%;
-}
-.DraftEditor-editorContainer {
-   height: 100%;
+   margin-left: 10px;
+   width: 89%;
 }
 
 .public-DraftEditorPlaceholder-root {
@@ -70,4 +66,17 @@
 .public-DraftEditorPlaceholder-inner {
    position: absolute;
    pointer-events: none;
+}
+
+button.draftJsEmojiPlugin__emojiSelectButton__3sPol {
+   font-size: 30px;
+   font-weight: 700;
+   color: var(--twitter-color);
+   background: none;
+}
+div.draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {
+   background: var(--background-dark);
+   border-radius: 16px;
+   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
+      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
 }

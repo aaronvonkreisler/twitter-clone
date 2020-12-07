@@ -20,10 +20,12 @@ const linkifyPlugin = createLinkifyPlugin({
    // eslint-disable-next-line jsx-a11y/anchor-has-content
    component: (params) => <a {...omit(params, ['blockKey'])} />,
 });
+
 const emojiPlugin = createEmojiPlugin();
 const hashtagPlugin = createHashtagPlugin();
 const editorPlugins = [linkifyPlugin, emojiPlugin, hashtagPlugin];
-const MAX_LENGTH = 150;
+const { EmojiSelect } = emojiPlugin;
+const MAX_LENGTH = 280;
 
 const TweetForm = ({ auth: { user, loading } }) => {
    const [editorState, setEditorState] = useState(() =>
@@ -79,7 +81,9 @@ const TweetForm = ({ auth: { user, loading } }) => {
                />
             </div>
             <div className="flex flex-row justify-between tweetForm_actions">
-               <div></div>
+               <div>
+                  <EmojiSelect />
+               </div>
                <div>
                   <Button
                      className="tweetForm__button"

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import UserMenu from '../sidebar/UserMenu';
 
@@ -32,12 +32,14 @@ const Main = ({ children }) => {
    return (
       <Grid container className={classes.root}>
          <Grid item xs={false} sm={2} md={2} lg={2} xl={4}>
-            <div className={classes.sidebarRoot}>
-               <Sidebar />
-               <div className={classes.userMenu}>
-                  <UserMenu />
+            <Hidden xsDown>
+               <div className={classes.sidebarRoot}>
+                  <Sidebar />
+                  <div className={classes.userMenu}>
+                     <UserMenu />
+                  </div>
                </div>
-            </div>
+            </Hidden>
          </Grid>
 
          <Grid
