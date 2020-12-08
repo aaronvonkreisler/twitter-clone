@@ -33,12 +33,12 @@ const Main = ({ children }) => {
       <Grid container className={classes.root}>
          <Grid item xs={false} sm={2} md={2} lg={2} xl={4}>
             <Hidden xsDown>
-               <div className={classes.sidebarRoot}>
+               <header className={classes.sidebarRoot}>
                   <Sidebar />
                   <div className={classes.userMenu}>
                      <UserMenu />
                   </div>
-               </div>
+               </header>
             </Hidden>
          </Grid>
 

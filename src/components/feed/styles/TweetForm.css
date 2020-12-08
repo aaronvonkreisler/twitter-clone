@@ -40,6 +40,9 @@
    height: 40px !important;
    width: 80px;
 }
+.tweetForm__button:disabled {
+   opacity: 0.5 !important;
+}
 
 .tweetForm .tweetForm__bottom-border {
    border-top: 1px solid var(--border-color);
@@ -51,6 +54,14 @@
 
 .tweetForm .tweetForm_actions {
    padding: 10px;
+}
+
+.counterProgress {
+   margin-right: 10px;
+}
+
+.emojiButton {
+   margin-left: 15px;
 }
 
 .DraftEditor-root {
@@ -96,6 +107,20 @@ h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
    font-weight: 700;
    color: #fff;
 }
+
+.counter {
+   display: inline-flex;
+   margin: auto;
+   color: var(--text-error);
+}
+
+.counter-hidden {
+   display: none;
+}
+
+/* span.draftJsUndoPlugin__counter__2wZYK {
+   display: none;
+} */
 
 /* .draftJsEmojiPlugin__emojiSelectPopover__1J1s0
    .draftJsEmojiPlugin__emojiSelectPopoverGroups__35t9m,
