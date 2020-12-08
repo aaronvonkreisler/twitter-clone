@@ -28,22 +28,22 @@ const Sidebar = (props) => {
       { text: 'Home', path: '/home', icon: BiHomeCircle },
       {
          text: 'Explore',
-         path: '#',
+         path: '/explore',
          icon: BiHash,
       },
       {
          text: 'Notifications',
-         path: '#',
+         path: '/notifications',
          icon: FaRegBell,
       },
       {
          text: 'Messages',
-         path: '#',
+         path: '/messages',
          icon: FiMail,
       },
       {
          text: 'Bookmarks',
-         path: '#',
+         path: '/bookmarks',
          icon: BiBookmark,
       },
 
@@ -54,7 +54,7 @@ const Sidebar = (props) => {
       },
       {
          text: 'More',
-         path: '#',
+         path: '/more',
          icon: CgMoreO,
       },
    ];

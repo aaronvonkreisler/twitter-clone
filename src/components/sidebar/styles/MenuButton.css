@@ -3,25 +3,37 @@
    color: #fff;
    font-size: 22px;
    font-weight: 700;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.menu-button__active {
+   color: var(--twitter-color);
+   fill: var(currentColor);
 }
 
 .menu-button__root {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   border-radius: 50%;
-   padding: 10px;
+
    max-width: 100%;
 }
-@media (min-width: 1920px) {
-   .menu-button__root {
-      border-radius: 9999px;
-      justify-content: flex-start;
-   }
+
+.menu-button__root .menu-button__wrapper {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   max-width: 100%;
+   border-radius: 9999px;
+   padding: 10px;
 }
-.menu-button__root:hover {
+
+.menu-button__root:hover .menu-button__wrapper {
    background-color: var(--twitter-button-hover);
    transition-property: background-color, box-shadow;
    transition-duration: 0.2s;
@@ -49,4 +61,26 @@
    margin-left: 20px;
    font-size: 19px;
    font-weight: 700;
+   min-width: 0px;
+}
+
+@media (min-width: 1920px) {
+   .menu-button__root {
+      flex-direction: row;
+
+      justify-content: flex-start;
+      width: 100%;
+      padding-bottom: 7px;
+      padding-top: 7px;
+   }
+   .menu-button__wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+   }
+
+   .menu-button__icon > svg {
+      margin-left: 10px;
+   }
 }

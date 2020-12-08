@@ -76,7 +76,7 @@ button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
    height: 37px;
    border-radius: 9999px;
    border: none;
-   font-size: 23px;
+   font-size: 30px !important;
    font-weight: 700;
 }
 .draftJsEmojiPlugin__emojiSelectButton__3sPol:hover,
