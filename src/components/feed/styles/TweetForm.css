@@ -68,15 +68,38 @@
    pointer-events: none;
 }
 
-button.draftJsEmojiPlugin__emojiSelectButton__3sPol {
-   font-size: 30px;
-   font-weight: 700;
+button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
+.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
    color: var(--twitter-color);
    background: none;
+   width: 37px;
+   height: 37px;
+   border-radius: 9999px;
+   border: none;
+   font-size: 23px;
+   font-weight: 700;
+}
+.draftJsEmojiPlugin__emojiSelectButton__3sPol:hover,
+.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover {
+   background: var(--twitter-button-hover);
 }
 div.draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {
    background: var(--background-dark);
    border-radius: 16px;
    box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
       rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
+   border: none;
 }
+
+h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
+   font-size: 19px;
+   font-weight: 700;
+   color: #fff;
+}
+
+/* .draftJsEmojiPlugin__emojiSelectPopover__1J1s0
+   .draftJsEmojiPlugin__emojiSelectPopoverGroups__35t9m,
+.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
+   height: 400px;
+   width: calc(290px);
+} */
