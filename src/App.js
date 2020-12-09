@@ -29,13 +29,13 @@ const App = () => {
    return (
       <Provider store={store}>
          <Router>
-            <React.Fragment>
+            <div className="app">
                <CssBaseline />
                <Switch>
                   <Route exact path="/" component={Landing} />
                   <Route component={Routes} />
                </Switch>
-            </React.Fragment>
+            </div>
          </Router>
       </Provider>
    );

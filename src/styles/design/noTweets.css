@@ -1,0 +1,36 @@
+.noTweets__root {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.noTweets__wrapper {
+   padding: 39px 20px;
+}
+
+.welcomeMessage {
+   color: #fff;
+   margin-bottom: 10px;
+   font-size: 20px;
+   font-weight: 700;
+}
+
+.welcomeMessage > span {
+   overflow-wrap: break-word;
+   line-height: 1.3125;
+   text-align: center;
+}
+
+.introMessage {
+   color: var(--text-gray);
+   font-size: 15px;
+   font-weight: 400;
+   text-align: center;
+   white-space: pre-line;
+}
+
+.actionArea {
+   margin-top: 20px;
+}

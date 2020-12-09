@@ -13,6 +13,7 @@ const Widgets = () => {
                <input type="text" placeholder="Search Tweeter" />
             </div>
             <WidgetItem />
+            <WidgetItem />
          </div>
       </div>
    );

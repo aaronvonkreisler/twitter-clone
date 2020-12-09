@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
+import Widgets from '../widgets/Widgets';
 
 const useStyles = makeStyles((theme) => ({
    root: {
       backgroundColor: 'rgb(21, 32, 42)',
       color: '#fff',
+      height: '100%',
    },
    feed: {
       borderRight: '1px solid rgb(56,68,77)',
@@ -18,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'flex-end',
       justifyContent: 'space-between',
       height: '100%',
-      // position: 'fixed',
    },
 }));
 
@@ -45,7 +46,9 @@ const Main = ({ children }) => {
          >
             {children}
          </Grid>
-         <Grid item xs={false} sm={2} md={4} lg={4} xl={4}></Grid>
+         <Grid item xs={false} sm={2} md={4} lg={4} xl={4}>
+            <Widgets />
+         </Grid>
       </Grid>
    );
 };

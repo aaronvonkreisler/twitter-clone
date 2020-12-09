@@ -12,7 +12,6 @@
    position: relative;
    align-items: stretch;
    margin-bottom: 15px;
-   border-left: 1px solid var(--twitter-background);
    overflow: hidden;
    display: flex;
    flex-basis: auto;

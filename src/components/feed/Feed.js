@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getTimelineTweets } from '../../actions/tweets';
 import PropTypes from 'prop-types';
-
+import { getTimelineTweets } from '../../actions/tweets';
+import NoTweets from './NoTweets';
 import './styles/Feed.css';
 
-const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
+const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
    useEffect(() => {
       getTimelineTweets();
    }, [getTimelineTweets]);
@@ -15,45 +15,14 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
             <React.Fragment>Loading...</React.Fragment>
          ) : (
             <React.Fragment>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
-               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               {user !== null && user.following.length === 0 ? (
+                  <NoTweets />
+               ) : (
+                  <React.Fragment>
+                     <p> This is the feed screen yay ya ya ya yayaya ayy aya</p>
+                     <p> This is the feed screen yay ya ya ya yayaya ayy aya</p>
+                  </React.Fragment>
+               )}
             </React.Fragment>
          )}
       </div>
@@ -67,5 +36,6 @@ Feed.propTypes = {
 
 const mapStateToProps = (state) => ({
    tweets: state.tweets,
+   user: state.auth.user,
 });
 export default connect(mapStateToProps, { getTimelineTweets })(Feed);
