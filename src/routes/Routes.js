@@ -5,7 +5,7 @@ import LoginPage from '../components/pages/LoginPage';
 import AlertDisplay from '../components/layout/AlertDisplay';
 import Main from '../components/layout/Main';
 import Profile from '../components/profile/Profile';
-import Home from '../components/home/Home';
+import Home from '../components/pages/Home';
 const Routes = (props) => {
    return (
       <React.Fragment>

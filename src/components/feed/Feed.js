@@ -1,21 +1,71 @@
-import React from 'react';
-import { useMediaQuery } from '@material-ui/core';
-import Header from './Header';
-import TweetForm from './TweetForm';
-import Tweet from './Tweet';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getTimelineTweets } from '../../actions/tweets';
+import PropTypes from 'prop-types';
+
 import './styles/Feed.css';
 
-const Feed = () => {
-   const largeDevice = useMediaQuery('(min-width:1440px)');
+const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
+   useEffect(() => {
+      getTimelineTweets();
+   }, [getTimelineTweets]);
    return (
-      <div className={largeDevice ? 'feed' : 'feed-small-screen'}>
-         <Header />
-         <TweetForm />
-         <Tweet />
-         <Tweet />
-         <Tweet />
+      <div className="feed">
+         {loading ? (
+            <React.Fragment>Loading...</React.Fragment>
+         ) : (
+            <React.Fragment>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+               <p> This is the feed screen yay ya ya ya yayaya ayy aya </p>
+            </React.Fragment>
+         )}
       </div>
    );
 };
 
-export default Feed;
+Feed.propTypes = {
+   getTimelineTweets: PropTypes.func.isRequired,
+   tweets: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+   tweets: state.tweets,
+});
+export default connect(mapStateToProps, { getTimelineTweets })(Feed);

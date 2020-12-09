@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
-import UserMenu from '../sidebar/UserMenu';
 
 const useStyles = makeStyles((theme) => ({
    root: {
-      height: '100vh',
       backgroundColor: 'rgb(21, 32, 42)',
       color: '#fff',
    },
@@ -20,10 +18,7 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'flex-end',
       justifyContent: 'space-between',
       height: '100%',
-   },
-   userMenu: {
-      marginBottom: '10px',
-      marginTop: '10px',
+      // position: 'fixed',
    },
 }));
 
@@ -35,9 +30,6 @@ const Main = ({ children }) => {
             <Hidden xsDown>
                <header className={classes.sidebarRoot}>
                   <Sidebar />
-                  <div className={classes.userMenu}>
-                     <UserMenu />
-                  </div>
                </header>
             </Hidden>
          </Grid>

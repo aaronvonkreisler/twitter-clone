@@ -5,6 +5,7 @@
    border-bottom: 1px solid var(--border-color);
    height: 53px;
    padding: 15px 20px;
+   background-color: var(--background-dark);
 }
 
 .header__root .header__items {
