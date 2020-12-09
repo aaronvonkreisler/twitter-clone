@@ -1,0 +1,50 @@
+.widgetItem {
+   display: none;
+   margin: 20px;
+}
+.widgetItem__flex {
+   display: flex;
+   flex-direction: column;
+   flex-basis: auto;
+}
+
+.widgetItem__flexItem {
+   padding: 10px 15px;
+   border-top: 1px solid var(--twitter-background);
+}
+
+.widgetItem__flexItem:hover {
+   background-color: var(--twitter-background) !important;
+}
+
+.widgetItem__header {
+   display: block;
+   padding-left: 15px;
+}
+.widgetItem__header > h2 {
+   font-size: 19px;
+   line-height: 1.3125;
+   font-weight: 800;
+   vertical-align: top;
+}
+
+.MuiCard-root {
+   background-color: rgb(247, 249, 250) !important;
+   border-radius: 16px !important;
+   border: 1px solid var(--twitter-background) !important;
+   cursor: pointer !important;
+}
+
+@media (min-width: 1095px) {
+   .widgetItem {
+      width: 350px;
+      display: block;
+   }
+}
+
+@media (min-width: 1005px) {
+   .widgetItem {
+      width: 290px;
+      display: block;
+   }
+}

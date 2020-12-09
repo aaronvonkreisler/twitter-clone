@@ -1,0 +1,41 @@
+.sidebar__root {
+   width: 88px;
+   position: relative;
+}
+
+@media (min-width: 1920px) {
+   .sidebar__root {
+      width: 275px;
+   }
+}
+.sidebar__items__wrapper .actions {
+   margin-left: 6px;
+   margin-top: 5px;
+   margin-bottom: 10px;
+}
+
+.actions .MuiFab-root {
+   background: var(--twitter-color);
+   font-size: 22px;
+   color: #fff;
+}
+.actions .MuiFab-root:hover {
+   background-color: var(--twitter-button-darken);
+}
+
+.sidebar__root .sidebar__wrapper {
+   height: 100%;
+
+   top: 0px;
+   backface-visibility: hidden;
+}
+.sidebar__root .sidebar__wrapper .sidebar__items__wrapper {
+   overflow-y: auto;
+   display: flex;
+   flex-basis: auto;
+   flex-direction: column;
+   height: 100%;
+   justify-content: space-between;
+   padding-left: 10px;
+   padding-right: 10px;
+}

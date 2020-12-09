@@ -1,0 +1,32 @@
+body {
+   --twitter-color: rgb(29, 161, 242, 1);
+   --twitter-background: #e6ecf0;
+   --twitter-button-hover: rgb(29, 161, 242, 0.1);
+   --twitter-button-darken: rgb(26, 145, 218);
+   --background-dark: rgb(22, 32, 42);
+   --border-color: rgb(56, 68, 78);
+   --text-gray: rgb(136, 153, 166);
+   --text-error: rgb(224, 36, 94);
+   margin: 0;
+   font-family: 'Roboto', sans-serif;
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   background-color: var(--background-dark);
+}
+
+button:hover {
+   cursor: pointer;
+}
+
+/* .app {
+   display: flex;
+   height: 100vh;
+   max-width: 1300px;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 0 10px;
+   background-color: var(--background-dark);
+} */
+
+@import './styles/design/utils.css';
