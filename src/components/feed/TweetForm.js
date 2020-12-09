@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Avatar, Button, CircularProgress } from '@material-ui/core';
 import omit from 'lodash/omit';
+import { addTweet } from '../../actions/tweets';
 // Editor Dependencies -------------------------
 import { EditorState, convertToRaw } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
@@ -37,7 +38,7 @@ const { CustomCounter } = counterPlugin;
 const MAX_LENGTH = 280;
 const MIN_LENGTH = 1;
 
-const TweetForm = ({ auth: { user, loading } }) => {
+const TweetForm = ({ auth: { user, loading }, addTweet }) => {
    const [editorState, setEditorState] = useState(() =>
       EditorState.createEmpty()
    );
@@ -51,7 +52,10 @@ const TweetForm = ({ auth: { user, loading } }) => {
       const contentState = editorState.getCurrentContent();
       const rawContent = JSON.stringify(convertToRaw(contentState));
 
-      console.log(rawContent);
+      addTweet({ content: rawContent });
+      setTimeout(() => {
+         setEditorState(() => EditorState.createEmpty());
+      }, 250);
    };
 
    const handleCharacterCountChange = (str) => {
@@ -136,10 +140,11 @@ const TweetForm = ({ auth: { user, loading } }) => {
 
 TweetForm.propTypes = {
    auth: PropTypes.object.isRequired,
+   addTweet: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
    auth: state.auth,
 });
 
-export default connect(mapStateToProps)(TweetForm);
+export default connect(mapStateToProps, { addTweet })(TweetForm);

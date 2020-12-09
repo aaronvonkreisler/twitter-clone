@@ -9,3 +9,6 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOG_OUT = 'LOG_OUT';
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const ADD_TWEET = 'ADD_TWEET';
+export const GET_TIMELINE_TWEETS = 'GET_TIMELINE_TWEETS';
+export const TWEETS_ERROR = 'TWEETS_ERROR';

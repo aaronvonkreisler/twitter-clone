@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { loadUser } from './actions/auth';
 import { getCurrentUsersProfile } from './actions/profile';
+import { getTimelineTweets } from './actions/tweets';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
 import Landing from './components/pages/Landing';
@@ -20,6 +21,7 @@ const App = () => {
       }
       store.dispatch(loadUser());
       store.dispatch(getCurrentUsersProfile());
+      store.dispatch(getTimelineTweets());
    }, []);
    return (
       <Provider store={store}>
