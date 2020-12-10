@@ -1,4 +1,9 @@
-import { TWEETS_ERROR, GET_TIMELINE_TWEETS, ADD_TWEET } from '../actions/types';
+import {
+   TWEETS_ERROR,
+   GET_TIMELINE_TWEETS,
+   ADD_TWEET,
+   DELETE_TWEET,
+} from '../actions/types';
 
 const initialState = {
    tweets: [],
@@ -23,6 +28,12 @@ export default function (state = initialState, action) {
          return {
             ...state,
             tweets: [payload, ...state.tweets],
+            loading: false,
+         };
+      case DELETE_TWEET:
+         return {
+            ...state,
+            tweets: state.tweets.filter((tweet) => tweet._id !== payload),
             loading: false,
          };
       default:

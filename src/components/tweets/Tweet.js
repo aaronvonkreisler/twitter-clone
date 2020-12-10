@@ -6,26 +6,32 @@ import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import omit from 'lodash/omit';
-import { Avatar, Menu, MenuItem } from '@material-ui/core';
+import {
+   Avatar,
+   Menu,
+   MenuItem,
+   ListItemIcon,
+   ListItemText,
+} from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import { BsChat } from 'react-icons/bs';
 import { BsHeart } from 'react-icons/bs';
 import { AiOutlineRetweet } from 'react-icons/ai';
 import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
+import { HiOutlineTrash } from 'react-icons/hi';
+import { BiPin } from 'react-icons/bi';
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
-
+import { deleteTweet } from '../../actions/tweets';
 import '../../styles/design/tweet.css';
-import { FaDivide } from 'react-icons/fa';
 
+//--------------- Draft.js Editor config ---------------------------------
 const linkifyPlugin = createLinkifyPlugin({
    target: '_blank',
    // eslint-disable-next-line jsx-a11y/anchor-has-content
    component: (params) => <a {...omit(params, ['blockKey'])} />,
 });
-
 const hashtagPlugin = createHashtagPlugin();
-
 const viewOnlyPlugins = [linkifyPlugin, hashtagPlugin];
 
 const getPluginDecoratorArray = () => {
@@ -55,7 +61,9 @@ const convertToEditorState = (editorContent) => {
    return newEditorState;
 };
 
-const Tweet = ({ tweet, auth }) => {
+//--------------- End Draft.js Editor config ---------------------------------
+
+const Tweet = ({ tweet, auth, deleteTweet }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const open = Boolean(anchorEl);
 
@@ -70,7 +78,23 @@ const Tweet = ({ tweet, auth }) => {
       return (
          <div>
             {!auth.loading && tweet.user._id === auth.user._id ? (
-               <MenuItem className="delete_tweet">This Is My Tweet</MenuItem>
+               <React.Fragment>
+                  <MenuItem
+                     className="delete_tweet"
+                     onClick={() => deleteTweet(tweet._id)}
+                  >
+                     <ListItemIcon>
+                        <HiOutlineTrash />
+                     </ListItemIcon>
+                     <ListItemText primary="Delete" />
+                  </MenuItem>
+                  <MenuItem className="pin-to-profile">
+                     <ListItemIcon>
+                        <BiPin />
+                     </ListItemIcon>
+                     <ListItemText primary="Pin to your profile" />
+                  </MenuItem>
+               </React.Fragment>
             ) : (
                <MenuItem>Not Mine</MenuItem>
             )}
@@ -200,9 +224,10 @@ const Tweet = ({ tweet, auth }) => {
 Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
    auth: PropTypes.object.isRequired,
+   deleteTweet: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
    auth: state.auth,
 });
-export default connect(mapStateToProps)(Tweet);
+export default connect(mapStateToProps, { deleteTweet })(Tweet);

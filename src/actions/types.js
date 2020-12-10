@@ -12,3 +12,4 @@ export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const ADD_TWEET = 'ADD_TWEET';
 export const GET_TIMELINE_TWEETS = 'GET_TIMELINE_TWEETS';
 export const TWEETS_ERROR = 'TWEETS_ERROR';
+export const DELETE_TWEET = 'DELETE_TWEET';
