@@ -82,10 +82,13 @@
 
 .MuiMenu-paper {
    background-color: var(--background-dark) !important;
-   min-width: 260px !important;
-   max-width: 360px !important;
    min-height: 30px !important;
    max-height: 480px !important;
+}
+
+.sidebar__userMenu .MuiMenu-paper {
+   min-width: 260px !important;
+   max-width: 360px !important;
 }
 
 .list-item__root {
@@ -158,7 +161,6 @@
 .MuiMenu-paper {
    box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
       rgba(136, 153, 166, 0.15) 0px 0px 3px 1px !important;
-   border-radius: 16px !important;
 }
 @media (max-width: 1919px) {
    .user-menu__wrapper:hover .user-menu__avatar {

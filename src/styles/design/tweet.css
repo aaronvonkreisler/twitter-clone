@@ -189,4 +189,24 @@
 
 .delete_tweet {
    color: var(--text-error) !important;
+   font-size: 23px !important;
+}
+
+.pin-to-profile {
+   font-size: 23px !important;
+}
+
+.delete_tweet .MuiListItemIcon-root > svg {
+   color: var(--text-error);
+}
+.pin-to-profile .MuiListItemIcon-root > svg {
+   color: var(--text-gray);
+}
+
+.tweet__root > .MuiMenu-paper {
+   max-width: calc(295px);
+}
+
+.tweet__root > .MuiPaper-rounded {
+   border-radius: 4px;
 }
