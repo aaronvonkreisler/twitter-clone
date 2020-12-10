@@ -15,14 +15,18 @@ import {
 } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import { BsChat } from 'react-icons/bs';
-import { BsHeart } from 'react-icons/bs';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { AiOutlineRetweet } from 'react-icons/ai';
 import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { BiPin } from 'react-icons/bi';
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
-import { deleteTweet } from '../../actions/tweets';
+import {
+   deleteTweet,
+   favoriteTweet,
+   removeFavorite,
+} from '../../actions/tweets';
 import '../../styles/design/tweet.css';
 
 //--------------- Draft.js Editor config ---------------------------------
@@ -63,7 +67,7 @@ const convertToEditorState = (editorContent) => {
 
 //--------------- End Draft.js Editor config ---------------------------------
 
-const Tweet = ({ tweet, auth, deleteTweet }) => {
+const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const open = Boolean(anchorEl);
 
@@ -74,6 +78,24 @@ const Tweet = ({ tweet, auth, deleteTweet }) => {
       setAnchorEl(null);
    };
 
+   const handleLikeOrUnlike = () => {
+      if (
+         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
+      ) {
+         removeFavorite(tweet._id);
+      } else {
+         favoriteTweet(tweet._id);
+      }
+   };
+
+   const renderFavoriteButton = () => {
+      if (
+         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
+      ) {
+         return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
+      }
+      return <BsHeart />;
+   };
    const renderMenuItems = () => {
       return (
          <div>
@@ -155,6 +177,7 @@ const Tweet = ({ tweet, auth, deleteTweet }) => {
                         editorState={convertToEditorState(tweet.content)}
                         plugins={viewOnlyPlugins}
                      />
+                     {/* Toolbar area - like, retweet, comment buttons */}
                      <div className="tweet__bottom-actionArea flex flex-row justify-between">
                         <div className="tweetAction-item">
                            <div className="flex flex-col justify-center">
@@ -188,10 +211,13 @@ const Tweet = ({ tweet, auth, deleteTweet }) => {
                         </div>
                         <div className="tweetAction-item">
                            <div className="flex flex-col justify-center">
-                              <div className="action-wrapper favorites_wrapper">
+                              <div
+                                 className="action-wrapper favorites_wrapper"
+                                 onClick={handleLikeOrUnlike}
+                              >
                                  <div className="d-inline-flex buttonDisplay">
                                     <div className="iconBackgroundDisplay favorites_display" />
-                                    <BsHeart />
+                                    {renderFavoriteButton()}
                                  </div>
                                  <div className="metrics">
                                     <span className="metrics__item">
@@ -225,9 +251,15 @@ Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
    auth: PropTypes.object.isRequired,
    deleteTweet: PropTypes.func.isRequired,
+   favoriteTweet: PropTypes.func.isRequired,
+   removeFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
    auth: state.auth,
 });
-export default connect(mapStateToProps, { deleteTweet })(Tweet);
+export default connect(mapStateToProps, {
+   deleteTweet,
+   favoriteTweet,
+   removeFavorite,
+})(Tweet);

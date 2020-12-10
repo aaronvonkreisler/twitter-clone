@@ -3,6 +3,7 @@ import {
    GET_TIMELINE_TWEETS,
    ADD_TWEET,
    DELETE_TWEET,
+   UPDATE_FAVORITES,
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,20 @@ export default function (state = initialState, action) {
             tweets: state.tweets.filter((tweet) => tweet._id !== payload),
             loading: false,
          };
+      case UPDATE_FAVORITES:
+         return {
+            ...state,
+            tweets: state.tweets.map((tweet) =>
+               tweet._id === payload.id
+                  ? {
+                       ...tweet,
+                       favorites: payload.favorites,
+                    }
+                  : tweet
+            ),
+            loading: false,
+         };
+
       default:
          return state;
    }
