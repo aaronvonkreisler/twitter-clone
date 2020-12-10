@@ -45,6 +45,7 @@ export default function (state = initialState, action) {
                   ? {
                        ...tweet,
                        favorites: payload.favorites,
+                       favorites_count: payload.favorites.length,
                     }
                   : tweet
             ),
