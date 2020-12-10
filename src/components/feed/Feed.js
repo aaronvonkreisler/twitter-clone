@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTimelineTweets } from '../../actions/tweets';
 import NoTweets from './NoTweets';
+import Tweet from './Tweet';
+import Spinner from '../layout/Spinner';
 import './styles/Feed.css';
 
 const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
@@ -12,18 +14,11 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
    return (
       <div className="feed">
          {loading ? (
-            <React.Fragment>Loading...</React.Fragment>
+            <Spinner />
+         ) : user !== null && user.following.length === 0 ? (
+            <NoTweets />
          ) : (
-            <React.Fragment>
-               {user !== null && user.following.length === 0 ? (
-                  <NoTweets />
-               ) : (
-                  <React.Fragment>
-                     <p> This is the feed screen yay ya ya ya yayaya ayy aya</p>
-                     <p> This is the feed screen yay ya ya ya yayaya ayy aya</p>
-                  </React.Fragment>
-               )}
-            </React.Fragment>
+            tweets.map((tweet) => <Tweet key={tweet._id} tweet={tweet} />)
          )}
       </div>
    );

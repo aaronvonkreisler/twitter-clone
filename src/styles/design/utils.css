@@ -56,6 +56,10 @@
    margin-bottom: 5px;
 }
 
+.mt-10 {
+   margin-top: 10px;
+}
+
 .mx-15 {
    margin-right: 15px;
    margin-left: 15px;
@@ -111,7 +115,7 @@
 }
 
 .justify-start {
-   justify-content: start;
+   justify-content: flex-start;
 }
 
 .justify-between {
@@ -120,6 +124,10 @@
 
 .align-center {
    align-items: center;
+}
+
+.align-start {
+   align-items: flex-start;
 }
 
 .d-inline-flex {
