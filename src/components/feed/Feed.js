@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTimelineTweets } from '../../actions/tweets';
-import NoTweets from './NoTweets';
-import Tweet from './Tweet';
+import NoTweets from '../tweets/NoTweets';
+import Tweet from '../tweets/Tweet';
 import Spinner from '../layout/Spinner';
 import './styles/Feed.css';
 

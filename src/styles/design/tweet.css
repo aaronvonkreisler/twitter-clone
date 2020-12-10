@@ -186,3 +186,7 @@
 .favorites_wrapper:hover {
    color: rgb(224, 36, 94);
 }
+
+.delete_tweet {
+   color: var(--text-error) !important;
+}

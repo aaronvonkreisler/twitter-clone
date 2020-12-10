@@ -19,6 +19,10 @@
    height: 100%;
 }
 
+.header__root .header__items > span {
+   font-size: 20px;
+}
+
 .header__root .header__items svg {
    color: var(--twitter-color);
 }

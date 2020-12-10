@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
 import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import omit from 'lodash/omit';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Menu, MenuItem } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import { BsChat } from 'react-icons/bs';
 import { BsHeart } from 'react-icons/bs';
@@ -15,6 +16,7 @@ import { CgMore } from 'react-icons/cg';
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
 
 import '../../styles/design/tweet.css';
+import { FaDivide } from 'react-icons/fa';
 
 const linkifyPlugin = createLinkifyPlugin({
    target: '_blank',
@@ -53,9 +55,42 @@ const convertToEditorState = (editorContent) => {
    return newEditorState;
 };
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet, auth }) => {
+   const [anchorEl, setAnchorEl] = useState(null);
+   const open = Boolean(anchorEl);
+
+   const openActionMenu = (e) => {
+      setAnchorEl(e.currentTarget);
+   };
+   const handleClose = () => {
+      setAnchorEl(null);
+   };
+
+   const renderMenuItems = () => {
+      return (
+         <div>
+            {!auth.loading && tweet.user._id === auth.user._id ? (
+               <MenuItem className="delete_tweet">This Is My Tweet</MenuItem>
+            ) : (
+               <MenuItem>Not Mine</MenuItem>
+            )}
+         </div>
+      );
+   };
    return (
       <div className="tweet__root">
+         <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+               vertical: 'bottom',
+               horizontal: 'center',
+            }}
+         >
+            {renderMenuItems()}
+         </Menu>
          {tweet && (
             <div className="flex flex-col">
                <article className="tweet__wrapper flex flex-row">
@@ -79,7 +114,10 @@ const Tweet = ({ tweet }) => {
                               </span>
                            </div>
                         </div>
-                        <div className="top-right__actionArea">
+                        <div
+                           className="top-right__actionArea"
+                           onClick={openActionMenu}
+                        >
                            <div className="flex flex-row justify-start top-right-icon">
                               <div className="d-inline-flex">
                                  <div className="icon__border"></div>
@@ -161,6 +199,10 @@ const Tweet = ({ tweet }) => {
 
 Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
+   auth: PropTypes.object.isRequired,
 };
 
-export default Tweet;
+const mapStateToProps = (state) => ({
+   auth: state.auth,
+});
+export default connect(mapStateToProps)(Tweet);
