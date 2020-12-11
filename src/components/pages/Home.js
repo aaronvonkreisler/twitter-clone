@@ -6,7 +6,7 @@ import Feed from '../feed/Feed';
 const Home = () => {
    return (
       <React.Fragment>
-         <Header text="Home" />
+         <Header text="Home" rightIcon />
          <TweetForm />
          <Feed />
       </React.Fragment>

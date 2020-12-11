@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
    feed: {
       borderRight: '1px solid rgb(56,68,77)',
       borderLeft: '1px solid rgb(56,68,77)',
+      height: '100%',
    },
    sidebarRoot: {
       display: 'flex',

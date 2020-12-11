@@ -1,6 +1,7 @@
 import {
    TWEETS_ERROR,
    GET_TIMELINE_TWEETS,
+   GET_TWEET,
    ADD_TWEET,
    DELETE_TWEET,
    UPDATE_FAVORITES,
@@ -19,6 +20,12 @@ export default function (state = initialState, action) {
    switch (type) {
       case GET_TIMELINE_TWEETS:
          return { ...state, tweets: payload, loading: false };
+      case GET_TWEET:
+         return {
+            ...state,
+            tweet: payload,
+            loading: false,
+         };
       case TWEETS_ERROR:
          return {
             ...state,

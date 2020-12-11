@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
@@ -67,7 +68,14 @@ const convertToEditorState = (editorContent) => {
 
 //--------------- End Draft.js Editor config ---------------------------------
 
-const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
+const Tweet = ({
+   tweet,
+   auth,
+   deleteTweet,
+   favoriteTweet,
+   removeFavorite,
+   displayNumbers,
+}) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const open = Boolean(anchorEl);
 
@@ -89,39 +97,45 @@ const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
    };
 
    const renderFavoriteButton = () => {
-      if (
-         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
-      ) {
-         return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
+      if (auth.isAuthenticated) {
+         if (
+            tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
+            0
+         ) {
+            return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
+         }
       }
       return <BsHeart />;
    };
    const renderMenuItems = () => {
-      return (
-         <div>
-            {!auth.loading && tweet.user._id === auth.user._id ? (
-               <React.Fragment>
-                  <MenuItem
-                     className="delete_tweet"
-                     onClick={() => deleteTweet(tweet._id)}
-                  >
-                     <ListItemIcon>
-                        <HiOutlineTrash />
-                     </ListItemIcon>
-                     <ListItemText primary="Delete" />
-                  </MenuItem>
-                  <MenuItem className="pin-to-profile">
-                     <ListItemIcon>
-                        <BiPin />
-                     </ListItemIcon>
-                     <ListItemText primary="Pin to your profile" />
-                  </MenuItem>
-               </React.Fragment>
-            ) : (
-               <MenuItem>Not Mine</MenuItem>
-            )}
-         </div>
-      );
+      if (auth.isAuthenticated) {
+         return (
+            <div>
+               {!auth.loading && tweet.user._id === auth.user._id ? (
+                  <React.Fragment>
+                     <MenuItem
+                        className="delete_tweet"
+                        onClick={() => deleteTweet(tweet._id)}
+                     >
+                        <ListItemIcon>
+                           <HiOutlineTrash />
+                        </ListItemIcon>
+                        <ListItemText primary="Delete" />
+                     </MenuItem>
+                     <MenuItem className="pin-to-profile">
+                        <ListItemIcon>
+                           <BiPin />
+                        </ListItemIcon>
+                        <ListItemText primary="Pin to your profile" />
+                     </MenuItem>
+                  </React.Fragment>
+               ) : (
+                  <MenuItem>Not Mine</MenuItem>
+               )}
+            </div>
+         );
+      }
+      <MenuItem>Loading...</MenuItem>;
    };
    return (
       <div className="tweet__root">
@@ -172,11 +186,15 @@ const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
                            </div>
                         </div>
                      </div>
-                     {/* Content goes here */}
-                     <ViewOnlyEditor
-                        editorState={convertToEditorState(tweet.content)}
-                        plugins={viewOnlyPlugins}
-                     />
+                     <Link
+                        to={`/${tweet.user.screen_name}/status/${tweet._id}`}
+                     >
+                        {/* Content goes here */}
+                        <ViewOnlyEditor
+                           editorState={convertToEditorState(tweet.content)}
+                           plugins={viewOnlyPlugins}
+                        />
+                     </Link>
                      {/* Toolbar area - like, retweet, comment buttons */}
                      <div className="tweet__bottom-actionArea flex flex-row justify-between">
                         <div className="tweetAction-item">
@@ -188,7 +206,10 @@ const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
                                  </div>
                                  <div className="metrics">
                                     <span className="metrics__item">
-                                       <span> {tweet.replies_count}</span>
+                                       {displayNumbers &&
+                                          tweet.replies_count > 0 && (
+                                             <span> {tweet.replies_count}</span>
+                                          )}
                                     </span>
                                  </div>
                               </div>
@@ -203,7 +224,10 @@ const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
                                  </div>
                                  <div className="metrics">
                                     <span className="metrics__item">
-                                       <span> {tweet.retweet_count}</span>
+                                       {displayNumbers &&
+                                          tweet.retweet_count > 0 && (
+                                             <span> {tweet.retweet_count}</span>
+                                          )}
                                     </span>
                                  </div>
                               </div>
@@ -221,7 +245,12 @@ const Tweet = ({ tweet, auth, deleteTweet, favoriteTweet, removeFavorite }) => {
                                  </div>
                                  <div className="metrics">
                                     <span className="metrics__item">
-                                       <span> {tweet.favorites_count}</span>
+                                       {displayNumbers &&
+                                          tweet.favorites_count > 0 && (
+                                             <span>
+                                                {tweet.favorites_count}
+                                             </span>
+                                          )}
                                     </span>
                                  </div>
                               </div>
@@ -253,6 +282,7 @@ Tweet.propTypes = {
    deleteTweet: PropTypes.func.isRequired,
    favoriteTweet: PropTypes.func.isRequired,
    removeFavorite: PropTypes.func.isRequired,
+   displayMetrics: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

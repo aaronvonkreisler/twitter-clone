@@ -2,6 +2,7 @@ import api from '../utils/api';
 import { setAlert } from './alerts';
 import {
    GET_TIMELINE_TWEETS,
+   GET_TWEET,
    ADD_TWEET,
    TWEETS_ERROR,
    DELETE_TWEET,
@@ -22,6 +23,21 @@ export const getTimelineTweets = () => async (dispatch) => {
          payload: { msg: err.response.statusText, status: err.response.status },
       });
       setAlert('There was an error getting your timeline tweets', 'info');
+   }
+};
+
+export const getTweet = (id) => async (dispatch) => {
+   try {
+      const res = await api.get(`/api/tweets/${id}`);
+      dispatch({
+         type: GET_TWEET,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
    }
 };
 
@@ -79,7 +95,7 @@ export const removeFavorite = (id) => async (dispatch) => {
       if (res.data === undefined) {
          res.data = [];
       }
-      console.log(res.data);
+
       dispatch({
          type: UPDATE_FAVORITES,
          payload: { id, favorites: res.data },
