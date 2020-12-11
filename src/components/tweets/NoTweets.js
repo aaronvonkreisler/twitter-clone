@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Button } from '@material-ui/core';
 import '../../styles/design/noTweets.css';
 
@@ -30,7 +30,5 @@ const NoTweets = (props) => {
       </div>
    );
 };
-
-NoTweets.propTypes = {};
 
 export default NoTweets;

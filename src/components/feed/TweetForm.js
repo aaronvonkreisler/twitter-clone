@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Avatar, Button, CircularProgress } from '@material-ui/core';
 import omit from 'lodash/omit';

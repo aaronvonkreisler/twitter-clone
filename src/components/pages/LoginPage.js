@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { FaTwitter } from 'react-icons/fa';
 import LoginForm from '../forms/LoginForm';
 import RegisterModal from './RegisterModal';

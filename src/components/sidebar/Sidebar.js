@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
 import { BiHomeCircle } from 'react-icons/bi';
@@ -104,8 +104,6 @@ const Sidebar = (props) => {
       </div>
    );
 };
-
-Sidebar.propTypes = {};
 
 export default Sidebar;
 

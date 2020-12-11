@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import Sidebar from '../sidebar/Sidebar';
 import Widgets from '../widgets/Widgets';
@@ -53,7 +53,5 @@ const Main = ({ children }) => {
       </Grid>
    );
 };
-
-Main.propTypes = {};
 
 export default Main;
