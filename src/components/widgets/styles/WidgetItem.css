@@ -10,7 +10,7 @@
 
 .widgetItem__flexItem {
    padding: 10px 15px;
-   border-top: 1px solid var(--twitter-background);
+   border-top: 1px solid rgb(56, 68, 77);
 }
 
 .widgetItem__flexItem:hover {
@@ -29,10 +29,11 @@
 }
 
 .MuiCard-root {
-   background-color: rgb(247, 249, 250) !important;
+   background-color: rgb(25, 39, 52) !important;
    border-radius: 16px !important;
-   border: 1px solid var(--twitter-background) !important;
+   border: 1px solid rgb(25, 39, 52) !important;
    cursor: pointer !important;
+   color: #fff;
 }
 
 @media (min-width: 1095px) {

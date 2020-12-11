@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaTwitter } from 'react-icons/fa';
-import {
-   Button,
-   Dialog,
-   DialogActions,
-   DialogContent,
-   DialogTitle,
-   useMediaQuery,
-   useTheme,
-} from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 
 import RegisterForm from '../forms/RegisterForm';
 

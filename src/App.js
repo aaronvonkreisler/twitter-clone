@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { loadUser } from './actions/auth';
 import { getCurrentUsersProfile } from './actions/profile';
+import { LOG_OUT } from './actions/types';
 import { getTimelineTweets } from './actions/tweets';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
@@ -22,17 +23,21 @@ const App = () => {
       store.dispatch(loadUser());
       store.dispatch(getCurrentUsersProfile());
       store.dispatch(getTimelineTweets());
+
+      window.addEventListener('storage', () => {
+         if (!localStorage.token) store.dispatch({ type: LOG_OUT });
+      });
    }, []);
    return (
       <Provider store={store}>
          <Router>
-            <React.Fragment>
+            <div className="app">
                <CssBaseline />
                <Switch>
                   <Route exact path="/" component={Landing} />
                   <Route component={Routes} />
                </Switch>
-            </React.Fragment>
+            </div>
          </Router>
       </Provider>
    );

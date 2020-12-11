@@ -1,21 +1,39 @@
-import React from 'react';
-import { useMediaQuery } from '@material-ui/core';
-import Header from './Header';
-import TweetForm from './TweetForm';
-import Tweet from './Tweet';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getTimelineTweets } from '../../actions/tweets';
+import NoTweets from '../tweets/NoTweets';
+import Tweet from '../tweets/Tweet';
+import Spinner from '../layout/Spinner';
 import './styles/Feed.css';
 
-const Feed = () => {
-   const largeDevice = useMediaQuery('(min-width:1440px)');
+const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
+   useEffect(() => {
+      getTimelineTweets();
+   }, [getTimelineTweets]);
    return (
-      <div className={largeDevice ? 'feed' : 'feed-small-screen'}>
-         <Header />
-         <TweetForm />
-         <Tweet />
-         <Tweet />
-         <Tweet />
+      <div className="feed">
+         {loading ? (
+            <Spinner />
+         ) : user !== null && user.following.length === 0 ? (
+            <NoTweets />
+         ) : (
+            user !== null &&
+            tweets.map((tweet) => (
+               <Tweet key={tweet._id} tweet={tweet} displayNumbers />
+            ))
+         )}
       </div>
    );
 };
 
-export default Feed;
+Feed.propTypes = {
+   getTimelineTweets: PropTypes.func.isRequired,
+   tweets: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+   tweets: state.tweets,
+   user: state.auth.user,
+});
+export default connect(mapStateToProps, { getTimelineTweets })(Feed);

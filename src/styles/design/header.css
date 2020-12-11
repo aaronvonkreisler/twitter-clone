@@ -5,9 +5,100 @@
    border-bottom: 1px solid var(--border-color);
    height: 53px;
    padding: 15px 20px;
+   background-color: var(--background-dark);
 }
 
-.header__root .header__items {
+.header__root-left-icon {
+   position: sticky;
+   top: 0;
+   z-index: 3;
+   border-bottom: 1px solid var(--border-color);
+   height: 53px;
+   padding-left: 15px;
+   padding-right: 15px;
+   background-color: var(--background-dark);
+}
+
+.header__items__left-icon {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.header__items__left-icon .icon__root {
+   min-width: 59px;
+   min-height: 30px;
+   display: flex;
+   flex-direction: column;
+   align-self: stretch;
+   justify-content: center;
+   align-items: flex-start;
+}
+
+.icon__root .icon__hover-box {
+   min-width: 39px;
+   min-height: 39px;
+   border-radius: 9999px;
+   outline-style: none;
+   background-color: transparent;
+}
+
+.icon__hover-box:hover {
+   background-color: rgba(29, 161, 242, 0.1);
+}
+
+.left-icon__wrapper {
+   font-weight: 700;
+   height: 39px;
+   font-size: 15px;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   color: var(--twitter-color);
+}
+.left-icon__wrapper > svg {
+   width: 1.5em;
+   height: 1.5em;
+   flex-shrink: 0;
+   color: var(--twitter-color);
+   vertical-align: text-bottom;
+   position: relative;
+   display: inline-block;
+   fill: currentColor;
+   overflow: hidden;
+}
+.left-icon__text-root {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   height: 100%;
+   flex-grow: 1;
+}
+
+.left-icon__text-wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+}
+
+.left-icon__text-wrapper > h2 {
+   font-weight: 800;
+   font-size: 19px;
+   color: #fff;
+   line-height: 1.3125;
+   overflow-wrap: break-word;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   max-width: 100%;
+}
+.header__root .header__items__right-icon {
    display: flex;
    flex-direction: row;
    align-items: center;
@@ -18,6 +109,10 @@
    height: 100%;
 }
 
-.header__root .header__items svg {
+.header__root .header__items__right-icon > span {
+   font-size: 20px;
+}
+
+.header__root .header__items__right-icon svg {
    color: var(--twitter-color);
 }

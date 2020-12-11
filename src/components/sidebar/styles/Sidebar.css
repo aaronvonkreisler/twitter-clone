@@ -1,6 +1,15 @@
+.sidebar__container {
+   height: 100%;
+   position: fixed;
+}
 .sidebar__root {
    width: 88px;
    position: relative;
+   z-index: 3;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
 }
 
 @media (min-width: 1920px) {

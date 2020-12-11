@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import MenuButton from './MenuButton';
+import UserMenu from './UserMenu';
 import { BiHomeCircle } from 'react-icons/bi';
 import { FaTwitter } from 'react-icons/fa';
 import { BiHash } from 'react-icons/bi';
@@ -59,47 +60,50 @@ const Sidebar = (props) => {
       },
    ];
    return (
-      <div className="sidebar__root">
-         <div className="sidebar__wrapper">
-            <div className="sidebar__items__wrapper">
-               {/* User Avatar needs to go in the bottom of this div for alignment to work out.  */}
-               <div className="h-100">
-                  {navItems.map((item, index) => (
-                     <MenuButton
-                        key={index}
-                        path={item.path}
-                        Icon={item.icon}
-                        text={item.text}
-                        large={large}
-                     />
-                  ))}
-                  {large ? (
-                     <div className="button-wrapper">
-                        <div className="button-subWrapper">
-                           <Button
-                              className="tweet-button"
-                              type="submit"
-                              fullWidth
-                           >
-                              Tweet
-                           </Button>
+      <div className="sidebar__container">
+         <div className="sidebar__root">
+            <div className="sidebar__wrapper">
+               <div className="sidebar__items__wrapper">
+                  {/* User Avatar needs to go in the bottom of this div for alignment to work out.  */}
+                  <div className="h-100">
+                     {navItems.map((item, index) => (
+                        <MenuButton
+                           key={index}
+                           path={item.path}
+                           Icon={item.icon}
+                           text={item.text}
+                           large={large}
+                        />
+                     ))}
+                     {large ? (
+                        <div className="button-wrapper">
+                           <div className="button-subWrapper">
+                              <Button
+                                 className="tweet-button"
+                                 type="submit"
+                                 fullWidth
+                              >
+                                 Tweet
+                              </Button>
+                           </div>
                         </div>
-                     </div>
-                  ) : (
-                     <div className="actions">
-                        <Fab>
-                           <RiQuillPenLine />
-                        </Fab>
-                     </div>
-                  )}
+                     ) : (
+                        <div className="actions">
+                           <Fab>
+                              <RiQuillPenLine />
+                           </Fab>
+                        </div>
+                     )}
+                  </div>
                </div>
+            </div>
+            <div className="sidebar__userMenu">
+               <UserMenu />
             </div>
          </div>
       </div>
    );
 };
-
-Sidebar.propTypes = {};
 
 export default Sidebar;
 
