@@ -56,6 +56,11 @@ export default function (state = initialState, action) {
                     }
                   : tweet
             ),
+            tweet: {
+               ...state.tweet,
+               favorites: payload.favorites,
+               favorites_count: payload.favorites.length,
+            },
             loading: false,
          };
 

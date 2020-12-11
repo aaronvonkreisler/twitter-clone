@@ -4,7 +4,7 @@ import '../../styles/design/utils.css';
 
 const Spinner = () => {
    return (
-      <div className="w-100 mt-15">
+      <div className="w-100 mt-10">
          <div className="flex flex-row justify-center ">
             <CircularProgress
                size={25}

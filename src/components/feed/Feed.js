@@ -18,6 +18,7 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
          ) : user !== null && user.following.length === 0 ? (
             <NoTweets />
          ) : (
+            user !== null &&
             tweets.map((tweet) => (
                <Tweet key={tweet._id} tweet={tweet} displayNumbers />
             ))

@@ -15,3 +15,4 @@ export const TWEETS_ERROR = 'TWEETS_ERROR';
 export const DELETE_TWEET = 'DELETE_TWEET';
 export const UPDATE_FAVORITES = 'UPDATE_FAVORITES';
 export const GET_TWEET = 'GET_TWEET';
+export const REPORT_TWEET = 'REPORT_TWEET';

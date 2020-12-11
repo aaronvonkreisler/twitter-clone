@@ -5,7 +5,7 @@ import { getTweet } from '../../actions/tweets';
 import Spinner from '../layout/Spinner';
 import Header from '../layout/Header';
 import PropTypes from 'prop-types';
-import Tweet from '../tweets/Tweet';
+import Tweet from '../single-tweet/Tweet';
 
 const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
    let history = useHistory();
