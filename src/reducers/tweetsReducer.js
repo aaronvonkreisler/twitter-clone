@@ -48,7 +48,15 @@ export default function (state = initialState, action) {
       case REPLY_TO_TWEET:
          return {
             ...state,
-            tweet: { ...state.tweet, replies: payload },
+            tweets: state.tweets.map((tweet) =>
+               tweet._id === payload.id
+                  ? {
+                       ...tweet,
+                       replies: payload.replies,
+                       replies_count: payload.replies.length,
+                    }
+                  : tweet
+            ),
             loading: false,
          };
       case UPDATE_FAVORITES:

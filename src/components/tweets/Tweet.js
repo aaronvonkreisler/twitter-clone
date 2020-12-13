@@ -114,7 +114,7 @@ const Tweet = ({
    };
 
    const renderMenuItems = () => {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && tweet.user !== undefined) {
          return (
             <div>
                {!auth.loading && tweet.user._id === auth.user._id ? (

@@ -109,13 +109,13 @@ export const removeFavorite = (id) => async (dispatch) => {
    }
 };
 
-export const replyToTweet = (tweetId, content) => async (dispatch) => {
+export const replyToTweet = (id, content) => async (dispatch) => {
    try {
-      let res = await api.post(`/api/tweets/${tweetId}`, content);
+      let res = await api.post(`/api/tweets/comment/${id}`, content);
 
       dispatch({
          type: REPLY_TO_TWEET,
-         payload: res.data,
+         payload: { id, replies: res.data },
       });
    } catch (err) {
       dispatch({

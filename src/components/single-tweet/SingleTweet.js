@@ -118,7 +118,7 @@ const SingleTweet = ({
    };
 
    const renderMenuItems = () => {
-      if (auth.isAuthenticated && auth.user !== null) {
+      if (auth.isAuthenticated && tweet.user !== undefined) {
          return (
             <div>
                {!auth.loading && tweet.user._id === auth.user._id ? (

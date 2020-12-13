@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
    Dialog,
    DialogContent,
@@ -10,14 +11,17 @@ import { CgClose } from 'react-icons/cg';
 import PropTypes from 'prop-types';
 import Tweet from '../tweets/Tweet';
 import TweetForm from '../feed/TweetForm';
+import { replyToTweet } from '../../actions/tweets';
 import '../../styles/design/replyModal.css';
 
-const ReplyModal = ({ tweet, open, setOpen }) => {
+const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
    const theme = useTheme();
    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-   const handleReply = (content) => {
-      console.log(content);
+
+   const handleTweetReply = (content) => {
+      replyToTweet(tweet._id, { content });
    };
+
    return (
       <div className="replyModal">
          <Dialog
@@ -25,6 +29,7 @@ const ReplyModal = ({ tweet, open, setOpen }) => {
             onClose={() => setOpen(false)}
             fullWidth
             fullScreen={fullScreen}
+            scroll="body"
          >
             <DialogTitle disableTypography>
                <div className="flex flex-row align-center justify-start close-icon">
@@ -62,7 +67,7 @@ const ReplyModal = ({ tweet, open, setOpen }) => {
                   </div>
                </div>
                <TweetForm
-                  onFormSubmit={handleReply}
+                  onFormSubmit={handleTweetReply}
                   placeholder="Tweet your reply"
                />
             </DialogContent>
@@ -73,6 +78,7 @@ const ReplyModal = ({ tweet, open, setOpen }) => {
 
 ReplyModal.propTypes = {
    tweet: PropTypes.object,
+   replyToTweet: PropTypes.func.isRequired,
 };
 
-export default ReplyModal;
+export default connect(null, { replyToTweet })(ReplyModal);
