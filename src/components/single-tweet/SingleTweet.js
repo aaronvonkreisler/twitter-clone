@@ -72,7 +72,7 @@ const convertToEditorState = (editorContent) => {
 
 //--------------- End Draft.js Editor config ---------------------------------
 
-const Tweet = ({
+const SingleTweet = ({
    tweet,
    auth,
    deleteTweet,
@@ -102,19 +102,23 @@ const Tweet = ({
    };
 
    const renderFavoriteButton = () => {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && auth.user !== null) {
          if (
             tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
             0
          ) {
-            return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
+            return (
+               <BsHeartFill
+                  style={{ color: 'rgb(224, 36, 94)', fontSize: '18px' }}
+               />
+            );
          }
       }
-      return <BsHeart />;
+      return <BsHeart style={{ fontSize: '18px' }} />;
    };
 
    const renderMenuItems = () => {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && auth.user !== null) {
          return (
             <div>
                {!auth.loading && tweet.user._id === auth.user._id ? (
@@ -242,13 +246,13 @@ const Tweet = ({
                   </div>
                </div>
                {/* Toolbar area - like, retweet, comment buttons */}
-               <div className="tweet__bottom-actionArea flex flex-row justify-between ml-15 my-10">
+               <div className="tweet__bottom-actionArea bottom-center flex flex-row justify-between ml-15 my-10">
                   <div className="tweetAction-item">
                      <div className="flex flex-col justify-center">
                         <div className="action-wrapper comment_wrapper">
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay comment_display" />
-                              <BsChat />
+                              <BsChat style={{ fontSize: '18px' }} />
                            </div>
                         </div>
                      </div>
@@ -258,7 +262,7 @@ const Tweet = ({
                         <div className="action-wrapper retweet_wrapper">
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay retweet_display" />
-                              <AiOutlineRetweet />
+                              <AiOutlineRetweet style={{ fontSize: '18px' }} />
                            </div>
                         </div>
                      </div>
@@ -281,7 +285,7 @@ const Tweet = ({
                         <div className="action-wrapper comment_wrapper">
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay comment_display" />
-                              <BsUpload />
+                              <BsUpload style={{ fontSize: '18px' }} />
                            </div>
                         </div>
                      </div>
@@ -293,7 +297,7 @@ const Tweet = ({
    );
 };
 
-Tweet.propTypes = {
+SingleTweet.propTypes = {
    tweet: PropTypes.object.isRequired,
    auth: PropTypes.object.isRequired,
    deleteTweet: PropTypes.func.isRequired,
@@ -309,4 +313,4 @@ export default connect(mapStateToProps, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
-})(Tweet);
+})(SingleTweet);

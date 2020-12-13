@@ -136,3 +136,7 @@
 .d-inline-flex {
    display: inline-flex;
 }
+
+.font-large {
+   font-size: 18px;
+}

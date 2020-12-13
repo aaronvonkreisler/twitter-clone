@@ -75,6 +75,10 @@ const Tweet = ({
    favoriteTweet,
    removeFavorite,
    displayNumbers,
+   displayActions,
+   onCommentClick,
+   replyView,
+   bottomBorder,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
 
@@ -140,24 +144,30 @@ const Tweet = ({
       <MenuItem>Loading...</MenuItem>;
    };
    return (
-      <div className="tweet__root">
-         <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-               vertical: 'bottom',
-               horizontal: 'center',
-            }}
-         >
-            {renderMenuItems()}
-         </Menu>
+      <div className={bottomBorder ? 'tweet__root border' : 'tweet__root'}>
+         {displayActions && (
+            <Menu
+               anchorEl={anchorEl}
+               open={open}
+               onClose={handleClose}
+               getContentAnchorEl={null}
+               anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+               }}
+            >
+               {renderMenuItems()}
+            </Menu>
+         )}
          {tweet && (
             <div className="flex flex-col">
                <article className="tweet__wrapper flex flex-row">
                   <div className=" tweet__avatar flex flex-col">
-                     <Avatar src={tweet.user.avatar} />
+                     <Avatar
+                        src={tweet.user.avatar}
+                        style={{ height: '49px', width: '49px' }}
+                     />
+                     {replyView && <div className="reply-line" />}
                   </div>
                   <div className="tweet__content flex flex-col justify-between">
                      <div className="flex flex-row justify-between tweet__name">
@@ -176,17 +186,19 @@ const Tweet = ({
                               </span>
                            </div>
                         </div>
-                        <div
-                           className="top-right__actionArea"
-                           onClick={openActionMenu}
-                        >
-                           <div className="flex flex-row justify-start top-right-icon">
-                              <div className="d-inline-flex">
-                                 <div className="icon__border"></div>
-                                 <CgMore />
+                        {displayActions && (
+                           <div
+                              className="top-right__actionArea"
+                              onClick={openActionMenu}
+                           >
+                              <div className="flex flex-row justify-start top-right-icon">
+                                 <div className="d-inline-flex">
+                                    <div className="icon__border"></div>
+                                    <CgMore />
+                                 </div>
                               </div>
                            </div>
-                        </div>
+                        )}
                      </div>
                      <Link
                         to={`/${tweet.user.screen_name}/status/${tweet._id}`}
@@ -198,78 +210,89 @@ const Tweet = ({
                         />
                      </Link>
                      {/* Toolbar area - like, retweet, comment buttons */}
-                     <div className="tweet__bottom-actionArea flex flex-row justify-between">
-                        <div className="tweetAction-item">
-                           <div className="flex flex-col justify-center">
-                              <div className="action-wrapper comment_wrapper">
-                                 <div className="d-inline-flex buttonDisplay">
-                                    <div className="iconBackgroundDisplay comment_display" />
-                                    <BsChat />
+                     {displayActions && (
+                        <div className="tweet__bottom-actionArea flex flex-row justify-between">
+                           <div className="tweetAction-item">
+                              <div className="flex flex-col justify-center">
+                                 <div
+                                    className="action-wrapper comment_wrapper"
+                                    onClick={() => onCommentClick(tweet)}
+                                 >
+                                    <div className="d-inline-flex buttonDisplay">
+                                       <div className="iconBackgroundDisplay comment_display" />
+                                       <BsChat />
+                                    </div>
+                                    <div className="metrics">
+                                       <span className="metrics__item">
+                                          {displayNumbers &&
+                                             tweet.replies_count > 0 && (
+                                                <span>
+                                                   {' '}
+                                                   {tweet.replies_count}
+                                                </span>
+                                             )}
+                                       </span>
+                                    </div>
                                  </div>
-                                 <div className="metrics">
-                                    <span className="metrics__item">
-                                       {displayNumbers &&
-                                          tweet.replies_count > 0 && (
-                                             <span> {tweet.replies_count}</span>
-                                          )}
-                                    </span>
+                              </div>
+                           </div>
+                           <div className="tweetAction-item ml-15">
+                              <div className="flex flex-col justify-center">
+                                 <div className="action-wrapper retweet_wrapper">
+                                    <div className="d-inline-flex buttonDisplay">
+                                       <div className="iconBackgroundDisplay retweet_display" />
+                                       <AiOutlineRetweet />
+                                    </div>
+                                    <div className="metrics">
+                                       <span className="metrics__item">
+                                          {displayNumbers &&
+                                             tweet.retweet_count > 0 && (
+                                                <span>
+                                                   {' '}
+                                                   {tweet.retweet_count}
+                                                </span>
+                                             )}
+                                       </span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div className="tweetAction-item">
+                              <div className="flex flex-col justify-center">
+                                 <div
+                                    className="action-wrapper favorites_wrapper"
+                                    onClick={handleLikeOrUnlike}
+                                 >
+                                    <div className="d-inline-flex buttonDisplay">
+                                       <div className="iconBackgroundDisplay favorites_display" />
+                                       {renderFavoriteButton()}
+                                    </div>
+                                    <div className="metrics">
+                                       <span className="metrics__item">
+                                          {displayNumbers &&
+                                             tweet.favorites_count > 0 && (
+                                                <span>
+                                                   {tweet.favorites_count}
+                                                </span>
+                                             )}
+                                       </span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div className="tweetAction-item">
+                              <div className="flex flex-col justify-center">
+                                 <div className="action-wrapper comment_wrapper">
+                                    <div className="d-inline-flex buttonDisplay">
+                                       <div className="iconBackgroundDisplay comment_display" />
+                                       <BsUpload />
+                                    </div>
+                                    <div className="metrics"></div>
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <div className="tweetAction-item ml-15">
-                           <div className="flex flex-col justify-center">
-                              <div className="action-wrapper retweet_wrapper">
-                                 <div className="d-inline-flex buttonDisplay">
-                                    <div className="iconBackgroundDisplay retweet_display" />
-                                    <AiOutlineRetweet />
-                                 </div>
-                                 <div className="metrics">
-                                    <span className="metrics__item">
-                                       {displayNumbers &&
-                                          tweet.retweet_count > 0 && (
-                                             <span> {tweet.retweet_count}</span>
-                                          )}
-                                    </span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div className="tweetAction-item">
-                           <div className="flex flex-col justify-center">
-                              <div
-                                 className="action-wrapper favorites_wrapper"
-                                 onClick={handleLikeOrUnlike}
-                              >
-                                 <div className="d-inline-flex buttonDisplay">
-                                    <div className="iconBackgroundDisplay favorites_display" />
-                                    {renderFavoriteButton()}
-                                 </div>
-                                 <div className="metrics">
-                                    <span className="metrics__item">
-                                       {displayNumbers &&
-                                          tweet.favorites_count > 0 && (
-                                             <span>
-                                                {tweet.favorites_count}
-                                             </span>
-                                          )}
-                                    </span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div className="tweetAction-item">
-                           <div className="flex flex-col justify-center">
-                              <div className="action-wrapper comment_wrapper">
-                                 <div className="d-inline-flex buttonDisplay">
-                                    <div className="iconBackgroundDisplay comment_display" />
-                                    <BsUpload />
-                                 </div>
-                                 <div className="metrics"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     )}
                   </div>
                </article>
             </div>
@@ -281,9 +304,18 @@ const Tweet = ({
 Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
    auth: PropTypes.object.isRequired,
-   deleteTweet: PropTypes.func.isRequired,
-   favoriteTweet: PropTypes.func.isRequired,
-   removeFavorite: PropTypes.func.isRequired,
+   deleteTweet: PropTypes.func,
+   favoriteTweet: PropTypes.func,
+   removeFavorite: PropTypes.func,
+   displayActions: PropTypes.bool,
+   replyView: PropTypes.bool,
+   bottomBorder: PropTypes.bool,
+};
+
+Tweet.defaultProps = {
+   displayActions: true,
+   replyView: false,
+   bottomBorder: true,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,10 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Header from '../layout/Header';
 
 const Profile = () => {
+   let history = useHistory();
    return (
-      <div style={{ color: 'white' }}>
-         <h2>Profile Route</h2>
-      </div>
+      <React.Fragment>
+         <Header leftIcon onIconClick={() => history.goBack()} text="test" />
+         <div className="feed" />
+      </React.Fragment>
    );
 };
 

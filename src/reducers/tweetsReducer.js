@@ -5,6 +5,7 @@ import {
    ADD_TWEET,
    DELETE_TWEET,
    UPDATE_FAVORITES,
+   REPLY_TO_TWEET,
 } from '../actions/types';
 
 const initialState = {
@@ -42,6 +43,12 @@ export default function (state = initialState, action) {
          return {
             ...state,
             tweets: state.tweets.filter((tweet) => tweet._id !== payload),
+            loading: false,
+         };
+      case REPLY_TO_TWEET:
+         return {
+            ...state,
+            tweet: { ...state.tweet, replies: payload },
             loading: false,
          };
       case UPDATE_FAVORITES:

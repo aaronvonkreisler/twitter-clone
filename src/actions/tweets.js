@@ -7,6 +7,7 @@ import {
    TWEETS_ERROR,
    DELETE_TWEET,
    UPDATE_FAVORITES,
+   REPLY_TO_TWEET,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -105,5 +106,25 @@ export const removeFavorite = (id) => async (dispatch) => {
          type: TWEETS_ERROR,
          payload: { msg: err.response.statusText, status: err.response.status },
       });
+   }
+};
+
+export const replyToTweet = (tweetId, content) => async (dispatch) => {
+   try {
+      let res = await api.post(`/api/tweets/${tweetId}`, content);
+
+      dispatch({
+         type: REPLY_TO_TWEET,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+
+      dispatch(
+         setAlert('There was an error sending your reply. Try again.', 'info')
+      );
    }
 };

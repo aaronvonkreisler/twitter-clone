@@ -1,0 +1,65 @@
+.MuiDialogContent-root {
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+}
+
+.MuiDialogTitle-root {
+   padding: 10px 10px 5px 10px !important;
+   border-bottom: 1px solid var(--border-color) !important;
+}
+.close-icon {
+   font-size: 22px;
+   font-weight: 400px;
+   color: var(--twitter-color);
+   border-radius: 9999px;
+   cursor: pointer;
+}
+
+.close-icon .icon__border {
+   display: inline-flex;
+   height: 34.75px;
+   width: 34.75px;
+
+   border-radius: 9999px;
+   background-color: transparent;
+}
+
+.close-icon .icon__border > svg {
+   margin: auto;
+}
+
+.close-icon .icon__border:hover {
+   background-color: var(--twitter-button-hover);
+   transition: background-color 0.2s ease-in;
+}
+.middleArea {
+   padding-right: 15px;
+   padding-left: 15px;
+}
+
+.middleArea .reply-line {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   flex-grow: 0;
+   flex-basis: 49px;
+   margin-right: 10px;
+}
+
+.middleArea .reply-line .line-display {
+   width: 2px;
+   background-color: rgb(61, 84, 102);
+   flex-grow: 1;
+   margin-left: auto;
+   margin-right: auto;
+}
+.middleArea .replying_to {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   flex-grow: 1;
+   color: var(--text-gray);
+}
+.middleArea .replying_to .display_name {
+   color: var(--twitter-color);
+}

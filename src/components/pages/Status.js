@@ -5,7 +5,7 @@ import { getTweet } from '../../actions/tweets';
 import Spinner from '../layout/Spinner';
 import Header from '../layout/Header';
 import PropTypes from 'prop-types';
-import Tweet from '../single-tweet/Tweet';
+import SingleTweet from '../single-tweet/SingleTweet';
 
 const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
    let history = useHistory();
@@ -17,7 +17,11 @@ const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
       <React.Fragment>
          <Header text="Tweet" leftIcon onIconClick={() => history.goBack()} />
          <div className="feed">
-            {loading || tweet === null ? <Spinner /> : <Tweet tweet={tweet} />}
+            {loading || tweet === null ? (
+               <Spinner />
+            ) : (
+               <SingleTweet tweet={tweet} />
+            )}
          </div>
       </React.Fragment>
    );

@@ -84,9 +84,6 @@
    background-color: var(--background-dark) !important;
    min-height: 30px !important;
    max-height: 480px !important;
-}
-
-.sidebar__userMenu .MuiMenu-paper {
    min-width: 260px !important;
    max-width: 360px !important;
 }

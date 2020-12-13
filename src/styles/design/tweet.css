@@ -1,5 +1,8 @@
 .tweet__root {
    display: block;
+}
+
+.border {
    border-bottom: 1px solid var(--border-color);
 }
 
@@ -209,4 +212,14 @@
 
 .tweet__root > .MuiPaper-rounded {
    border-radius: 4px;
+}
+
+.tweet__avatar .reply-line {
+   margin-top: 5px;
+   width: 2px;
+
+   background-color: rgb(61, 84, 102);
+   flex-grow: 1;
+   margin-left: auto;
+   margin-right: auto;
 }
