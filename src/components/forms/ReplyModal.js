@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
    Dialog,
    DialogContent,
@@ -17,11 +18,14 @@ import '../../styles/design/replyModal.css';
 const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
    const theme = useTheme();
    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-
+   let history = useHistory();
    const handleTweetReply = (content) => {
-      replyToTweet(tweet._id, { content });
+      const { location } = history;
+      replyToTweet(tweet._id, { content }, location);
+      setTimeout(() => {
+         setOpen(false);
+      }, 250);
    };
-
    return (
       <div className="replyModal">
          <Dialog

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTimelineTweets } from '../../actions/tweets';
@@ -20,6 +21,7 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
       setTweetForModal(tweet);
       setModalOpen(true);
    };
+
    return (
       <React.Fragment>
          <ReplyModal

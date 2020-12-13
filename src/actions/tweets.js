@@ -7,7 +7,8 @@ import {
    TWEETS_ERROR,
    DELETE_TWEET,
    UPDATE_FAVORITES,
-   REPLY_TO_TWEET,
+   REPLY_TO_TWEET_FROM_HOME,
+   REPLY_TO_TWEET_FROM_STATUS,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -109,14 +110,21 @@ export const removeFavorite = (id) => async (dispatch) => {
    }
 };
 
-export const replyToTweet = (id, content) => async (dispatch) => {
+export const replyToTweet = (id, content, location) => async (dispatch) => {
    try {
       let res = await api.post(`/api/tweets/comment/${id}`, content);
-
-      dispatch({
-         type: REPLY_TO_TWEET,
-         payload: { id, replies: res.data },
-      });
+      if (location.pathname === '/home') {
+         dispatch({
+            type: REPLY_TO_TWEET_FROM_HOME,
+            payload: { id, replies: res.data },
+         });
+         dispatch(setAlert('Reply sent', 'info'));
+      } else {
+         dispatch({
+            type: REPLY_TO_TWEET_FROM_STATUS,
+            payload: res.data,
+         });
+      }
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,

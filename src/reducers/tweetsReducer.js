@@ -5,7 +5,8 @@ import {
    ADD_TWEET,
    DELETE_TWEET,
    UPDATE_FAVORITES,
-   REPLY_TO_TWEET,
+   REPLY_TO_TWEET_FROM_HOME,
+   REPLY_TO_TWEET_FROM_STATUS,
 } from '../actions/types';
 
 const initialState = {
@@ -45,7 +46,17 @@ export default function (state = initialState, action) {
             tweets: state.tweets.filter((tweet) => tweet._id !== payload),
             loading: false,
          };
-      case REPLY_TO_TWEET:
+      case REPLY_TO_TWEET_FROM_STATUS:
+         return {
+            ...state,
+            tweet: {
+               ...state.tweet,
+               replies: payload,
+               replies_count: payload.length,
+            },
+            loading: false,
+         };
+      case REPLY_TO_TWEET_FROM_HOME:
          return {
             ...state,
             tweets: state.tweets.map((tweet) =>

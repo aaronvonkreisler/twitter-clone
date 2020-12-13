@@ -79,6 +79,7 @@ const SingleTweet = ({
    favoriteTweet,
    removeFavorite,
    displayNumbers,
+   onCommentClick,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
 
@@ -249,7 +250,10 @@ const SingleTweet = ({
                <div className="tweet__bottom-actionArea bottom-center flex flex-row justify-between ml-15 my-10">
                   <div className="tweetAction-item">
                      <div className="flex flex-col justify-center">
-                        <div className="action-wrapper comment_wrapper">
+                        <div
+                           className="action-wrapper comment_wrapper"
+                           onClick={() => onCommentClick(tweet)}
+                        >
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay comment_display" />
                               <BsChat style={{ fontSize: '18px' }} />
