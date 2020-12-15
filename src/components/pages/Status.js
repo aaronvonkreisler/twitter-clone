@@ -7,6 +7,7 @@ import Header from '../layout/Header';
 import PropTypes from 'prop-types';
 import SingleTweet from '../single-tweet/SingleTweet';
 import ReplyModal from '../forms/ReplyModal';
+import Tweet from '../tweets/Tweet';
 
 const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
    let history = useHistory();
@@ -38,6 +39,15 @@ const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
                      tweet={tweet}
                      onCommentClick={handleCommentClick}
                   />
+                  {tweet.replies.map((reply) => (
+                     <Tweet
+                        tweet={reply.tweet}
+                        key={reply.tweet._id}
+                        displayActions={false}
+                        replyingTo
+                        replyingToUserName={tweet.user.screen_name}
+                     />
+                  ))}
                </React.Fragment>
             )}
          </div>

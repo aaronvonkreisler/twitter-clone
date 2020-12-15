@@ -78,6 +78,8 @@ const Tweet = ({
    displayActions,
    onCommentClick,
    replyView,
+   replyingTo,
+   replyingToUserName,
    bottomBorder,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
@@ -200,10 +202,19 @@ const Tweet = ({
                            </div>
                         )}
                      </div>
+
+                     {/* Content goes here */}
+                     {replyingTo && (
+                        <div className="replying_to">
+                           Replying to{' '}
+                           <span className="reply_screen_name">
+                              <Link to="/profile">@{replyingToUserName}</Link>
+                           </span>
+                        </div>
+                     )}
                      <Link
                         to={`/${tweet.user.screen_name}/status/${tweet._id}`}
                      >
-                        {/* Content goes here */}
                         <ViewOnlyEditor
                            editorState={convertToEditorState(tweet.content)}
                            plugins={viewOnlyPlugins}
@@ -310,6 +321,8 @@ Tweet.propTypes = {
    displayActions: PropTypes.bool,
    replyView: PropTypes.bool,
    bottomBorder: PropTypes.bool,
+   replyingTo: PropTypes.bool,
+   replyingToUserName: PropTypes.string,
 };
 
 Tweet.defaultProps = {
