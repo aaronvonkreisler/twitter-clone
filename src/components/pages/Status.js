@@ -5,7 +5,7 @@ import { getTweet } from '../../actions/tweets';
 import Spinner from '../layout/Spinner';
 import Header from '../layout/Header';
 import PropTypes from 'prop-types';
-import SingleTweet from '../single-tweet/SingleTweet';
+import SingleTweet from '../tweets/SingleTweet';
 import ReplyModal from '../forms/ReplyModal';
 import Tweet from '../tweets/Tweet';
 
