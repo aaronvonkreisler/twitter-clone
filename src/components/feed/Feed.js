@@ -32,18 +32,26 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
          <div className="feed">
             {loading ? (
                <Spinner />
-            ) : user !== null && user.following.length === 0 ? (
-               <NoTweets />
             ) : (
                user !== null &&
-               tweets.map((tweet) => (
-                  <Tweet
-                     key={tweet._id}
-                     tweet={tweet}
-                     displayNumbers
-                     onCommentClick={handleCommentClick}
-                  />
-               ))
+               tweets.map((tweet) =>
+                  tweet.retweetData ? (
+                     <Tweet
+                        tweet={tweet.retweetData}
+                        retweetedBy={tweet.user.name}
+                        key={tweet._id}
+                        displayNumbers
+                        onCommentClick={handleCommentClick}
+                     />
+                  ) : (
+                     <Tweet
+                        key={tweet._id}
+                        tweet={tweet}
+                        displayNumbers
+                        onCommentClick={handleCommentClick}
+                     />
+                  )
+               )
             )}
          </div>
       </React.Fragment>

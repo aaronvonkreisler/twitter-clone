@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { loadUser } from './actions/auth';
-import { getCurrentUsersProfile } from './actions/profile';
+
 import { LOG_OUT } from './actions/types';
 import { getTimelineTweets } from './actions/tweets';
 import setAuthToken from './utils/setAuthToken';
@@ -21,7 +21,7 @@ const App = () => {
          setAuthToken(localStorage.token);
       }
       store.dispatch(loadUser());
-      store.dispatch(getCurrentUsersProfile());
+
       store.dispatch(getTimelineTweets());
 
       window.addEventListener('storage', () => {

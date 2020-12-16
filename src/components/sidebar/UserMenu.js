@@ -24,7 +24,7 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
 
    return (
       !loading &&
-      user && (
+      user !== null && (
          <div className="sidebar__userMenu">
             <Menu
                anchorOrigin={{

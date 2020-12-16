@@ -1,6 +1,10 @@
 .MuiDialog-paper {
    background-color: var(--background-dark) !important;
 }
+.MuiBox-root-11 {
+   padding-top: 0 !important;
+   padding-bottom: 0 !important;
+}
 
 .MuiDialogContent-root {
    color: #fff !important;
@@ -8,6 +12,11 @@
 
 #dialog-title {
    color: #fff;
+   max-width: 600px;
+   width: 100%;
+   height: 53px;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 #dialog-title .modal-icon {
@@ -16,4 +25,42 @@
 
 .dialog-content-wrapper .header {
    display: inline-block;
+   padding-left: 25px;
+}
+
+#dialog-title .dialog-title-left {
+   display: flex;
+   flex-direction: column;
+   flex-basis: 50%;
+   min-width: 59px;
+   min-height: 30px;
+   align-self: stretch;
+   align-items: flex-start;
+   justify-content: center;
+   flex-shrink: 1;
+   flex-grow: 1;
+}
+
+#dialog-title .dialog-title-center {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 1;
+   height: 100%;
+   flex-grow: 1;
+}
+
+#dialog-title .dialog-title-right {
+   margin-left: 20px;
+   display: flex;
+   flex-direction: column;
+   flex-basis: 50%;
+   min-width: 30px;
+   min-height: 30px;
+   align-self: stretch;
+   justify-content: center;
+   flex-shrink: 1;
+   flex-grow: 1;
+   align-items: flex-end;
 }

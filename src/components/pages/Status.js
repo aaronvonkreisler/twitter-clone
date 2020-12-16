@@ -39,15 +39,16 @@ const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
                      tweet={tweet}
                      onCommentClick={handleCommentClick}
                   />
-                  {tweet.replies.map((reply) => (
-                     <Tweet
-                        tweet={reply.tweet}
-                        key={reply.tweet._id}
-                        displayActions={false}
-                        replyingTo
-                        replyingToUserName={tweet.user.screen_name}
-                     />
-                  ))}
+                  {tweet.replies !== null &&
+                     tweet.replies.map((reply) => (
+                        <Tweet
+                           tweet={reply.tweet}
+                           key={reply.tweet._id}
+                           displayActions={false}
+                           replyingTo
+                           replyingToUserName={tweet.user.screen_name}
+                        />
+                     ))}
                </React.Fragment>
             )}
          </div>

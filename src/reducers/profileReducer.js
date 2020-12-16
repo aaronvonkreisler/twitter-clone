@@ -1,6 +1,11 @@
-import { GET_USER_PROFILE, PROFILE_ERROR } from '../actions/types';
+import {
+   GET_CURRENT_USERS_PROFILE,
+   PROFILE_ERROR,
+   UPLOAD_PROFILE_PICTURE,
+} from '../actions/types';
 
 const initialState = {
+   currentProfile: null,
    profile: null,
    loading: true,
    error: {},
@@ -11,10 +16,11 @@ export default function (state = initialState, action) {
    const { type, payload } = action;
 
    switch (type) {
-      case GET_USER_PROFILE:
+      case GET_CURRENT_USERS_PROFILE:
+      case UPLOAD_PROFILE_PICTURE:
          return {
             ...state,
-            profile: payload,
+            currentProfile: payload,
             loading: false,
          };
       case PROFILE_ERROR:
@@ -22,7 +28,7 @@ export default function (state = initialState, action) {
             ...state,
             error: payload,
             loading: false,
-            profile: null,
+            currentProfile: null,
          };
       default:
          return state;

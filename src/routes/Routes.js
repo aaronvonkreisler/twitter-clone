@@ -14,13 +14,13 @@ const Routes = (props) => {
          <Switch>
             <Route exact path="/login" component={LoginPage} />
             <Main>
-               <PrivateRoute exact path="/home" component={Home} />
-               <PrivateRoute exact path="/profile" component={Profile} />
                <PrivateRoute
                   exact
                   path="/:screen_name/status/:tweet_id"
                   component={Status}
                />
+               <PrivateRoute exact path="/home" component={Home} />
+               <PrivateRoute exact path="/:username" component={Profile} />
             </Main>
          </Switch>
       </React.Fragment>

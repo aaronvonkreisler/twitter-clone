@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
@@ -18,7 +19,7 @@ import '../../styles/design/utils.css';
 
 // The width of the root div needs to be 275px on large and up.
 // on md and down it needs to be 88px
-const Sidebar = (props) => {
+const Sidebar = ({ auth: { loading, user } }) => {
    const large = useMediaQuery('(min-width: 1920px)');
    const navItems = [
       {
@@ -50,7 +51,7 @@ const Sidebar = (props) => {
 
       {
          text: 'Profile',
-         path: '/profile',
+         path: !loading && user !== null ? `/${user.screen_name}` : '/profile',
          icon: BsPerson,
       },
       {
@@ -105,8 +106,8 @@ const Sidebar = (props) => {
    );
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => ({
+   auth: state.auth,
+});
 
-// MenuButton text="Home" Icon={BiHomeCircle} path="/home" />
-//          <MenuButton text="Home" Icon={BiHomeCircle} path="/home" />
-//          <MenuButton text="Home" Icon={BiHomeCircle} path="/home" />
+export default connect(mapStateToProps)(Sidebar);

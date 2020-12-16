@@ -6,6 +6,7 @@ import {
    ADD_TWEET,
    TWEETS_ERROR,
    DELETE_TWEET,
+   RETWEET,
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
@@ -51,6 +52,24 @@ export const addTweet = (content) => async (dispatch) => {
          type: ADD_TWEET,
          payload: res.data,
       });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
+export const retweet = (id) => async (dispatch) => {
+   try {
+      await api.post(`/api/tweets/${id}/retweet`);
+
+      // dispatch({
+      //    type: RETWEET,
+      //    payload: res.data,
+      // });
+
+      dispatch(getTimelineTweets());
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,

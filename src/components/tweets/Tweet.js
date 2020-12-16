@@ -7,6 +7,7 @@ import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import omit from 'lodash/omit';
+import Moment from 'react-moment';
 import {
    Avatar,
    Menu,
@@ -27,6 +28,7 @@ import {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
+   retweet,
 } from '../../actions/tweets';
 import '../../styles/design/tweet.css';
 
@@ -73,6 +75,8 @@ const Tweet = ({
    auth,
    deleteTweet,
    favoriteTweet,
+   retweet,
+   retweetedBy,
    removeFavorite,
    displayNumbers,
    displayActions,
@@ -83,6 +87,10 @@ const Tweet = ({
    bottomBorder,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
+
+   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
+      ? 'retweet__active'
+      : '';
 
    const open = Boolean(anchorEl);
 
@@ -163,6 +171,17 @@ const Tweet = ({
          )}
          {tweet && (
             <div className="flex flex-col">
+               {retweetedBy && (
+                  <div className="retweetedByDisplay">
+                     <div className="retweetIcon__col">
+                        <AiOutlineRetweet />
+                     </div>
+                     <div className="retweetedBy__col">
+                        <span>{retweetedBy} Retweeted</span>
+                     </div>
+                  </div>
+               )}
+
                <article className="tweet__wrapper flex flex-row">
                   <div className=" tweet__avatar flex flex-col">
                      <Avatar
@@ -185,6 +204,12 @@ const Tweet = ({
                               )}
                               <span className="screen_name">
                                  @{tweet.user.screen_name}
+                              </span>
+                              <span className="time_stamp">
+                                 •{' '}
+                                 <Moment fromNow ago>
+                                    {tweet.created_at}
+                                 </Moment>
                               </span>
                            </div>
                         </div>
@@ -236,10 +261,10 @@ const Tweet = ({
                                     <div className="metrics">
                                        <span className="metrics__item">
                                           {displayNumbers &&
-                                             tweet.replies_count > 0 && (
+                                             tweet.replies.length > 0 && (
                                                 <span>
                                                    {' '}
-                                                   {tweet.replies_count}
+                                                   {tweet.replies.length}
                                                 </span>
                                              )}
                                        </span>
@@ -249,18 +274,23 @@ const Tweet = ({
                            </div>
                            <div className="tweetAction-item ml-15">
                               <div className="flex flex-col justify-center">
-                                 <div className="action-wrapper retweet_wrapper">
+                                 <div
+                                    className="action-wrapper retweet_wrapper"
+                                    onClick={() => retweet(tweet._id)}
+                                 >
                                     <div className="d-inline-flex buttonDisplay">
                                        <div className="iconBackgroundDisplay retweet_display" />
-                                       <AiOutlineRetweet />
+                                       <AiOutlineRetweet
+                                          className={retweetActiveClass}
+                                       />
                                     </div>
                                     <div className="metrics">
                                        <span className="metrics__item">
                                           {displayNumbers &&
-                                             tweet.retweet_count > 0 && (
+                                             tweet.retweetUsers.length > 0 && (
                                                 <span>
                                                    {' '}
-                                                   {tweet.retweet_count}
+                                                   {tweet.retweetUsers.length}
                                                 </span>
                                              )}
                                        </span>
@@ -281,9 +311,9 @@ const Tweet = ({
                                     <div className="metrics">
                                        <span className="metrics__item">
                                           {displayNumbers &&
-                                             tweet.favorites_count > 0 && (
+                                             tweet.favorites.length > 0 && (
                                                 <span>
-                                                   {tweet.favorites_count}
+                                                   {tweet.favorites.length}
                                                 </span>
                                              )}
                                        </span>
@@ -317,6 +347,8 @@ Tweet.propTypes = {
    auth: PropTypes.object.isRequired,
    deleteTweet: PropTypes.func,
    favoriteTweet: PropTypes.func,
+   retweet: PropTypes.func,
+   retweetedBy: PropTypes.string,
    removeFavorite: PropTypes.func,
    displayActions: PropTypes.bool,
    replyView: PropTypes.bool,
@@ -338,4 +370,5 @@ export default connect(mapStateToProps, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
+   retweet,
 })(Tweet);

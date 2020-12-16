@@ -55,6 +55,11 @@
    color: var(--text-gray);
 }
 
+.names__display .time_stamp {
+   color: var(--text-gray);
+   margin-left: 5px;
+}
+
 .top-right-icon {
    font-size: 15px;
    font-weight: 400;
@@ -231,4 +236,36 @@
 
 .replying_to .reply_screen_name {
    color: var(--twitter-color);
+}
+
+.tweetAction-item svg.retweet__active {
+   color: rgb(23, 191, 99) !important;
+}
+
+.retweetedByDisplay {
+   color: var(--text-gray);
+   padding-top: 10px;
+   padding-left: 15px;
+   display: flex;
+   flex-direction: row;
+}
+
+.retweetedByDisplay .retweetIcon__col {
+   display: flex;
+   flex-direction: column;
+   flex-basis: 49px;
+   align-items: flex-end;
+   margin-right: 10px;
+   color: inherit;
+}
+
+.retweetedByDisplay .retweetIcon__col > svg {
+   color: inherit;
+   fill: currentColor;
+   font-size: 20px;
+}
+
+.retweetedByDisplay .retweetedBy__col > span {
+   font-size: 14px;
+   font-weight: 700;
 }
