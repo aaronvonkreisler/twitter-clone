@@ -5,7 +5,8 @@ import LoginPage from '../components/pages/LoginPage';
 import AlertDisplay from '../components/layout/AlertDisplay';
 import Status from '../components/pages/Status';
 import Main from '../components/layout/Main';
-import Profile from '../components/profile/Profile';
+import UserProfile from '../components/profile/UserProfile';
+import SelectedProfile from '../components/profile/SelectedProfile';
 import Home from '../components/pages/Home';
 const Routes = (props) => {
    return (
@@ -20,7 +21,18 @@ const Routes = (props) => {
                   component={Status}
                />
                <PrivateRoute exact path="/home" component={Home} />
-               <PrivateRoute exact path="/:username" component={Profile} />
+               <PrivateRoute
+                  exact
+                  path="/profile"
+                  component={UserProfile}
+                  key="user"
+               />
+               <PrivateRoute
+                  exact
+                  path="/profile/:username"
+                  key="selected-user"
+                  component={SelectedProfile}
+               />
             </Main>
          </Switch>
       </React.Fragment>

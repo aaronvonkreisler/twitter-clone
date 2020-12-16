@@ -4,6 +4,7 @@ import {
    GET_CURRENT_USERS_PROFILE,
    PROFILE_ERROR,
    UPLOAD_PROFILE_PICTURE,
+   SELECTED_USER_LOADED,
 } from './types';
 
 export const getCurrentUsersProfile = () => async (dispatch) => {
@@ -12,6 +13,21 @@ export const getCurrentUsersProfile = () => async (dispatch) => {
 
       dispatch({
          type: GET_CURRENT_USERS_PROFILE,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: PROFILE_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
+export const getUserByUsername = (username) => async (dispatch) => {
+   try {
+      const res = await api.get(`/api/user/${username}`);
+      dispatch({
+         type: SELECTED_USER_LOADED,
          payload: res.data,
       });
    } catch (err) {

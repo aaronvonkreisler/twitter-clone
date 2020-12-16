@@ -195,7 +195,11 @@ const Tweet = ({
                         <div className="flex flex-row justify-between align-start names__display">
                            <div className="flex flex-row justify-between">
                               <span className="display_name">
-                                 {tweet.user.name}
+                                 <Link
+                                    to={`/profile/${tweet.user.screen_name}`}
+                                 >
+                                    {tweet.user.name}
+                                 </Link>
                               </span>
                               {tweet.user.verified && (
                                  <span className="verified-badge">
@@ -203,7 +207,11 @@ const Tweet = ({
                                  </span>
                               )}
                               <span className="screen_name">
-                                 @{tweet.user.screen_name}
+                                 <Link
+                                    to={`/profile/${tweet.user.screen_name}`}
+                                 >
+                                    @{tweet.user.screen_name}
+                                 </Link>
                               </span>
                               <span className="time_stamp">
                                  •{' '}

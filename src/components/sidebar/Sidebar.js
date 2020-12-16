@@ -1,5 +1,4 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 
 import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
@@ -13,13 +12,15 @@ import { RiQuillPenLine } from 'react-icons/ri';
 import { CgMoreO } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
 import { useMediaQuery, Fab, Button } from '@material-ui/core';
+import ComposeModal from '../forms/ComposeModal';
 
 import './styles/Sidebar.css';
 import '../../styles/design/utils.css';
 
 // The width of the root div needs to be 275px on large and up.
 // on md and down it needs to be 88px
-const Sidebar = ({ auth: { loading, user } }) => {
+const Sidebar = (props) => {
+   const [modalOpen, setModalOpen] = useState(false);
    const large = useMediaQuery('(min-width: 1920px)');
    const navItems = [
       {
@@ -51,7 +52,7 @@ const Sidebar = ({ auth: { loading, user } }) => {
 
       {
          text: 'Profile',
-         path: !loading && user !== null ? `/${user.screen_name}` : '/profile',
+         path: '/profile',
          icon: BsPerson,
       },
       {
@@ -61,53 +62,53 @@ const Sidebar = ({ auth: { loading, user } }) => {
       },
    ];
    return (
-      <div className="sidebar__container">
-         <div className="sidebar__root">
-            <div className="sidebar__wrapper">
-               <div className="sidebar__items__wrapper">
-                  {/* User Avatar needs to go in the bottom of this div for alignment to work out.  */}
-                  <div className="h-100">
-                     {navItems.map((item, index) => (
-                        <MenuButton
-                           key={index}
-                           path={item.path}
-                           Icon={item.icon}
-                           text={item.text}
-                           large={large}
-                        />
-                     ))}
-                     {large ? (
-                        <div className="button-wrapper">
-                           <div className="button-subWrapper">
-                              <Button
-                                 className="tweet-button"
-                                 type="submit"
-                                 fullWidth
-                              >
-                                 Tweet
-                              </Button>
+      <React.Fragment>
+         <ComposeModal open={modalOpen} setOpen={setModalOpen} />
+         <div className="sidebar__container">
+            <div className="sidebar__root">
+               <div className="sidebar__wrapper">
+                  <div className="sidebar__items__wrapper">
+                     {/* User Avatar needs to go in the bottom of this div for alignment to work out.  */}
+                     <div className="h-100">
+                        {navItems.map((item, index) => (
+                           <MenuButton
+                              key={index}
+                              path={item.path}
+                              Icon={item.icon}
+                              text={item.text}
+                              large={large}
+                           />
+                        ))}
+                        {large ? (
+                           <div className="button-wrapper">
+                              <div className="button-subWrapper">
+                                 <Button
+                                    className="tweet-button"
+                                    type="submit"
+                                    fullWidth
+                                    onClick={() => setModalOpen(true)}
+                                 >
+                                    Tweet
+                                 </Button>
+                              </div>
                            </div>
-                        </div>
-                     ) : (
-                        <div className="actions">
-                           <Fab>
-                              <RiQuillPenLine />
-                           </Fab>
-                        </div>
-                     )}
+                        ) : (
+                           <div className="actions">
+                              <Fab onClick={() => setModalOpen(true)}>
+                                 <RiQuillPenLine />
+                              </Fab>
+                           </div>
+                        )}
+                     </div>
                   </div>
                </div>
-            </div>
-            <div className="sidebar__userMenu">
-               <UserMenu />
+               <div className="sidebar__userMenu">
+                  <UserMenu />
+               </div>
             </div>
          </div>
-      </div>
+      </React.Fragment>
    );
 };
 
-const mapStateToProps = (state) => ({
-   auth: state.auth,
-});
-
-export default connect(mapStateToProps)(Sidebar);
+export default Sidebar;

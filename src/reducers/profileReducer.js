@@ -2,6 +2,7 @@ import {
    GET_CURRENT_USERS_PROFILE,
    PROFILE_ERROR,
    UPLOAD_PROFILE_PICTURE,
+   SELECTED_USER_LOADED,
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +22,12 @@ export default function (state = initialState, action) {
          return {
             ...state,
             currentProfile: payload,
+            loading: false,
+         };
+      case SELECTED_USER_LOADED:
+         return {
+            ...state,
+            profile: payload,
             loading: false,
          };
       case PROFILE_ERROR:
