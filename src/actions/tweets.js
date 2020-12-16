@@ -6,7 +6,6 @@ import {
    ADD_TWEET,
    TWEETS_ERROR,
    DELETE_TWEET,
-   RETWEET,
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
@@ -63,11 +62,6 @@ export const addTweet = (content) => async (dispatch) => {
 export const retweet = (id) => async (dispatch) => {
    try {
       await api.post(`/api/tweets/${id}/retweet`);
-
-      // dispatch({
-      //    type: RETWEET,
-      //    payload: res.data,
-      // });
 
       dispatch(getTimelineTweets());
    } catch (err) {

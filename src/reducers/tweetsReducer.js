@@ -3,7 +3,6 @@ import {
    GET_TIMELINE_TWEETS,
    GET_TWEET,
    ADD_TWEET,
-   RETWEET,
    DELETE_TWEET,
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
@@ -36,7 +35,6 @@ export default function (state = initialState, action) {
             loading: false,
          };
       case ADD_TWEET:
-      case RETWEET:
          return {
             ...state,
             tweets: [payload, ...state.tweets],
