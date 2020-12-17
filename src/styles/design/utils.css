@@ -12,6 +12,19 @@
    transition: 0.2s !important;
 }
 
+.follow-button {
+   background-color: var(--twitter-color) !important;
+   border-radius: 9999px !important;
+   text-transform: inherit !important;
+   color: #fff !important;
+   font-weight: 700 !important;
+}
+
+.follow-button:hover {
+   background-color: var(--text-error) !important;
+   transition: background-color 0.2s ease-in;
+}
+
 .tweet-button-outline {
    background-color: rgb(22, 32, 42) !important;
    border-radius: 9999px !important;

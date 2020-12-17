@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,6 +7,10 @@ import { FiMail } from 'react-icons/fi';
 import { getUserByUsername } from '../../actions/profile';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
+import ProfileTabs from './ProfileTabs';
+import ProfileTweets from './ProfileTweets';
+import ProfileReplies from './ProfileReplies';
+import ProfileLikes from './ProfileLikes';
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
 
@@ -17,10 +21,12 @@ const SelectedProfile = ({
    auth,
 }) => {
    let history = useHistory();
+   const [isHovering, setIsHovering] = useState(false);
 
    useEffect(() => {
       getUserByUsername(match.params.username, auth.user._id);
    }, [getUserByUsername, match.params.username, auth.user._id]);
+
    return (
       <div>
          {loading || profile === null ? (
@@ -47,8 +53,13 @@ const SelectedProfile = ({
                               </Link>
                               <div className="follow__button">
                                  {isFollowing ? (
-                                    <Button className="tweet-button" fullWidth>
-                                       Following
+                                    <Button
+                                       className="follow-button"
+                                       fullWidth
+                                       onMouseEnter={() => setIsHovering(true)}
+                                       onMouseLeave={() => setIsHovering(false)}
+                                    >
+                                       {isHovering ? 'Unfollow' : 'Follow'}
                                     </Button>
                                  ) : (
                                     <Button
@@ -86,6 +97,13 @@ const SelectedProfile = ({
                            </div>
                         </div>
                      </div>
+                  </div>
+                  <div className="profile__tabs">
+                     <ProfileTabs
+                        tweets={<ProfileTweets />}
+                        replies={<ProfileReplies />}
+                        likes={<ProfileLikes />}
+                     />
                   </div>
                </div>
             </React.Fragment>
