@@ -23,12 +23,21 @@ export const getCurrentUsersProfile = () => async (dispatch) => {
    }
 };
 
-export const getUserByUsername = (username) => async (dispatch) => {
+export const getUserByUsername = (username, requestorId) => async (
+   dispatch
+) => {
    try {
       const res = await api.get(`/api/user/${username}`);
+
+      const isFollowing = res.data.followers.some(
+         (follower) => follower.user === requestorId
+      );
+
+      const isOwnProfile = res.data._id === requestorId;
+
       dispatch({
          type: SELECTED_USER_LOADED,
-         payload: res.data,
+         payload: { user: res.data, isFollowing, isOwnProfile },
       });
    } catch (err) {
       dispatch({

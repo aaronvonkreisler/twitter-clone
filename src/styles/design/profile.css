@@ -19,11 +19,11 @@
 }
 
 .profileWrapper .profileButtons__container {
-   padding: 15px;
    min-height: 66px;
    display: flex;
-   flex-direction: row-reverse;
-   align-items: flex-start;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-end;
 }
 
 .profileWrapper .profileButtons__container > a {
@@ -37,9 +37,73 @@
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   margin-right: 15px;
 }
 
 .profileWrapper .profileButtons__container > a:hover {
    background-color: var(--twitter-button-hover);
    transition: background-color 0.2s ease-in;
+}
+
+.profileWrapper .profileButtons__container .follow__button {
+   min-width: 79px;
+}
+
+.profileWrapper .profileTop__container {
+   padding: 0 15px 15px 15px;
+}
+
+.profileWrapper .userDetailsContainer {
+   display: flex;
+   flex-direction: column;
+
+   margin-bottom: 10px;
+}
+.profileWrapper .userDetailsContainer .user__name {
+   color: #fff;
+   font-weight: 700;
+   font-size: 20px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: start;
+}
+
+.profileWrapper .userDetailsContainer .screen__name {
+   color: var(--text-gray);
+   font-weight: 400;
+   font-size: 15px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: start;
+}
+
+.profileWrapper .following__container {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+}
+.profileWrapper .following__container .item {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   margin-right: 10px;
+   cursor: pointer;
+}
+
+.profileWrapper .following__container .item:hover .text {
+   text-decoration: underline;
+}
+
+.profileWrapper .following__container .item .number {
+   color: #fff;
+   font-weight: 700;
+   margin-right: 5px;
+}
+
+.profileWrapper .following__container .item .text {
+   color: var(--text-gray);
 }

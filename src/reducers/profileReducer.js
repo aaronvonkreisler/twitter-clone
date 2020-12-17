@@ -8,6 +8,8 @@ import {
 const initialState = {
    currentProfile: null,
    profile: null,
+   isFollowing: false,
+   isOwnProfile: false,
    loading: true,
    error: {},
 };
@@ -27,7 +29,9 @@ export default function (state = initialState, action) {
       case SELECTED_USER_LOADED:
          return {
             ...state,
-            profile: payload,
+            profile: payload.user,
+            isFollowing: payload.isFollowing,
+            isOwnProfile: payload.isOwnProfile,
             loading: false,
          };
       case PROFILE_ERROR:
