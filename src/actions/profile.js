@@ -8,6 +8,8 @@ import {
    GET_PROFILE_LIKES,
    GET_PROFILE_REPLIES,
    GET_PROFILE_TWEETS,
+   FOLLOW_USER,
+   UNFOLLOW_USER,
 } from './types';
 
 export const getCurrentUsersProfile = () => async (dispatch) => {
@@ -88,6 +90,33 @@ export const getProfileLikes = (userId) => async (dispatch) => {
 
       dispatch({
          type: GET_PROFILE_LIKES,
+         payload: res.data,
+      });
+   } catch (err) {}
+};
+
+export const followUser = (userId) => async (dispatch) => {
+   try {
+      const res = await api.put(`/api/user/follow/${userId}`);
+
+      dispatch({
+         type: FOLLOW_USER,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: PROFILE_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
+export const unfollowUser = (userId) => async (dispatch) => {
+   try {
+      const res = await api.put(`/api/user/unfollow/${userId}`);
+
+      dispatch({
+         type: UNFOLLOW_USER,
          payload: res.data,
       });
    } catch (err) {

@@ -4,18 +4,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar, Button } from '@material-ui/core';
 import { FiMail } from 'react-icons/fi';
-import { getUserByUsername } from '../../actions/profile';
+import {
+   getUserByUsername,
+   followUser,
+   unfollowUser,
+} from '../../actions/profile';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
 import ProfileTabs from './ProfileTabs';
 import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
+
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
 
 const SelectedProfile = ({
    getUserByUsername,
+   unfollowUser,
+   followUser,
    match,
    profiles: { profile, loading, isFollowing, isOwnProfile },
    auth,
@@ -58,6 +65,7 @@ const SelectedProfile = ({
                                        fullWidth
                                        onMouseEnter={() => setIsHovering(true)}
                                        onMouseLeave={() => setIsHovering(false)}
+                                       onClick={() => unfollowUser(profile._id)}
                                     >
                                        {isHovering ? 'Unfollow' : 'Following'}
                                     </Button>
@@ -65,6 +73,7 @@ const SelectedProfile = ({
                                     <Button
                                        className="tweet-button-outline"
                                        fullWidth
+                                       onClick={() => followUser(profile._id)}
                                     >
                                        Follow
                                     </Button>
@@ -114,6 +123,8 @@ const SelectedProfile = ({
 
 SelectedProfile.propTypes = {
    getUserByUsername: PropTypes.func.isRequired,
+   followUser: PropTypes.func.isRequired,
+   unfollowUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -121,4 +132,8 @@ const mapStateToProps = (state) => ({
    auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getUserByUsername })(SelectedProfile);
+export default connect(mapStateToProps, {
+   getUserByUsername,
+   followUser,
+   unfollowUser,
+})(SelectedProfile);

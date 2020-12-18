@@ -6,6 +6,8 @@ import {
    GET_PROFILE_TWEETS,
    GET_PROFILE_REPLIES,
    GET_PROFILE_LIKES,
+   FOLLOW_USER,
+   UNFOLLOW_USER,
 } from '../actions/types';
 
 const initialState = {
@@ -31,6 +33,24 @@ export default function (state = initialState, action) {
             ...state,
             currentProfile: payload,
             loading: false,
+         };
+      case FOLLOW_USER:
+         return {
+            ...state,
+            profile: {
+               ...state.profile,
+               followers: payload,
+            },
+            isFollowing: true,
+         };
+      case UNFOLLOW_USER:
+         return {
+            ...state,
+            profile: {
+               ...state.profile,
+               followers: payload,
+            },
+            isFollowing: false,
          };
       case SELECTED_USER_LOADED:
          return {
