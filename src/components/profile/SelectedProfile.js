@@ -126,6 +126,9 @@ const SelectedProfile = ({
                         tab1={<ProfileTweets userId={profile._id} />}
                         tab2={<ProfileReplies userId={profile._id} />}
                         tab3={<ProfileLikes userId={profile._id} />}
+                        tab1Text="Tweets"
+                        tab2Text="Tweets & replies"
+                        tab3Text="Likes"
                      />
                   </div>
                </div>

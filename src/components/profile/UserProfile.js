@@ -66,9 +66,12 @@ const UserProfile = ({ profiles: { currentProfile, loading } }) => {
                   </div>
                   <div className="profile__tabs feed">
                      <ProfileTabs
-                        tweets={<ProfileTweets userId={currentProfile._id} />}
-                        replies={<ProfileReplies userId={currentProfile._id} />}
-                        likes={<ProfileLikes userId={currentProfile._id} />}
+                        tab1={<ProfileTweets userId={currentProfile._id} />}
+                        tab2={<ProfileReplies userId={currentProfile._id} />}
+                        tab3={<ProfileLikes userId={currentProfile._id} />}
+                        tab1Text="Tweets"
+                        tab2Text="Tweets & replies"
+                        tab3Text="Likes"
                      />
                   </div>
                </div>

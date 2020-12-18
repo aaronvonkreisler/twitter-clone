@@ -66,7 +66,7 @@ const StyledTab = withStyles({
    },
 })((props) => <Tab disableRipple {...props} />);
 
-const ProfileTabs = ({ tab1, tab2, tab3 }) => {
+const ProfileTabs = ({ tab1, tab2, tab3, tab1Text, tab2Text, tab3Text }) => {
    const [value, setValue] = useState(0);
 
    const handleChange = (event, newValue) => {
@@ -85,9 +85,9 @@ const ProfileTabs = ({ tab1, tab2, tab3 }) => {
                variant="fullWidth"
                aria-label="Profile tabs"
             >
-               <StyledTab label="Tweets" {...a11yProps(0)} />
-               <StyledTab label="Tweets & replies" {...a11yProps(1)} />
-               <StyledTab label="Likes" {...a11yProps(2)} />
+               <StyledTab label={tab1Text} {...a11yProps(0)} />
+               <StyledTab label={tab2Text} {...a11yProps(1)} />
+               <StyledTab label={tab3Text} {...a11yProps(2)} />
             </TweeterTabs>
          </AppBar>
          <TabPanel value={value} index={0}>
