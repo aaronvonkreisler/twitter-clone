@@ -16,7 +16,7 @@ import ProfileTabs from './ProfileTabs';
 import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
-
+import FollowingButton from '../layout/FollowingButton';
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
 
@@ -29,8 +29,6 @@ const SelectedProfile = ({
    profiles: { profile, loading, isFollowing, isOwnProfile },
    auth,
 }) => {
-   const [isHovering, setIsHovering] = useState(false);
-
    useEffect(() => {
       getUserByUsername(match.params.username, auth.user._id);
 
@@ -66,15 +64,9 @@ const SelectedProfile = ({
                               </Link>
                               <div className="follow__button">
                                  {isFollowing ? (
-                                    <Button
-                                       className="follow-button"
-                                       fullWidth
-                                       onMouseEnter={() => setIsHovering(true)}
-                                       onMouseLeave={() => setIsHovering(false)}
+                                    <FollowingButton
                                        onClick={() => unfollowUser(profile._id)}
-                                    >
-                                       {isHovering ? 'Unfollow' : 'Following'}
-                                    </Button>
+                                    />
                                  ) : (
                                     <Button
                                        className="tweet-button-outline"

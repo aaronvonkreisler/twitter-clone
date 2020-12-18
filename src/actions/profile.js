@@ -11,6 +11,7 @@ import {
    FOLLOW_USER,
    UNFOLLOW_USER,
    CLEAR_PROFILE,
+   SET_NAME_IN_PROFILE_DATA_STATE,
 } from './types';
 
 export const getCurrentUsersProfile = () => async (dispatch) => {
@@ -44,6 +45,11 @@ export const getUserByUsername = (username, requestorId) => async (
       dispatch({
          type: SELECTED_USER_LOADED,
          payload: { user: res.data, isFollowing, isOwnProfile },
+      });
+
+      dispatch({
+         type: SET_NAME_IN_PROFILE_DATA_STATE,
+         payload: { name: res.data.name, screenName: res.data.screen_name },
       });
    } catch (err) {
       dispatch({

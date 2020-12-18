@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Avatar, Button } from '@material-ui/core';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
@@ -50,16 +51,24 @@ const UserProfile = ({ profiles: { currentProfile, loading } }) => {
 
                         <div className="following__container">
                            <div className="item">
-                              <span className="number">
-                                 {currentProfile.following.length}
-                              </span>
-                              <span className="text">Following</span>
+                              <Link
+                                 to={`/profile/${currentProfile.screen_name}/following`}
+                              >
+                                 <span className="number">
+                                    {currentProfile.following.length}
+                                 </span>
+                                 <span className="text">Following</span>
+                              </Link>
                            </div>
                            <div className="item">
-                              <span className="number">
-                                 {currentProfile.followers.length}
-                              </span>
-                              <span className="text">Followers</span>
+                              <Link
+                                 to={`/profile/${currentProfile.screen_name}/following`}
+                              >
+                                 <span className="number">
+                                    {currentProfile.followers.length}
+                                 </span>
+                                 <span className="text">Followers</span>
+                              </Link>
                            </div>
                         </div>
                      </div>

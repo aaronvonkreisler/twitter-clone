@@ -34,9 +34,6 @@ const TweeterTabs = withStyles({
          width: '100%',
          backgroundColor: 'rgb(29, 161, 242, 1)',
       },
-      root: {
-         borderBottom: '1px solid rgb(56, 68, 78)',
-      },
    },
 })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
@@ -45,6 +42,7 @@ const StyledTab = withStyles({
       textTransform: 'none',
       fontWeight: 700,
       fontSize: '14px',
+      borderBottom: '1px solid rgb(56, 68, 78)',
       backgroundColor: 'rgb(22, 32, 42)',
       color: 'rgb(136, 153, 166)',
       fontFamily: [
