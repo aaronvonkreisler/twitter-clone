@@ -8,6 +8,7 @@ import {
    getUserByUsername,
    followUser,
    unfollowUser,
+   clearProfileState,
 } from '../../actions/profile';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
@@ -21,6 +22,7 @@ import '../../styles/design/utils.css';
 
 const SelectedProfile = ({
    getUserByUsername,
+   clearProfileState,
    unfollowUser,
    followUser,
    match,
@@ -32,7 +34,16 @@ const SelectedProfile = ({
 
    useEffect(() => {
       getUserByUsername(match.params.username, auth.user._id);
-   }, [getUserByUsername, match.params.username, auth.user._id]);
+
+      return function cleanup() {
+         clearProfileState();
+      };
+   }, [
+      getUserByUsername,
+      match.params.username,
+      auth.user._id,
+      clearProfileState,
+   ]);
 
    return (
       <div>
@@ -136,4 +147,5 @@ export default connect(mapStateToProps, {
    getUserByUsername,
    followUser,
    unfollowUser,
+   clearProfileState,
 })(SelectedProfile);

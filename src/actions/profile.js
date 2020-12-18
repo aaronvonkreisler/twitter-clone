@@ -10,6 +10,7 @@ import {
    GET_PROFILE_TWEETS,
    FOLLOW_USER,
    UNFOLLOW_USER,
+   CLEAR_PROFILE,
 } from './types';
 
 export const getCurrentUsersProfile = () => async (dispatch) => {
@@ -126,6 +127,10 @@ export const unfollowUser = (userId) => async (dispatch) => {
       });
    }
 };
+
+export const clearProfileState = () => ({
+   type: CLEAR_PROFILE,
+});
 
 export const uploadProfilePicture = (file) => async (dispatch) => {
    //https://tweeter-v1-api.herokuapp.com/user/avatar

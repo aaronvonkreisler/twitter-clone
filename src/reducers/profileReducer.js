@@ -8,6 +8,7 @@ import {
    GET_PROFILE_LIKES,
    FOLLOW_USER,
    UNFOLLOW_USER,
+   CLEAR_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -77,6 +78,13 @@ export default function (state = initialState, action) {
             ...state,
             likedTweets: payload,
             loading: false,
+         };
+      case CLEAR_PROFILE:
+         return {
+            ...state,
+            profile: null,
+            isFollowing: false,
+            isOwnProfile: false,
          };
       case PROFILE_ERROR:
          return {

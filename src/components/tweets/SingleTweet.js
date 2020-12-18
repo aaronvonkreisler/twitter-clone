@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Moment from 'react-moment';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
@@ -177,7 +177,9 @@ const SingleTweet = ({
                      <div className="flex flex-row justify-between align-start">
                         <div className="flex flex-col w-max-100">
                            <div className="flex flex-row w-max-100 align-center user_name">
-                              <span>{tweet.user.name}</span>
+                              <Link to={`/profile/${tweet.user.screen_name}`}>
+                                 <span>{tweet.user.name}</span>
+                              </Link>
                               {tweet.user.verified && (
                                  <span className="verified-badge">
                                     <GoVerified />
@@ -185,7 +187,9 @@ const SingleTweet = ({
                               )}
                            </div>
                            <div className="flex flex-row mw-100 align-center display_name">
-                              <span>@{tweet.user.screen_name}</span>
+                              <Link to={`/profile/${tweet.user.screen_name}`}>
+                                 <span>@{tweet.user.screen_name}</span>
+                              </Link>
                            </div>
                         </div>
                         <div
