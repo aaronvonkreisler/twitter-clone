@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { getTweet } from '../../actions/tweets';
 import Spinner from '../layout/Spinner';
@@ -14,7 +14,6 @@ const TweetDisplay = ({
    getTweet,
    match,
 }) => {
-   let history = useHistory();
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
 
@@ -28,7 +27,7 @@ const TweetDisplay = ({
    };
    return (
       <React.Fragment>
-         <Header text="Tweet" leftIcon onIconClick={() => history.goBack()} />
+         <Header text="Tweet" leftIcon />
          <div className="feed">
             {loading && !tweetReady ? (
                <Spinner />

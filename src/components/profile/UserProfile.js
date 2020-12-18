@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { Avatar, Button } from '@material-ui/core';
 import Header from '../layout/Header';
@@ -11,19 +11,13 @@ import ProfileLikes from './ProfileLikes';
 import '../../styles/design/profile.css';
 
 const UserProfile = ({ profiles: { currentProfile, loading } }) => {
-   let history = useHistory();
-
    return (
       <React.Fragment>
          {loading || currentProfile === null ? (
             <Spinner />
          ) : (
             <React.Fragment>
-               <Header
-                  leftIcon
-                  onIconClick={() => history.goBack()}
-                  text={currentProfile.name}
-               />
+               <Header leftIcon text={currentProfile.name} />
                <div className="profileWrapper ">
                   <div className="coverPhoto__container">
                      <div className="userImage__container">

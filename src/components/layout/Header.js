@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { HiOutlineSparkles, HiArrowLeft } from 'react-icons/hi';
 import '../../styles/design/header.css';
 
-const Header = ({ text, rightIcon, leftIcon, onIconClick }) => {
+const Header = ({ text, rightIcon, leftIcon, borderBottom }) => {
+   let history = useHistory();
    return (
       <React.Fragment>
          {rightIcon && (
@@ -15,13 +17,19 @@ const Header = ({ text, rightIcon, leftIcon, onIconClick }) => {
             </div>
          )}
          {leftIcon && (
-            <div className="header__root-left-icon">
+            <div
+               className={
+                  borderBottom
+                     ? 'header__root-left-icon bottom-border'
+                     : 'header__root-left-icon'
+               }
+            >
                <div className="header__items__left-icon">
                   <div className="icon__root">
                      <div className="icon__hover-box">
                         <div
                            className="left-icon__wrapper"
-                           onClick={onIconClick}
+                           onClick={() => history.goBack()}
                         >
                            <HiArrowLeft />
                         </div>
@@ -43,6 +51,11 @@ Header.propTypes = {
    rightIcon: PropTypes.bool,
    leftIcon: PropTypes.bool,
    text: PropTypes.string.isRequired,
+   borderBottom: PropTypes.bool,
+};
+
+Header.defaultProps = {
+   borderBottom: true,
 };
 
 export default Header;

@@ -29,7 +29,6 @@ const SelectedProfile = ({
    profiles: { profile, loading, isFollowing, isOwnProfile },
    auth,
 }) => {
-   let history = useHistory();
    const [isHovering, setIsHovering] = useState(false);
 
    useEffect(() => {
@@ -51,11 +50,7 @@ const SelectedProfile = ({
             <Spinner />
          ) : (
             <React.Fragment>
-               <Header
-                  leftIcon
-                  onIconClick={() => history.goBack()}
-                  text={profile.name}
-               />
+               <Header leftIcon text={profile.name} />
                <div className="profileWrapper ">
                   <div className="coverPhoto__container">
                      <div className="userImage__container">
@@ -103,18 +98,26 @@ const SelectedProfile = ({
                         {/* Users Bio, location and joined date goes here */}
 
                         <div className="following__container">
-                           <div className="item">
-                              <span className="number">
-                                 {profile.following.length}
-                              </span>
-                              <span className="text">Following</span>
-                           </div>
-                           <div className="item">
-                              <span className="number">
-                                 {profile.followers.length}
-                              </span>
-                              <span className="text">Followers</span>
-                           </div>
+                           <Link
+                              to={`/profile/${profile.screen_name}/following`}
+                           >
+                              <div className="item">
+                                 <span className="number">
+                                    {profile.following.length}
+                                 </span>
+                                 <span className="text">Following</span>
+                              </div>
+                           </Link>
+                           <Link
+                              to={`/profile/${profile.screen_name}/following`}
+                           >
+                              <div className="item">
+                                 <span className="number">
+                                    {profile.followers.length}
+                                 </span>
+                                 <span className="text">Followers</span>
+                              </div>
+                           </Link>
                         </div>
                      </div>
                   </div>

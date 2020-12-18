@@ -7,6 +7,7 @@ import Status from '../components/pages/Status';
 import Main from '../components/layout/Main';
 import UserProfile from '../components/profile/UserProfile';
 import SelectedProfile from '../components/profile/SelectedProfile';
+import ProfileFollowing from '../components/profile/ProfileFollowing';
 import Home from '../components/pages/Home';
 const Routes = (props) => {
    return (
@@ -32,6 +33,12 @@ const Routes = (props) => {
                   path="/profile/:username"
                   key="selected-user"
                   component={SelectedProfile}
+               />
+               <PrivateRoute
+                  exact
+                  path="/profile/:username/following"
+                  key="users-following"
+                  component={ProfileFollowing}
                />
             </Main>
          </Switch>
