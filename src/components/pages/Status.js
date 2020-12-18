@@ -9,7 +9,11 @@ import SingleTweet from '../tweets/SingleTweet';
 import ReplyModal from '../forms/ReplyModal';
 import Tweet from '../tweets/Tweet';
 
-const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
+const TweetDisplay = ({
+   tweets: { tweet, loading, tweetReady },
+   getTweet,
+   match,
+}) => {
    let history = useHistory();
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
@@ -26,21 +30,22 @@ const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
       <React.Fragment>
          <Header text="Tweet" leftIcon onIconClick={() => history.goBack()} />
          <div className="feed">
-            {loading || tweet === null ? (
+            {loading && !tweetReady ? (
                <Spinner />
             ) : (
-               <React.Fragment>
-                  <ReplyModal
-                     tweet={tweetForModal}
-                     open={modalOpen}
-                     setOpen={setModalOpen}
-                  />
-                  <SingleTweet
-                     tweet={tweet}
-                     onCommentClick={handleCommentClick}
-                  />
-                  {tweet.replies !== null &&
-                     tweet.replies.map((reply) => (
+               tweetReady && (
+                  <React.Fragment>
+                     <ReplyModal
+                        tweet={tweetForModal}
+                        open={modalOpen}
+                        setOpen={setModalOpen}
+                     />
+                     <SingleTweet
+                        tweet={tweet}
+                        onCommentClick={handleCommentClick}
+                     />
+
+                     {tweet.replies.map((reply) => (
                         <Tweet
                            tweet={reply.tweet}
                            key={reply.tweet._id}
@@ -49,7 +54,8 @@ const TweetDisplay = ({ tweets: { tweet, loading }, getTweet, match }) => {
                            replyingToUserName={tweet.user.screen_name}
                         />
                      ))}
-               </React.Fragment>
+                  </React.Fragment>
+               )
             )}
          </div>
       </React.Fragment>

@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
+import { getProfileTweets } from '../../actions/profile';
+import Spinner from '../layout/Spinner';
+import Tweet from '../tweets/Tweet';
+
 import PropTypes from 'prop-types';
 
-const ProfileTweets = (props) => {
-   return <div>Tweets View</div>;
+const ProfileTweets = ({
+   getProfileTweets,
+   userId,
+   profiles: { loading, tweets },
+}) => {
+   useEffect(() => {
+      getProfileTweets(userId);
+   }, [getProfileTweets, userId]);
+
+   return (
+      <React.Fragment>
+         {loading ? (
+            <Spinner />
+         ) : (
+            tweets.map((tweet) => (
+               <Tweet tweet={tweet} key={tweet._id} displayActions={false} />
+            ))
+         )}
+      </React.Fragment>
+   );
 };
 
-ProfileTweets.propTypes = {};
+ProfileTweets.propTypes = {
+   getProfileTweets: PropTypes.func.isRequired,
+   tweets: PropTypes.array,
+};
 
-export default ProfileTweets;
+const mapStateToProps = (state) => ({
+   profiles: state.profiles,
+});
+
+export default connect(mapStateToProps, { getProfileTweets })(ProfileTweets);

@@ -38,13 +38,13 @@ const SelectedProfile = ({
                   onIconClick={() => history.goBack()}
                   text={profile.name}
                />
-               <div className="profileWrapper feed">
+               <div className="profileWrapper ">
                   <div className="coverPhoto__container">
                      <div className="userImage__container">
                         <Avatar src={profile.avatar} alt="User profile" />
                      </div>
                   </div>
-                  <div className="profileTop__container">
+                  <div className="profileTop__container ">
                      <div className="profileButtons__container">
                         {!isOwnProfile && (
                            <React.Fragment>
@@ -59,7 +59,7 @@ const SelectedProfile = ({
                                        onMouseEnter={() => setIsHovering(true)}
                                        onMouseLeave={() => setIsHovering(false)}
                                     >
-                                       {isHovering ? 'Unfollow' : 'Follow'}
+                                       {isHovering ? 'Unfollow' : 'Following'}
                                     </Button>
                                  ) : (
                                     <Button
@@ -98,11 +98,11 @@ const SelectedProfile = ({
                         </div>
                      </div>
                   </div>
-                  <div className="profile__tabs">
+                  <div className="profile__tabs feed">
                      <ProfileTabs
-                        tweets={<ProfileTweets />}
-                        replies={<ProfileReplies />}
-                        likes={<ProfileLikes />}
+                        tweets={<ProfileTweets userId={profile._id} />}
+                        replies={<ProfileReplies userId={profile._id} />}
+                        likes={<ProfileLikes userId={profile._id} />}
                      />
                   </div>
                </div>

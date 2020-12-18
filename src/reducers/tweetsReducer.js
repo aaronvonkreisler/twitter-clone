@@ -13,6 +13,7 @@ const initialState = {
    tweets: [],
    tweet: null,
    loading: true,
+   tweetReady: false,
    error: {},
 };
 
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
             ...state,
             tweet: payload,
             loading: false,
+            tweetReady: true,
          };
       case TWEETS_ERROR:
          return {
