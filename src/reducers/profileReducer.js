@@ -17,8 +17,11 @@ const initialState = {
    isFollowing: false,
    isOwnProfile: false,
    tweets: [],
+   tweetsLoading: true,
    likedTweets: [],
+   likesLoading: true,
    replies: [],
+   repliesLoading: true,
    loading: true,
    error: {},
 };
@@ -59,25 +62,25 @@ export default function (state = initialState, action) {
             profile: payload.user,
             isFollowing: payload.isFollowing,
             isOwnProfile: payload.isOwnProfile,
-            loading: false,
+            tweetsReady: false,
          };
       case GET_PROFILE_TWEETS:
          return {
             ...state,
             tweets: payload,
-            loading: false,
+            tweetsLoading: false,
          };
       case GET_PROFILE_REPLIES:
          return {
             ...state,
             replies: payload,
-            loading: false,
+            repliesLoading: false,
          };
       case GET_PROFILE_LIKES:
          return {
             ...state,
             likedTweets: payload,
-            loading: false,
+            likesLoading: false,
          };
       case CLEAR_PROFILE:
          return {
@@ -85,6 +88,9 @@ export default function (state = initialState, action) {
             profile: null,
             isFollowing: false,
             isOwnProfile: false,
+            tweets: [],
+            likedTweets: [],
+            replies: [],
          };
       case PROFILE_ERROR:
          return {

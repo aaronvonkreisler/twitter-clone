@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar, Button } from '@material-ui/core';
@@ -123,9 +123,9 @@ const SelectedProfile = ({
                   </div>
                   <div className="profile__tabs feed">
                      <ProfileTabs
-                        tweets={<ProfileTweets userId={profile._id} />}
-                        replies={<ProfileReplies userId={profile._id} />}
-                        likes={<ProfileLikes userId={profile._id} />}
+                        tab1={<ProfileTweets userId={profile._id} />}
+                        tab2={<ProfileReplies userId={profile._id} />}
+                        tab3={<ProfileLikes userId={profile._id} />}
                      />
                   </div>
                </div>

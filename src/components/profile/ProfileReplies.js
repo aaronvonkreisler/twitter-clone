@@ -8,14 +8,14 @@ import Tweet from '../tweets/Tweet';
 const ProfileReplies = ({
    userId,
    getProfileReplies,
-   profiles: { loading, replies },
+   profiles: { repliesLoading, replies },
 }) => {
    useEffect(() => {
       getProfileReplies(userId);
    }, [getProfileReplies, userId]);
    return (
       <React.Fragment>
-         {loading ? (
+         {repliesLoading ? (
             <Spinner />
          ) : (
             replies.map((reply) => (

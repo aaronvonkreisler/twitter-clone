@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const ProfileTweets = ({
    getProfileTweets,
    userId,
-   profiles: { loading, tweets },
+   profiles: { tweetsLoading, tweets },
 }) => {
    useEffect(() => {
       getProfileTweets(userId);
@@ -18,7 +18,7 @@ const ProfileTweets = ({
 
    return (
       <React.Fragment>
-         {loading ? (
+         {tweetsLoading ? (
             <Spinner />
          ) : (
             tweets.map((tweet) => (
