@@ -66,7 +66,7 @@ const StyledTab = withStyles({
    },
 })((props) => <Tab disableRipple {...props} />);
 
-const ProfileTabs = ({ tweets, replies, likes }) => {
+const ProfileTabs = ({ tab1, tab2, tab3 }) => {
    const [value, setValue] = useState(0);
 
    const handleChange = (event, newValue) => {
@@ -91,13 +91,13 @@ const ProfileTabs = ({ tweets, replies, likes }) => {
             </TweeterTabs>
          </AppBar>
          <TabPanel value={value} index={0}>
-            {tweets}
+            {tab1}
          </TabPanel>
          <TabPanel value={value} index={1}>
-            {replies}
+            {tab2}
          </TabPanel>
          <TabPanel value={value} index={2}>
-            {likes}
+            {tab3}
          </TabPanel>
       </div>
    );
