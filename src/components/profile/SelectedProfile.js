@@ -17,6 +17,7 @@ import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
 import FollowingButton from '../layout/FollowingButton';
+import OutlineButton from '../layout/OutlineButton';
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
 
@@ -64,7 +65,15 @@ const SelectedProfile = ({
                   </div>
                   <div className="profileTop__container ">
                      <div className="profileButtons__container">
-                        {!isOwnProfile && (
+                        {isOwnProfile ? (
+                           <div>
+                              <OutlineButton
+                                 role="link"
+                                 path="/profile"
+                                 text="Edit Profile"
+                              />
+                           </div>
+                        ) : (
                            <React.Fragment>
                               <Link to={`/messages/${profile._id}`}>
                                  <FiMail />

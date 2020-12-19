@@ -10,12 +10,30 @@
    padding-left: 15px;
    position: absolute;
    bottom: -66px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.userImage__container .profilePictureButton {
+   position: absolute;
+   font-size: 25px;
+   color: #fff;
+   display: none;
+}
+
+.userImage__container:hover .profilePictureButton {
+   display: block;
 }
 
 .profileWrapper .userImage__container .MuiAvatar-circle {
    height: 132px;
    width: 132px;
    border: 4px solid var(--background-dark);
+}
+
+.profileWrapper .userImage__container .MuiIconButton-root:hover {
+   background-color: var(--twitter-button-hover);
 }
 
 .profileWrapper .profileButtons__container {

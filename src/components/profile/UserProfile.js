@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Avatar, Button } from '@material-ui/core';
+import { Avatar, Button, IconButton } from '@material-ui/core';
+import { FiCamera } from 'react-icons/fi';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
 import ProfileTabs from './ProfileTabs';
@@ -33,6 +34,9 @@ const UserProfile = ({
                            src={currentProfile.avatar}
                            alt="User profile"
                         />
+                        <IconButton className="profilePictureButton">
+                           <FiCamera />
+                        </IconButton>
                      </div>
                   </div>
                   <div className="profileTop__container">
