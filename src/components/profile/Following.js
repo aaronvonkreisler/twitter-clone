@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import { getUsersFollowing } from '../../actions/profileData';
 import FollowingButton from '../layout/FollowingButton';
+import UserPreview from '../layout/UserPreview';
 
 const Following = ({
    profileData: { following, followingLoading, screenName },
@@ -17,8 +18,10 @@ const Following = ({
          {followingLoading ? (
             <Spinner />
          ) : (
-            <div>
-               <FollowingButton onClick={() => alert('HIIII')} />
+            <div className="feed">
+               {following.map((user) => (
+                  <UserPreview user={user.user} key={user._id} />
+               ))}
             </div>
          )}
       </React.Fragment>
@@ -28,8 +31,8 @@ const Following = ({
 Following.propTypes = {
    following: PropTypes.array,
    followingLoading: PropTypes.bool,
-   getUsersFollowers: PropTypes.func.isRequired,
-   screenName: PropTypes.string.isRequired,
+   getUsersFollowers: PropTypes.func,
+   screenName: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

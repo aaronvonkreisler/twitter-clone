@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import { getUsersFollowers } from '../../actions/profileData';
+import UserPreview from '../layout/UserPreview';
 
 const Followers = ({
    profileData: { followers, followersLoading, screenName },
@@ -13,7 +14,15 @@ const Followers = ({
    }, [getUsersFollowers, screenName]);
    return (
       <React.Fragment>
-         {followersLoading ? <Spinner /> : <div>Success!!!!!!</div>}
+         {followersLoading ? (
+            <Spinner />
+         ) : (
+            <div className="feed">
+               {followers.map((user) => (
+                  <UserPreview user={user.user} key={user._id} />
+               ))}
+            </div>
+         )}
       </React.Fragment>
    );
 };
