@@ -1,36 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar } from '@material-ui/core';
+import { GoVerified } from 'react-icons/go';
 import FollowingButton from '../layout/FollowingButton';
+import OutlineButton from '../layout/OutlineButton';
 import '../../styles/design/userPreview.css';
 
-const UserPreview = ({ user, showBio }) => {
+const UserPreview = ({
+   user: { avatar, name, screen_name, _id, verified, followers },
+   auth,
+   showBio,
+}) => {
+   const [isOwnProfile] = useState(() => auth.user._id === _id);
+   const [isFollowing] = useState(() =>
+      followers.some((follow) => follow.user === auth.user._id)
+   );
+
    return (
       <div className="userPreview">
          <div className="userPreview__avatar">
-            <Avatar
-               src={user.avatar}
-               style={{ height: '49px', width: '49px' }}
-            />
+            <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
          </div>
          <div className="userPreview__details">
             {/* Top Row -- includes 2 columns - Col1. names, Col2. Following Button */}
             <div className="details__top">
                <div className="names">
                   <div className="displayName">
-                     <Link to={`/profile/${user.screen_name}`}>
-                        <span>{user.name}</span>
+                     <Link to={`/profile/${screen_name}`}>
+                        <span>{name}</span>
                      </Link>
+                     {verified && (
+                        <span className="verified-badge">
+                           <GoVerified />
+                        </span>
+                     )}
                   </div>
                   <div className="screenName">
-                     <Link to={`/profile/${user.screen_name}`}>
-                        <span>@{user.screen_name}</span>
+                     <Link to={`/profile/${screen_name}`}>
+                        <span>@{screen_name}</span>
                      </Link>
                   </div>
                </div>
                <div className="actions">
-                  <FollowingButton onClick={() => alert(user._id)} />
+                  {isOwnProfile ? (
+                     <OutlineButton
+                        text="Edit Profile"
+                        role="link"
+                        path="/profile"
+                     />
+                  ) : isFollowing ? (
+                     <FollowingButton onClick={() => alert(_id, name)} />
+                  ) : (
+                     <OutlineButton
+                        text="Follow"
+                        role="button"
+                        onClick={() => alert(_id, name)}
+                     />
+                  )}
                </div>
             </div>
             {/* Bottom row. Includes optional bio */}
@@ -56,4 +84,8 @@ UserPreview.defaultProps = {
    showBio: true,
 };
 
-export default UserPreview;
+const mapStateToProps = (state) => ({
+   auth: state.auth,
+});
+
+export default connect(mapStateToProps)(UserPreview);

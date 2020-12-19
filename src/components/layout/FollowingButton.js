@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import '../../styles/design/button.css';
 
-const FollowingButton = ({ onClick }) => {
+const FollowingButton = ({ onClick, height30 }) => {
    const [isHovering, setIsHovering] = useState(false);
    return (
-      <div>
+      <React.Fragment>
          <Button
             className="follow-button"
             fullWidth
@@ -16,12 +16,13 @@ const FollowingButton = ({ onClick }) => {
          >
             {isHovering ? 'Unfollow' : 'Following'}
          </Button>
-      </div>
+      </React.Fragment>
    );
 };
 
 FollowingButton.propTypes = {
    onClick: PropTypes.func.isRequired,
+   height30: PropTypes.bool,
 };
 
 export default FollowingButton;

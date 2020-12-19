@@ -19,7 +19,7 @@ const Followers = ({
          ) : (
             <div className="feed">
                {followers.map((user) => (
-                  <UserPreview user={user.user} key={user._id} />
+                  <UserPreview user={user.user} key={user._id} height30 />
                ))}
             </div>
          )}
