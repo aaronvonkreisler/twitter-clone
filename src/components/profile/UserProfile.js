@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,9 +9,16 @@ import ProfileTabs from './ProfileTabs';
 import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
+import { prepareProfileData } from '../../actions/profileData';
 import '../../styles/design/profile.css';
 
-const UserProfile = ({ profiles: { currentProfile, loading } }) => {
+const UserProfile = ({
+   profiles: { currentProfile, loading },
+   prepareProfileData,
+}) => {
+   useEffect(() => {
+      prepareProfileData(currentProfile);
+   }, [prepareProfileData, currentProfile]);
    return (
       <React.Fragment>
          {loading || currentProfile === null ? (
@@ -94,4 +101,4 @@ const mapStateToProps = (state) => ({
    auth: state.auth,
    profiles: state.profiles,
 });
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps, { prepareProfileData })(UserProfile);

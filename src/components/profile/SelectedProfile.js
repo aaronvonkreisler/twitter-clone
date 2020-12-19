@@ -26,7 +26,14 @@ const SelectedProfile = ({
    unfollowUser,
    followUser,
    match,
-   profiles: { profile, loading, isFollowing, isOwnProfile },
+   profiles: {
+      profile,
+      loading,
+      isFollowing,
+      isOwnProfile,
+      followersCount,
+      followingCount,
+   },
    auth,
 }) => {
    useEffect(() => {
@@ -95,7 +102,7 @@ const SelectedProfile = ({
                            >
                               <div className="item">
                                  <span className="number">
-                                    {profile.following.length}
+                                    {followingCount}
                                  </span>
                                  <span className="text">Following</span>
                               </div>
@@ -105,7 +112,7 @@ const SelectedProfile = ({
                            >
                               <div className="item">
                                  <span className="number">
-                                    {profile.followers.length}
+                                    {followersCount}
                                  </span>
                                  <span className="text">Followers</span>
                               </div>

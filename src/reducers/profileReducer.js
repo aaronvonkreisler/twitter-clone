@@ -16,6 +16,8 @@ const initialState = {
    profile: null,
    isFollowing: false,
    isOwnProfile: false,
+   followersCount: 0,
+   followingCount: 0,
    tweets: [],
    tweetsLoading: true,
    likedTweets: [],
@@ -41,19 +43,13 @@ export default function (state = initialState, action) {
       case FOLLOW_USER:
          return {
             ...state,
-            profile: {
-               ...state.profile,
-               followers: payload,
-            },
+            followersCount: payload.length,
             isFollowing: true,
          };
       case UNFOLLOW_USER:
          return {
             ...state,
-            profile: {
-               ...state.profile,
-               followers: payload,
-            },
+            followersCount: payload.length,
             isFollowing: false,
          };
       case SELECTED_USER_LOADED:
@@ -62,6 +58,8 @@ export default function (state = initialState, action) {
             profile: payload.user,
             isFollowing: payload.isFollowing,
             isOwnProfile: payload.isOwnProfile,
+            followersCount: payload.user.followers.length,
+            followingCount: payload.user.following.length,
             tweetsReady: false,
          };
       case GET_PROFILE_TWEETS:

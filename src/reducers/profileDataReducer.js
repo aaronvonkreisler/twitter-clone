@@ -4,6 +4,7 @@ import {
    FETCH_USERS_FOLLOWING,
    FETCH_USERS_FOLLOWERS,
    CLEAR_PROFILE_DATA,
+   PREPARE_PROFILE_DATA,
 } from '../actions/types';
 
 const initialState = {
@@ -29,6 +30,13 @@ export default function (state = initialState, action) {
             screenName: payload.screenName,
             nameLoading: false,
          };
+      case PREPARE_PROFILE_DATA:
+         return {
+            ...state,
+            name: payload.name,
+            screenName: payload.screen_name,
+            nameLoading: false,
+         };
       case FETCH_USERS_FOLLOWERS:
          return {
             ...state,
@@ -51,7 +59,6 @@ export default function (state = initialState, action) {
             ...state,
             name: null,
             screenName: null,
-            nameLoading: false,
             followers: [],
             followersLoading: false,
             following: [],

@@ -6,15 +6,18 @@ import { Avatar } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import FollowingButton from '../layout/FollowingButton';
 import OutlineButton from '../layout/OutlineButton';
+import { followUser, unfollowUser } from '../../actions/profile';
 import '../../styles/design/userPreview.css';
 
 const UserPreview = ({
    user: { avatar, name, screen_name, _id, verified, followers },
    auth,
    showBio,
+   followUser,
+   unfollowUser,
 }) => {
    const [isOwnProfile] = useState(() => auth.user._id === _id);
-   const [isFollowing] = useState(() =>
+   const [isFollowing, setIsFollowing] = useState(() =>
       followers.some((follow) => follow.user === auth.user._id)
    );
 
@@ -51,12 +54,20 @@ const UserPreview = ({
                         path="/profile"
                      />
                   ) : isFollowing ? (
-                     <FollowingButton onClick={() => alert(_id, name)} />
+                     <FollowingButton
+                        onClick={() => {
+                           unfollowUser(_id);
+                           setIsFollowing(false);
+                        }}
+                     />
                   ) : (
                      <OutlineButton
                         text="Follow"
                         role="button"
-                        onClick={() => alert(_id, name)}
+                        onClick={() => {
+                           followUser(_id);
+                           setIsFollowing(true);
+                        }}
                      />
                   )}
                </div>
@@ -88,4 +99,6 @@ const mapStateToProps = (state) => ({
    auth: state.auth,
 });
 
-export default connect(mapStateToProps)(UserPreview);
+export default connect(mapStateToProps, { followUser, unfollowUser })(
+   UserPreview
+);

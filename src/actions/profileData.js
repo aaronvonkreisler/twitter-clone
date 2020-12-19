@@ -4,6 +4,7 @@ import {
    FETCH_USERS_FOLLOWERS,
    FETCH_USERS_FOLLOWING,
    CLEAR_PROFILE_DATA,
+   PREPARE_PROFILE_DATA,
 } from './types';
 
 export const clearProfileDataState = () => ({
@@ -39,3 +40,8 @@ export const getUsersFollowing = (username) => async (dispatch) => {
       });
    }
 };
+
+export const prepareProfileData = (profile) => ({
+   type: PREPARE_PROFILE_DATA,
+   payload: profile,
+});
