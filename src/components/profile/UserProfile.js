@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import ProfileTabs from './ProfileTabs';
 import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
+import ProfilePictureModal from '../forms/ProfilePictureModal';
 import { prepareProfileData } from '../../actions/profileData';
 import '../../styles/design/profile.css';
 
@@ -17,6 +18,8 @@ const UserProfile = ({
    profiles: { currentProfile, loading },
    prepareProfileData,
 }) => {
+   const [modalOpen, setModalOpen] = useState(false);
+
    useEffect(() => {
       prepareProfileData(currentProfile);
    }, [prepareProfileData, currentProfile]);
@@ -26,6 +29,11 @@ const UserProfile = ({
             <Spinner />
          ) : (
             <React.Fragment>
+               <ProfilePictureModal
+                  open={modalOpen}
+                  setOpen={setModalOpen}
+                  defaultPicture={currentProfile.avatar}
+               />
                <Header leftIcon text={currentProfile.name} />
                <div className="profileWrapper ">
                   <div className="coverPhoto__container">
@@ -34,7 +42,10 @@ const UserProfile = ({
                            src={currentProfile.avatar}
                            alt="User profile"
                         />
-                        <IconButton className="profilePictureButton">
+                        <IconButton
+                           className="profilePictureButton"
+                           onClick={() => setModalOpen(true)}
+                        >
                            <FiCamera />
                         </IconButton>
                      </div>

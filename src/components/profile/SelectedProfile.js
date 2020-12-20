@@ -18,6 +18,7 @@ import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
 import FollowingButton from '../layout/FollowingButton';
 import OutlineButton from '../layout/OutlineButton';
+
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
 
