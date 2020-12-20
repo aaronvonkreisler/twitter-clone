@@ -59,7 +59,15 @@ const SelectedProfile = ({
             <React.Fragment>
                <Header leftIcon text={profile.name} />
                <div className="profileWrapper ">
-                  <div className="coverPhoto__container">
+                  <div className="coverPhoto__section">
+                     <div className="coverPhoto__container">
+                        {profile.backgroundPicture && (
+                           <img
+                              src={profile.backgroundPicture}
+                              alt="Background"
+                           />
+                        )}
+                     </div>
                      <div className="userImage__container">
                         <Avatar src={profile.avatar} alt="User profile" />
                      </div>

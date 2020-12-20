@@ -1,6 +1,6 @@
-.profileWrapper .coverPhoto__container {
+.profileWrapper .coverPhoto__section {
    height: 199px;
-   background-color: var(--twitter-color);
+   background-color: var(--text-gray);
    position: relative;
 }
 
@@ -15,17 +15,30 @@
    justify-content: center;
 }
 
-.userImage__container .profilePictureButton {
+.userImage__container .profilePictureButton,
+.coverPhoto__container .coverPhoto__button {
    position: absolute;
    font-size: 25px;
    color: #fff;
    display: none;
 }
 
-.userImage__container:hover .profilePictureButton {
+.userImage__container:hover .profilePictureButton,
+.coverPhoto__section:hover .coverPhoto__button {
    display: block;
 }
 
+.coverPhoto__container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+}
+.coverPhoto__container img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
 .profileWrapper .userImage__container .MuiAvatar-circle {
    height: 132px;
    width: 132px;

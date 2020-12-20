@@ -11,14 +11,17 @@ import ProfileTweets from './ProfileTweets';
 import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
 import ProfilePictureModal from '../forms/ProfilePictureModal';
+import BackgroundPictureModal from '../forms/BackgroundPictureModal';
 import { prepareProfileData } from '../../actions/profileData';
 import '../../styles/design/profile.css';
 
 const UserProfile = ({
    profiles: { currentProfile, loading },
    prepareProfileData,
+   auth: { user },
 }) => {
-   const [modalOpen, setModalOpen] = useState(false);
+   const [avatarModalOpen, setAvatarModalOpen] = useState(false);
+   const [coverModalOpen, setCoverModalOpen] = useState(false);
 
    useEffect(() => {
       prepareProfileData(currentProfile);
@@ -30,13 +33,33 @@ const UserProfile = ({
          ) : (
             <React.Fragment>
                <ProfilePictureModal
-                  open={modalOpen}
-                  setOpen={setModalOpen}
+                  open={avatarModalOpen}
+                  setOpen={setAvatarModalOpen}
                   defaultPicture={currentProfile.avatar}
+                  userId={user._id}
+               />
+               <BackgroundPictureModal
+                  open={coverModalOpen}
+                  setOpen={setCoverModalOpen}
+                  defaultPicture={currentProfile.backgroundPicture}
                />
                <Header leftIcon text={currentProfile.name} />
-               <div className="profileWrapper ">
-                  <div className="coverPhoto__container">
+               <div className="profileWrapper">
+                  <div className="coverPhoto__section">
+                     <div className="coverPhoto__container">
+                        {currentProfile.backgroundPicture && (
+                           <img
+                              src={currentProfile.backgroundPicture}
+                              alt="Background"
+                           />
+                        )}
+                        <IconButton
+                           className="coverPhoto__button"
+                           onClick={() => setCoverModalOpen(true)}
+                        >
+                           <FiCamera />
+                        </IconButton>
+                     </div>
                      <div className="userImage__container">
                         <Avatar
                            src={currentProfile.avatar}
@@ -44,7 +67,7 @@ const UserProfile = ({
                         />
                         <IconButton
                            className="profilePictureButton"
-                           onClick={() => setModalOpen(true)}
+                           onClick={() => setAvatarModalOpen(true)}
                         >
                            <FiCamera />
                         </IconButton>

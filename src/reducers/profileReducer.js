@@ -1,7 +1,9 @@
 import {
    GET_CURRENT_USERS_PROFILE,
    PROFILE_ERROR,
-   UPLOAD_PROFILE_PICTURE,
+   UPLOAD_AVATAR_SUCCESS,
+   UPLOAD_COVER_PHOTO_SUCCESS,
+   UPLOAD_PHOTO_ERROR,
    SELECTED_USER_LOADED,
    GET_PROFILE_TWEETS,
    GET_PROFILE_REPLIES,
@@ -34,7 +36,8 @@ export default function (state = initialState, action) {
 
    switch (type) {
       case GET_CURRENT_USERS_PROFILE:
-      case UPLOAD_PROFILE_PICTURE:
+      case UPLOAD_AVATAR_SUCCESS:
+      case UPLOAD_COVER_PHOTO_SUCCESS:
          return {
             ...state,
             currentProfile: payload,
@@ -100,6 +103,11 @@ export default function (state = initialState, action) {
             tweets: [],
             likedTweets: [],
             replies: [],
+         };
+      case UPLOAD_PHOTO_ERROR:
+         return {
+            ...state,
+            error: payload,
          };
       default:
          return state;

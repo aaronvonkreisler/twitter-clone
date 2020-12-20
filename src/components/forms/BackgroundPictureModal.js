@@ -12,17 +12,17 @@ import {
 } from '@material-ui/core';
 import { FiCamera } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
-import { uploadProfilePicture } from '../../actions/profile';
+import { uploadCoverPicture } from '../../actions/profile';
 import OutlineButton from '../layout/OutlineButton';
 import '../../styles/design/utils.css';
 import 'cropperjs/dist/cropper.css';
 import '../../styles/design/profilePictureModal.css';
 
-const ProfilePictureModal = ({
+const BackgroundPictureModal = ({
    open,
    setOpen,
    defaultPicture,
-   uploadProfilePicture,
+   uploadCoverPicture,
    userId,
 }) => {
    const [image, setImage] = useState(defaultPicture);
@@ -55,7 +55,7 @@ const ProfilePictureModal = ({
       canvas.toBlob((blob) => {
          const formData = new FormData();
          formData.append('image', blob);
-         uploadProfilePicture(formData, userId);
+         uploadCoverPicture(formData, userId);
       });
    };
    return (
@@ -74,7 +74,7 @@ const ProfilePictureModal = ({
                         <CgClose />
                      </div>
                      <div className="text">
-                        <span>Edit profile picture</span>
+                        <span>Edit cover photo</span>
                      </div>
                   </div>
                   <div className="profilePicture__right">
@@ -129,9 +129,10 @@ const ProfilePictureModal = ({
    );
 };
 
-ProfilePictureModal.propTypes = {
+BackgroundPictureModal.propTypes = {
    open: PropTypes.bool.isRequired,
    setOpen: PropTypes.func.isRequired,
+   uploadCoverPicture: PropTypes.func.isRequired,
 };
 
-export default connect(null, { uploadProfilePicture })(ProfilePictureModal);
+export default connect(null, { uploadCoverPicture })(BackgroundPictureModal);

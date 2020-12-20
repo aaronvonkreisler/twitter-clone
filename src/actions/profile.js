@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
    GET_CURRENT_USERS_PROFILE,
    PROFILE_ERROR,
-   UPLOAD_PROFILE_PICTURE,
+   UPLOAD_AVATAR_SUCCESS,
    SELECTED_USER_LOADED,
    GET_PROFILE_LIKES,
    GET_PROFILE_REPLIES,
@@ -11,8 +11,12 @@ import {
    FOLLOW_USER,
    UNFOLLOW_USER,
    CLEAR_PROFILE,
+   UPLOAD_PHOTO_ERROR,
    SET_NAME_IN_PROFILE_DATA_STATE,
+   UPLOAD_COVER_PHOTO_SUCCESS,
 } from './types';
+
+import { loadUser } from './auth';
 
 export const getCurrentUsersProfile = () => async (dispatch) => {
    try {
@@ -138,24 +142,34 @@ export const clearProfileState = () => ({
    type: CLEAR_PROFILE,
 });
 
-export const uploadProfilePicture = (file) => async (dispatch) => {
-   //https://tweeter-v1-api.herokuapp.com/user/avatar
-   //
+export const uploadProfilePicture = (formData, userId) => async (dispatch) => {
    try {
-      const fd = new FormData();
-      fd.append('image', file, file.name);
-      const res = await axios.post(
-         'https://tweeter-v1-api.herokuapp.com/user/avatar',
-         fd
-      );
-      console.log(res);
+      const res = await api.put('/api/user/avatar', formData);
       dispatch({
-         type: UPLOAD_PROFILE_PICTURE,
+         type: UPLOAD_AVATAR_SUCCESS,
+         payload: res.data,
+      });
+
+      dispatch(loadUser());
+      dispatch(getProfileTweets(userId));
+   } catch (err) {
+      dispatch({
+         type: UPLOAD_PHOTO_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
+export const uploadCoverPicture = (formData) => async (dispatch) => {
+   try {
+      const res = await api.put('/api/user/background', formData);
+      dispatch({
+         type: UPLOAD_COVER_PHOTO_SUCCESS,
          payload: res.data,
       });
    } catch (err) {
       dispatch({
-         type: PROFILE_ERROR,
+         type: UPLOAD_PHOTO_ERROR,
          payload: { msg: err.response.statusText, status: err.response.status },
       });
    }
