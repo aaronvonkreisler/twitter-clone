@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+
 import { AppBar, Tabs, Tab, withStyles } from '@material-ui/core';
 
 const TabPanel = (props) => {

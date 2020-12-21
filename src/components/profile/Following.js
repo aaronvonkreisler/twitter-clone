@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import { getUsersFollowing } from '../../actions/profileData';
-import FollowingButton from '../layout/FollowingButton';
+
 import UserPreview from '../layout/UserPreview';
 
 const Following = ({

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { CgClose } from 'react-icons/cg';
 import {
    Dialog,
-   DialogContent,
    DialogTitle,
    useMediaQuery,
    useTheme,

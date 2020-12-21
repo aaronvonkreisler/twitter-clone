@@ -32,7 +32,9 @@ const ProfileFollowing = ({
    );
 };
 
-ProfileFollowing.propTypes = {};
+ProfileFollowing.propTypes = {
+   clearProfileDataState: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
    profileData: state.profileData,

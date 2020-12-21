@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTimelineTweets } from '../../actions/tweets';
-import NoTweets from '../tweets/NoTweets';
 import Tweet from '../tweets/Tweet';
 import Spinner from '../layout/Spinner';
 import ReplyModal from '../forms/ReplyModal';
