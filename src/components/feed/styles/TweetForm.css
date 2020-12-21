@@ -1,29 +1,106 @@
-.tweetForm > form {
+.tweetForm {
    display: flex;
    flex-direction: column;
+   align-items: stretch;
 }
 
-.tweetForm__input {
+.rightSide__wrapper > form {
+   display: block;
+   max-width: 100%;
+   width: 100%;
+}
+
+.tweetForm__wrapper {
    display: flex;
-   padding: 20px;
+   flex-direction: row;
+   padding-left: 15px;
+   padding-right: 15px;
 }
 
-.tweetForm__input > input {
-   flex: 1;
-   margin-left: 20px;
-   font-size: 20px;
-   border: none;
-   border-style: none;
-   appearance: none;
-   background-color: var(--background-dark);
-   box-sizing: border-box;
+.tweetForm__wrapper .avatar__wrapper {
+   display: flex;
+   flex-direction: column;
+   flex-basis: 40px;
+   flex-grow: 0;
+   align-items: stretch;
+   margin-right: 10px;
+   padding-top: 5px;
+}
+
+.tweetForm__wrapper .rightSide__wrapper {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   justify-content: center;
+   align-items: flex-start;
+   padding-top: 5px;
+}
+
+.rightSide__wrapper .textEditor__root {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: stretch;
+   overflow-wrap: break-word;
+   white-space: pre-wrap;
+   font-size: 18px;
    color: #fff;
+   width: 100%;
 }
 
-.tweetForm__input > input:focus {
-   border: none;
-   border-style: none;
-   outline: none;
+.textEditor__root .textEditor {
+   display: inline-flex;
+   width: 100%;
+   padding: 10px;
+}
+
+.textEditor .public-DraftEditorPlaceholder-root {
+   width: 100%;
+}
+.textEditor__root .textEditor .public-DraftEditorPlaceholder-inner {
+   position: absolute;
+   pointer-events: none;
+   color: var(--text-gray);
+}
+
+.textEditor .DraftEditor-root {
+   width: 100%;
+}
+
+.DraftEditor-editorContainer,
+.DraftEditor-root,
+.public-DraftEditor-content {
+   height: inherit;
+   text-align: initial;
+   min-height: inherit;
+   max-height: inherit;
+   overflow: auto;
+}
+
+.toolbar__root {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   margin-left: 2px;
+   margin-right: 2px;
+}
+
+.toolbar__addOns {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 10px;
+}
+
+.toolbar__submit {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   margin-top: 10px;
 }
 
 .tweetForm__button {
@@ -40,39 +117,23 @@
    opacity: 0.5 !important;
 }
 
+.textEditor .public-DraftStyleDefault-block {
+   overflow: hidden;
+}
+
 .tweetForm .tweetForm__bottom-border {
    border-top: 1px solid var(--border-color);
    border-bottom: 1px solid var(--border-color);
    height: 10px;
    background-color: rgb(25, 39, 52);
    width: 100%;
+   margin-top: 15px;
 }
 
-.tweetForm .tweetForm_actions {
-   padding: 10px;
-}
-
-.counterProgress {
+.toolbar__root .counter {
    margin-right: 10px;
-}
-
-.emojiButton {
-   margin-left: 15px;
-}
-
-.tweetForm__input > .DraftEditor-root {
-   font-size: 20px;
-   margin-left: 10px;
-   width: 89%;
-}
-
-.public-DraftEditorPlaceholder-root {
-   color: var(--text-gray);
-}
-
-.public-DraftEditorPlaceholder-inner {
-   position: absolute;
-   pointer-events: none;
+   margin-top: auto;
+   margin-bottom: auto;
 }
 
 button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
@@ -103,24 +164,3 @@ h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
    font-weight: 700;
    color: #fff;
 }
-
-.counter {
-   display: inline-flex;
-   margin: auto;
-   color: var(--text-error);
-}
-
-.counter-hidden {
-   display: none;
-}
-
-/* span.draftJsUndoPlugin__counter__2wZYK {
-   display: none;
-} */
-
-/* .draftJsEmojiPlugin__emojiSelectPopover__1J1s0
-   .draftJsEmojiPlugin__emojiSelectPopoverGroups__35t9m,
-.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
-   height: 400px;
-   width: calc(290px);
-} */

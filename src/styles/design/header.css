@@ -8,14 +8,17 @@
    background-color: var(--background-dark);
 }
 
+.bottom-border {
+   border-bottom: 1px solid var(--border-color);
+}
+
 .header__root-left-icon {
    position: sticky;
    top: 0;
-   z-index: 3;
-   border-bottom: 1px solid var(--border-color);
    height: 53px;
    padding-left: 15px;
    padding-right: 15px;
+   z-index: 3;
    background-color: var(--background-dark);
 }
 
@@ -37,6 +40,7 @@
    align-self: stretch;
    justify-content: center;
    align-items: flex-start;
+   cursor: pointer;
 }
 
 .icon__root .icon__hover-box {

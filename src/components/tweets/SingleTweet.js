@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Moment from 'react-moment';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
@@ -29,6 +29,8 @@ import {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
+   reportTweet,
+   retweet,
 } from '../../actions/tweets';
 
 import '../../styles/design/tweet.css';
@@ -72,15 +74,21 @@ const convertToEditorState = (editorContent) => {
 
 //--------------- End Draft.js Editor config ---------------------------------
 
-const Tweet = ({
+const SingleTweet = ({
    tweet,
    auth,
    deleteTweet,
    favoriteTweet,
    removeFavorite,
    displayNumbers,
+   onCommentClick,
+   reportTweet,
+   retweet,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
+   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
+      ? 'retweet__active'
+      : '';
 
    const open = Boolean(anchorEl);
 
@@ -102,19 +110,23 @@ const Tweet = ({
    };
 
    const renderFavoriteButton = () => {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && auth.user !== null) {
          if (
             tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
             0
          ) {
-            return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
+            return (
+               <BsHeartFill
+                  style={{ color: 'rgb(224, 36, 94)', fontSize: '18px' }}
+               />
+            );
          }
       }
-      return <BsHeart />;
+      return <BsHeart style={{ fontSize: '18px' }} />;
    };
 
    const renderMenuItems = () => {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && tweet.user !== undefined) {
          return (
             <div>
                {!auth.loading && tweet.user._id === auth.user._id ? (
@@ -136,7 +148,9 @@ const Tweet = ({
                      </MenuItem>
                   </React.Fragment>
                ) : (
-                  <MenuItem>Report Tweet</MenuItem>
+                  <MenuItem onClick={() => reportTweet()}>
+                     Report Tweet
+                  </MenuItem>
                )}
             </div>
          );
@@ -172,7 +186,9 @@ const Tweet = ({
                      <div className="flex flex-row justify-between align-start">
                         <div className="flex flex-col w-max-100">
                            <div className="flex flex-row w-max-100 align-center user_name">
-                              <span>{tweet.user.name}</span>
+                              <Link to={`/profile/${tweet.user.screen_name}`}>
+                                 <span>{tweet.user.name}</span>
+                              </Link>
                               {tweet.user.verified && (
                                  <span className="verified-badge">
                                     <GoVerified />
@@ -180,7 +196,9 @@ const Tweet = ({
                               )}
                            </div>
                            <div className="flex flex-row mw-100 align-center display_name">
-                              <span>@{tweet.user.screen_name}</span>
+                              <Link to={`/profile/${tweet.user.screen_name}`}>
+                                 <span>@{tweet.user.screen_name}</span>
+                              </Link>
                            </div>
                         </div>
                         <div
@@ -211,54 +229,67 @@ const Tweet = ({
                </div>
                <div className="singleTweet__metrics-wrapper">
                   <div className="metrics">
-                     {tweet.retweet_count > 0 && (
+                     {tweet.retweetUsers.length > 0 && (
                         <div className="metrics-item">
-                           <span className="number">{tweet.retweet_count}</span>
+                           <span className="number">
+                              {tweet.retweetUsers.length}
+                           </span>
                            <span className="text">
-                              {tweet.retweet_count === 1
+                              {tweet.retweetUsers.length === 1
                                  ? 'Retweet'
                                  : 'Retweets'}
                            </span>
                         </div>
                      )}
-                     {tweet.favorites_count > 0 && (
+                     {tweet.favorites.length > 0 && (
                         <div className="metrics-item">
                            <span className="number">
-                              {tweet.favorites_count}
+                              {tweet.favorites.length}
                            </span>
                            <span className="text">
-                              {tweet.favorites_count === 1 ? 'Like' : 'Likes'}
+                              {tweet.favorites.length === 1 ? 'Like' : 'Likes'}
                            </span>
                         </div>
                      )}
-                     {tweet.replies_count > 0 && (
+                     {tweet.replies.length > 0 && (
                         <div className="metrics-item">
-                           <span className="number">{tweet.replies_count}</span>
+                           <span className="number">
+                              {tweet.replies.length}
+                           </span>
                            <span className="text">
-                              {tweet.replies_count === 1 ? 'Reply' : 'Replies'}
+                              {tweet.replies.length === 1 ? 'Reply' : 'Replies'}
                            </span>
                         </div>
                      )}
                   </div>
                </div>
                {/* Toolbar area - like, retweet, comment buttons */}
-               <div className="tweet__bottom-actionArea flex flex-row justify-between ml-15 my-10">
+               <div className="tweet__bottom-actionArea bottom-center flex flex-row justify-between ml-15 my-10">
                   <div className="tweetAction-item">
                      <div className="flex flex-col justify-center">
-                        <div className="action-wrapper comment_wrapper">
+                        <div
+                           className="action-wrapper comment_wrapper"
+                           onClick={() => onCommentClick(tweet)}
+                        >
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay comment_display" />
-                              <BsChat />
+                              <BsChat style={{ fontSize: '18px' }} />
                            </div>
                         </div>
                      </div>
                   </div>
                   <div className="tweetAction-item">
                      <div className="flex flex-col justify-center">
-                        <div className="action-wrapper retweet_wrapper">
+                        <div
+                           className="action-wrapper retweet_wrapper"
+                           onClick={() => retweet(tweet._id)}
+                        >
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay retweet_display" />
-                              <AiOutlineRetweet />
+                              <AiOutlineRetweet
+                                 style={{ fontSize: '18px' }}
+                                 className={retweetActiveClass}
+                              />
                            </div>
                         </div>
                      </div>
@@ -281,7 +312,7 @@ const Tweet = ({
                         <div className="action-wrapper comment_wrapper">
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay comment_display" />
-                              <BsUpload />
+                              <BsUpload style={{ fontSize: '18px' }} />
                            </div>
                         </div>
                      </div>
@@ -293,12 +324,13 @@ const Tweet = ({
    );
 };
 
-Tweet.propTypes = {
+SingleTweet.propTypes = {
    tweet: PropTypes.object.isRequired,
    auth: PropTypes.object.isRequired,
    deleteTweet: PropTypes.func.isRequired,
    favoriteTweet: PropTypes.func.isRequired,
    removeFavorite: PropTypes.func.isRequired,
+   retweet: PropTypes.func.isRequired,
    displayMetrics: PropTypes.bool,
 };
 
@@ -309,4 +341,6 @@ export default connect(mapStateToProps, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
-})(Tweet);
+   reportTweet,
+   retweet,
+})(SingleTweet);

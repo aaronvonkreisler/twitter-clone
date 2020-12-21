@@ -1,16 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from '../layout/Header';
+import { addTweet } from '../../actions/tweets';
 import TweetForm from '../feed/TweetForm';
 import Feed from '../feed/Feed';
 
-const Home = () => {
+const Home = ({ addTweet }) => {
+   const onFormSubmit = (content) => {
+      addTweet({ content });
+   };
+
    return (
       <React.Fragment>
          <Header text="Home" rightIcon />
-         <TweetForm />
+         <TweetForm
+            placeholder="What's happening?"
+            bottomBorder
+            onFormSubmit={onFormSubmit}
+         />
          <Feed />
       </React.Fragment>
    );
 };
 
-export default Home;
+export default connect(null, { addTweet })(Home);

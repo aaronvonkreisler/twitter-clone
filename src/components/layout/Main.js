@@ -1,6 +1,8 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Grid, makeStyles, Hidden } from '@material-ui/core';
+import { loadUser } from '../../actions/auth';
+import { getCurrentUsersProfile } from '../../actions/profile';
 import Sidebar from '../sidebar/Sidebar';
 import Widgets from '../widgets/Widgets';
 
@@ -24,8 +26,13 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-const Main = ({ children }) => {
+const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
    const classes = useStyles();
+
+   useEffect(() => {
+      loadUser();
+      getCurrentUsersProfile();
+   }, [loadUser, getCurrentUsersProfile]);
    return (
       <Grid container className={classes.root}>
          <Grid item xs={false} sm={2} md={2} lg={2} xl={4}>
@@ -54,4 +61,4 @@ const Main = ({ children }) => {
    );
 };
 
-export default Main;
+export default connect(null, { loadUser, getCurrentUsersProfile })(Main);

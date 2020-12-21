@@ -1,0 +1,70 @@
+.profilePicture__title {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.profilePicture__title .profilePicture__left {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.profilePicture__title .profilePicture__right {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.profilePicture__title .profilePicture__left .icon {
+   font-size: 22px;
+   font-weight: 400px;
+   color: var(--twitter-color);
+
+   cursor: pointer;
+   display: inline-flex;
+   height: 34.75px;
+   width: 34.75px;
+
+   border-radius: 9999px;
+   background-color: transparent;
+}
+.profilePicture__title .profilePicture__left .icon svg {
+   margin: auto;
+}
+
+.profilePicture__title .profilePicture__left .icon:hover {
+   background-color: var(--twitter-button-hover);
+   transition: background-color 0.2s ease-in;
+}
+
+.profilePicture__title .profilePicture__left .text {
+   color: #fff;
+   margin-left: 10px;
+   font-size: 20px;
+}
+.profilePictureWrapper {
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+.profilePictureWrapper .profilePicture__input {
+   display: none;
+}
+
+.profilePictureWrapper .uploadButton {
+   color: #fff;
+}
+
+.profilePictureWrapper .MuiIconButton-root:hover {
+   background-color: var(--twitter-button-hover);
+}
+
+.profilePictureWrapper .uploadButtonWrapper {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 5px;
+}

@@ -1,0 +1,38 @@
+.follow-button {
+   background-color: var(--twitter-color) !important;
+   border-radius: 9999px !important;
+   text-transform: inherit !important;
+   color: #fff !important;
+   font-weight: 700 !important;
+   line-height: inherit !important;
+}
+
+.btn-h-30 {
+   max-height: 30px !important;
+}
+
+.follow-button:hover {
+   background-color: var(--text-error) !important;
+   transition: background-color 0.2s ease-in;
+}
+
+.tweet-button-outline {
+   background-color: rgb(22, 32, 42) !important;
+   border-radius: 9999px !important;
+   font-weight: 700 !important;
+   color: var(--twitter-color) !important;
+   border: 1px solid var(--twitter-color) !important;
+   text-transform: inherit !important;
+   line-height: inherit !important;
+}
+
+.tweet-button-outline:hover {
+   background-color: rgba(29, 161, 242, 0.1) !important;
+   color: #1da1f2 !important;
+   transition-property: background-color, box-shadow !important;
+   transition: 0.2s !important;
+}
+
+.tweet-button-outline .MuiButton-label {
+   color: var(--twitter-color) !important;
+}

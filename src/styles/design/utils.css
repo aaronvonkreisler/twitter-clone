@@ -3,6 +3,7 @@
    border-radius: 9999px !important;
    text-transform: inherit !important;
    color: #fff !important;
+   font-weight: 700 !important;
 }
 
 .tweet-button:hover {
@@ -14,6 +15,7 @@
 .tweet-button-outline {
    background-color: rgb(22, 32, 42) !important;
    border-radius: 9999px !important;
+   font-weight: 700 !important;
    color: var(--twitter-color) !important;
    border: 1px solid var(--twitter-color) !important;
    text-transform: inherit !important;
@@ -121,6 +123,10 @@
    justify-content: flex-start;
 }
 
+.justify-end {
+   justify-content: flex-end;
+}
+
 .justify-between {
    justify-content: space-between;
 }
@@ -135,4 +141,8 @@
 
 .d-inline-flex {
    display: inline-flex;
+}
+
+.font-large {
+   font-size: 18px;
 }

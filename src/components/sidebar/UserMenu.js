@@ -24,7 +24,7 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
 
    return (
       !loading &&
-      user && (
+      user !== null && (
          <div className="sidebar__userMenu">
             <Menu
                anchorOrigin={{
@@ -35,6 +35,7 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
                keepMounted
                open={Boolean(anchorEl)}
                onClose={handleClose}
+               id="sidebar-menu"
             >
                <MenuItem>
                   <div className="list-item__root">

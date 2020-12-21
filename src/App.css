@@ -1,4 +1,4 @@
-body {
+:root {
    --twitter-color: rgb(29, 161, 242, 1);
    --twitter-background: #e6ecf0;
    --tweet-hover: rgba(255, 255, 255, 0.03);
@@ -13,12 +13,8 @@ body {
 
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-   background-color: var(--background-dark);
-   background: var(--background-dark);
-}
 
-html {
-   background: var(--background-dark);
+   background-color: rgb(22, 32, 42);
 }
 
 a {
