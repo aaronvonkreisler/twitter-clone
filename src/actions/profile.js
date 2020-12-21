@@ -1,5 +1,5 @@
 import api from '../utils/api';
-import axios from 'axios';
+
 import {
    GET_CURRENT_USERS_PROFILE,
    PROFILE_ERROR,
