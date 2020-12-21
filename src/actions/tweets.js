@@ -106,10 +106,7 @@ export const favoriteTweet = (id) => async (dispatch) => {
 
 export const removeFavorite = (id) => async (dispatch) => {
    try {
-      let res = api.put(`/api/tweets/unlike/${id}`);
-      if (res.data === undefined) {
-         res.data = [];
-      }
+      let res = await api.put(`/api/tweets/unlike/${id}`);
 
       dispatch({
          type: UPDATE_FAVORITES,
@@ -148,4 +145,8 @@ export const replyToTweet = (id, content, location) => async (dispatch) => {
          setAlert('There was an error sending your reply. Try again.', 'info')
       );
    }
+};
+
+export const reportTweet = () => async (dispatch) => {
+   dispatch(setAlert('Tweet successfully reported', 'info'));
 };
