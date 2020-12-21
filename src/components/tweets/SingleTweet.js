@@ -31,6 +31,7 @@ import {
    removeFavorite,
    reportTweet,
    retweet,
+   pinTweetToProfile,
 } from '../../actions/tweets';
 
 import '../../styles/design/tweet.css';
@@ -84,6 +85,7 @@ const SingleTweet = ({
    onCommentClick,
    reportTweet,
    retweet,
+   pinTweetToProfile,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
@@ -140,7 +142,10 @@ const SingleTweet = ({
                         </ListItemIcon>
                         <ListItemText primary="Delete" />
                      </MenuItem>
-                     <MenuItem className="pin-to-profile">
+                     <MenuItem
+                        className="pin-to-profile"
+                        onClick={() => pinTweetToProfile(tweet._id)}
+                     >
                         <ListItemIcon>
                            <BiPin />
                         </ListItemIcon>
@@ -343,4 +348,5 @@ export default connect(mapStateToProps, {
    removeFavorite,
    reportTweet,
    retweet,
+   pinTweetToProfile,
 })(SingleTweet);

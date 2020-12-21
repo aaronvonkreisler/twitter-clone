@@ -10,6 +10,7 @@ import {
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
+   PIN_TWEET_TO_PROFILE,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -154,4 +155,19 @@ export const replyToTweet = (id, content, location) => async (dispatch) => {
 
 export const reportTweet = () => async (dispatch) => {
    dispatch(setAlert('Tweet successfully reported', 'info'));
+};
+
+export const pinTweetToProfile = (tweetId) => async (dispatch) => {
+   try {
+      await api.put(`/api/tweets/pin-tweet/${tweetId}`);
+
+      dispatch(setAlert('Tweet pinned to your profile', 'info'));
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+
+      dispatch(setAlert('There was an error pinning your tweet.', 'info'));
+   }
 };

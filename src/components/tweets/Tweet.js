@@ -30,6 +30,7 @@ import {
    removeFavorite,
    retweet,
    reportTweet,
+   pinTweetToProfile,
 } from '../../actions/tweets';
 import '../../styles/design/tweet.css';
 
@@ -87,6 +88,7 @@ const Tweet = ({
    replyingToUserName,
    bottomBorder,
    reportTweet,
+   pinTweetToProfile,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
 
@@ -140,7 +142,10 @@ const Tweet = ({
                         </ListItemIcon>
                         <ListItemText primary="Delete" />
                      </MenuItem>
-                     <MenuItem className="pin-to-profile">
+                     <MenuItem
+                        className="pin-to-profile"
+                        onClick={() => pinTweetToProfile(tweet._id)}
+                     >
                         <ListItemIcon>
                            <BiPin />
                         </ListItemIcon>
@@ -384,4 +389,5 @@ export default connect(mapStateToProps, {
    removeFavorite,
    retweet,
    reportTweet,
+   pinTweetToProfile,
 })(Tweet);
