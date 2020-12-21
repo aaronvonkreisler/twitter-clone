@@ -4,6 +4,7 @@ import {
    GET_TIMELINE_TWEETS,
    GET_TWEET,
    ADD_TWEET,
+   RETWEET_SUCCESS,
    TWEETS_ERROR,
    DELETE_TWEET,
    UPDATE_FAVORITES,
@@ -61,8 +62,12 @@ export const addTweet = (content) => async (dispatch) => {
 
 export const retweet = (id) => async (dispatch) => {
    try {
-      await api.post(`/api/tweets/${id}/retweet`);
+      const res = await api.post(`/api/tweets/${id}/retweet`);
 
+      dispatch({
+         type: RETWEET_SUCCESS,
+         payload: res.data.retweetUsers,
+      });
       dispatch(getTimelineTweets());
    } catch (err) {
       dispatch({

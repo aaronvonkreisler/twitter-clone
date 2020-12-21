@@ -7,6 +7,7 @@ import {
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
+   RETWEET_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -89,7 +90,14 @@ export default function (state = initialState, action) {
             },
             loading: false,
          };
-
+      case RETWEET_SUCCESS:
+         return {
+            ...state,
+            tweet: {
+               ...state.tweet,
+               retweetUsers: payload,
+            },
+         };
       default:
          return state;
    }

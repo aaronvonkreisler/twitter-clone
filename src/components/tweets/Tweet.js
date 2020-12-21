@@ -29,6 +29,7 @@ import {
    favoriteTweet,
    removeFavorite,
    retweet,
+   reportTweet,
 } from '../../actions/tweets';
 import '../../styles/design/tweet.css';
 
@@ -85,6 +86,7 @@ const Tweet = ({
    replyingTo,
    replyingToUserName,
    bottomBorder,
+   reportTweet,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
 
@@ -146,7 +148,9 @@ const Tweet = ({
                      </MenuItem>
                   </React.Fragment>
                ) : (
-                  <MenuItem>Not Mine</MenuItem>
+                  <MenuItem onClick={() => reportTweet()}>
+                     Report Tweet
+                  </MenuItem>
                )}
             </div>
          );
@@ -379,4 +383,5 @@ export default connect(mapStateToProps, {
    favoriteTweet,
    removeFavorite,
    retweet,
+   reportTweet,
 })(Tweet);

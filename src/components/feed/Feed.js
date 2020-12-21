@@ -8,7 +8,7 @@ import Spinner from '../layout/Spinner';
 import ReplyModal from '../forms/ReplyModal';
 import './styles/Feed.css';
 
-const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
+const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
 
@@ -32,7 +32,6 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading }, user }) => {
             {loading ? (
                <Spinner />
             ) : (
-               user !== null &&
                tweets.map((tweet) =>
                   tweet.retweetData ? (
                      <Tweet
@@ -64,6 +63,5 @@ Feed.propTypes = {
 
 const mapStateToProps = (state) => ({
    tweets: state.tweets,
-   user: state.auth.user,
 });
 export default connect(mapStateToProps, { getTimelineTweets })(Feed);

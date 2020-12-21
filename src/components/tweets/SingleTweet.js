@@ -29,6 +29,8 @@ import {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
+   reportTweet,
+   retweet,
 } from '../../actions/tweets';
 
 import '../../styles/design/tweet.css';
@@ -80,8 +82,13 @@ const SingleTweet = ({
    removeFavorite,
    displayNumbers,
    onCommentClick,
+   reportTweet,
+   retweet,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
+   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
+      ? 'retweet__active'
+      : '';
 
    const open = Boolean(anchorEl);
 
@@ -141,7 +148,9 @@ const SingleTweet = ({
                      </MenuItem>
                   </React.Fragment>
                ) : (
-                  <MenuItem>Report Tweet</MenuItem>
+                  <MenuItem onClick={() => reportTweet()}>
+                     Report Tweet
+                  </MenuItem>
                )}
             </div>
          );
@@ -220,31 +229,35 @@ const SingleTweet = ({
                </div>
                <div className="singleTweet__metrics-wrapper">
                   <div className="metrics">
-                     {tweet.retweet_count > 0 && (
+                     {tweet.retweetUsers.length > 0 && (
                         <div className="metrics-item">
-                           <span className="number">{tweet.retweet_count}</span>
+                           <span className="number">
+                              {tweet.retweetUsers.length}
+                           </span>
                            <span className="text">
-                              {tweet.retweet_count === 1
+                              {tweet.retweetUsers.length === 1
                                  ? 'Retweet'
                                  : 'Retweets'}
                            </span>
                         </div>
                      )}
-                     {tweet.favorites_count > 0 && (
+                     {tweet.favorites.length > 0 && (
                         <div className="metrics-item">
                            <span className="number">
-                              {tweet.favorites_count}
+                              {tweet.favorites.length}
                            </span>
                            <span className="text">
-                              {tweet.favorites_count === 1 ? 'Like' : 'Likes'}
+                              {tweet.favorites.length === 1 ? 'Like' : 'Likes'}
                            </span>
                         </div>
                      )}
-                     {tweet.replies_count > 0 && (
+                     {tweet.replies.length > 0 && (
                         <div className="metrics-item">
-                           <span className="number">{tweet.replies_count}</span>
+                           <span className="number">
+                              {tweet.replies.length}
+                           </span>
                            <span className="text">
-                              {tweet.replies_count === 1 ? 'Reply' : 'Replies'}
+                              {tweet.replies.length === 1 ? 'Reply' : 'Replies'}
                            </span>
                         </div>
                      )}
@@ -267,10 +280,16 @@ const SingleTweet = ({
                   </div>
                   <div className="tweetAction-item">
                      <div className="flex flex-col justify-center">
-                        <div className="action-wrapper retweet_wrapper">
+                        <div
+                           className="action-wrapper retweet_wrapper"
+                           onClick={() => retweet(tweet._id)}
+                        >
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay retweet_display" />
-                              <AiOutlineRetweet style={{ fontSize: '18px' }} />
+                              <AiOutlineRetweet
+                                 style={{ fontSize: '18px' }}
+                                 className={retweetActiveClass}
+                              />
                            </div>
                         </div>
                      </div>
@@ -311,6 +330,7 @@ SingleTweet.propTypes = {
    deleteTweet: PropTypes.func.isRequired,
    favoriteTweet: PropTypes.func.isRequired,
    removeFavorite: PropTypes.func.isRequired,
+   retweet: PropTypes.func.isRequired,
    displayMetrics: PropTypes.bool,
 };
 
@@ -321,4 +341,6 @@ export default connect(mapStateToProps, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
+   reportTweet,
+   retweet,
 })(SingleTweet);
