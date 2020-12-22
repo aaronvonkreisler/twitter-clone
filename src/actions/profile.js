@@ -14,6 +14,7 @@ import {
    UPLOAD_PHOTO_ERROR,
    SET_NAME_IN_PROFILE_DATA_STATE,
    UPLOAD_COVER_PHOTO_SUCCESS,
+   GET_PINNED_TWEET,
 } from './types';
 
 import { loadUser } from './auth';
@@ -103,7 +104,28 @@ export const getProfileLikes = (userId) => async (dispatch) => {
          type: GET_PROFILE_LIKES,
          payload: res.data,
       });
-   } catch (err) {}
+   } catch (err) {
+      dispatch({
+         type: PROFILE_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
+export const getProfilePinnedTweet = (username) => async (dispatch) => {
+   try {
+      const res = await api.get(`/api/user/${username}/pinned`);
+
+      dispatch({
+         type: GET_PINNED_TWEET,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: PROFILE_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
 };
 
 export const followUser = (userId) => async (dispatch) => {

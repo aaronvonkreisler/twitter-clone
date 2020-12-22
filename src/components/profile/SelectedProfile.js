@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import {
    followUser,
    unfollowUser,
    clearProfileState,
+   getProfilePinnedTweet,
 } from '../../actions/profile';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
@@ -18,6 +19,7 @@ import ProfileReplies from './ProfileReplies';
 import ProfileLikes from './ProfileLikes';
 import FollowingButton from '../layout/FollowingButton';
 import OutlineButton from '../layout/OutlineButton';
+import ReplyModal from '../forms/ReplyModal';
 
 import '../../styles/design/profile.css';
 import '../../styles/design/utils.css';
@@ -25,6 +27,7 @@ import '../../styles/design/utils.css';
 const SelectedProfile = ({
    getUserByUsername,
    clearProfileState,
+   getProfilePinnedTweet,
    unfollowUser,
    followUser,
    match,
@@ -38,18 +41,28 @@ const SelectedProfile = ({
    },
    auth,
 }) => {
+   const [modalOpen, setModalOpen] = useState(false);
+   const [tweetForModal, setTweetForModal] = useState(null);
+
    useEffect(() => {
       getUserByUsername(match.params.username, auth.user._id);
+      getProfilePinnedTweet(match.params.username);
 
       return function cleanup() {
          clearProfileState();
       };
    }, [
       getUserByUsername,
+      getProfilePinnedTweet,
       match.params.username,
       auth.user._id,
       clearProfileState,
    ]);
+
+   const handleCommentClick = (tweet) => {
+      setTweetForModal(tweet);
+      setModalOpen(true);
+   };
 
    return (
       <div>
@@ -57,6 +70,11 @@ const SelectedProfile = ({
             <Spinner />
          ) : (
             <React.Fragment>
+               <ReplyModal
+                  tweet={tweetForModal}
+                  open={modalOpen}
+                  setOpen={setModalOpen}
+               />
                <Header leftIcon text={profile.name} />
                <div className="profileWrapper ">
                   <div className="coverPhoto__section">
@@ -140,7 +158,12 @@ const SelectedProfile = ({
                   </div>
                   <div className="profile__tabs feed">
                      <ProfileTabs
-                        tab1={<ProfileTweets userId={profile._id} />}
+                        tab1={
+                           <ProfileTweets
+                              userId={profile._id}
+                              onCommentClick={handleCommentClick}
+                           />
+                        }
                         tab2={<ProfileReplies userId={profile._id} />}
                         tab3={<ProfileLikes userId={profile._id} />}
                         tab1Text="Tweets"
@@ -159,6 +182,7 @@ SelectedProfile.propTypes = {
    getUserByUsername: PropTypes.func.isRequired,
    followUser: PropTypes.func.isRequired,
    unfollowUser: PropTypes.func.isRequired,
+   getProfilePinnedTweet: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -171,4 +195,5 @@ export default connect(mapStateToProps, {
    followUser,
    unfollowUser,
    clearProfileState,
+   getProfilePinnedTweet,
 })(SelectedProfile);

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
-import { getTweet } from '../../actions/tweets';
+import {
+   getTweet,
+   getTweetsReplies,
+   clearTweetState,
+} from '../../actions/tweets';
 import Spinner from '../layout/Spinner';
 import Header from '../layout/Header';
 import PropTypes from 'prop-types';
@@ -10,8 +14,10 @@ import ReplyModal from '../forms/ReplyModal';
 import Tweet from '../tweets/Tweet';
 
 const TweetDisplay = ({
-   tweets: { tweet, loading, tweetReady },
+   tweets: { tweet, loading, tweetReady, replies, fetchingReplies },
    getTweet,
+   getTweetsReplies,
+   clearTweetState,
    match,
 }) => {
    const [modalOpen, setModalOpen] = useState(false);
@@ -19,7 +25,12 @@ const TweetDisplay = ({
 
    useEffect(() => {
       getTweet(match.params.tweet_id);
-   }, [getTweet, match.params.tweet_id]);
+      getTweetsReplies(match.params.tweet_id);
+
+      return function cleanup() {
+         clearTweetState();
+      };
+   }, [getTweet, getTweetsReplies, clearTweetState, match.params.tweet_id]);
 
    const handleCommentClick = (tweet) => {
       setTweetForModal(tweet);
@@ -29,7 +40,7 @@ const TweetDisplay = ({
       <React.Fragment>
          <Header text="Tweet" leftIcon />
          <div className="feed">
-            {loading && !tweetReady ? (
+            {loading || !tweetReady ? (
                <Spinner />
             ) : (
                tweetReady && (
@@ -44,15 +55,19 @@ const TweetDisplay = ({
                         onCommentClick={handleCommentClick}
                      />
 
-                     {tweet.replies.map((reply) => (
-                        <Tweet
-                           tweet={reply.tweet}
-                           key={reply.tweet._id}
-                           displayActions={false}
-                           replyingTo
-                           replyingToUserName={tweet.user.screen_name}
-                        />
-                     ))}
+                     {fetchingReplies ? (
+                        <Spinner />
+                     ) : (
+                        replies.map((reply) => (
+                           <Tweet
+                              tweet={reply}
+                              key={reply._id}
+                              displayActions={true}
+                              replyingTo
+                              replyingToUserName={tweet.user.screen_name}
+                           />
+                        ))
+                     )}
                   </React.Fragment>
                )
             )}
@@ -61,12 +76,25 @@ const TweetDisplay = ({
    );
 };
 
+// <Tweet
+//                            tweet={reply.tweet}
+//                            key={reply.tweet._id}
+//                            displayActions={true}
+//                            replyingTo
+//                            replyingToUserName={tweet.user.screen_name}
+//                         />
+
 TweetDisplay.propTypes = {
    getTweet: PropTypes.func.isRequired,
+   getTweetsReplies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
    tweets: state.tweets,
 });
 
-export default connect(mapStateToProps, { getTweet })(TweetDisplay);
+export default connect(mapStateToProps, {
+   getTweet,
+   getTweetsReplies,
+   clearTweetState,
+})(TweetDisplay);

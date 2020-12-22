@@ -11,6 +11,9 @@ import {
    FOLLOW_USER,
    UNFOLLOW_USER,
    CLEAR_PROFILE,
+   GET_PINNED_TWEET,
+   UPDATE_FAVORITES,
+   RETWEET_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +29,8 @@ const initialState = {
    likesLoading: true,
    replies: [],
    repliesLoading: true,
+   pinnedTweet: null,
+   pinnedTweetLoading: true,
    loading: true,
    error: {},
 };
@@ -55,6 +60,30 @@ export default function (state = initialState, action) {
             followersCount: payload.length,
             isFollowing: false,
          };
+      case UPDATE_FAVORITES:
+         return {
+            ...state,
+            tweets: state.tweets.map((tweet) =>
+               tweet._id === payload.id
+                  ? {
+                       ...tweet,
+                       favorites: payload.favorites,
+                    }
+                  : tweet
+            ),
+         };
+      case RETWEET_SUCCESS:
+         return {
+            ...state,
+            tweets: state.tweets.map((tweet) =>
+               tweet._id === payload.id
+                  ? {
+                       ...tweet,
+                       retweetUsers: payload.users,
+                    }
+                  : tweet
+            ),
+         };
       case SELECTED_USER_LOADED:
          return {
             ...state,
@@ -83,6 +112,12 @@ export default function (state = initialState, action) {
             likedTweets: payload,
             likesLoading: false,
          };
+      case GET_PINNED_TWEET:
+         return {
+            ...state,
+            pinnedTweet: payload,
+            pinnedTweetLoading: false,
+         };
       case CLEAR_PROFILE:
          return {
             ...state,
@@ -92,6 +127,7 @@ export default function (state = initialState, action) {
             tweets: [],
             likedTweets: [],
             replies: [],
+            pinnedTweet: null,
          };
       case PROFILE_ERROR:
          return {

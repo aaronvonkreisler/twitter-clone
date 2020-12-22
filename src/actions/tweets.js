@@ -10,7 +10,8 @@ import {
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
-   PIN_TWEET_TO_PROFILE,
+   CLEAR_TWEET_STATE,
+   GET_TWEETS_REPLIES,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -27,6 +28,21 @@ export const getTimelineTweets = () => async (dispatch) => {
          payload: { msg: err.response.statusText, status: err.response.status },
       });
       setAlert('There was an error getting your timeline tweets', 'info');
+   }
+};
+
+export const getTweetsReplies = (id) => async (dispatch) => {
+   try {
+      const res = await api.get(`/api/tweets/${id}/replies`);
+      dispatch({
+         type: GET_TWEETS_REPLIES,
+         payload: res.data,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
    }
 };
 
@@ -67,7 +83,7 @@ export const retweet = (id) => async (dispatch) => {
 
       dispatch({
          type: RETWEET_SUCCESS,
-         payload: res.data.retweetUsers,
+         payload: { id, users: res.data.retweetUsers },
       });
       dispatch(getTimelineTweets());
    } catch (err) {
@@ -171,3 +187,7 @@ export const pinTweetToProfile = (tweetId) => async (dispatch) => {
       dispatch(setAlert('There was an error pinning your tweet.', 'info'));
    }
 };
+
+export const clearTweetState = () => ({
+   type: CLEAR_TWEET_STATE,
+});

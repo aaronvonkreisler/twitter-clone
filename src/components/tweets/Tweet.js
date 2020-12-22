@@ -88,13 +88,14 @@ const Tweet = ({
    replyingToUserName,
    bottomBorder,
    reportTweet,
+   pinnedTweet,
    pinTweetToProfile,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
 
-   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
-      ? 'retweet__active'
-      : '';
+   // const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
+   //    ? 'retweet__active'
+   //    : '';
 
    const open = Boolean(anchorEl);
 
@@ -187,6 +188,16 @@ const Tweet = ({
                      </div>
                      <div className="retweetedBy__col">
                         <span>{retweetedBy} Retweeted</span>
+                     </div>
+                  </div>
+               )}
+               {pinnedTweet && (
+                  <div className="retweetedByDisplay">
+                     <div className="retweetIcon__col">
+                        <BiPin />
+                     </div>
+                     <div className="retweetedBy__col">
+                        <span>Pinned Tweet</span>
                      </div>
                   </div>
                )}
@@ -297,9 +308,7 @@ const Tweet = ({
                                  >
                                     <div className="d-inline-flex buttonDisplay">
                                        <div className="iconBackgroundDisplay retweet_display" />
-                                       <AiOutlineRetweet
-                                          className={retweetActiveClass}
-                                       />
+                                       <AiOutlineRetweet />
                                     </div>
                                     <div className="metrics">
                                        <span className="metrics__item">

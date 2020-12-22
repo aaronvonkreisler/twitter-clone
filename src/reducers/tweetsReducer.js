@@ -2,9 +2,11 @@ import {
    TWEETS_ERROR,
    GET_TIMELINE_TWEETS,
    GET_TWEET,
+   GET_TWEETS_REPLIES,
    ADD_TWEET,
    DELETE_TWEET,
    UPDATE_FAVORITES,
+   CLEAR_TWEET_STATE,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
    RETWEET_SUCCESS,
@@ -13,6 +15,8 @@ import {
 const initialState = {
    tweets: [],
    tweet: null,
+   replies: [],
+   fetchingReplies: true,
    loading: true,
    tweetReady: false,
    error: {},
@@ -30,6 +34,12 @@ export default function (state = initialState, action) {
             tweet: payload,
             loading: false,
             tweetReady: true,
+         };
+      case GET_TWEETS_REPLIES:
+         return {
+            ...state,
+            replies: payload,
+            fetchingReplies: false,
          };
       case TWEETS_ERROR:
          return {
@@ -88,6 +98,11 @@ export default function (state = initialState, action) {
                ...state.tweet,
                favorites: payload.favorites,
             },
+            replies: state.replies.map((reply) =>
+               reply._id === payload.id
+                  ? { ...reply, favorites: payload }
+                  : reply
+            ),
             loading: false,
          };
       case RETWEET_SUCCESS:
@@ -95,8 +110,14 @@ export default function (state = initialState, action) {
             ...state,
             tweet: {
                ...state.tweet,
-               retweetUsers: payload,
+               retweetUsers: payload.users,
             },
+         };
+      case CLEAR_TWEET_STATE:
+         return {
+            ...state,
+            fetchingReplies: true,
+            loading: true,
          };
       default:
          return state;
