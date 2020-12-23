@@ -5,8 +5,8 @@ import LoginPage from '../components/pages/LoginPage';
 import AlertDisplay from '../components/layout/AlertDisplay';
 import Status from '../components/pages/Status';
 import Main from '../components/layout/Main';
-import UserProfile from '../components/profile/UserProfile';
-import SelectedProfile from '../components/profile/SelectedProfile';
+import UserProfile from '../components/pages/UserProfile';
+import SelectedProfile from '../components/pages/SelectedProfile';
 import ProfileFollowing from '../components/profile/ProfileFollowing';
 import Home from '../components/pages/Home';
 const Routes = (props) => {

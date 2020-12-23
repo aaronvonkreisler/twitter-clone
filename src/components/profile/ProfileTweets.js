@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 const ProfileTweets = ({
    getProfileTweets,
    userId,
+   authId,
    onCommentClick,
    profiles: { tweetsLoading, tweets, pinnedTweet },
 }) => {
@@ -27,8 +28,10 @@ const ProfileTweets = ({
                   <Tweet
                      tweet={pinnedTweet}
                      key={pinnedTweet.user._id}
-                     displayActions={false}
+                     displayActions={true}
+                     authId={authId}
                      pinnedTweet
+                     onCommentClick={onCommentClick}
                   />
                )}
                {tweets.map((tweet) => (
@@ -36,6 +39,7 @@ const ProfileTweets = ({
                      tweet={tweet}
                      key={tweet._id}
                      displayActions={true}
+                     authId={authId}
                      onCommentClick={onCommentClick}
                   />
                ))}

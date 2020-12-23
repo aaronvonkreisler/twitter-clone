@@ -7,7 +7,9 @@ import Tweet from '../tweets/Tweet';
 
 const ProfileLikes = ({
    userId,
+   authId,
    getProfileLikes,
+   onCommentClick,
    profiles: { likesLoading, likedTweets },
 }) => {
    useEffect(() => {
@@ -19,7 +21,13 @@ const ProfileLikes = ({
             <Spinner />
          ) : (
             likedTweets.map((tweet) => (
-               <Tweet tweet={tweet} displayActions={false} key={tweet._id} />
+               <Tweet
+                  tweet={tweet}
+                  displayActions
+                  key={tweet._id}
+                  authId={authId}
+                  onCommentClick={onCommentClick}
+               />
             ))
          )}
       </React.Fragment>

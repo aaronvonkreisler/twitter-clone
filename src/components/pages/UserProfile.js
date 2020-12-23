@@ -6,10 +6,10 @@ import { Avatar, Button, IconButton } from '@material-ui/core';
 import { FiCamera } from 'react-icons/fi';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
-import ProfileTabs from './ProfileTabs';
-import ProfileTweets from './ProfileTweets';
-import ProfileReplies from './ProfileReplies';
-import ProfileLikes from './ProfileLikes';
+import ProfileTabs from '../profile/ProfileTabs';
+import ProfileTweets from '../profile/ProfileTweets';
+import ProfileReplies from '../profile/ProfileReplies';
+import ProfileLikes from '../profile/ProfileLikes';
 import ProfilePictureModal from '../forms/ProfilePictureModal';
 import BackgroundPictureModal from '../forms/BackgroundPictureModal';
 import { getProfilePinnedTweet } from '../../actions/profile';
@@ -31,7 +31,7 @@ const UserProfile = ({
    }, [prepareProfileData, currentProfile, getProfilePinnedTweet]);
    return (
       <React.Fragment>
-         {loading || currentProfile === null ? (
+         {loading || currentProfile === null || user === null ? (
             <Spinner />
          ) : (
             <React.Fragment>
@@ -123,9 +123,24 @@ const UserProfile = ({
                   </div>
                   <div className="profile__tabs feed">
                      <ProfileTabs
-                        tab1={<ProfileTweets userId={currentProfile._id} />}
-                        tab2={<ProfileReplies userId={currentProfile._id} />}
-                        tab3={<ProfileLikes userId={currentProfile._id} />}
+                        tab1={
+                           <ProfileTweets
+                              userId={currentProfile._id}
+                              authId={user._id}
+                           />
+                        }
+                        tab2={
+                           <ProfileReplies
+                              userId={currentProfile._id}
+                              authId={user._id}
+                           />
+                        }
+                        tab3={
+                           <ProfileLikes
+                              userId={currentProfile._id}
+                              authId={user._id}
+                           />
+                        }
                         tab1Text="Tweets"
                         tab2Text="Tweets & replies"
                         tab3Text="Likes"

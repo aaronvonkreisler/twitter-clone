@@ -13,10 +13,10 @@ import {
 } from '../../actions/profile';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
-import ProfileTabs from './ProfileTabs';
-import ProfileTweets from './ProfileTweets';
-import ProfileReplies from './ProfileReplies';
-import ProfileLikes from './ProfileLikes';
+import ProfileTabs from '../profile/ProfileTabs';
+import ProfileTweets from '../profile/ProfileTweets';
+import ProfileReplies from '../profile/ProfileReplies';
+import ProfileLikes from '../profile/ProfileLikes';
 import FollowingButton from '../layout/FollowingButton';
 import OutlineButton from '../layout/OutlineButton';
 import ReplyModal from '../forms/ReplyModal';
@@ -39,13 +39,13 @@ const SelectedProfile = ({
       followersCount,
       followingCount,
    },
-   auth,
+   auth: { user },
 }) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
 
    useEffect(() => {
-      getUserByUsername(match.params.username, auth.user._id);
+      getUserByUsername(match.params.username, user._id);
       getProfilePinnedTweet(match.params.username);
 
       return function cleanup() {
@@ -55,7 +55,7 @@ const SelectedProfile = ({
       getUserByUsername,
       getProfilePinnedTweet,
       match.params.username,
-      auth.user._id,
+      user._id,
       clearProfileState,
    ]);
 
@@ -66,7 +66,7 @@ const SelectedProfile = ({
 
    return (
       <div>
-         {loading || profile === null ? (
+         {loading || profile === null || user === null ? (
             <Spinner />
          ) : (
             <React.Fragment>
@@ -162,10 +162,23 @@ const SelectedProfile = ({
                            <ProfileTweets
                               userId={profile._id}
                               onCommentClick={handleCommentClick}
+                              authId={user._id}
                            />
                         }
-                        tab2={<ProfileReplies userId={profile._id} />}
-                        tab3={<ProfileLikes userId={profile._id} />}
+                        tab2={
+                           <ProfileReplies
+                              userId={profile._id}
+                              onCommentClick={handleCommentClick}
+                              authId={user._id}
+                           />
+                        }
+                        tab3={
+                           <ProfileLikes
+                              userId={profile._id}
+                              onCommentClick={handleCommentClick}
+                              authId={user._id}
+                           />
+                        }
                         tab1Text="Tweets"
                         tab2Text="Tweets & replies"
                         tab3Text="Likes"
