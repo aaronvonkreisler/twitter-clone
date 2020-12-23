@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { connect } from 'react-redux';
 import {
@@ -43,7 +43,8 @@ const TweetDisplay = ({
             {loading || !tweetReady ? (
                <Spinner />
             ) : (
-               tweetReady && (
+               tweetReady &&
+               tweet !== null && (
                   <React.Fragment>
                      <ReplyModal
                         tweet={tweetForModal}
@@ -64,7 +65,9 @@ const TweetDisplay = ({
                               key={reply._id}
                               displayActions={true}
                               replyingTo
+                              displayNumbers
                               replyingToUserName={tweet.user.screen_name}
+                              onCommentClick={handleCommentClick}
                            />
                         ))
                      )}
@@ -75,14 +78,6 @@ const TweetDisplay = ({
       </React.Fragment>
    );
 };
-
-// <Tweet
-//                            tweet={reply.tweet}
-//                            key={reply.tweet._id}
-//                            displayActions={true}
-//                            replyingTo
-//                            replyingToUserName={tweet.user.screen_name}
-//                         />
 
 TweetDisplay.propTypes = {
    getTweet: PropTypes.func.isRequired,

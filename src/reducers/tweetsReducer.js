@@ -9,7 +9,6 @@ import {
    CLEAR_TWEET_STATE,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
-   RETWEET_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -57,16 +56,13 @@ export default function (state = initialState, action) {
          return {
             ...state,
             tweets: state.tweets.filter((tweet) => tweet._id !== payload),
+            replies: state.replies.filter((reply) => reply._id !== payload),
             loading: false,
          };
       case REPLY_TO_TWEET_FROM_STATUS:
          return {
             ...state,
-            tweet: {
-               ...state.tweet,
-               replies: payload,
-               replies_count: payload.length,
-            },
+            replies: [payload, ...state.replies],
             loading: false,
          };
       case REPLY_TO_TWEET_FROM_HOME:
@@ -81,6 +77,11 @@ export default function (state = initialState, action) {
                     }
                   : tweet
             ),
+            replies: state.replies.map((reply) =>
+               reply._id === payload.id
+                  ? { ...reply, replies: payload.replies }
+                  : reply
+            ),
             loading: false,
          };
       case UPDATE_FAVORITES:
@@ -94,30 +95,15 @@ export default function (state = initialState, action) {
                     }
                   : tweet
             ),
-            tweet: {
-               ...state.tweet,
-               favorites: payload.favorites,
-            },
-            replies: state.replies.map((reply) =>
-               reply._id === payload.id
-                  ? { ...reply, favorites: payload }
-                  : reply
-            ),
             loading: false,
          };
-      case RETWEET_SUCCESS:
-         return {
-            ...state,
-            tweet: {
-               ...state.tweet,
-               retweetUsers: payload.users,
-            },
-         };
+
       case CLEAR_TWEET_STATE:
          return {
             ...state,
             fetchingReplies: true,
             loading: true,
+            tweet: null,
          };
       default:
          return state;

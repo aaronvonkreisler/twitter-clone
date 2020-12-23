@@ -38,108 +38,105 @@ const { CustomCounter } = counterPlugin;
 const MAX_LENGTH = 280;
 const MIN_LENGTH = 1;
 
-const TweetForm = ({
-   auth: { user, loading },
-   placeholder,
-   bottomBorder,
-   onFormSubmit,
-}) => {
-   const [editorState, setEditorState] = useState(() =>
-      EditorState.createEmpty()
-   );
+const TweetForm = React.memo(
+   ({ auth: { user, loading }, placeholder, bottomBorder, onFormSubmit }) => {
+      const [editorState, setEditorState] = useState(() =>
+         EditorState.createEmpty()
+      );
 
-   const [disabled, setDisabled] = useState(true);
+      const [disabled, setDisabled] = useState(true);
 
-   const normalizeLength = (value) =>
-      ((value - MIN_LENGTH) * 100) / (MAX_LENGTH - MIN_LENGTH);
+      const normalizeLength = (value) =>
+         ((value - MIN_LENGTH) * 100) / (MAX_LENGTH - MIN_LENGTH);
 
-   const handleTweetSubmit = () => {
-      const contentState = editorState.getCurrentContent();
-      const rawContent = JSON.stringify(convertToRaw(contentState));
+      const handleTweetSubmit = () => {
+         const contentState = editorState.getCurrentContent();
+         const rawContent = JSON.stringify(convertToRaw(contentState));
 
-      onFormSubmit(rawContent);
-      setTimeout(() => {
-         setEditorState(() => EditorState.createEmpty());
-      }, 250);
-   };
+         onFormSubmit(rawContent);
+         setTimeout(() => {
+            setEditorState(() => EditorState.createEmpty());
+         }, 250);
+      };
 
-   const handleCharacterCountChange = (str) => {
-      const charRegex = new RegExp(/./, 'mg');
-      const characterArray = str.match(charRegex);
+      const handleCharacterCountChange = (str) => {
+         const charRegex = new RegExp(/./, 'mg');
+         const characterArray = str.match(charRegex);
 
-      if (characterArray) {
-         if (characterArray.length > 1) setDisabled(false);
-         if (characterArray.length > 280) setDisabled(true);
-         return (
-            <CircularProgress
-               variant="static"
-               value={normalizeLength(characterArray.length)}
-               size={characterArray.length <= 280 ? 20 : 30}
-               thickness={2.6}
-               style={
-                  characterArray.length <= 280
-                     ? { color: 'rgb(29, 161, 242, 1)' }
-                     : { color: 'red' }
-               }
-            />
-         );
-      }
-      return;
-   };
-   return (
-      <div className="tweetForm">
-         <div className="tweetForm__wrapper">
-            {/*Avatar */}
-            <div className="avatar__wrapper">
-               {!loading && user !== null ? (
-                  <Avatar
-                     src={user.avatar}
-                     style={{ height: '49px', width: '49px' }}
-                  />
-               ) : (
-                  <Avatar style={{ height: '49px', width: '49px' }} />
-               )}
-            </div>
-            {/*Everything else */}
-            <div className="rightSide__wrapper">
-               <form>
-                  <div className="textEditor__root">
-                     <div className="textEditor">
-                        <Editor
-                           editorState={editorState}
-                           onChange={setEditorState}
-                           plugins={editorPlugins}
-                           placeholder={placeholder}
-                        />
-                     </div>
-                  </div>
-                  <div className="toolbar__root">
-                     <div className="toolbar__addOns">
-                        <EmojiSelect />
-                     </div>
-                     <div className="toolbar__submit">
-                        <div className="counter">
-                           <CustomCounter
-                              limit={280}
-                              countFunction={handleCharacterCountChange}
+         if (characterArray) {
+            if (characterArray.length > 1) setDisabled(false);
+            if (characterArray.length > 280) setDisabled(true);
+            return (
+               <CircularProgress
+                  variant="static"
+                  value={normalizeLength(characterArray.length)}
+                  size={characterArray.length <= 280 ? 20 : 30}
+                  thickness={2.6}
+                  style={
+                     characterArray.length <= 280
+                        ? { color: 'rgb(29, 161, 242, 1)' }
+                        : { color: 'red' }
+                  }
+               />
+            );
+         }
+         return;
+      };
+      return (
+         <div className="tweetForm">
+            <div className="tweetForm__wrapper">
+               {/*Avatar */}
+               <div className="avatar__wrapper">
+                  {!loading && user !== null ? (
+                     <Avatar
+                        src={user.avatar}
+                        style={{ height: '49px', width: '49px' }}
+                     />
+                  ) : (
+                     <Avatar style={{ height: '49px', width: '49px' }} />
+                  )}
+               </div>
+               {/*Everything else */}
+               <div className="rightSide__wrapper">
+                  <form>
+                     <div className="textEditor__root">
+                        <div className="textEditor">
+                           <Editor
+                              editorState={editorState}
+                              onChange={setEditorState}
+                              plugins={editorPlugins}
+                              placeholder={placeholder}
                            />
                         </div>
-                        <Button
-                           className="tweetForm__button"
-                           onClick={handleTweetSubmit}
-                           disabled={disabled}
-                        >
-                           Tweet
-                        </Button>
                      </div>
-                  </div>
-               </form>
+                     <div className="toolbar__root">
+                        <div className="toolbar__addOns">
+                           <EmojiSelect />
+                        </div>
+                        <div className="toolbar__submit">
+                           <div className="counter">
+                              <CustomCounter
+                                 limit={280}
+                                 countFunction={handleCharacterCountChange}
+                              />
+                           </div>
+                           <Button
+                              className="tweetForm__button"
+                              onClick={handleTweetSubmit}
+                              disabled={disabled}
+                           >
+                              Tweet
+                           </Button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
             </div>
+            {bottomBorder && <div className="tweetForm__bottom-border" />}
          </div>
-         {bottomBorder && <div className="tweetForm__bottom-border" />}
-      </div>
-   );
-};
+      );
+   }
+);
 
 TweetForm.propTypes = {
    auth: PropTypes.object.isRequired,

@@ -3,11 +3,6 @@ import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
-import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
-import createLinkifyPlugin from 'draft-js-linkify-plugin';
-import createHashtagPlugin from 'draft-js-hashtag-plugin';
-import omit from 'lodash/omit';
 import {
    Avatar,
    Menu,
@@ -34,46 +29,13 @@ import {
    pinTweetToProfile,
 } from '../../actions/tweets';
 
+import {
+   viewOnlyPlugins,
+   convertToEditorState,
+} from '../../utils/draftEditorSetup';
+
 import '../../styles/design/tweet.css';
 import '../../styles/design/singleTweet.css';
-
-//--------------- Draft.js Editor config ---------------------------------
-const linkifyPlugin = createLinkifyPlugin({
-   target: '_blank',
-   // eslint-disable-next-line jsx-a11y/anchor-has-content
-   component: (params) => <a {...omit(params, ['blockKey'])} />,
-});
-const hashtagPlugin = createHashtagPlugin();
-const viewOnlyPlugins = [linkifyPlugin, hashtagPlugin];
-
-const getPluginDecoratorArray = () => {
-   let decorators = [];
-   let plugin;
-   // check each plugin that will be used in the editor for decorators
-   // (retrieve listOfPlugins however makes sense in your code)
-   for (plugin of viewOnlyPlugins) {
-      if (plugin.decorators !== null && plugin.decorators !== undefined) {
-         // if the plugin has any decorators, add them to a list of all decorators from all plugins
-         decorators = decorators.concat(plugin.decorators);
-      }
-   }
-   return decorators;
-};
-
-const grabAllPluginDecorators = () => {
-   return new MultiDecorator([
-      new CompositeDecorator(getPluginDecoratorArray()),
-   ]);
-};
-
-const convertToEditorState = (editorContent) => {
-   let decorator = grabAllPluginDecorators();
-   const content = convertFromRaw(JSON.parse(editorContent));
-   const newEditorState = EditorState.createWithContent(content, decorator);
-   return newEditorState;
-};
-
-//--------------- End Draft.js Editor config ---------------------------------
 
 const SingleTweet = ({
    tweet,
@@ -89,11 +51,16 @@ const SingleTweet = ({
    replies,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
+   const open = Boolean(anchorEl);
+   const [tweetLiked, setTweetLiked] = useState(() =>
+      tweet
+         ? tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
+           0
+         : false
+   );
    const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
       ? 'retweet__active'
       : '';
-
-   const open = Boolean(anchorEl);
 
    const openActionMenu = (e) => {
       setAnchorEl(e.currentTarget);
@@ -103,31 +70,16 @@ const SingleTweet = ({
    };
 
    const handleLikeOrUnlike = () => {
-      if (
-         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
-      ) {
+      if (tweetLiked) {
          removeFavorite(tweet._id);
+         setTweetLiked(false);
       } else {
          favoriteTweet(tweet._id);
+         setTweetLiked(true);
       }
    };
 
-   const renderFavoriteButton = () => {
-      if (auth.isAuthenticated && auth.user !== null) {
-         if (
-            tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
-            0
-         ) {
-            return (
-               <BsHeartFill
-                  style={{ color: 'rgb(224, 36, 94)', fontSize: '18px' }}
-               />
-            );
-         }
-      }
-      return <BsHeart style={{ fontSize: '18px' }} />;
-   };
-
+   // TODO ---- EXTRACT USER MENU INTO IT'S OWN FILE/COMPONENT
    const renderMenuItems = () => {
       if (auth.isAuthenticated && tweet.user !== undefined) {
          return (
@@ -306,7 +258,16 @@ const SingleTweet = ({
                         >
                            <div className="d-inline-flex buttonDisplay">
                               <div className="iconBackgroundDisplay favorites_display" />
-                              {renderFavoriteButton()}
+                              {tweetLiked ? (
+                                 <BsHeartFill
+                                    style={{
+                                       color: 'rgb(224, 36, 94)',
+                                       fontSize: '18px',
+                                    }}
+                                 />
+                              ) : (
+                                 <BsHeart style={{ fontSize: '18px' }} />
+                              )}
                            </div>
                         </div>
                      </div>

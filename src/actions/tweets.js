@@ -77,6 +77,9 @@ export const addTweet = (content) => async (dispatch) => {
    }
 };
 
+// TODO -- dispatching getTimeLineTweets is expensive. Rather than doing this,
+// the API response needs to send the actual retweet that has the "retweetData" key,
+// so that we can push the response to the tweets state rather than re rendering everything.
 export const retweet = (id) => async (dispatch) => {
    try {
       const res = await api.post(`/api/tweets/${id}/retweet`);
@@ -85,6 +88,7 @@ export const retweet = (id) => async (dispatch) => {
          type: RETWEET_SUCCESS,
          payload: { id, users: res.data.retweetUsers },
       });
+
       dispatch(getTimelineTweets());
    } catch (err) {
       dispatch({
