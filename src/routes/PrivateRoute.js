@@ -14,7 +14,7 @@ const PrivateRoute = ({
       render={(props) =>
          loading ? (
             <BackdropSpinner />
-         ) : isAuthenticated ? (
+         ) : isAuthenticated && !loading ? (
             <Component {...props} />
          ) : (
             <Redirect to="/login" />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, makeStyles, Hidden } from '@material-ui/core';
-import { loadUser } from '../../actions/auth';
+
 import { getCurrentUsersProfile } from '../../actions/profile';
 import Sidebar from '../sidebar/Sidebar';
 import Widgets from '../widgets/Widgets';
@@ -30,7 +30,6 @@ const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
    const classes = useStyles();
 
    useEffect(() => {
-      loadUser();
       getCurrentUsersProfile();
    }, [loadUser, getCurrentUsersProfile]);
    return (
@@ -61,4 +60,4 @@ const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
    );
 };
 
-export default connect(null, { loadUser, getCurrentUsersProfile })(Main);
+export default connect(null, { getCurrentUsersProfile })(Main);
