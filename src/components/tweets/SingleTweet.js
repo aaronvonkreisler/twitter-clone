@@ -86,6 +86,7 @@ const SingleTweet = ({
    reportTweet,
    retweet,
    pinTweetToProfile,
+   replies,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
@@ -256,13 +257,11 @@ const SingleTweet = ({
                            </span>
                         </div>
                      )}
-                     {tweet.replies.length > 0 && (
+                     {replies && replies.length > 0 && (
                         <div className="metrics-item">
-                           <span className="number">
-                              {tweet.replies.length}
-                           </span>
+                           <span className="number">{replies.length}</span>
                            <span className="text">
-                              {tweet.replies.length === 1 ? 'Reply' : 'Replies'}
+                              {replies.length === 1 ? 'Reply' : 'Replies'}
                            </span>
                         </div>
                      )}
@@ -341,6 +340,7 @@ SingleTweet.propTypes = {
 
 const mapStateToProps = (state) => ({
    auth: state.auth,
+   replies: state.tweets.replies,
 });
 export default connect(mapStateToProps, {
    deleteTweet,
