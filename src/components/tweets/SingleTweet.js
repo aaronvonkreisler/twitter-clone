@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-   Avatar,
-   Menu,
-   MenuItem,
-   ListItemIcon,
-   ListItemText,
-} from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import { BsChat } from 'react-icons/bs';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { AiOutlineRetweet } from 'react-icons/ai';
 import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
-import { HiOutlineTrash } from 'react-icons/hi';
-import { BiPin } from 'react-icons/bi';
+
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
 import Spinner from '../layout/Spinner';
+import TweetMenu from './TweetMenu';
 import {
    deleteTweet,
    favoriteTweet,
@@ -39,7 +33,7 @@ import '../../styles/design/singleTweet.css';
 
 const SingleTweet = ({
    tweet,
-   auth,
+   authId,
    deleteTweet,
    favoriteTweet,
    removeFavorite,
@@ -51,16 +45,18 @@ const SingleTweet = ({
    replies,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
-   const open = Boolean(anchorEl);
-   const [tweetLiked, setTweetLiked] = useState(() =>
-      tweet
-         ? tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
-           0
-         : false
-   );
-   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
-      ? 'retweet__active'
-      : '';
+
+   const [tweetLiked, setTweetLiked] = useState(false);
+
+   const [retweeted, setRetweeted] = useState(false);
+
+   useEffect(() => {
+      const isLiked =
+         tweet.favorites.filter((fav) => fav.user === authId).length > 0;
+      const isRetweeted = tweet.retweetUsers.includes(authId);
+      setTweetLiked(isLiked);
+      setRetweeted(isRetweeted);
+   }, [authId, tweet]);
 
    const openActionMenu = (e) => {
       setAnchorEl(e.currentTarget);
@@ -79,58 +75,16 @@ const SingleTweet = ({
       }
    };
 
-   // TODO ---- EXTRACT USER MENU INTO IT'S OWN FILE/COMPONENT
-   const renderMenuItems = () => {
-      if (auth.isAuthenticated && tweet.user !== undefined) {
-         return (
-            <div>
-               {!auth.loading && tweet.user._id === auth.user._id ? (
-                  <React.Fragment>
-                     <MenuItem
-                        className="delete_tweet"
-                        onClick={() => deleteTweet(tweet._id)}
-                     >
-                        <ListItemIcon>
-                           <HiOutlineTrash />
-                        </ListItemIcon>
-                        <ListItemText primary="Delete" />
-                     </MenuItem>
-                     <MenuItem
-                        className="pin-to-profile"
-                        onClick={() => pinTweetToProfile(tweet._id)}
-                     >
-                        <ListItemIcon>
-                           <BiPin />
-                        </ListItemIcon>
-                        <ListItemText primary="Pin to your profile" />
-                     </MenuItem>
-                  </React.Fragment>
-               ) : (
-                  <MenuItem onClick={() => reportTweet()}>
-                     Report Tweet
-                  </MenuItem>
-               )}
-            </div>
-         );
-      }
-      <MenuItem>
-         <Spinner />
-      </MenuItem>;
-   };
    return (
       <div className="single-tweet__root">
-         <Menu
+         <TweetMenu
             anchorEl={anchorEl}
-            open={open}
+            setAnchorEl={setAnchorEl}
             onClose={handleClose}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-               vertical: 'bottom',
-               horizontal: 'center',
-            }}
-         >
-            {renderMenuItems()}
-         </Menu>
+            tweetOwner={tweet.user._id}
+            currentUser={authId}
+            tweetId={tweet._id}
+         />
          {tweet && (
             <div>
                <div className="flex flex-row mb-5">
@@ -244,7 +198,7 @@ const SingleTweet = ({
                               <div className="iconBackgroundDisplay retweet_display" />
                               <AiOutlineRetweet
                                  style={{ fontSize: '18px' }}
-                                 className={retweetActiveClass}
+                                 className={retweeted ? 'retweet__active' : ''}
                               />
                            </div>
                         </div>
@@ -300,7 +254,6 @@ SingleTweet.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-   auth: state.auth,
    replies: state.tweets.replies,
 });
 export default connect(mapStateToProps, {

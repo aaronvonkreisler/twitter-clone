@@ -8,7 +8,11 @@ import Spinner from '../layout/Spinner';
 import ReplyModal from '../forms/ReplyModal';
 import './styles/Feed.css';
 
-const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
+const Feed = ({
+   getTimelineTweets,
+   tweets: { tweets, loading },
+   auth: { user },
+}) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
 
@@ -29,7 +33,7 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
             setOpen={setModalOpen}
          />
          <div className="feed">
-            {loading ? (
+            {loading || user === null ? (
                <Spinner />
             ) : (
                tweets.map((tweet) =>
@@ -40,6 +44,7 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
                         key={tweet._id}
                         displayNumbers
                         onCommentClick={handleCommentClick}
+                        authId={user._id}
                      />
                   ) : (
                      <Tweet
@@ -47,6 +52,7 @@ const Feed = ({ getTimelineTweets, tweets: { tweets, loading } }) => {
                         tweet={tweet}
                         displayNumbers
                         onCommentClick={handleCommentClick}
+                        authId={user._id}
                      />
                   )
                )
@@ -63,5 +69,6 @@ Feed.propTypes = {
 
 const mapStateToProps = (state) => ({
    tweets: state.tweets,
+   auth: state.auth,
 });
 export default connect(mapStateToProps, { getTimelineTweets })(Feed);

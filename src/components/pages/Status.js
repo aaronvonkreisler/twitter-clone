@@ -15,6 +15,7 @@ import Tweet from '../tweets/Tweet';
 
 const TweetDisplay = ({
    tweets: { tweet, loading, tweetReady, replies, fetchingReplies },
+   auth: { user },
    getTweet,
    getTweetsReplies,
    clearTweetState,
@@ -40,7 +41,7 @@ const TweetDisplay = ({
       <React.Fragment>
          <Header text="Tweet" leftIcon />
          <div className="feed">
-            {loading || !tweetReady ? (
+            {loading || !tweetReady || user === null ? (
                <Spinner />
             ) : (
                tweetReady &&
@@ -54,6 +55,7 @@ const TweetDisplay = ({
                      <SingleTweet
                         tweet={tweet}
                         onCommentClick={handleCommentClick}
+                        authId={user._id}
                      />
 
                      {fetchingReplies ? (
@@ -68,6 +70,7 @@ const TweetDisplay = ({
                               displayNumbers
                               replyingToUserName={tweet.user.screen_name}
                               onCommentClick={handleCommentClick}
+                              authId={user._id}
                            />
                         ))
                      )}
@@ -86,6 +89,7 @@ TweetDisplay.propTypes = {
 
 const mapStateToProps = (state) => ({
    tweets: state.tweets,
+   auth: state.auth,
 });
 
 export default connect(mapStateToProps, {

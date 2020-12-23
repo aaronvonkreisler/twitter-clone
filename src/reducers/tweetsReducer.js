@@ -9,6 +9,7 @@ import {
    CLEAR_TWEET_STATE,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
+   LOG_OUT,
 } from '../actions/types';
 
 const initialState = {
@@ -104,6 +105,13 @@ export default function (state = initialState, action) {
             fetchingReplies: true,
             loading: true,
             tweet: null,
+         };
+      case LOG_OUT:
+         return {
+            ...state,
+            tweets: [],
+            tweet: null,
+            replies: [],
          };
       default:
          return state;

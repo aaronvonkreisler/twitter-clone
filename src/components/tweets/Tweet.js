@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -18,8 +18,6 @@ import {
    favoriteTweet,
    removeFavorite,
    retweet,
-   reportTweet,
-   pinTweetToProfile,
 } from '../../actions/tweets';
 
 import {
@@ -31,7 +29,7 @@ import '../../styles/design/tweet.css';
 
 const Tweet = ({
    tweet,
-   auth,
+   authId,
    deleteTweet,
    favoriteTweet,
    retweet,
@@ -44,25 +42,21 @@ const Tweet = ({
    replyingTo,
    replyingToUserName,
    bottomBorder,
-   reportTweet,
+
    pinnedTweet,
-   pinTweetToProfile,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
-   const [tweetLiked, setTweetLiked] = useState(() =>
-      tweet
-         ? tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
-           0
-         : false
-   );
+   const [tweetLiked, setTweetLiked] = useState(false);
 
-   const [retweeted, setRetweeted] = useState(() =>
-      tweet.retweetUsers.includes(auth.user._id)
-   );
+   const [retweeted, setRetweeted] = useState(false);
 
-   // const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
-   //    ? 'retweet__active'
-   //    : '';
+   useEffect(() => {
+      const isLiked =
+         tweet.favorites.filter((fav) => fav.user === authId).length > 0;
+      const isRetweeted = tweet.retweetUsers.includes(authId);
+      setTweetLiked(isLiked);
+      setRetweeted(isRetweeted);
+   }, [authId, tweet]);
 
    const openActionMenu = (e) => {
       setAnchorEl(e.currentTarget);
@@ -89,7 +83,7 @@ const Tweet = ({
                setAnchorEl={setAnchorEl}
                onClose={handleClose}
                tweetOwner={tweet.user._id}
-               currentUser={auth.user._id}
+               currentUser={authId}
                tweetId={tweet._id}
             />
          )}
@@ -326,6 +320,4 @@ export default connect(mapStateToProps, {
    favoriteTweet,
    removeFavorite,
    retweet,
-   reportTweet,
-   pinTweetToProfile,
 })(Tweet);
