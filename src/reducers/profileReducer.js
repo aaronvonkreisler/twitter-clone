@@ -14,6 +14,8 @@ import {
    GET_PINNED_TWEET,
    UPDATE_FAVORITES,
    RETWEET_SUCCESS,
+   REMOVE_PINNED_TWEET,
+   DELETE_TWEET,
 } from '../actions/types';
 
 const initialState = {
@@ -70,6 +72,15 @@ export default function (state = initialState, action) {
                        favorites: payload.favorites,
                     }
                   : tweet
+            ),
+         };
+      case DELETE_TWEET:
+         return {
+            ...state,
+            tweets: state.tweets.filter((tweet) => tweet._id !== payload),
+            replies: state.replies.filter((reply) => reply._id !== payload),
+            likedTweets: state.likedTweets.filter(
+               (tweet) => tweet._id !== payload
             ),
          };
       case RETWEET_SUCCESS:
@@ -144,6 +155,11 @@ export default function (state = initialState, action) {
          return {
             ...state,
             error: payload,
+         };
+      case REMOVE_PINNED_TWEET:
+         return {
+            ...state,
+            pinnedTweet: null,
          };
       default:
          return state;

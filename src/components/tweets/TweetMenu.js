@@ -8,6 +8,7 @@ import {
    deleteTweet,
    reportTweet,
    pinTweetToProfile,
+   removePinnedTweetFromProfile,
 } from '../../actions/tweets';
 
 const TweetMenu = ({
@@ -20,6 +21,8 @@ const TweetMenu = ({
    deleteTweet,
    reportTweet,
    pinTweetToProfile,
+   removePinnedTweetFromProfile,
+   pinnedTweet,
 }) => {
    const open = Boolean(anchorEl);
 
@@ -48,15 +51,27 @@ const TweetMenu = ({
                      </ListItemIcon>
                      <ListItemText primary="Delete" />
                   </MenuItem>
-                  <MenuItem
-                     className="pin-to-profile"
-                     onClick={() => pinTweetToProfile(tweetId)}
-                  >
-                     <ListItemIcon>
-                        <BiPin />
-                     </ListItemIcon>
-                     <ListItemText primary="Pin to your profile" />
-                  </MenuItem>
+                  {pinnedTweet ? (
+                     <MenuItem
+                        className="pin-to-profile"
+                        onClick={() => removePinnedTweetFromProfile()}
+                     >
+                        <ListItemIcon>
+                           <BiPin />
+                        </ListItemIcon>
+                        <ListItemText primary="Remove pinned tweet" />
+                     </MenuItem>
+                  ) : (
+                     <MenuItem
+                        className="pin-to-profile"
+                        onClick={() => pinTweetToProfile(tweetId)}
+                     >
+                        <ListItemIcon>
+                           <BiPin />
+                        </ListItemIcon>
+                        <ListItemText primary="Pin to your profile" />
+                     </MenuItem>
+                  )}
                </div>
             ) : (
                <MenuItem onClick={() => reportTweet()}>Report Tweet</MenuItem>
@@ -75,6 +90,9 @@ TweetMenu.propTypes = {
    tweetId: PropTypes.string.isRequired,
 };
 
-export default connect(null, { deleteTweet, reportTweet, pinTweetToProfile })(
-   TweetMenu
-);
+export default connect(null, {
+   deleteTweet,
+   reportTweet,
+   pinTweetToProfile,
+   removePinnedTweetFromProfile,
+})(TweetMenu);

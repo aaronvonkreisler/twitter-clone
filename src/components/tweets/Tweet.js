@@ -42,7 +42,6 @@ const Tweet = ({
    replyingTo,
    replyingToUserName,
    bottomBorder,
-
    pinnedTweet,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
@@ -85,6 +84,7 @@ const Tweet = ({
                tweetOwner={tweet.user._id}
                currentUser={authId}
                tweetId={tweet._id}
+               pinnedTweet={pinnedTweet}
             />
          )}
          {tweet && (
@@ -293,7 +293,7 @@ const Tweet = ({
 
 Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
-   auth: PropTypes.object.isRequired,
+
    deleteTweet: PropTypes.func,
    favoriteTweet: PropTypes.func,
    retweet: PropTypes.func,
@@ -304,18 +304,17 @@ Tweet.propTypes = {
    bottomBorder: PropTypes.bool,
    replyingTo: PropTypes.bool,
    replyingToUserName: PropTypes.string,
+   pinnedTweet: PropTypes.bool,
 };
 
 Tweet.defaultProps = {
    displayActions: true,
    replyView: false,
    bottomBorder: true,
+   pinnedTweet: false,
 };
 
-const mapStateToProps = (state) => ({
-   auth: state.auth,
-});
-export default connect(mapStateToProps, {
+export default connect(null, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,

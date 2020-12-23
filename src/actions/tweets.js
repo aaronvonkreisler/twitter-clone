@@ -12,6 +12,8 @@ import {
    REPLY_TO_TWEET_FROM_STATUS,
    CLEAR_TWEET_STATE,
    GET_TWEETS_REPLIES,
+   GET_TWEETS_LIKED_USERS,
+   REMOVE_PINNED_TWEET,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -192,6 +194,26 @@ export const pinTweetToProfile = (tweetId) => async (dispatch) => {
    }
 };
 
+export const removePinnedTweetFromProfile = () => async (dispatch) => {
+   try {
+      const res = await api.put('/api/tweets/remove-pin');
+
+      console.log(res);
+      dispatch({
+         type: REMOVE_PINNED_TWEET,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+   }
+};
+
 export const clearTweetState = () => ({
    type: CLEAR_TWEET_STATE,
 });
+
+// export const getTweetsLikedUsers = (tweetId) => async (dispatch) => {
+
+// }
