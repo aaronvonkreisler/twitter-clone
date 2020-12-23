@@ -49,9 +49,11 @@ const Tweet = ({
    pinTweetToProfile,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
-   const [tweetLiked, setTweetLiked] = useState(
-      () =>
-         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
+   const [tweetLiked, setTweetLiked] = useState(() =>
+      tweet
+         ? tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
+           0
+         : false
    );
 
    const [retweeted, setRetweeted] = useState(() =>
