@@ -13,6 +13,7 @@ import { CgMore } from 'react-icons/cg';
 import { BiPin } from 'react-icons/bi';
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
 import TweetMenu from './TweetMenu';
+import ImageDisplay from './ImageDisplay';
 import {
    deleteTweet,
    favoriteTweet,
@@ -181,6 +182,10 @@ const Tweet = ({
                            plugins={viewOnlyPlugins}
                         />
                      </Link>
+
+                     {/* IMAGE PREVIEW COMPONENT GOES HERE */}
+                     {tweet.image && <ImageDisplay image={tweet.image} />}
+
                      {/* Toolbar area - like, retweet, comment buttons */}
                      {displayActions && (
                         <div className="tweet__bottom-actionArea flex flex-row justify-between">

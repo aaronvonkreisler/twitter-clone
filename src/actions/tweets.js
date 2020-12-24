@@ -14,6 +14,7 @@ import {
    GET_TWEETS_REPLIES,
    GET_TWEETS_LIKED_USERS,
    REMOVE_PINNED_TWEET,
+   PIN_TWEET_TO_PROFILE,
 } from './types';
 
 export const getTimelineTweets = () => async (dispatch) => {
@@ -181,8 +182,11 @@ export const reportTweet = () => async (dispatch) => {
 
 export const pinTweetToProfile = (tweetId) => async (dispatch) => {
    try {
-      await api.put(`/api/tweets/pin-tweet/${tweetId}`);
-
+      const res = await api.put(`/api/tweets/pin-tweet/${tweetId}`);
+      dispatch({
+         type: PIN_TWEET_TO_PROFILE,
+         payload: res.data,
+      });
       dispatch(setAlert('Tweet pinned to your profile', 'info'));
    } catch (err) {
       dispatch({
@@ -196,9 +200,8 @@ export const pinTweetToProfile = (tweetId) => async (dispatch) => {
 
 export const removePinnedTweetFromProfile = () => async (dispatch) => {
    try {
-      const res = await api.put('/api/tweets/remove-pin');
+      await api.put('/api/tweets/remove-pin');
 
-      console.log(res);
       dispatch({
          type: REMOVE_PINNED_TWEET,
       });

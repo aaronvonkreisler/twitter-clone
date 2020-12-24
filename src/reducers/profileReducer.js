@@ -14,8 +14,10 @@ import {
    GET_PINNED_TWEET,
    UPDATE_FAVORITES,
    RETWEET_SUCCESS,
+   PIN_TWEET_TO_PROFILE,
    REMOVE_PINNED_TWEET,
    DELETE_TWEET,
+   USER_LOADED,
 } from '../actions/types';
 
 const initialState = {
@@ -45,6 +47,7 @@ export default function (state = initialState, action) {
       case GET_CURRENT_USERS_PROFILE:
       case UPLOAD_AVATAR_SUCCESS:
       case UPLOAD_COVER_PHOTO_SUCCESS:
+      case USER_LOADED:
          return {
             ...state,
             currentProfile: payload,
@@ -124,11 +127,13 @@ export default function (state = initialState, action) {
             likesLoading: false,
          };
       case GET_PINNED_TWEET:
+      case PIN_TWEET_TO_PROFILE:
          return {
             ...state,
             pinnedTweet: payload,
             pinnedTweetLoading: false,
          };
+
       case CLEAR_PROFILE:
          return {
             ...state,

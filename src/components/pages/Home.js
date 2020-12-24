@@ -6,8 +6,8 @@ import TweetForm from '../feed/TweetForm';
 import Feed from '../feed/Feed';
 
 const Home = ({ addTweet }) => {
-   const onFormSubmit = (content) => {
-      addTweet({ content });
+   const onFormSubmit = (content, image) => {
+      addTweet({ content, image });
    };
 
    return (

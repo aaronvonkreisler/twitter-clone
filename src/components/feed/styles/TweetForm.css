@@ -36,6 +36,52 @@
    padding-top: 5px;
 }
 
+.tweetForm__wrapper .rightSide__wrapper .image__container {
+   margin-top: 5px;
+   overflow: hidden;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   z-index: 1;
+   width: 100%;
+   height: 285px;
+   border-radius: 16px;
+   margin-bottom: 15px;
+}
+
+.rightSide__wrapper .image__container .image__wrapper {
+   height: 100%;
+   z-index: 0;
+   width: 100%;
+   overflow: hidden;
+   display: block;
+   position: relative;
+}
+.image__container .image__wrapper .presentation {
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center center;
+   z-index: -1;
+   background-color: rgba(0, 0, 0, 0);
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+}
+
+.image__container .image__wrapper .image {
+   inset: 0px;
+   height: 100%;
+   opacity: 0;
+   position: absolute;
+   width: 100%;
+   z-index: -1;
+}
+
 .rightSide__wrapper .textEditor__root {
    display: flex;
    flex-direction: row;
@@ -147,8 +193,22 @@ button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
    font-size: 30px !important;
    font-weight: 700;
 }
+
+.imageUpload .MuiIconButton-root {
+   height: 37px !important;
+   width: 37px !important;
+   padding: 8px;
+   margin-left: 5px;
+   color: var(--twitter-color);
+}
+
+div.draftJsEmojiPlugin__emojiSelect__34S1B {
+   padding-bottom: 5px;
+}
+
 .draftJsEmojiPlugin__emojiSelectButton__3sPol:hover,
-.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover {
+.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover,
+.imageUpload .MuiIconButton-root:hover {
    background: var(--twitter-button-hover);
 }
 div.draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {

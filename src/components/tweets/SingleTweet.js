@@ -245,7 +245,7 @@ const SingleTweet = ({
 
 SingleTweet.propTypes = {
    tweet: PropTypes.object.isRequired,
-   auth: PropTypes.object.isRequired,
+
    deleteTweet: PropTypes.func.isRequired,
    favoriteTweet: PropTypes.func.isRequired,
    removeFavorite: PropTypes.func.isRequired,

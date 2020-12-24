@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Avatar, Button, CircularProgress } from '@material-ui/core';
+import {
+   Avatar,
+   Button,
+   CircularProgress,
+   IconButton,
+} from '@material-ui/core';
 import omit from 'lodash/omit';
-
+import { FiImage } from 'react-icons/fi';
+import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
 // Editor Dependencies -------------------------
 import { EditorState, convertToRaw } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
@@ -43,8 +49,23 @@ const TweetForm = React.memo(
       const [editorState, setEditorState] = useState(() =>
          EditorState.createEmpty()
       );
-
+      const [imagePreview, setImagePreview] = useState(null);
+      const [imageFile, setImageFile] = useState(null);
+      const [imageLink, setImageLink] = useState('');
       const [disabled, setDisabled] = useState(true);
+
+      useEffect(() => {
+         async function uploadImageToDb() {
+            const imagePath = await uploadPhotoForTweet(imageFile);
+            setImageLink(imagePath);
+         }
+
+         uploadImageToDb();
+      }, [imageFile]);
+      const handleFileChange = (e) => {
+         getBase64(e.target.files[0]).then((data) => setImagePreview(data));
+         setImageFile(e.target.files[0]);
+      };
 
       const normalizeLength = (value) =>
          ((value - MIN_LENGTH) * 100) / (MAX_LENGTH - MIN_LENGTH);
@@ -52,10 +73,12 @@ const TweetForm = React.memo(
       const handleTweetSubmit = () => {
          const contentState = editorState.getCurrentContent();
          const rawContent = JSON.stringify(convertToRaw(contentState));
+         // NEED TO CHANGE THE CONSOLE.LOG BACK TO "onFormSubmit(rawContent)"
 
-         onFormSubmit(rawContent);
+         onFormSubmit(rawContent, imageLink);
          setTimeout(() => {
             setEditorState(() => EditorState.createEmpty());
+            setImagePreview(null);
          }, 250);
       };
 
@@ -109,9 +132,44 @@ const TweetForm = React.memo(
                            />
                         </div>
                      </div>
+                     {imagePreview !== null && (
+                        <div className="image__container">
+                           <div className="image__wrapper">
+                              <div
+                                 style={{
+                                    backgroundImage: `url(${imagePreview})`,
+                                 }}
+                                 className="presentation"
+                              />
+                              <img
+                                 src={imagePreview}
+                                 alt=""
+                                 className="image"
+                              />
+                           </div>
+                        </div>
+                     )}
                      <div className="toolbar__root">
                         <div className="toolbar__addOns">
                            <EmojiSelect />
+                           <div className="imageUpload">
+                              <input
+                                 type="file"
+                                 accept="image/*"
+                                 id="imageUpload"
+                                 style={{ display: 'none' }}
+                                 onChange={handleFileChange}
+                              />
+                              <label htmlFor="imageUpload">
+                                 <IconButton
+                                    aria-label="upload picture"
+                                    component="span"
+                                    className="uploadButton"
+                                 >
+                                    <FiImage />
+                                 </IconButton>
+                              </label>
+                           </div>
                         </div>
                         <div className="toolbar__submit">
                            <div className="counter">
