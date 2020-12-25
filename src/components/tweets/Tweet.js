@@ -13,6 +13,7 @@ import { CgMore } from 'react-icons/cg';
 import { BiPin } from 'react-icons/bi';
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
 import TweetMenu from './TweetMenu';
+import ToolbarMenu from './ToolbarMenu';
 import ImageDisplay from './ImageDisplay';
 import {
    deleteTweet,
@@ -45,7 +46,8 @@ const Tweet = ({
    bottomBorder,
    pinnedTweet,
 }) => {
-   const [anchorEl, setAnchorEl] = useState(null);
+   const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
+   const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
 
    const [retweeted, setRetweeted] = useState(false);
@@ -59,10 +61,15 @@ const Tweet = ({
    }, [authId, tweet]);
 
    const openActionMenu = (e) => {
-      setAnchorEl(e.currentTarget);
+      setTweetMenuAnchorEl(e.currentTarget);
+   };
+
+   const openToolbarMenu = (e) => {
+      setToolbarMenuAnchorEl(e.currentTarget);
    };
    const handleClose = () => {
-      setAnchorEl(null);
+      setTweetMenuAnchorEl(null);
+      setToolbarMenuAnchorEl(null);
    };
 
    const handleLikeOrUnlike = () => {
@@ -78,15 +85,22 @@ const Tweet = ({
    return (
       <div className={bottomBorder ? 'tweet__root border' : 'tweet__root'}>
          {displayActions && (
-            <TweetMenu
-               anchorEl={anchorEl}
-               setAnchorEl={setAnchorEl}
-               onClose={handleClose}
-               tweetOwner={tweet.user._id}
-               currentUser={authId}
-               tweetId={tweet._id}
-               pinnedTweet={pinnedTweet}
-            />
+            <React.Fragment>
+               <TweetMenu
+                  anchorEl={tweetMenuAnchorEl}
+                  setAnchorEl={setTweetMenuAnchorEl}
+                  onClose={handleClose}
+                  tweetOwner={tweet.user._id}
+                  currentUser={authId}
+                  tweetId={tweet._id}
+                  pinnedTweet={pinnedTweet}
+               />
+               <ToolbarMenu
+                  anchorEl={toolbarMenuAnchorEl}
+                  setAnchorEl={setToolbarMenuAnchorEl}
+                  onClose={handleClose}
+               />
+            </React.Fragment>
          )}
          {tweet && (
             <div className="flex flex-col">
@@ -282,7 +296,10 @@ const Tweet = ({
                            </div>
                            <div className="tweetAction-item">
                               <div className="flex flex-col justify-center">
-                                 <div className="action-wrapper comment_wrapper">
+                                 <div
+                                    className="action-wrapper comment_wrapper"
+                                    onClick={openToolbarMenu}
+                                 >
                                     <div className="d-inline-flex buttonDisplay">
                                        <div className="iconBackgroundDisplay comment_display" />
                                        <BsUpload />

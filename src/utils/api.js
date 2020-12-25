@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from '../store/store';
-import { LOG_OUT } from '../actions/types';
+// import store from '../store/store';
+// import { LOG_OUT } from '../actions/types';
 
 const api = axios.create({
    baseURL: 'https://tweeter-v1-api.herokuapp.com/',

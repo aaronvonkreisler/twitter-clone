@@ -27,7 +27,7 @@ const TweetMenu = ({
    const open = Boolean(anchorEl);
 
    // tweetOwner : Id of the owener of the tweet (string)
-   // currentUser: ID of the user currently logged in.
+   // currentUser: ID of the user currently logged in. (string)
    return (
       <React.Fragment>
          <Menu

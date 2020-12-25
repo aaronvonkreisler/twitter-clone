@@ -5,6 +5,7 @@ import { CgMore } from 'react-icons/cg';
 import Header from '../layout/Header';
 import NoBookmarks from '../bookmarks/NoBookmarks';
 import Spinner from '../layout/Spinner';
+import Tweet from '../tweets/Tweet';
 
 import { getUserBookmarks, clearBookmarkState } from '../../actions/bookmarks';
 
@@ -31,7 +32,19 @@ const Bookmarks = ({
             onRightIconClick={() => alert('Menu Goes here')}
          />
          <div className="feed">
-            <NoBookmarks />
+            {loading && <Spinner />}
+            {!loading && bookmarks.tweets ? (
+               bookmarks.tweets.map((tweet) => (
+                  <Tweet
+                     tweet={tweet}
+                     key={tweet._id}
+                     displayNumbers
+                     displayActions
+                  />
+               ))
+            ) : (
+               <NoBookmarks />
+            )}
          </div>
       </div>
    );
