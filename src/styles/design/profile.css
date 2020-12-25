@@ -97,7 +97,7 @@
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: start;
+   justify-content: flex-start;
 }
 
 .profileWrapper .userDetailsContainer .screen__name {
@@ -107,7 +107,7 @@
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: start;
+   justify-content: flex-start;
 }
 
 .profileWrapper .following__container {
