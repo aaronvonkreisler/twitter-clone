@@ -48,8 +48,34 @@
    height: 285px;
    border-radius: 16px;
    margin-bottom: 15px;
+   position: relative;
 }
 
+.image__container .image__button {
+   position: absolute;
+   top: 5px;
+   left: 5px;
+   background-color: rgba(0, 0, 0, 0.77);
+   min-height: 30px;
+   min-width: 30px;
+   border-radius: 50%;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+}
+
+.image__container .image__button > svg {
+   font-size: 20px;
+   vertical-align: text-bottom;
+}
+
+.image__container .image__button:hover {
+   background-color: rgba(26, 26, 26, 0.77);
+   transition: background-color 0.2s ease-in;
+}
 .rightSide__wrapper .image__container .image__wrapper {
    height: 100%;
    z-index: 0;

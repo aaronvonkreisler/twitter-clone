@@ -5,7 +5,6 @@
    align-items: center;
    margin-top: 10px;
    position: relative;
-   height: 199px;
 }
 
 .imageDisplay__wrapper {
@@ -14,17 +13,23 @@
    display: flex;
    flex-direction: column;
    align-items: stretch;
+   height: 100%;
+   width: 100%;
+   border-radius: 16px;
 }
 .imageDisplay__wrapper .presentation {
    display: block;
    overflow: hidden;
-   /* position: relative */
+   position: relative;
+   height: 100%;
+   width: 100%;
 }
 
 .presentation .presentation__empty {
    padding-bottom: 56.25%;
    width: 100%;
    display: block;
+   height: 100%;
 }
 
 .presentation .imageContainer {
@@ -38,7 +43,7 @@
 }
 
 .presentation .imageContainer .image {
-   margin-bottom: -10px;
+   margin-bottom: -18%;
    margin-top: 0;
    display: flex;
    flex-direction: column;
@@ -51,7 +56,6 @@
    right: 0;
    z-index: 0;
    overflow: hidden;
-   border-radius: 16px;
 }
 
 .imageContainer .image .backgroundCover {

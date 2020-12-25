@@ -13,9 +13,15 @@ import {
    CLEAR_TWEET_STATE,
    GET_TWEETS_REPLIES,
    GET_TWEETS_LIKED_USERS,
+   PHOTO_UPLOAD_ERROR,
    REMOVE_PINNED_TWEET,
    PIN_TWEET_TO_PROFILE,
 } from './types';
+
+export const photoUploadError = () => async (dispatch) => {
+   dispatch({ type: PHOTO_UPLOAD_ERROR });
+   dispatch(setAlert('This file type is not supported', 'info'));
+};
 
 export const getTimelineTweets = () => async (dispatch) => {
    try {

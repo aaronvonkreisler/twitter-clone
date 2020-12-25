@@ -9,6 +9,8 @@ import UserProfile from '../components/pages/UserProfile';
 import SelectedProfile from '../components/pages/SelectedProfile';
 import ProfileFollowing from '../components/profile/ProfileFollowing';
 import Home from '../components/pages/Home';
+import Bookmarks from '../components/pages/Bookmarks';
+
 const Routes = (props) => {
    return (
       <React.Fragment>
@@ -40,6 +42,7 @@ const Routes = (props) => {
                   key="users-following"
                   component={ProfileFollowing}
                />
+               <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
             </Main>
          </Switch>
       </React.Fragment>

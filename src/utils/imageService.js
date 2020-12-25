@@ -1,4 +1,7 @@
 import api from './api';
+import store from '../store/store';
+import { PHOTO_UPLOAD_ERROR, PHOTO_UPLOAD_SUCCESS } from '../actions/types';
+import { setAlert } from '../actions/alerts';
 
 export const getBase64 = (file) => {
    return new Promise((resolve, reject) => {
@@ -16,12 +19,16 @@ export const uploadPhotoForTweet = async (file) => {
          formData.append('image', file);
 
          const response = await api.post('api/tweets/image', formData);
-
+         store.dispatch({ type: PHOTO_UPLOAD_SUCCESS });
          return response.data;
       } else {
          return;
       }
    } catch (err) {
-      throw new Error(err.response.data.error);
+      store.dispatch({
+         type: PHOTO_UPLOAD_ERROR,
+         payload: err.respose.data.error,
+      });
+      store.dispatch(setAlert('Photo upload unsuccessful.', 'info'));
    }
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../layout/Header';
 import { addTweet } from '../../actions/tweets';
 import TweetForm from '../feed/TweetForm';
@@ -12,7 +13,12 @@ const Home = ({ addTweet }) => {
 
    return (
       <React.Fragment>
-         <Header text="Home" rightIcon />
+         <Header
+            text="Home"
+            rightIcon
+            IconComponent={HiOutlineSparkles}
+            onRightIconClick={() => alert('TODO')}
+         />
          <TweetForm
             placeholder="What's happening?"
             bottomBorder

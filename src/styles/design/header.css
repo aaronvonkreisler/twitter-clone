@@ -43,7 +43,15 @@
    cursor: pointer;
 }
 
-.icon__root .icon__hover-box {
+.header__items__right-icon .rightIcon {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.icon__root .icon__hover-box,
+.rightIcon .icon__hover-box {
    min-width: 39px;
    min-height: 39px;
    border-radius: 9999px;
@@ -55,7 +63,8 @@
    background-color: rgba(29, 161, 242, 0.1);
 }
 
-.left-icon__wrapper {
+.left-icon__wrapper,
+.right-icon__wrapper {
    font-weight: 700;
    height: 39px;
    font-size: 15px;
@@ -66,7 +75,9 @@
    text-align: center;
    color: var(--twitter-color);
 }
-.left-icon__wrapper > svg {
+
+.left-icon__wrapper > svg,
+.right-icon__wrapper > svg {
    width: 1.5em;
    height: 1.5em;
    flex-shrink: 0;

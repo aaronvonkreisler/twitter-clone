@@ -12,7 +12,7 @@ import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
 
 import ViewOnlyEditor from '../layout/ViewOnlyEditor';
-import Spinner from '../layout/Spinner';
+import ImageDisplay from './ImageDisplay';
 import TweetMenu from './TweetMenu';
 import {
    deleteTweet,
@@ -134,6 +134,7 @@ const SingleTweet = ({
                      plugins={viewOnlyPlugins}
                   />
                </div>
+               {tweet.image && <ImageDisplay image={tweet.image} />}
                <div className="singleTweet__time-data">
                   <Moment format="h:mm A • MMM D, YYYY">
                      {tweet.created_at}

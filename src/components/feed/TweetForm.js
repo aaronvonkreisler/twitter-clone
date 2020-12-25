@@ -8,7 +8,9 @@ import {
 } from '@material-ui/core';
 import omit from 'lodash/omit';
 import { FiImage } from 'react-icons/fi';
+import { CgClose } from 'react-icons/cg';
 import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
+import { photoUploadError } from '../../actions/tweets';
 // Editor Dependencies -------------------------
 import { EditorState, convertToRaw } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
@@ -45,7 +47,13 @@ const MAX_LENGTH = 280;
 const MIN_LENGTH = 1;
 
 const TweetForm = React.memo(
-   ({ auth: { user, loading }, placeholder, bottomBorder, onFormSubmit }) => {
+   ({
+      auth: { user, loading },
+      placeholder,
+      bottomBorder,
+      onFormSubmit,
+      photoUploadError,
+   }) => {
       const [editorState, setEditorState] = useState(() =>
          EditorState.createEmpty()
       );
@@ -54,14 +62,6 @@ const TweetForm = React.memo(
       const [imageLink, setImageLink] = useState('');
       const [disabled, setDisabled] = useState(true);
 
-      useEffect(() => {
-         async function uploadImageToDb() {
-            const imagePath = await uploadPhotoForTweet(imageFile);
-            setImageLink(imagePath);
-         }
-
-         uploadImageToDb();
-      }, [imageFile]);
       const handleFileChange = (e) => {
          getBase64(e.target.files[0]).then((data) => setImagePreview(data));
          setImageFile(e.target.files[0]);
@@ -81,6 +81,30 @@ const TweetForm = React.memo(
             setImagePreview(null);
          }, 250);
       };
+
+      const handleRemoveImage = () => {
+         setImagePreview(null);
+         setImageLink('');
+         setImageFile(null);
+      };
+
+      useEffect(() => {
+         async function uploadImageToDb() {
+            const regex = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
+
+            if (imageFile !== null) {
+               if (imageFile.type.match(regex)) {
+                  const imagePath = await uploadPhotoForTweet(imageFile);
+                  setImageLink(imagePath);
+               } else {
+                  handleRemoveImage();
+                  photoUploadError();
+               }
+            }
+         }
+
+         uploadImageToDb();
+      }, [imageFile, photoUploadError]);
 
       const handleCharacterCountChange = (str) => {
          const charRegex = new RegExp(/./, 'mg');
@@ -147,6 +171,12 @@ const TweetForm = React.memo(
                                  className="image"
                               />
                            </div>
+                           <div
+                              className="image__button"
+                              onClick={handleRemoveImage}
+                           >
+                              <CgClose />
+                           </div>
                         </div>
                      )}
                      <div className="toolbar__root">
@@ -206,4 +236,4 @@ const mapStateToProps = (state) => ({
    auth: state.auth,
 });
 
-export default connect(mapStateToProps)(TweetForm);
+export default connect(mapStateToProps, { photoUploadError })(TweetForm);

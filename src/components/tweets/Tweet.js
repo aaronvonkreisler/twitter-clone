@@ -184,7 +184,12 @@ const Tweet = ({
                      </Link>
 
                      {/* IMAGE PREVIEW COMPONENT GOES HERE */}
-                     {tweet.image && <ImageDisplay image={tweet.image} />}
+                     {tweet.image && (
+                        <ImageDisplay
+                           image={tweet.image}
+                           path={`/${tweet.user.screen_name}/status/${tweet._id}`}
+                        />
+                     )}
 
                      {/* Toolbar area - like, retweet, comment buttons */}
                      {displayActions && (
