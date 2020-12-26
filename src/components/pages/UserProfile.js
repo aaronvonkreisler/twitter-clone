@@ -12,6 +12,7 @@ import ProfileReplies from '../profile/ProfileReplies';
 import ProfileLikes from '../profile/ProfileLikes';
 import ProfilePictureModal from '../forms/ProfilePictureModal';
 import BackgroundPictureModal from '../forms/BackgroundPictureModal';
+import EditProfileModal from '../forms/EditProfileModal';
 import { getProfilePinnedTweet } from '../../actions/profile';
 import { prepareProfileData } from '../../actions/profileData';
 import '../../styles/design/profile.css';
@@ -24,7 +25,7 @@ const UserProfile = ({
 }) => {
    const [avatarModalOpen, setAvatarModalOpen] = useState(false);
    const [coverModalOpen, setCoverModalOpen] = useState(false);
-
+   const [editProfileModalOpen, setEditProfileModalOpen] = useState(false)
    useEffect(() => {
       prepareProfileData(currentProfile);
       getProfilePinnedTweet(currentProfile.screen_name);
@@ -45,6 +46,11 @@ const UserProfile = ({
                   open={coverModalOpen}
                   setOpen={setCoverModalOpen}
                   defaultPicture={currentProfile.backgroundPicture}
+               />
+               <EditProfileModal 
+                  open={editProfileModalOpen}
+                  setOpen={setEditProfileModalOpen}
+                  profile={currentProfile}
                />
                <Header leftIcon text={currentProfile.name} />
                <div className="profileWrapper">
@@ -82,7 +88,7 @@ const UserProfile = ({
                            <Button
                               className="tweet-button-outline"
                               fullWidth
-                              onClick={() => alert('TODO!!!')}
+                              onClick={() => setEditProfileModalOpen(true)}
                            >
                               Edit Profile
                            </Button>

@@ -1,0 +1,11 @@
+.editProfile > .MuiDialogContent-root {
+  padding-top: 0px;
+}
+
+.textFieldsWrapper {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
