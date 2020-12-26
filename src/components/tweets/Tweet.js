@@ -49,15 +49,17 @@ const Tweet = ({
    const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
    const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
-
+   
    const [retweeted, setRetweeted] = useState(false);
 
    useEffect(() => {
       const isLiked =
          tweet.favorites.filter((fav) => fav.user === authId).length > 0;
       const isRetweeted = tweet.retweetUsers.includes(authId);
+      
       setTweetLiked(isLiked);
       setRetweeted(isRetweeted);
+      
    }, [authId, tweet]);
 
    const openActionMenu = (e) => {
@@ -99,6 +101,9 @@ const Tweet = ({
                   anchorEl={toolbarMenuAnchorEl}
                   setAnchorEl={setToolbarMenuAnchorEl}
                   onClose={handleClose}
+                  bookmarkedBy={tweet.bookmarkedBy}
+                  currentUser={authId}
+                  tweetId={tweet._id}
                />
             </React.Fragment>
          )}

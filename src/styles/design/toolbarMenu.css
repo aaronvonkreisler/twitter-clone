@@ -1,0 +1,3 @@
+.menuItem .MuiListItemIcon-root > svg {
+    color: var(--text-gray);
+ }

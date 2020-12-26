@@ -1,9 +1,11 @@
 import api from '../utils/api';
+import {setAlert} from './alerts'
 import {
    GET_BOOKMARKS,
    BOOKMARKS_ERROR,
    CLEAR_BOOKMARKS,
    ADD_TO_BOOKMARKS,
+   REMOVE_BOOKMARK_ITEM,
 } from './types';
 
 export const clearBookmarkState = () => ({
@@ -34,10 +36,31 @@ export const addTweetToBookmarks = (tweetId) => async (dispatch) => {
          type: ADD_TO_BOOKMARKS,
          payload: res.data,
       });
+
+      dispatch(setAlert('Tweet added to your bookmarks', 'info'))
+   } catch (err) {
+      dispatch({
+         type: BOOKMARKS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+
+   }
+};
+
+export const removeTweetFromBookmarks = (tweetId) => async (dispatch) => {
+   try {
+      const res = await api.put(`/api/bookmarks/${tweetId}`)
+
+      dispatch({
+         type: REMOVE_BOOKMARK_ITEM,
+         payload: res.data,
+      })
+
+      dispatch(setAlert('Tweet removed from your bookmarks', 'info'))
    } catch (err) {
       dispatch({
          type: BOOKMARKS_ERROR,
          payload: { msg: err.response.statusText, status: err.response.status },
       });
    }
-};
+}

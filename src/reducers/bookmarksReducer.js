@@ -1,6 +1,6 @@
 import {
-   ADD_TO_BOOKMARKS,
-   REMOVE_FROM_BOOKMARKS,
+   
+   REMOVE_BOOKMARK_ITEM,
    GET_BOOKMARKS,
    BOOKMARKS_ERROR,
    CLEAR_BOOKMARKS,
@@ -18,18 +18,21 @@ export default function (state = initialState, action) {
 
    switch (type) {
       case GET_BOOKMARKS:
+         case REMOVE_BOOKMARK_ITEM:
          return {
             ...state,
             bookmarks: payload,
             loading: false,
          };
-      case CLEAR_BOOKMARKS:
-         return {
-            ...state,
-            bookmarks: {},
-            loading: true,
-            error: {},
-         };
+      
+         
+      // case CLEAR_BOOKMARKS:
+      //    return {
+      //       ...state,
+      //       bookmarks: {},
+      //       loading: true,
+      //       error: {},
+      //    };
       case BOOKMARKS_ERROR:
          return {
             ...state,

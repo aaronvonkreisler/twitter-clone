@@ -11,16 +11,15 @@ import { getUserBookmarks, clearBookmarkState } from '../../actions/bookmarks';
 
 const Bookmarks = ({
    bookmarks: { bookmarks, loading },
+   auth: {user},
    getUserBookmarks,
    clearBookmarkState,
 }) => {
    useEffect(() => {
       getUserBookmarks();
 
-      return function cleanup() {
-         clearBookmarkState();
-      };
-   }, [getUserBookmarks, clearBookmarkState]);
+      
+   }, [getUserBookmarks]);
 
    return (
       <div>
@@ -33,13 +32,14 @@ const Bookmarks = ({
          />
          <div className="feed">
             {loading && <Spinner />}
-            {!loading && bookmarks.tweets ? (
+            {!loading && user !== null && bookmarks.tweets.length > 0 ? (
                bookmarks.tweets.map((tweet) => (
                   <Tweet
                      tweet={tweet}
                      key={tweet._id}
                      displayNumbers
                      displayActions
+                     authId={user._id}
                   />
                ))
             ) : (
@@ -56,6 +56,7 @@ Bookmarks.propTypes = {
 
 const mapStateToProps = (state) => ({
    bookmarks: state.bookmarks,
+   auth: state.auth
 });
 
 export default connect(mapStateToProps, {

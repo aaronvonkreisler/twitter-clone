@@ -44,7 +44,10 @@ const TweetMenu = ({
                <div>
                   <MenuItem
                      className="delete_tweet"
-                     onClick={() => deleteTweet(tweetId)}
+                     onClick={() => {
+                        deleteTweet(tweetId)
+                        setAnchorEl(null)
+                     }}
                   >
                      <ListItemIcon>
                         <HiOutlineTrash />
@@ -54,7 +57,10 @@ const TweetMenu = ({
                   {pinnedTweet ? (
                      <MenuItem
                         className="pin-to-profile"
-                        onClick={() => removePinnedTweetFromProfile()}
+                        onClick={() => {
+                           removePinnedTweetFromProfile()
+                           setAnchorEl(null)
+                        }}
                      >
                         <ListItemIcon>
                            <BiPin />
@@ -64,7 +70,10 @@ const TweetMenu = ({
                   ) : (
                      <MenuItem
                         className="pin-to-profile"
-                        onClick={() => pinTweetToProfile(tweetId)}
+                        onClick={() => {
+                           pinTweetToProfile(tweetId)
+                           setAnchorEl(null)
+                        }}
                      >
                         <ListItemIcon>
                            <BiPin />
@@ -74,7 +83,10 @@ const TweetMenu = ({
                   )}
                </div>
             ) : (
-               <MenuItem onClick={() => reportTweet()}>Report Tweet</MenuItem>
+               <MenuItem onClick={() => {
+                  reportTweet()
+                  setAnchorEl(null)
+               }}>Report Tweet</MenuItem>
             )}
          </Menu>
       </React.Fragment>
