@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
   Dialog,
   DialogTitle,
@@ -10,17 +11,18 @@ import {
 } from '@material-ui/core';
 import { CgClose } from 'react-icons/cg';
 import { FiCamera } from 'react-icons/fi';
+import PropTypes from 'prop-types';
+
 import OutlineButton from '../layout/OutlineButton';
 import TextBox from '../layout/TextBox';
-import PropTypes from 'prop-types';
+import BackgroundPictureModal from './BackgroundPictureModal';
+import ProfilePictureModal from './ProfilePictureModal';
+import { editProfile } from '../../actions/profile';
 import '../../styles/design/utils.css';
 import '../../styles/design/profile.css';
 import '../../styles/design/editProfileModal.css';
 
-import BackgroundPictureModal from './BackgroundPictureModal';
-import ProfilePictureModal from './ProfilePictureModal';
-
-const EditProfileModal = ({ user, open, setOpen, profile }) => {
+const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
   const [backgroundPicOpen, setBackgroundPicOpen] = useState(false);
   const [profilePicOpen, setProfilePicOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,12 +32,18 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
     website: profile.website ? profile.website : '',
   });
 
-  const { name, bio, location, website } = formData;
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const { name, bio, location, website } = formData;
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { value, name, maxLength } = e.target;
+    setFormData({ ...formData, [name]: value.slice(0, maxLength) });
+  };
+  const handleSubmit = () => {
+    editProfile(formData);
+    setOpen(false);
   };
   return (
     <div className="editProfile">
@@ -66,7 +74,7 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
               </div>
             </div>
             <div className="profilePicture__right">
-              <OutlineButton text="Save" onClick={() => alert('Hi')} />
+              <OutlineButton text="Save" onClick={handleSubmit} />
             </div>
           </div>
         </DialogTitle>
@@ -101,6 +109,9 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
                 label="Name"
                 value={name}
                 onChange={handleChange}
+                counter
+                maxLength={50}
+                count={formData.name.length}
                 style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
@@ -109,6 +120,11 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
                 label="Bio"
                 value={bio}
                 onChange={handleChange}
+                textArea
+                counter
+                count={formData.bio.length}
+                maxLength={160}
+                rows={3}
                 style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
@@ -117,6 +133,9 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
                 label="Location"
                 value={location}
                 onChange={handleChange}
+                counter
+                count={formData.location.length}
+                maxLength={30}
                 style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
@@ -125,6 +144,9 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
                 label="Website"
                 value={website}
                 onChange={handleChange}
+                counter
+                count={formData.website.length}
+                maxLength={100}
                 style={{ width: '100%', paddingLeft: '15px' }}
               />
             </div>
@@ -137,6 +159,9 @@ const EditProfileModal = ({ user, open, setOpen, profile }) => {
 
 EditProfileModal.propTypes = {
   profile: PropTypes.object.isRequired,
+  editProfile: PropTypes.func.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
-export default EditProfileModal;
+export default connect(null, { editProfile })(EditProfileModal);
