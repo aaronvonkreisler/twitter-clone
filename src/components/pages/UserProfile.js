@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Avatar, Button } from '@material-ui/core';
-import { BsCalendar } from 'react-icons/bs';
+import { BsCalendar, BsLink45Deg } from 'react-icons/bs';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import Moment from 'react-moment';
 import Header from '../layout/Header';
@@ -99,6 +99,19 @@ const UserProfile = ({
                     <span className="locationItem">
                       <HiOutlineLocationMarker />
                       <span>{currentProfile.location}</span>
+                    </span>
+                  )}
+                  {currentProfile.website && (
+                    <span className="locationItem">
+                      <BsLink45Deg />
+                      <a
+                        className="link"
+                        href={currentProfile.website}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {currentProfile.website}
+                      </a>
                     </span>
                   )}
                   {currentProfile.createdAt && (

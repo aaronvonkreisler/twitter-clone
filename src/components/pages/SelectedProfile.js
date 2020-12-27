@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Avatar, Button } from '@material-ui/core';
 import { FiMail } from 'react-icons/fi';
-import { BsCalendar } from 'react-icons/bs';
+import { BsCalendar, BsLink45Deg } from 'react-icons/bs';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import {
   getUserByUsername,
@@ -141,6 +141,19 @@ const SelectedProfile = ({
                     <span className="locationItem">
                       <HiOutlineLocationMarker />
                       <span>{profile.location}</span>
+                    </span>
+                  )}
+                  {profile.website && (
+                    <span className="locationItem">
+                      <BsLink45Deg />
+                      <a
+                        className="link"
+                        href={profile.website}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {profile.website}
+                      </a>
                     </span>
                   )}
                   {profile.createdAt && (

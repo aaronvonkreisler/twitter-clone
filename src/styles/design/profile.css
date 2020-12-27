@@ -132,6 +132,15 @@
   vertical-align: text-bottom;
   height: 1.25em;
 }
+
+.userDetailsContainer .locationAndJoinedDate .locationItem .link {
+  color: var(--twitter-color);
+  cursor: pointer;
+}
+
+.userDetailsContainer .locationAndJoinedDate .locationItem .link:hover {
+  text-decoration: underline;
+}
 .profileWrapper .userDetailsContainer .screen__name {
   color: var(--text-gray);
   font-weight: 400;
