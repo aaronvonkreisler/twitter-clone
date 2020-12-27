@@ -81,7 +81,7 @@ const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
 ReplyModal.propTypes = {
   tweet: PropTypes.object,
   replyToTweet: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
+  open: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
