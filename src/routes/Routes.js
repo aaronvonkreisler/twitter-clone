@@ -10,43 +10,45 @@ import SelectedProfile from '../components/pages/SelectedProfile';
 import ProfileFollowing from '../components/profile/ProfileFollowing';
 import Home from '../components/pages/Home';
 import Bookmarks from '../components/pages/Bookmarks';
+import ReplyModal from '../components/forms/ReplyModal';
 
 const Routes = (props) => {
-   return (
-      <React.Fragment>
-         <AlertDisplay />
-         <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Main>
-               <PrivateRoute
-                  exact
-                  path="/:screen_name/status/:tweet_id"
-                  component={Status}
-               />
-               <PrivateRoute exact path="/home" component={Home} />
-               <PrivateRoute
-                  exact
-                  path="/profile"
-                  component={UserProfile}
-                  key="user"
-               />
-               <PrivateRoute
-                  exact
-                  path="/profile/:username"
-                  key="selected-user"
-                  component={SelectedProfile}
-               />
-               <PrivateRoute
-                  exact
-                  path="/profile/:username/following"
-                  key="users-following"
-                  component={ProfileFollowing}
-               />
-               <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
-            </Main>
-         </Switch>
-      </React.Fragment>
-   );
+  return (
+    <React.Fragment>
+      <AlertDisplay />
+      <ReplyModal />
+      <Switch>
+        <Route exact path="/login" component={LoginPage} />
+        <Main>
+          <PrivateRoute
+            exact
+            path="/:screen_name/status/:tweet_id"
+            component={Status}
+          />
+          <PrivateRoute exact path="/home" component={Home} />
+          <PrivateRoute
+            exact
+            path="/profile"
+            component={UserProfile}
+            key="user"
+          />
+          <PrivateRoute
+            exact
+            path="/profile/:username"
+            key="selected-user"
+            component={SelectedProfile}
+          />
+          <PrivateRoute
+            exact
+            path="/profile/:username/following"
+            key="users-following"
+            component={ProfileFollowing}
+          />
+          <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
+        </Main>
+      </Switch>
+    </React.Fragment>
+  );
 };
 
 export default Routes;
