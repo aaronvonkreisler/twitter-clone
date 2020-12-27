@@ -5,38 +5,46 @@ import Spinner from '../layout/Spinner';
 import { getUsersFollowing } from '../../actions/profileData';
 
 import UserPreview from '../layout/UserPreview';
+import EmptyDisplay from '../layout/EmptyDisplay';
 
 const Following = ({
-   profileData: { following, followingLoading, screenName },
-   getUsersFollowing,
+  profileData: { following, followingLoading, screenName },
+  getUsersFollowing,
 }) => {
-   useEffect(() => {
-      getUsersFollowing(screenName);
-   }, [getUsersFollowing, screenName]);
-   return (
-      <React.Fragment>
-         {followingLoading ? (
-            <Spinner />
-         ) : (
-            <div className="feed">
-               {following.map((user) => (
-                  <UserPreview user={user.user} key={user._id} height30 />
-               ))}
-            </div>
-         )}
-      </React.Fragment>
-   );
+  useEffect(() => {
+    getUsersFollowing(screenName);
+  }, [getUsersFollowing, screenName]);
+  return (
+    <React.Fragment>
+      {followingLoading ? (
+        <Spinner />
+      ) : (
+        <div className="feed">
+          {following.length === 0 ? (
+            <EmptyDisplay
+              primaryText="You aren't following anyone yet"
+              secondaryText="When you follow someone, you'll see them here."
+            />
+          ) : (
+            following.map((user) => (
+              <UserPreview user={user.user} key={user._id} height30 />
+            ))
+          )}
+        </div>
+      )}
+    </React.Fragment>
+  );
 };
 
 Following.propTypes = {
-   following: PropTypes.array,
-   followingLoading: PropTypes.bool,
-   getUsersFollowers: PropTypes.func,
-   screenName: PropTypes.string,
+  following: PropTypes.array,
+  followingLoading: PropTypes.bool,
+  getUsersFollowers: PropTypes.func,
+  screenName: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-   profileData: state.profileData,
+  profileData: state.profileData,
 });
 
 export default connect(mapStateToProps, { getUsersFollowing })(Following);
