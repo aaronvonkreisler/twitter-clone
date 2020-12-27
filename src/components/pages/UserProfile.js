@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Avatar, Button, IconButton } from '@material-ui/core';
-import { FiCamera } from 'react-icons/fi';
+import { Avatar, Button } from '@material-ui/core';
+import { BsCalendar } from 'react-icons/bs';
+import { HiOutlineLocationMarker } from 'react-icons/hi';
+import Moment from 'react-moment';
 import Header from '../layout/Header';
 import Spinner from '../layout/Spinner';
 import ProfileTabs from '../profile/ProfileTabs';
@@ -87,7 +89,30 @@ const UserProfile = ({
                   <span>@{currentProfile.screen_name}</span>
                 </div>
                 {/* Users Bio, location and joined date goes here */}
-
+                {currentProfile.bio && (
+                  <div className="profileBio">
+                    <span>{currentProfile.bio}</span>
+                  </div>
+                )}
+                <div className="locationAndJoinedDate">
+                  {currentProfile.location && (
+                    <span className="locationItem">
+                      <HiOutlineLocationMarker />
+                      <span>{currentProfile.location}</span>
+                    </span>
+                  )}
+                  {currentProfile.createdAt && (
+                    <span className="locationItem">
+                      <BsCalendar />
+                      <span>
+                        Joined{' '}
+                        <Moment format="MMMM YYYY">
+                          {currentProfile.createdAt}
+                        </Moment>
+                      </span>
+                    </span>
+                  )}
+                </div>
                 <div className="following__container">
                   <div className="item">
                     <Link

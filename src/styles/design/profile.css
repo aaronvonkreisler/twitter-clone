@@ -90,6 +90,21 @@
 
   margin-bottom: 10px;
 }
+
+.profileWrapper .userDetailsContainer .profileBio {
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  overflow-wrap: break-word;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.profileWrapper .userDetailsContainer .profileBio > span {
+  overflow-wrap: break-word;
+  line-height: 1.3125;
+  display: inline;
+}
 .profileWrapper .userDetailsContainer .user__name {
   color: #fff;
   font-weight: 700;
@@ -98,8 +113,25 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 5px;
 }
 
+.profileWrapper .userDetailsContainer .locationAndJoinedDate {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-gray);
+  font-size: 15px;
+}
+.userDetailsContainer .locationAndJoinedDate .locationItem {
+  display: inline-block;
+  overflow-wrap: break-word;
+  margin-right: 10px;
+}
+.userDetailsContainer .locationAndJoinedDate .locationItem > svg {
+  margin-right: 5px;
+  vertical-align: text-bottom;
+  height: 1.25em;
+}
 .profileWrapper .userDetailsContainer .screen__name {
   color: var(--text-gray);
   font-weight: 400;
@@ -108,6 +140,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 .profileWrapper .following__container {
