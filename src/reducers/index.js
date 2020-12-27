@@ -6,6 +6,7 @@ import tweets from './tweetsReducer';
 import profileData from './profileDataReducer';
 import bookmarks from './bookmarksReducer';
 import modal from './modalReducer';
+import suggestions from './suggestionsReducer';
 
 export default combineReducers({
   alerts,
@@ -15,4 +16,5 @@ export default combineReducers({
   profileData,
   tweets,
   modal,
+  suggestions,
 });
