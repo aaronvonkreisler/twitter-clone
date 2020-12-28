@@ -10,53 +10,53 @@ import Spinner from '../layout/Spinner';
 import './styles/Feed.css';
 
 const Feed = ({
-  tweets: { tweets, loading },
-  auth: { user },
-  getTimelineTweets,
+   tweets: { tweets, loading },
+   auth: { user },
+   getTimelineTweets,
 }) => {
-  useEffect(() => {
-    getTimelineTweets();
-  }, [getTimelineTweets]);
+   useEffect(() => {
+      getTimelineTweets();
+   }, [getTimelineTweets]);
 
-  return (
-    <React.Fragment>
-      <div className="feed">
-        {loading || user === null ? (
-          <Spinner />
-        ) : (
-          tweets.map((tweet) =>
-            tweet.retweetData ? (
-              <Tweet
-                tweet={tweet.retweetData}
-                retweetedBy={tweet.user.name}
-                key={tweet._id}
-                displayNumbers
-                authId={user._id}
-              />
+   return (
+      <React.Fragment>
+         <div className="feed" id="feed">
+            {loading || user === null ? (
+               <Spinner />
             ) : (
-              <Tweet
-                key={tweet._id}
-                tweet={tweet}
-                displayNumbers
-                authId={user._id}
-              />
-            )
-          )
-        )}
-      </div>
-    </React.Fragment>
-  );
+               tweets.map((tweet) =>
+                  tweet.retweetData ? (
+                     <Tweet
+                        tweet={tweet.retweetData}
+                        retweetedBy={tweet.user.name}
+                        key={tweet._id}
+                        displayNumbers
+                        authId={user._id}
+                     />
+                  ) : (
+                     <Tweet
+                        key={tweet._id}
+                        tweet={tweet}
+                        displayNumbers
+                        authId={user._id}
+                     />
+                  )
+               )
+            )}
+         </div>
+      </React.Fragment>
+   );
 };
 
 Feed.propTypes = {
-  getTimelineTweets: PropTypes.func.isRequired,
-  tweets: PropTypes.object.isRequired,
+   getTimelineTweets: PropTypes.func.isRequired,
+   tweets: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  tweets: state.tweets,
-  auth: state.auth,
+   tweets: state.tweets,
+   auth: state.auth,
 });
 export default connect(mapStateToProps, {
-  getTimelineTweets,
+   getTimelineTweets,
 })(Feed);

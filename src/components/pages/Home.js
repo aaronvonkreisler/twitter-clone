@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../layout/Header';
@@ -6,7 +6,33 @@ import { addTweet } from '../../actions/tweets';
 import TweetForm from '../feed/TweetForm';
 import Feed from '../feed/Feed';
 
-const Home = ({ addTweet }) => {
+import { fetchTimelineTweetsStart } from '../../actions/timeline';
+import useScrollPosition from '../../hooks/useScrollPosition';
+
+const Home = ({
+   addTweet,
+   fetchTimelineTweetsStart,
+   timeline: { fetching, hasMore, tweets },
+}) => {
+   const [feedEl, setFeedEl] = useState(null);
+
+   useEffect(() => {
+      document.title = 'Home / Tweeter';
+      const element = document.getElementById('feed');
+      setFeedEl(element);
+      fetchTimelineTweetsStart();
+   }, [fetchTimelineTweetsStart]);
+
+   useScrollPosition(
+      ({ atBottom }) => {
+         if (atBottom && hasMore && !fetching) {
+            fetchTimelineTweetsStart(tweets.length);
+         }
+      },
+      feedEl,
+      [hasMore, fetching]
+   );
+
    const onFormSubmit = (content, image) => {
       addTweet({ content, image });
    };
@@ -29,4 +55,10 @@ const Home = ({ addTweet }) => {
    );
 };
 
-export default connect(null, { addTweet })(Home);
+const mapStateToProps = (state) => ({
+   timeline: state.timeline,
+});
+
+export default connect(mapStateToProps, { addTweet, fetchTimelineTweetsStart })(
+   Home
+);
