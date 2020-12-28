@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CgMore } from 'react-icons/cg';
-import Header from '../layout/Header';
-import EmptyDisplay from '../layout/EmptyDisplay';
-import Spinner from '../layout/Spinner';
-import Tweet from '../tweets/Tweet';
-import BookmarksMenu from '../bookmarks/BoomarksMenu';
+import Header from '../components/layout/Header';
+import EmptyDisplay from '../components/layout/EmptyDisplay';
+import Spinner from '../components/layout/Spinner';
+import Tweet from '../components/tweets/Tweet';
+import BookmarksMenu from '../components/bookmarks/BoomarksMenu';
 
-import { getUserBookmarks, clearBookmarkState } from '../../actions/bookmarks';
+import { getUserBookmarks, clearBookmarkState } from '../actions/bookmarks';
 
 const Bookmarks = ({
   bookmarks: { bookmarks, loading },

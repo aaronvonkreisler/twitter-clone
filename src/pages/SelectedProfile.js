@@ -14,18 +14,18 @@ import {
   clearProfileState,
   getProfilePinnedTweet,
 } from '../../actions/profile';
-import Header from '../layout/Header';
-import Spinner from '../layout/Spinner';
-import ProfileTabs from '../profile/ProfileTabs';
-import ProfileTweets from '../profile/ProfileTweets';
-import ProfileReplies from '../profile/ProfileReplies';
-import ProfileLikes from '../profile/ProfileLikes';
-import FollowingButton from '../layout/FollowingButton';
-import OutlineButton from '../layout/OutlineButton';
-import ReplyModal from '../forms/ReplyModal';
+import Header from '../components/layout/Header';
+import Spinner from '../components/layout/Spinner';
+import ProfileTabs from '../components/profile/ProfileTabs';
+import ProfileTweets from '../components/profile/ProfileTweets';
+import ProfileReplies from '../components/profile/ProfileReplies';
+import ProfileLikes from '../components/profile/ProfileLikes';
+import FollowingButton from '../components/layout/FollowingButton';
+import OutlineButton from '../components/layout/OutlineButton';
+import ReplyModal from '../components/forms/ReplyModal';
 
-import '../../styles/design/profile.css';
-import '../../styles/design/utils.css';
+import '../styles/design/profile.css';
+import '../styles/design/utils.css';
 
 const SelectedProfile = ({
   getUserByUsername,
