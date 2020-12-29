@@ -15,3 +15,12 @@ export const retrieveTimelineTweets = async (offset = 0) => {
       throw new Error(err.response.data);
    }
 };
+
+export const getSuggestedUsers = async (max) => {
+   try {
+      const res = await api.get(`/api/user/suggested/${max}`);
+      return res.data;
+   } catch (err) {
+      throw new Error(err.response.data);
+   }
+};
