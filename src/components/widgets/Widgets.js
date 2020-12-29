@@ -1,5 +1,5 @@
 import React from 'react';
-
+//REFACTOR
 import { FiSearch } from 'react-icons/fi';
 import WidgetItem from './WidgetItem';
 import './styles/Widgets.css';
