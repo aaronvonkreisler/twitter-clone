@@ -2,7 +2,6 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTimelineTweets } from '../../actions/tweets';
 
 import Tweet from '../tweets/Tweet';
 import Spinner from '../layout/Spinner';
@@ -49,6 +48,4 @@ const mapStateToProps = (state) => ({
   timeline: state.timeline,
   auth: state.auth,
 });
-export default connect(mapStateToProps, {
-  getTimelineTweets,
-})(Feed);
+export default connect(mapStateToProps)(Feed);

@@ -3,6 +3,10 @@ import {
   FETCH_TWEETS_START,
   FETCH_TWEETS_SUCCESS,
   CLEAR_TIMELINE,
+  DELETE_TWEET,
+  UPDATE_FAVORITES,
+  REPLY_TO_TWEET_FROM_HOME,
+  ADD_TWEET,
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +40,41 @@ export default function (state = initialState, action) {
         ...state,
         fetching: false,
         error: payload,
+      };
+    case ADD_TWEET:
+      return {
+        ...state,
+        tweets: [payload, ...state.tweets],
+      };
+    case DELETE_TWEET:
+      return {
+        ...state,
+        tweets: state.tweets.filter((tweet) => tweet._id !== payload),
+      };
+    case UPDATE_FAVORITES:
+      return {
+        ...state,
+        tweets: state.tweets.map((tweet) =>
+          tweet._id === payload.id
+            ? {
+                ...tweet,
+                favorites: payload.favorites,
+              }
+            : tweet
+        ),
+      };
+    case REPLY_TO_TWEET_FROM_HOME:
+      return {
+        ...state,
+        tweets: state.tweets.map((tweet) =>
+          tweet._id === payload.id
+            ? {
+                ...tweet,
+                replies: [...tweet.replies, payload.replies],
+              }
+            : tweet
+        ),
+        loading: false,
       };
     case CLEAR_TIMELINE:
       return {
