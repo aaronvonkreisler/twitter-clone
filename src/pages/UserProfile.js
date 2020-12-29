@@ -29,6 +29,7 @@ const UserProfile = ({
   const [coverModalOpen, setCoverModalOpen] = useState(false);
   const [editProfileModalOpen, setEditProfileModalOpen] = useState(false);
   useEffect(() => {
+    document.title = `${currentProfile.name} (@${currentProfile.screen_name})`;
     prepareProfileData(currentProfile);
     getProfilePinnedTweet(currentProfile.screen_name);
   }, [prepareProfileData, currentProfile, getProfilePinnedTweet]);

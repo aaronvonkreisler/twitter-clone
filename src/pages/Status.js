@@ -29,6 +29,14 @@ const Status = ({
     };
   }, [getTweet, getTweetsReplies, clearTweetState, match.params.tweet_id]);
 
+  useEffect(
+    () =>
+      tweet !== null
+        ? (document.title = `${tweet.user.name} on Tweeter:`)
+        : (document.title = 'Tweeter'),
+    [tweet]
+  );
+
   const handleCommentClick = (tweet) => {
     setTweetInModal(tweet);
     openModal();

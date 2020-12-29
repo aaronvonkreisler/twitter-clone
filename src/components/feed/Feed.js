@@ -15,6 +15,7 @@ const Feed = ({ timeline: { tweets, fetching }, auth: { user } }) => {
       <div className="feed" id="feed">
         {fetching && <Spinner />}
         {tweets &&
+          user !== null &&
           tweets.map((tweet) =>
             tweet.retweetData ? (
               <Tweet

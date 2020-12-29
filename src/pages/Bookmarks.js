@@ -26,6 +26,7 @@ const Bookmarks = ({
     setAnchorEl(null);
   };
   useEffect(() => {
+    document.title = 'Bookmarks/Tweeter';
     getUserBookmarks();
   }, [getUserBookmarks]);
 

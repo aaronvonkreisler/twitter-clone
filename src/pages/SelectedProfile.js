@@ -48,6 +48,7 @@ const SelectedProfile = ({
   const [tweetForModal, setTweetForModal] = useState(null);
 
   useEffect(() => {
+    document.title = `${profile.name} (@${profile.screen_name})`;
     getUserByUsername(match.params.username, user._id);
     getProfilePinnedTweet(match.params.username);
 
