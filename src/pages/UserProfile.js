@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Avatar, Button } from '@material-ui/core';
 import { BsCalendar, BsLink45Deg } from 'react-icons/bs';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import Moment from 'react-moment';
-import Header from '../layout/Header';
-import Spinner from '../layout/Spinner';
-import ProfileTabs from '../profile/ProfileTabs';
-import ProfileTweets from '../profile/ProfileTweets';
-import ProfileReplies from '../profile/ProfileReplies';
-import ProfileLikes from '../profile/ProfileLikes';
-import ProfilePictureModal from '../forms/ProfilePictureModal';
-import BackgroundPictureModal from '../forms/BackgroundPictureModal';
-import EditProfileModal from '../forms/EditProfileModal';
-import { getProfilePinnedTweet } from '../../actions/profile';
-import { prepareProfileData } from '../../actions/profileData';
-import '../../styles/design/profile.css';
+
+import Header from '../components/layout/Header';
+import Spinner from '../components/layout/Spinner';
+import ProfileTabs from '../components/profile/ProfileTabs';
+import ProfileTweets from '../components/profile/ProfileTweets';
+import ProfileReplies from '../components/profile/ProfileReplies';
+import ProfileLikes from '../components/profile/ProfileLikes';
+import ProfilePictureModal from '../components/forms/ProfilePictureModal';
+import BackgroundPictureModal from '../components/forms/BackgroundPictureModal';
+import EditProfileModal from '../components/forms/EditProfileModal';
+import { getProfilePinnedTweet } from '../actions/profile';
+import { prepareProfileData } from '../actions/profileData';
+import '../styles/design/profile.css';
 
 const UserProfile = ({
   profiles: { currentProfile, loading },
@@ -29,6 +29,7 @@ const UserProfile = ({
   const [coverModalOpen, setCoverModalOpen] = useState(false);
   const [editProfileModalOpen, setEditProfileModalOpen] = useState(false);
   useEffect(() => {
+    document.title = `${currentProfile.name} (@${currentProfile.screen_name})`;
     prepareProfileData(currentProfile);
     getProfilePinnedTweet(currentProfile.screen_name);
   }, [prepareProfileData, currentProfile, getProfilePinnedTweet]);

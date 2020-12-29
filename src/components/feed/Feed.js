@@ -1,62 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTimelineTweets } from '../../actions/tweets';
 
 import Tweet from '../tweets/Tweet';
 import Spinner from '../layout/Spinner';
 
 import './styles/Feed.css';
 
-const Feed = ({
-   tweets: { tweets, loading },
-   auth: { user },
-   getTimelineTweets,
-}) => {
-   useEffect(() => {
-      getTimelineTweets();
-   }, [getTimelineTweets]);
-
-   return (
-      <React.Fragment>
-         <div className="feed" id="feed">
-            {loading || user === null ? (
-               <Spinner />
+const Feed = ({ timeline: { tweets, fetching }, auth: { user } }) => {
+  return (
+    <React.Fragment>
+      <div className="feed" id="feed">
+        {fetching && <Spinner />}
+        {tweets &&
+          user !== null &&
+          tweets.map((tweet) =>
+            tweet.retweetData ? (
+              <Tweet
+                tweet={tweet.retweetData}
+                retweetedBy={tweet.user.name}
+                key={tweet._id}
+                displayNumbers
+                authId={user._id}
+              />
             ) : (
-               tweets.map((tweet) =>
-                  tweet.retweetData ? (
-                     <Tweet
-                        tweet={tweet.retweetData}
-                        retweetedBy={tweet.user.name}
-                        key={tweet._id}
-                        displayNumbers
-                        authId={user._id}
-                     />
-                  ) : (
-                     <Tweet
-                        key={tweet._id}
-                        tweet={tweet}
-                        displayNumbers
-                        authId={user._id}
-                     />
-                  )
-               )
-            )}
-         </div>
-      </React.Fragment>
-   );
+              <Tweet
+                key={tweet._id}
+                tweet={tweet}
+                displayNumbers
+                authId={user._id}
+              />
+            )
+          )}
+      </div>
+    </React.Fragment>
+  );
 };
 
 Feed.propTypes = {
-   getTimelineTweets: PropTypes.func.isRequired,
-   tweets: PropTypes.object.isRequired,
+  tweets: PropTypes.array,
+  fetching: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-   tweets: state.tweets,
-   auth: state.auth,
+  timeline: state.timeline,
+  auth: state.auth,
 });
-export default connect(mapStateToProps, {
-   getTimelineTweets,
-})(Feed);
+export default connect(mapStateToProps)(Feed);

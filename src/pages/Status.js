@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import {
-  getTweet,
-  getTweetsReplies,
-  clearTweetState,
-} from '../../actions/tweets';
-import { setTweetInModal, openModal } from '../../actions/modal';
-import Spinner from '../layout/Spinner';
-import Header from '../layout/Header';
 import PropTypes from 'prop-types';
-import SingleTweet from '../tweets/SingleTweet';
+import { getTweet, getTweetsReplies, clearTweetState } from '../actions/tweets';
+import { setTweetInModal, openModal } from '../actions/modal';
+import Spinner from '../components/layout/Spinner';
+import Header from '../components/layout/Header';
+import SingleTweet from '../components/tweets/SingleTweet';
 
-import Tweet from '../tweets/Tweet';
+import Tweet from '../components/tweets/Tweet';
 
-const TweetDisplay = ({
+const Status = ({
   tweets: { tweet, loading, tweetReady, replies, fetchingReplies },
   auth: { user },
   getTweet,
@@ -32,6 +28,14 @@ const TweetDisplay = ({
       clearTweetState();
     };
   }, [getTweet, getTweetsReplies, clearTweetState, match.params.tweet_id]);
+
+  useEffect(
+    () =>
+      tweet !== null
+        ? (document.title = `${tweet.user.name} on Tweeter:`)
+        : (document.title = 'Tweeter'),
+    [tweet]
+  );
 
   const handleCommentClick = (tweet) => {
     setTweetInModal(tweet);
@@ -77,7 +81,7 @@ const TweetDisplay = ({
   );
 };
 
-TweetDisplay.propTypes = {
+Status.propTypes = {
   getTweet: PropTypes.func.isRequired,
   getTweetsReplies: PropTypes.func.isRequired,
   setTweetInModal: PropTypes.func.isRequired,
@@ -96,4 +100,4 @@ export default connect(mapStateToProps, {
   clearTweetState,
   setTweetInModal,
   openModal,
-})(TweetDisplay);
+})(Status);

@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   feed: {
-    borderRight: '1px solid rgb(56,68,77)',
-    borderLeft: '1px solid rgb(56,68,77)',
     height: '100%',
   },
   sidebarRoot: {
@@ -23,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     height: '100%',
+  },
+  widgets: {
+    borderLeft: '1px solid rgb(56,68,77)',
   },
 }));
 
@@ -45,7 +46,15 @@ const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
       <Grid item xs={12} sm={8} md={6} lg={6} xl={4} className={classes.feed}>
         {children}
       </Grid>
-      <Grid item xs={false} sm={2} md={4} lg={4} xl={4}>
+      <Grid
+        item
+        xs={false}
+        sm={2}
+        md={4}
+        lg={4}
+        xl={4}
+        className={classes.widgets}
+      >
         <Widgets />
       </Grid>
     </Grid>
