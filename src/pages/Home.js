@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../components/layout/Header';
 import { addTweet } from '../actions/tweets';
-import TweetForm from '..components/feed/TweetForm';
+import TweetForm from '../components/feed/TweetForm';
 import Feed from '../components/feed/Feed';
+import NoTweets from '../components/tweets/NoTweets';
 
 import { fetchTimelineTweetsStart } from '../actions/timeline';
 import useScrollPosition from '../hooks/useScrollPosition';
@@ -45,12 +46,18 @@ const Home = ({
         IconComponent={HiOutlineSparkles}
         onRightIconClick={() => alert('TODO')}
       />
-      <TweetForm
-        placeholder="What's happening?"
-        bottomBorder
-        onFormSubmit={onFormSubmit}
-      />
-      <Feed />
+      {!fetching && tweets.length === 0 ? (
+        <NoTweets />
+      ) : (
+        <React.Fragment>
+          <TweetForm
+            placeholder="What's happening?"
+            bottomBorder
+            onFormSubmit={onFormSubmit}
+          />
+          <Feed />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

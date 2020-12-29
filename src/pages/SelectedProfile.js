@@ -13,7 +13,7 @@ import {
   unfollowUser,
   clearProfileState,
   getProfilePinnedTweet,
-} from '../../actions/profile';
+} from '../actions/profile';
 import Header from '../components/layout/Header';
 import Spinner from '../components/layout/Spinner';
 import ProfileTabs from '../components/profile/ProfileTabs';
