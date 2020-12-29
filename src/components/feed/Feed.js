@@ -39,7 +39,9 @@ const Feed = ({ timeline: { tweets, fetching }, auth: { user } }) => {
 };
 
 Feed.propTypes = {
-  tweets: PropTypes.object.isRequired,
+  tweets: PropTypes.array,
+  fetching: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
