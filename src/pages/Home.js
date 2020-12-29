@@ -7,12 +7,13 @@ import TweetForm from '../components/feed/TweetForm';
 import Feed from '../components/feed/Feed';
 import NoTweets from '../components/tweets/NoTweets';
 
-import { fetchTimelineTweetsStart } from '../actions/timeline';
+import { fetchTimelineTweetsStart, clearTimeline } from '../actions/timeline';
 import useScrollPosition from '../hooks/useScrollPosition';
 
 const Home = ({
   addTweet,
   fetchTimelineTweetsStart,
+  clearTimeline,
   timeline: { fetching, hasMore, tweets },
 }) => {
   const [feedEl, setFeedEl] = useState(null);
@@ -22,7 +23,11 @@ const Home = ({
     const element = document.getElementById('feed');
     setFeedEl(element);
     fetchTimelineTweetsStart();
-  }, [fetchTimelineTweetsStart]);
+
+    return function cleanup() {
+      clearTimeline();
+    };
+  }, [fetchTimelineTweetsStart, clearTimeline]);
 
   useScrollPosition(
     ({ atBottom }) => {
@@ -66,6 +71,8 @@ const mapStateToProps = (state) => ({
   timeline: state.timeline,
 });
 
-export default connect(mapStateToProps, { addTweet, fetchTimelineTweetsStart })(
-  Home
-);
+export default connect(mapStateToProps, {
+  addTweet,
+  fetchTimelineTweetsStart,
+  clearTimeline,
+})(Home);
