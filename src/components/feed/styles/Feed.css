@@ -1,5 +1,5 @@
-.feed {
-   /* max-width: 600px; */
+/* .feed {
+    max-width: 600px; 
    overflow-y: scroll;
    display: flex;
    flex-basis: auto;
@@ -8,7 +8,7 @@
    position: relative;
    width: 100%;
    height: 100vh;
-}
+} */
 
 /* Hide scrollbar in IE, Edge, & Firefox */
 .feed {

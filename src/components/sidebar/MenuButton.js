@@ -5,25 +5,21 @@ import './styles/MenuButton.css';
 
 const MenuButton = ({ text, path, Icon, large }) => {
    return (
-      <NavLink
-         exact
-         to={path}
-         className="menu-button__link"
-         activeClassName="menu-button__active"
-      >
-         <div className="menu-button__root">
-            <div className="menu-button__wrapper">
-               <div className="menu-button__icon">
+      <li className="main-nav-item">
+         <NavLink
+            exact
+            to={path}
+            className="menu-button__link menu-item"
+            activeClassName="menu-button__active"
+         >
+            <span>
+               <span className="icon">
                   <Icon />
-               </div>
-               {large && (
-                  <div className="menu-button__text">
-                     <span>{text}</span>
-                  </div>
-               )}
-            </div>
-         </div>
-      </NavLink>
+               </span>
+               <span className="text">{text}</span>
+            </span>
+         </NavLink>
+      </li>
    );
 };
 

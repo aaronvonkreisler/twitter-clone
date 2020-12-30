@@ -221,15 +221,13 @@ button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
 }
 
 .imageUpload .MuiIconButton-root {
-   height: 37px !important;
-   width: 37px !important;
    padding: 8px;
    margin-left: 5px;
    color: var(--twitter-color);
 }
 
 div.draftJsEmojiPlugin__emojiSelect__34S1B {
-   padding-bottom: 5px;
+   font-size: 1.5rem;
 }
 
 .draftJsEmojiPlugin__emojiSelectButton__3sPol:hover,
