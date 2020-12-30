@@ -27,38 +27,44 @@ const Sidebar = (props) => {
          text: 'Explore',
          path: '/explore',
          icon: BiHash,
+         hideSmall: true,
       },
       {
          text: 'Notifications',
          path: '/notifications',
          icon: FaRegBell,
+         hideSmall: false,
       },
       {
          text: 'Messages',
          path: '/messages',
          icon: FiMail,
+         hideSmall: false,
       },
       {
          text: 'Bookmarks',
          path: '/bookmarks',
          icon: BiBookmark,
+         hideSmall: true,
       },
 
       {
          text: 'Profile',
          path: '/profile',
          icon: BsPerson,
+         hideSmall: false,
       },
       {
          text: 'More',
          path: '/more',
          icon: CgMoreO,
+         hideSmall: true,
       },
    ];
    return (
       <React.Fragment>
          <ComposeModal open={modalOpen} setOpen={setModalOpen} />
-         <Link to="/home" className="logo">
+         <Link to="/home" className="nav-logo">
             <span className="icon">
                <FaTwitter />
             </span>
@@ -70,8 +76,20 @@ const Sidebar = (props) => {
                   path={item.path}
                   Icon={item.icon}
                   text={item.text}
+                  hideSmall={item.hideSmall}
                />
             ))}
+            <li className="main-nav-item nav-tweet-button">
+               <button
+                  className="common-button full-width large-height"
+                  onClick={() => setModalOpen(true)}
+               >
+                  <span className="icon icon-tweet">
+                     <RiQuillPenLine />
+                  </span>
+                  <span className="text">Tweet</span>
+               </button>
+            </li>
          </ul>
       </React.Fragment>
    );

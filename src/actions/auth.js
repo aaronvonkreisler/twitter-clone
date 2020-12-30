@@ -50,7 +50,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
    try {
       const response = await signIn(loginInfo);
-      console.log(response);
+
       dispatch({
          type: LOGIN_SUCCESS,
          payload: response,
