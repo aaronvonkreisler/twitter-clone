@@ -9,6 +9,7 @@
    --text-gray: rgb(136, 153, 166);
    --text-error: rgb(224, 36, 94);
    --input-color: rgb(37, 51, 65);
+   --card-color: rgb(25, 39, 52);
 
    margin: 0;
    font-family: 'Roboto', sans-serif;

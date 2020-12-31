@@ -8,12 +8,14 @@ import Feed from '../components/feed/Feed';
 import NoTweets from '../components/tweets/NoTweets';
 
 import { fetchTimelineTweetsStart, clearTimeline } from '../actions/timeline';
+import { getSidebarSuggestions } from '../actions/suggestions';
 import useScrollPosition from '../hooks/useScrollPosition';
 
 const Home = ({
    addTweet,
    fetchTimelineTweetsStart,
    clearTimeline,
+   getSidebarSuggestions,
    timeline: { fetching, hasMore, tweets },
 }) => {
    const [feedEl, setFeedEl] = useState(null);
@@ -28,6 +30,10 @@ const Home = ({
          clearTimeline();
       };
    }, [fetchTimelineTweetsStart, clearTimeline]);
+
+   useEffect(() => {
+      getSidebarSuggestions(3);
+   }, [getSidebarSuggestions]);
 
    useScrollPosition(
       ({ atBottom }) => {
@@ -74,5 +80,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
    addTweet,
    fetchTimelineTweetsStart,
+   getSidebarSuggestions,
    clearTimeline,
 })(Home);

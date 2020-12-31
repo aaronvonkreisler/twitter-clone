@@ -73,8 +73,10 @@
    display: flex;
    flex-direction: column;
    margin-left: 10px;
-   min-width: 101px;
+
+   max-width: 101px;
    max-height: 30px;
+   flex-grow: 1;
 }
 
 .userPreview__details .details__bottom {

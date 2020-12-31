@@ -1,5 +1,5 @@
 .search-bar {
-   position: fixed;
+   position: sticky;
    z-index: 2;
    top: 0;
    padding-top: 5px;

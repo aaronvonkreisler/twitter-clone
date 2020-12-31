@@ -51,6 +51,8 @@ $break5open:"(min-width:1282px)"; */
    overflow: auto;
    background-color: var(--background-dark);
    border-right: 1px solid var(--border-color);
+   overflow-y: auto;
+   scrollbar-width: thin;
 }
 @media (max-width: 499px) {
    .main-nav {

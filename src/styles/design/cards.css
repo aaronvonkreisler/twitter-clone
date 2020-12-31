@@ -1,0 +1,32 @@
+.card {
+   background-color: var(--card-color);
+   border-radius: 16px;
+   margin-bottom: 15px;
+}
+
+.card .card-header {
+   display: flex !important;
+   padding: 10px 15px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.card .card-header .title {
+   font-size: 19px;
+   font-weight: 800;
+   color: #fff;
+}
+
+.card .card-more {
+   display: block;
+   padding: 10px 15px;
+   color: var(--twitter-color);
+   border-radius: 0 0 16px 16px;
+}
+
+.card .card-more:hover {
+   background-color: var(--tweet-hover);
+}
+
+.card .skeleton-loader {
+   height: 70px;
+}
