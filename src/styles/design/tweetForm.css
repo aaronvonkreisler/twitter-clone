@@ -243,6 +243,8 @@ div.draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {
    box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
       rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
    border: none;
+   font-size: 14px;
+   z-index: 2000;
 }
 
 h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {

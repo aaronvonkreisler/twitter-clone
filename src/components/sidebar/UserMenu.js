@@ -5,7 +5,7 @@ import { Avatar, Menu, MenuItem } from '@material-ui/core';
 import { BsCheck } from 'react-icons/bs';
 import { MdMoreHoriz } from 'react-icons/md';
 import { logout } from '../../actions/auth';
-import './styles/UserMenu.css';
+import '../../styles/design/userMenu.css';
 import '../../styles/design/utils.css';
 
 const UserMenu = ({ auth: { user, loading }, logout }) => {
