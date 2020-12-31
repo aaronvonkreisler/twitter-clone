@@ -1,188 +1,112 @@
-.user-menu__root {
-   width: 88px;
+.sidebar__user-menu {
+   position: fixed;
+   bottom: 5px;
+   margin-bottom: 10px;
+   cursor: pointer;
+}
+.sidebar__user-menu:hover .user-menu {
+   background-color: var(--twitter-button-hover);
+   transition: background-color 0.1s ease-in;
+}
+.user-menu {
    padding: 10px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   border-radius: 9999px;
 }
 
-.user-menu__avatar {
+.list-item {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   width: 100%;
+   padding: 0 10px;
+}
+
+.user-menu .avatar,
+.list-item .avatar {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
-   height: 59px;
-   width: 59px;
-   border-radius: 9999px;
+   flex-basis: 40px;
 }
 
-.user-menu__avatar .MuiAvatar-root {
-   height: 39px;
-   width: 39px;
-   cursor: pointer;
-}
-
-.user-menu__wrapper {
-   border-radius: 9999px;
-   padding: 10px;
-   cursor: pointer;
-   width: 100%;
+.user-menu .names,
+.list-item .names {
    display: flex;
    flex-direction: column;
-   justify-content: center;
-}
-
-.user-menu__name {
-   display: none;
-   flex-direction: column;
-   flex-shrink: 1;
-}
-
-.user-menu__name .user-menu__name__container {
-   margin-left: 10px;
+   justify-content: flex-start;
    margin-right: 10px;
-   margin-top: 10px;
-}
-
-.user-menu__name .user-menu__name__container .user-menu__display-name {
+   margin-left: 10px;
    white-space: nowrap;
-   font-size: 17px;
-   font-weight: 700;
-   color: #fff;
    overflow-wrap: break-word;
-   overflow: hidden;
    text-overflow: ellipsis;
-   line-height: 1.3125;
+   overflow: hidden;
 }
 
-.user-menu__name .user-menu__name__container .user-menu__handle-name {
-   white-space: nowrap;
-   font-size: 17px;
-   font-weight: 400;
-   color: rgb(136, 153, 166);
-   overflow-wrap: break-word;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   line-height: 1.3125;
-}
-
-.user-menu__wrapper .user-menu__action {
+.user-menu .menu-icon,
+.list-item .menu-icon {
    display: flex;
    flex-direction: column;
+   flex-grow: 1;
    align-items: flex-end;
    justify-content: center;
-   flex-grow: 1;
 }
 
-.user-menu__wrapper .user-menu__action > svg {
-   vertical-align: text-bottom;
-   height: 1.25em;
-   fill: currentColor;
-   display: none;
-   overflow: hidden;
-   font-size: 25px;
-}
-
-.MuiMenu-paper {
-   background-color: var(--background-dark) !important;
-   min-height: 30px !important;
-   max-height: 480px !important;
-   min-width: 260px !important;
-   max-width: 360px !important;
-}
-
-.list-item__root {
-   display: flex;
-   flex-direction: column;
-   align-items: stretch;
-   border-bottom: 1px solid rgb(56, 68, 77);
-   padding: 10px 5px 10px 5px;
-   width: 100%;
-}
-
-.list-item__root .list-item__avatar {
-   flex-basis: 49px;
-   margin-right: 10px;
-}
-
-.list-item__avatar .list-item__avatar-holder {
-   width: 100%;
-   height: 49px;
-   display: block;
-   border-radius: 9999px;
-}
-
-.list-item__avatar .list-item__avatar-holder .MuiAvatar-circle {
-   height: 49px;
-   width: 49px;
-}
-.list-item__root .list-item__right-side {
-   flex-grow: 1;
-   justify-content: center;
-}
-
-.list-item__right-side .list-item__name {
-   white-space: nowrap;
-   font-weight: 700;
-   font-size: 15px;
+.user-menu .names .display-name,
+.list-item .display-name {
    color: #fff;
-   line-height: 1.3125;
-   overflow-wrap: break-word;
-   overflow: hidden;
-   text-overflow: ellipsis;
-}
-
-.list-item__right-side .list-item__handle {
-   color: var(--text-gray);
-   font-weight: 400;
    font-size: 15px;
-   line-height: 1.3125;
-   overflow-wrap: break-word;
-   overflow: hidden;
-   text-overflow: ellipsis;
+   font-weight: 700;
 }
 
-.list-item__right-side .list-item__icon {
-   vertical-align: text-bottom;
+.user-menu .names .screen-name,
+.list-item .screen-name {
+   color: var(--text-gray);
+   font-size: 15px;
+   font-weight: 400;
+}
+
+.user-menu .menu-icon .icon {
+   color: #fff;
+   font-size: 20px;
+}
+
+.list-item .menu-icon .icon {
    color: var(--twitter-color);
-   flex-shrink: 0;
-   margin-left: 10px;
-   position: relative;
-   max-width: 100%;
-   height: 1.25em;
-   display: inline-block;
-   overflow: hidden;
-   font-size: 23px;
-}
-.MuiMenu-list {
-   color: #fff !important;
 }
 
-.MuiMenu-paper {
-   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
-      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px !important;
-}
-@media (max-width: 1919px) {
-   .user-menu__wrapper:hover .user-menu__avatar {
-      background-color: var(--twitter-button-hover);
+@media (max-width: 499px) {
+   .sidebar__user-menu {
+      display: none !important;
    }
 }
+@media (min-width: 1095px) and (max-width: 1281px),
+   (min-width: 1005px) and (max-width: 1094px),
+   (min-width: 500px) and (max-width: 1004px) {
+   .user-menu .names {
+      display: none !important;
+   }
+   .user-menu .icon {
+      display: none !important;
+   }
 
-@media (min-width: 1920px) {
-   .user-menu__root {
-      width: 275px;
+   .user-menu {
+      display: block;
       margin-right: 10px;
-   }
-   .user-menu__wrapper {
-      margin-left: 0px;
-      padding-right: 10px;
-      flex-direction: row;
-   }
-   .user-menu__name {
-      display: flex;
+      padding: 10px;
    }
 
-   .user-menu__wrapper .user-menu__action > svg {
-      display: inline-block;
-   }
-   .user-menu__wrapper:hover {
-      background-color: var(--twitter-button-hover);
+   .sidebar__user-menu {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
    }
 }

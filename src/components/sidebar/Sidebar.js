@@ -69,34 +69,37 @@ const Sidebar = (props) => {
    return (
       <React.Fragment>
          <ComposeModal open={modalOpen} setOpen={setModalOpen} />
-         <Link to="/home" className="nav-logo">
-            <span className="icon">
-               <FaTwitter />
-            </span>
-         </Link>
-         <ul className="main-nav-list">
-            {navItems.map((item, index) => (
-               <MenuButton
-                  key={index}
-                  path={item.path}
-                  Icon={item.icon}
-                  text={item.text}
-                  hideSmall={item.hideSmall}
-                  hideMedium={item.hideMedium}
-               />
-            ))}
-            <li className="main-nav-item nav-tweet-button">
-               <button
-                  className="common-button full-width large-height"
-                  onClick={() => setModalOpen(true)}
-               >
-                  <span className="icon icon-tweet">
-                     <RiQuillPenLine />
-                  </span>
-                  <span className="text">Tweet</span>
-               </button>
-            </li>
-         </ul>
+         <div className="main-nav-wrapper">
+            <Link to="/home" className="nav-logo">
+               <span className="icon">
+                  <FaTwitter />
+               </span>
+            </Link>
+            <ul className="main-nav-list">
+               {navItems.map((item, index) => (
+                  <MenuButton
+                     key={index}
+                     path={item.path}
+                     Icon={item.icon}
+                     text={item.text}
+                     hideSmall={item.hideSmall}
+                     hideMedium={item.hideMedium}
+                  />
+               ))}
+               <li className="main-nav-item nav-tweet-button">
+                  <button
+                     className="common-button full-width large-height"
+                     onClick={() => setModalOpen(true)}
+                  >
+                     <span className="icon icon-tweet">
+                        <RiQuillPenLine />
+                     </span>
+                     <span className="text">Tweet</span>
+                  </button>
+               </li>
+            </ul>
+         </div>
+         <UserMenu />
       </React.Fragment>
    );
 };

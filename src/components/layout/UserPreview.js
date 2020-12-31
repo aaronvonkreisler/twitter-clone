@@ -10,7 +10,7 @@ import { followUser, unfollowUser } from '../../actions/profile';
 import '../../styles/design/userPreview.css';
 
 const UserPreview = ({
-   user: { avatar, name, screen_name, _id, verified, followers },
+   user: { avatar, name, screen_name, _id, verified, followers, bio },
    auth,
    showBio,
    followUser,
@@ -73,12 +73,9 @@ const UserPreview = ({
                </div>
             </div>
             {/* Bottom row. Includes optional bio */}
-            {showBio && (
+            {showBio && bio && (
                <div className="details__bottom">
-                  <span>
-                     This is where the bio will go if someone has one so in the
-                     mean time here is some dummy text to fill up the area yay.
-                  </span>
+                  <span>{bio}</span>
                </div>
             )}
          </div>

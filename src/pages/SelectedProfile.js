@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
@@ -63,6 +63,12 @@ const SelectedProfile = ({
       user._id,
       clearProfileState,
    ]);
+
+   if (profile !== null && user !== null) {
+      if (profile.screen_name === user.screen_name) {
+         return <Redirect to="/profile" />;
+      }
+   }
 
    const handleCommentClick = (tweet) => {
       setTweetForModal(tweet);

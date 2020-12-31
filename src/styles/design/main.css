@@ -13,6 +13,10 @@ $break5open:"(min-width:1282px)"; */
    min-height: 100vh;
    margin: 0 auto;
 }
+
+.main-side {
+   margin-left: 30px;
+}
 @media (max-width: 499px), (min-width: 500px) and (max-width: 1004px) {
    .main-side {
       display: none;
@@ -79,6 +83,9 @@ $break5open:"(min-width:1282px)"; */
       min-width: 88px;
       width: 255px;
       padding-right: 10px;
+      border-right: 1px solid var(--border-color);
+   }
+   .main-content {
       border-right: 1px solid var(--border-color);
    }
 }

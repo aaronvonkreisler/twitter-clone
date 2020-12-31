@@ -22,6 +22,7 @@
    padding-right: 15px;
    z-index: 3;
    background-color: var(--background-dark);
+   padding-top: 5px;
 }
 
 .header__items__left-icon {
@@ -30,8 +31,6 @@
    justify-content: center;
    align-items: center;
    width: 100%;
-   margin-left: auto;
-   margin-right: auto;
 }
 
 .header__items__left-icon .icon__root {

@@ -34,19 +34,23 @@ const TweetMenu = ({
             anchorEl={anchorEl}
             open={open}
             onClose={onClose}
-            getContentAnchorEl={null}
             anchorOrigin={{
                vertical: 'bottom',
                horizontal: 'center',
             }}
+            transformOrigin={{
+               vertical: 'top',
+               horizontal: 'right',
+            }}
+            getContentAnchorEl={null}
          >
             {tweetOwner === currentUser ? (
                <div>
                   <MenuItem
                      className="delete_tweet"
                      onClick={() => {
-                        deleteTweet(tweetId)
-                        setAnchorEl(null)
+                        deleteTweet(tweetId);
+                        setAnchorEl(null);
                      }}
                   >
                      <ListItemIcon>
@@ -58,8 +62,8 @@ const TweetMenu = ({
                      <MenuItem
                         className="pin-to-profile"
                         onClick={() => {
-                           removePinnedTweetFromProfile()
-                           setAnchorEl(null)
+                           removePinnedTweetFromProfile();
+                           setAnchorEl(null);
                         }}
                      >
                         <ListItemIcon>
@@ -71,8 +75,8 @@ const TweetMenu = ({
                      <MenuItem
                         className="pin-to-profile"
                         onClick={() => {
-                           pinTweetToProfile(tweetId)
-                           setAnchorEl(null)
+                           pinTweetToProfile(tweetId);
+                           setAnchorEl(null);
                         }}
                      >
                         <ListItemIcon>
@@ -83,10 +87,14 @@ const TweetMenu = ({
                   )}
                </div>
             ) : (
-               <MenuItem onClick={() => {
-                  reportTweet()
-                  setAnchorEl(null)
-               }}>Report Tweet</MenuItem>
+               <MenuItem
+                  onClick={() => {
+                     reportTweet();
+                     setAnchorEl(null);
+                  }}
+               >
+                  Report Tweet
+               </MenuItem>
             )}
          </Menu>
       </React.Fragment>

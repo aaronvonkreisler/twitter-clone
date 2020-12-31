@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { getCurrentUsersProfile } from '../../actions/profile';
 import Sidebar from '../sidebar/Sidebar';
-import Widgets from '../widgets/Widgets';
+import Searchbar from '../widgets/Searchbar';
+
 import '../../styles/design/main.css';
 
 const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
@@ -18,6 +19,7 @@ const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
          <main className="main-content">{children}</main>
          <aside className="main-side">
             {/* Widgets go here and search bar*/}
+            <Searchbar />
          </aside>
       </div>
    );
