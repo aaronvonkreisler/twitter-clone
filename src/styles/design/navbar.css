@@ -159,6 +159,14 @@
    .nav-tweet-button .common-button .text {
       display: none;
    }
+
+   .hide-medium {
+      display: none !important;
+   }
+
+   .main-nav-item {
+      padding: 4px 0;
+   }
 }
 
 @media (min-width: 1005px) and (max-width: 1094px) {
@@ -172,6 +180,12 @@
    .nav-tweet-button .common-button .text {
       display: none;
    }
+   .hide-medium {
+      display: none !important;
+   }
+   .main-nav-item {
+      padding: 4px 0;
+   }
 }
 
 @media (min-width: 1095px) and (max-width: 1281px) {
@@ -184,6 +198,12 @@
    }
    .nav-tweet-button .common-button .text {
       display: none;
+   }
+   .main-nav-item {
+      padding: 4px 0;
+   }
+   .hide-medium {
+      display: none !important;
    }
 }
 

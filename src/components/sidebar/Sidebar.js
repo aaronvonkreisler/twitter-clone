@@ -34,18 +34,21 @@ const Sidebar = (props) => {
          path: '/notifications',
          icon: FaRegBell,
          hideSmall: false,
+         hideMedium: false,
       },
       {
          text: 'Messages',
          path: '/messages',
          icon: FiMail,
          hideSmall: false,
+         hideMedium: false,
       },
       {
          text: 'Bookmarks',
          path: '/bookmarks',
          icon: BiBookmark,
          hideSmall: true,
+         hideMedium: true,
       },
 
       {
@@ -53,12 +56,14 @@ const Sidebar = (props) => {
          path: '/profile',
          icon: BsPerson,
          hideSmall: false,
+         hideMedium: false,
       },
       {
          text: 'More',
          path: '/more',
          icon: CgMoreO,
          hideSmall: true,
+         hideMedium: false,
       },
    ];
    return (
@@ -77,6 +82,7 @@ const Sidebar = (props) => {
                   Icon={item.icon}
                   text={item.text}
                   hideSmall={item.hideSmall}
+                  hideMedium={item.hideMedium}
                />
             ))}
             <li className="main-nav-item nav-tweet-button">
