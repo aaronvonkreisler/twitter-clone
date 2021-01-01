@@ -53,6 +53,9 @@ $break5open:"(min-width:1282px)"; */
    border-right: 1px solid var(--border-color);
    overflow-y: auto;
    scrollbar-width: thin;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
 }
 @media (max-width: 499px) {
    .main-nav {

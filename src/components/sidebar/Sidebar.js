@@ -12,15 +12,12 @@ import { RiQuillPenLine } from 'react-icons/ri';
 import { CgMoreO } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
 import { useMediaQuery, Fab, Button } from '@material-ui/core';
-import ComposeModal from '../forms/ComposeModal';
 
 import '../../styles/design/navbar.css';
 
 // The width of the root div needs to be 275px on large and up.
 // on md and down it needs to be 88px
-const Sidebar = (props) => {
-   const [modalOpen, setModalOpen] = useState(false);
-
+const Sidebar = ({ setModalOpen }) => {
    const navItems = [
       { text: 'Home', path: '/home', icon: BiHomeCircle },
       {
@@ -68,7 +65,6 @@ const Sidebar = (props) => {
    ];
    return (
       <React.Fragment>
-         <ComposeModal open={modalOpen} setOpen={setModalOpen} />
          <div className="main-nav-wrapper">
             <Link to="/home" className="nav-logo">
                <span className="icon">

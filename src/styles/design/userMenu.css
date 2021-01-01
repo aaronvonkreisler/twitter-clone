@@ -1,6 +1,4 @@
 .sidebar__user-menu {
-   position: fixed;
-   bottom: 5px;
    margin-bottom: 10px;
    cursor: pointer;
 }
