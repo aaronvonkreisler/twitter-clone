@@ -94,6 +94,10 @@
    font-weight: 700;
 }
 
+.common-button:hover {
+   background-color: var(--twitter-button-darken);
+}
+
 .common-button.full-width {
    width: 100%;
    display: block;
@@ -104,7 +108,11 @@
 }
 
 .common-button .icon-tweet {
-   font-size: 20px;
+   font-size: 24px;
+   text-align: center;
+}
+.common-button .icon-tweet > svg {
+   vertical-align: text-bottom;
 }
 
 @media (max-width: 499px) {

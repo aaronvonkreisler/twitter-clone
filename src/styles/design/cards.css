@@ -4,19 +4,29 @@
    margin-bottom: 15px;
 }
 
-.card .card-header {
+.transparent-card {
+   background-color: transparent;
+   border-radius: 16px;
+   margin-bottom: 15px;
+   border: 1px solid var(--border-color);
+}
+
+.card .card-header,
+.transparent-card .card-header {
    display: flex !important;
    padding: 10px 15px;
    border-bottom: 1px solid var(--border-color);
 }
 
-.card .card-header .title {
+.card .card-header .title,
+.transparent-card .card-header .title {
    font-size: 19px;
    font-weight: 800;
    color: #fff;
 }
 
-.card .card-more {
+.card .card-more,
+.transparent-card .card-more {
    display: block;
    padding: 10px 15px;
    color: var(--twitter-color);
@@ -25,6 +35,12 @@
 
 .card .card-more:hover {
    background-color: var(--tweet-hover);
+}
+
+.transparent-card .footer {
+   display: block;
+   padding: 10px 15px;
+   border-radius: 0 0 16px 16px;
 }
 
 .card .skeleton-loader {

@@ -15,14 +15,15 @@ const UserPreview = ({
    showBio,
    followUser,
    unfollowUser,
+   bottomBorder,
 }) => {
    const [isOwnProfile] = useState(() => auth.user._id === _id);
    const [isFollowing, setIsFollowing] = useState(() =>
       followers.some((follow) => follow.user === auth.user._id)
    );
-
+   const borderClass = bottomBorder ? 'bottom-border' : '';
    return (
-      <div className="userPreview">
+      <div className={`userPreview ${borderClass}`}>
          <div className="userPreview__avatar">
             <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
          </div>
@@ -86,10 +87,12 @@ const UserPreview = ({
 UserPreview.propTypes = {
    user: PropTypes.object.isRequired,
    showBio: PropTypes.bool,
+   bottomBorder: PropTypes.bool,
 };
 
 UserPreview.defaultProps = {
    showBio: true,
+   bottomBorder: true,
 };
 
 const mapStateToProps = (state) => ({

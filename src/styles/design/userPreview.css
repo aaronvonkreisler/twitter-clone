@@ -3,7 +3,9 @@
    flex-direction: row;
    padding: 10px 15px;
    cursor: pointer;
+}
 
+.userPreview.bottom-border {
    border-bottom: 1px solid var(--border-color);
 }
 
