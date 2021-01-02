@@ -21,8 +21,8 @@ const RelevantPeople = ({ tweets: { tweet, loading } }) => {
 };
 
 RelevantPeople.propTypes = {
-   tweet: PropTypes.object.isRequired,
-   loading: PropTypes.bool.isRequired,
+   tweet: PropTypes.object,
+   loading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
