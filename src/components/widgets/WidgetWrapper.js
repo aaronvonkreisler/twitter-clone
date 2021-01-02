@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import SearchUsers from './SearchUsers';
 import SuggestedFollowCard from './SuggestedFollow';
 import RelevantPeople from './RelevantPeople';
-
+import '../../styles/design/widgetWrapper.css';
 const WidgetWrapper = (props) => {
    let location = useLocation();
    const isStatusPageRendered = location.pathname.split('/')[2] === 'status';
-   console.log(isStatusPageRendered);
+
    return (
-      <div>
+      <div className="widget-wrapper">
          <SearchUsers />
          {isStatusPageRendered && <RelevantPeople />}
          <SuggestedFollowCard />

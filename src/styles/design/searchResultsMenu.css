@@ -24,3 +24,9 @@
    padding: 15px;
    border-bottom: 1px solid var(--border-color);
 }
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .search-menu {
+      width: 290px;
+   }
+}

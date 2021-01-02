@@ -1,12 +1,12 @@
 .feed {
    max-width: 600px;
    overflow-y: scroll;
-   display: flex;
+   /* display: flex;
    flex-basis: auto;
    flex-direction: column;
    flex-shrink: 0;
    position: relative;
-   width: 100%;
+   width: 100%; */
 }
 
 /* Hide scrollbar in IE, Edge, & Firefox */

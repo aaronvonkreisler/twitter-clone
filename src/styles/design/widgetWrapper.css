@@ -1,0 +1,5 @@
+.widget-wrapper {
+   display: block;
+   position: sticky !important;
+   top: 0;
+}

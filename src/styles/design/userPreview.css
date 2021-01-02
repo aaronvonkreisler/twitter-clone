@@ -89,3 +89,9 @@
    overflow-wrap: break-word;
    line-height: 1.3125;
 }
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .userPreview__details .details__top .actions {
+      display: none;
+   }
+}

@@ -17,6 +17,7 @@ $break5open:"(min-width:1282px)"; */
 .main-side {
    margin-left: 30px;
 }
+
 @media (max-width: 499px), (min-width: 500px) and (max-width: 1004px) {
    .main-side {
       display: none;
