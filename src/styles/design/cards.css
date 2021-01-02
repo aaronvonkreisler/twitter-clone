@@ -2,6 +2,7 @@
    background-color: var(--card-color);
    border-radius: 16px;
    margin-bottom: 15px;
+   margin-top: 10px;
 }
 
 .transparent-card {
@@ -9,6 +10,7 @@
    border-radius: 16px;
    margin-bottom: 15px;
    border: 1px solid var(--border-color);
+   margin-top: 10px;
 }
 
 .card .card-header,
@@ -45,4 +47,10 @@
 
 .card .skeleton-loader {
    height: 70px;
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .card {
+      width: 290px;
+   }
 }

@@ -1,9 +1,8 @@
 .search-bar {
-   position: sticky;
+   position: relative;
    z-index: 2;
    top: 0;
    padding-top: 5px;
-   padding-bottom: 10px;
    background-color: var(--background-dark);
    width: 350px;
 }

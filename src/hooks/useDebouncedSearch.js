@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { searchUsers } from '../services/user';
 
-const useDebouncedSearch = () => {
+export const useDebouncedSearch = () => {
    const [result, setResult] = useState([]);
    const [fetching, setFetching] = useState(false);
 
@@ -33,5 +33,3 @@ const useDebouncedSearch = () => {
       setFetching,
    };
 };
-
-export default useDebouncedSearch;
