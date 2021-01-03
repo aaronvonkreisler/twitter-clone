@@ -73,6 +73,10 @@ $break5open:"(min-width:1282px)"; */
    .main-content {
       width: 100vw;
    }
+
+   .main-grid {
+      display: flex;
+   }
 }
 
 @media (min-width: 500px) and (max-width: 1004px),
