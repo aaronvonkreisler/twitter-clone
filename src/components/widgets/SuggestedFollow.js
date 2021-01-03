@@ -31,8 +31,8 @@ const SuggestedFollowCard = ({ suggestions: { loading, sidebarUsers } }) => {
 };
 
 SuggestedFollowCard.propTypes = {
-   loading: PropTypes.bool.isRequired,
-   sidebarUsers: PropTypes.array.isRequired,
+   loading: PropTypes.bool,
+   sidebarUsers: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
