@@ -1,0 +1,11 @@
+.connect-title {
+   padding: 10px 15px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.connect-title .connect-text {
+   font-size: 18px;
+   font-weight: 800;
+   color: #fff;
+   line-height: 1.3125;
+}

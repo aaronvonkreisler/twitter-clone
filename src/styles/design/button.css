@@ -5,6 +5,7 @@
    color: #fff !important;
    font-weight: 700 !important;
    line-height: inherit !important;
+   z-index: 10 !important;
 }
 
 .btn-h-30 {

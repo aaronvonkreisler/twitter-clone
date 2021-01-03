@@ -30,7 +30,10 @@ const SuggestedFollowCard = ({ suggestions: { loading, sidebarUsers } }) => {
    );
 };
 
-SuggestedFollowCard.propTypes = {};
+SuggestedFollowCard.propTypes = {
+   loading: PropTypes.bool.isRequired,
+   sidebarUsers: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = (state) => ({
    suggestions: state.suggestions,
