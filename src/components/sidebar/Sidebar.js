@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
@@ -11,19 +11,12 @@ import { BiBookmark } from 'react-icons/bi';
 import { RiQuillPenLine } from 'react-icons/ri';
 import { CgMoreO } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
 
+import MoreMenu from './MoreMenu';
 import '../../styles/design/navbar.css';
 
-// The width of the root div needs to be 275px on large and up.
-// on md and down it needs to be 88px
-const Sidebar = ({ setModalOpen }) => {
-   const query =
-      '(min-width: 500px) and (max-width: 1004px), (min-width: 1005px) and (max-width: 1094px),(min-width: 1095px) and (max-width: 1281px)';
-   const matches = useMediaQuery(query);
-
-   // When matches = true, that's when the bookmark link should be in the more menu as it will not
-   // be displayed in the sidebar
+const Sidebar = memo(function Sidebar({ setModalOpen }) {
+   const [anchorEl, setAnchorEl] = useState(null);
 
    const navItems = [
       { text: 'Home', path: '/home', icon: BiHomeCircle },
@@ -62,13 +55,6 @@ const Sidebar = ({ setModalOpen }) => {
          hideSmall: false,
          hideMedium: false,
       },
-      {
-         text: 'More',
-         path: '/more',
-         icon: CgMoreO,
-         hideSmall: true,
-         hideMedium: false,
-      },
    ];
    return (
       <React.Fragment>
@@ -89,6 +75,19 @@ const Sidebar = ({ setModalOpen }) => {
                      hideMedium={item.hideMedium}
                   />
                ))}
+               <MoreMenu
+                  open={Boolean(anchorEl)}
+                  setAnchorEl={setAnchorEl}
+                  anchorEl={anchorEl}
+               />
+               <MenuButton
+                  text="More"
+                  link={false}
+                  Icon={CgMoreO}
+                  hideSmall={true}
+                  hideMedium={false}
+                  onClick={(e) => setAnchorEl(e.currentTarget)}
+               />
                <li className="main-nav-item nav-tweet-button">
                   <button
                      className="common-button full-width large-height"
@@ -105,6 +104,6 @@ const Sidebar = ({ setModalOpen }) => {
          <UserMenu />
       </React.Fragment>
    );
-};
+});
 
 export default React.memo(Sidebar);
