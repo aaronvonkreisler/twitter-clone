@@ -46,6 +46,11 @@
    font-size: 15px;
    font-weight: 700;
    color: #fff;
+   overflow-wrap: break-word;
+   line-height: 1.3125;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 .names__display .screen_name {
@@ -54,11 +59,19 @@
    font-size: 15px;
    font-weight: 400;
    color: var(--text-gray);
+   overflow-wrap: break-word;
+   line-height: 1.3125;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 .names__display .time_stamp {
    color: var(--text-gray);
    margin-left: 5px;
+   /* overflow-wrap: break-word;
+   line-height: 1.3125;
+   white-space: nowrap; */
 }
 
 .top-right-icon {
@@ -75,6 +88,7 @@
 }
 .top-right__actionArea {
    position: relative;
+   margin-left: 20px;
 }
 
 .top-right-icon .icon__border {
@@ -269,4 +283,10 @@
 .retweetedByDisplay .retweetedBy__col > span {
    font-size: 14px;
    font-weight: 700;
+}
+
+@media (max-width: 499px) {
+   .names__display .time_stamp {
+      display: none;
+   }
 }

@@ -69,6 +69,10 @@ $break5open:"(min-width:1282px)"; */
 
       border-top: 1px solid var(--border-color);
    }
+
+   .main-content {
+      width: 100vw;
+   }
 }
 
 @media (min-width: 500px) and (max-width: 1004px),
