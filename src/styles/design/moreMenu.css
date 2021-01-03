@@ -1,0 +1,13 @@
+#more-menu div.MuiMenu-paper {
+   min-width: 190px !important;
+   max-width: 200px !important;
+}
+
+#more-menu .more-menu-icon {
+   color: var(--text-gray);
+}
+
+#more-menu .MuiListItemIcon-root {
+   min-width: 0;
+   margin-right: 10px;
+}

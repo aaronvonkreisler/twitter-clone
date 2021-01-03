@@ -9,7 +9,7 @@
 }
 
 .menu-button__active {
-   color: var(--twitter-color);
+   color: var(--twitter-color) !important;
    fill: var(currentColor);
 }
 
@@ -55,6 +55,7 @@
    border-radius: 9999px;
    font-weight: 700;
    font-size: 20px;
+   color: #fff;
 }
 
 .menu-item .icon {
