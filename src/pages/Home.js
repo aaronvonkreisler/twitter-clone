@@ -4,6 +4,7 @@ import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../components/layout/Header';
 import { addTweet } from '../actions/tweets';
 import TweetForm from '../components/feed/TweetForm';
+import TweetFormV2 from '../components/forms/TweetFormV2';
 import Feed from '../components/feed/Feed';
 import NoTweets from '../components/tweets/NoTweets';
 
@@ -45,9 +46,9 @@ const Home = ({
       [hasMore, fetching]
    );
 
-   const onFormSubmit = (content, image) => {
-      addTweet({ content, image });
-   };
+   // const onFormSubmit = (content, image) => {
+   //    addTweet({ content, image });
+   // };
 
    return (
       <React.Fragment>
@@ -61,11 +62,12 @@ const Home = ({
             <NoTweets />
          ) : (
             <React.Fragment>
-               <TweetForm
+               {/* <TweetForm
                   placeholder="What's happening?"
                   bottomBorder
                   onFormSubmit={onFormSubmit}
-               />
+               /> */}
+               <TweetFormV2 bottomBorder />
                <Feed />
             </React.Fragment>
          )}

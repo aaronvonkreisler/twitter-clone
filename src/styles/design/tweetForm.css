@@ -70,6 +70,7 @@
 .image__container .image__button > svg {
    font-size: 20px;
    vertical-align: text-bottom;
+   color: #fff;
 }
 
 .image__container .image__button:hover {
@@ -124,6 +125,7 @@
    display: inline-flex;
    width: 100%;
    padding: 10px;
+   position: relative;
 }
 
 .textEditor .public-DraftEditorPlaceholder-root {
@@ -251,4 +253,17 @@ h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
    font-size: 19px;
    font-weight: 700;
    color: #fff;
+}
+
+.textEditor .tweet-form-textarea {
+   resize: none;
+   border: none;
+   outline: none;
+   font-family: inherit;
+   font-size: 1.25rem;
+   width: 100%;
+   background-color: transparent;
+   display: block;
+   color: #fff;
+   overflow: hidden;
 }

@@ -1,0 +1,14 @@
+.mention-menu {
+   position: absolute;
+   left: 0px;
+   top: 101%;
+   max-width: 850px;
+   min-width: 300px;
+   overflow-x: hidden;
+   min-height: 100px;
+   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
+      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
+   background-color: var(--background-dark);
+   overflow-y: auto;
+   z-index: 4;
+}

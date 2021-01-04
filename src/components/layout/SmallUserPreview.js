@@ -40,6 +40,13 @@ const SmallUserPreview = ({
    );
 };
 
-SmallUserPreview.propTypes = {};
+SmallUserPreview.defaultProps = {
+   bottomBorder: true,
+};
+
+SmallUserPreview.propTypes = {
+   user: PropTypes.object.isRequired,
+   bottomBorder: PropTypes.bool,
+};
 
 export default SmallUserPreview;
