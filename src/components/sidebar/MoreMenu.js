@@ -7,7 +7,6 @@ import {
    ListItemIcon,
    ListItemText,
    Link,
-   Divider,
 } from '@material-ui/core';
 import { BiBookmark, BiHelpCircle } from 'react-icons/bi';
 import { BsBrush } from 'react-icons/bs';

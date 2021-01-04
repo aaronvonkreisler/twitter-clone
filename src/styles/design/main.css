@@ -7,7 +7,8 @@ $break3open:"(min-width:1005px)";
 $break4:    "(min-width:1095px) and (max-width:1281px)";
 $break4open:"(min-width:1095px)";
 $break5open:"(min-width:1282px)"; */
-.main-grid {
+.main-grid,
+.main-messages-grid {
    display: grid;
    justify-content: center;
    min-height: 100vh;
@@ -27,7 +28,8 @@ $break5open:"(min-width:1282px)"; */
    }
 }
 @media (min-width: 500px) and (max-width: 1004px) {
-   .main-grid {
+   .main-grid,
+   .main-messages-grid {
       grid-template-columns: auto minmax(auto, 600px);
       max-width: 705px;
    }
@@ -38,9 +40,15 @@ $break5open:"(min-width:1282px)"; */
       padding: 0 10px;
       box-sizing: content-box;
    }
+
+   .main-messages-grid {
+      grid-template-columns: auto minmax(auto, 900px);
+      max-width: 1005px;
+   }
 }
 @media (min-width: 1095px) {
-   .main-grid {
+   .main-grid,
+   .main-messages-grid {
       max-width: 1235px;
    }
 }

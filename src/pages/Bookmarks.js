@@ -11,79 +11,76 @@ import BookmarksMenu from '../components/bookmarks/BoomarksMenu';
 import { getUserBookmarks, clearBookmarkState } from '../actions/bookmarks';
 
 const Bookmarks = ({
-  bookmarks: { bookmarks, loading },
-  auth: { user },
-  getUserBookmarks,
-  clearBookmarkState,
+   bookmarks: { bookmarks, loading },
+   auth: { user },
+   getUserBookmarks,
+   clearBookmarkState,
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+   const [anchorEl, setAnchorEl] = useState(null);
 
-  const openMenu = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
+   const openMenu = (e) => {
+      setAnchorEl(e.currentTarget);
+   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  useEffect(() => {
-    document.title = 'Bookmarks/Tweeter';
-    getUserBookmarks();
-  }, [getUserBookmarks]);
+   const handleClose = () => {
+      setAnchorEl(null);
+   };
+   useEffect(() => {
+      document.title = 'Bookmarks/Tweeter';
+      getUserBookmarks();
+   }, [getUserBookmarks]);
 
-  return (
-    <div>
-      <Header
-        borderBottom
-        text="Bookmarks"
-        rightIcon
-        IconComponent={CgMore}
-        onRightIconClick={openMenu}
-      />
-      <BookmarksMenu
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-        onClose={handleClose}
-      />
-      <div className="feed">
-        {loading && <Spinner />}
-        {!loading && user !== null && bookmarks.tweets ? (
-          bookmarks.tweets.length > 0 ? (
-            bookmarks.tweets.map((tweet) => (
-              <Tweet
-                tweet={tweet}
-                key={tweet._id}
-                displayNumbers
-                displayActions
-                authId={user._id}
-              />
-            ))
-          ) : (
-            <EmptyDisplay
-              primaryText="You haven’t added any Tweets to your Bookmarks yet"
-              secondaryText="When you do, they’ll show up here."
-            />
-          )
-        ) : (
-          <EmptyDisplay
-            primaryText="You haven’t added any Tweets to your Bookmarks yet"
-            secondaryText="When you do, they’ll show up here."
-          />
-        )}
+   return (
+      <div>
+         <Header
+            borderBottom
+            text="Bookmarks"
+            rightIcon
+            IconComponent={CgMore}
+            onRightIconClick={openMenu}
+         />
+         <BookmarksMenu
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            onClose={handleClose}
+         />
+         <div className="feed">
+            {loading && <Spinner />}
+            {!loading && user !== null && bookmarks.tweets ? (
+               bookmarks.tweets.length > 0 ? (
+                  bookmarks.tweets.map((tweet) => (
+                     <Tweet
+                        tweet={tweet}
+                        key={tweet._id}
+                        displayNumbers
+                        displayActions
+                        authId={user._id}
+                     />
+                  ))
+               ) : (
+                  <EmptyDisplay
+                     primaryText="You haven’t added any Tweets to your Bookmarks yet"
+                     secondaryText="When you do, they’ll show up here."
+                  />
+               )
+            ) : (
+               <Spinner />
+            )}
+         </div>
       </div>
-    </div>
-  );
+   );
 };
 
 Bookmarks.propTypes = {
-  getUserBookmarks: PropTypes.func.isRequired,
+   getUserBookmarks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  bookmarks: state.bookmarks,
-  auth: state.auth,
+   bookmarks: state.bookmarks,
+   auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
-  getUserBookmarks,
-  clearBookmarkState,
+   getUserBookmarks,
+   clearBookmarkState,
 })(Bookmarks);

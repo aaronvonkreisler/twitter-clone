@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import Bookmarks from '../pages/Bookmarks';
 import SelectedProfile from '../pages/SelectedProfile';
 import Connect from '../pages/Connect';
+import Messages from '../pages/Messages';
 import AlertDisplay from '../components/layout/AlertDisplay';
 
 import Main from '../components/layout/Main';
@@ -50,6 +51,7 @@ const Routes = (props) => {
                />
                <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
                <PrivateRoute exact path="/connect" component={Connect} />
+               <PrivateRoute exact path="/messages" component={Messages} />
             </Main>
          </Switch>
       </React.Fragment>

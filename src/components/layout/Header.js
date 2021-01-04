@@ -11,6 +11,7 @@ const Header = ({
    borderBottom,
    IconComponent,
    onRightIconClick,
+   overrideStyle,
 }) => {
    let history = useHistory();
    return (
@@ -25,7 +26,9 @@ const Header = ({
                            className="right-icon__wrapper"
                            onClick={onRightIconClick}
                         >
-                           <IconComponent />
+                           <IconComponent
+                              style={overrideStyle ? overrideStyle : null}
+                           />
                         </div>
                      </div>
                   </div>
