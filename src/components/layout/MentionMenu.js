@@ -4,14 +4,18 @@ import Spinner from './Spinner';
 import SmallUserPreview from './SmallUserPreview';
 import '../../styles/design/mentionMenu.css';
 
-const MentionMenu = ({ users, fetching }) => {
+const MentionMenu = ({ users, fetching, onClick }) => {
    return (
       <div className="mention-menu" role="listbox">
          {fetching && <Spinner />}
          {!fetching &&
             users.length > 0 &&
             users.map((user) => (
-               <SmallUserPreview user={user} key={user._id} />
+               <SmallUserPreview
+                  user={user}
+                  key={user._id}
+                  onClick={() => onClick(user)}
+               />
             ))}
       </div>
    );

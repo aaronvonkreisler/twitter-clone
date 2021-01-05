@@ -4,13 +4,14 @@ import { Avatar } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
 import PropTypes from 'prop-types';
 
-const SmallUserPreview = ({
-   user: { avatar, name, screen_name, verified },
-   bottomBorder,
-}) => {
+const SmallUserPreview = ({ user, bottomBorder, onClick }) => {
    const borderClass = bottomBorder ? 'bottom-border' : '';
+   const { avatar, name, screen_name, verified } = user;
    return (
-      <div className={`userPreview ${borderClass}`}>
+      <div
+         className={`userPreview ${borderClass}`}
+         onClick={() => onClick(user)}
+      >
          <div className="userPreview__avatar">
             <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
          </div>
@@ -19,9 +20,8 @@ const SmallUserPreview = ({
             <div className="details__top">
                <div className="names">
                   <div className="displayName">
-                     <Link to={`/profile/${screen_name}`}>
-                        <span>{name}</span>
-                     </Link>
+                     <span>{name}</span>
+
                      {verified && (
                         <span className="verified-badge">
                            <GoVerified />
@@ -29,9 +29,7 @@ const SmallUserPreview = ({
                      )}
                   </div>
                   <div className="screenName">
-                     <Link to={`/profile/${screen_name}`}>
-                        <span>@{screen_name}</span>
-                     </Link>
+                     <span>@{screen_name}</span>
                   </div>
                </div>
             </div>

@@ -29,9 +29,9 @@ const TweetFormV2 = React.memo(
       const [disabled, setDisabled] = useState(true);
       const [mention, setMention] = useState(false);
       const [imagePreview, setImagePreview] = useState(null);
+      const [tweetLength, setTweetLength] = useState(0);
       const [tweet, setTweet] = useState({
          content: '',
-         contentLength: 0,
          image: null,
          mentions: [],
          hashtags: [],
@@ -70,7 +70,7 @@ const TweetFormV2 = React.memo(
       };
 
       const handleInputChange = (e) => {
-         let string = e.target.value.match(new RegExp(/@[a-zA-Z0-9]+$/));
+         let string = e.target.value.match(new RegExp(/@[a-zA-Z0-9._]+$/));
 
          if (string) {
             setMention(() => {
@@ -88,9 +88,10 @@ const TweetFormV2 = React.memo(
          setTweet({
             ...tweet,
             content: e.target.value,
-            contentLength: e.target.value.length,
          });
+         setTweetLength(e.target.value.length);
       };
+
       const handleTweetSubmit = (e) => {
          console.log(tweet);
       };
@@ -101,10 +102,9 @@ const TweetFormV2 = React.memo(
       };
 
       useEffect(() => {
-         const disableButton =
-            tweet.contentLength === 0 || tweet.contentLength > 280;
+         const disableButton = tweetLength === 0 || tweetLength > 280;
          setDisabled(disableButton);
-      }, [tweet]);
+      }, [tweetLength]);
 
       return (
          <div className="tweetForm">
@@ -132,9 +132,31 @@ const TweetFormV2 = React.memo(
                               onChange={handleInputChange}
                               placeholder="What's happening?"
                               className="tweet-form-textarea"
+                              inputRef={tweetInputRef}
                            />
                            {result && (
-                              <MentionMenu users={result} fetching={fetching} />
+                              <MentionMenu
+                                 users={result}
+                                 fetching={fetching}
+                                 username={mention}
+                                 onClick={(user) => {
+                                    let currentTweetValue =
+                                       tweetInputRef.current.value;
+
+                                    const username = currentTweetValue.replace(
+                                       /@\b(\w+)$/,
+                                       `@${user.screen_name}`
+                                    );
+                                    setTweet({
+                                       ...tweet,
+                                       content: username,
+                                    });
+
+                                    tweetInputRef.current.focus();
+
+                                    setResult(null);
+                                 }}
+                              />
                            )}
                         </div>
                      </div>
@@ -170,7 +192,6 @@ const TweetFormV2 = React.memo(
                                  id="imageUpload"
                                  style={{ display: 'none' }}
                                  onChange={handleFileChange}
-                                 ref={tweetInputRef}
                               />
                               <label htmlFor="imageUpload">
                                  <IconButton
@@ -186,12 +207,12 @@ const TweetFormV2 = React.memo(
                         <div className="toolbar__submit">
                            <div className="counter">
                               <CircularProgress
-                                 value={normalizeLength(tweet.contentLength)}
+                                 value={normalizeLength(tweetLength)}
                                  variant="static"
-                                 size={disabled ? 30 : 20}
+                                 size={tweetLength > 280 ? 30 : 20}
                                  thickness={2.2}
                                  style={
-                                    disabled
+                                    tweetLength > 280
                                        ? { color: spinnerColors.red }
                                        : { color: spinnerColors.blue }
                                  }

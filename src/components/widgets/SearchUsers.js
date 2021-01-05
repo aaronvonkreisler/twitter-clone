@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Searchbar from '../layout/Searchbar';
 import SearchResultsMenu from './SearchResultsMenu';
@@ -6,8 +7,8 @@ import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
 import '../../styles/design/searchResultsMenu.css';
 const SearchUsers = ({ setResult }) => {
    const [query, setQuery] = useState('');
-
    const [open, setOpen] = useState(false);
+   let history = useHistory();
 
    const handleClose = useCallback(() => {
       setOpen(false);
@@ -35,6 +36,10 @@ const SearchUsers = ({ setResult }) => {
       }
    }, [query, handleClose]);
 
+   const handleUserClick = (user) => {
+      history.push(`/profile/${user.screen_name}`);
+   };
+
    return (
       <React.Fragment>
          <Searchbar
@@ -46,7 +51,12 @@ const SearchUsers = ({ setResult }) => {
             }}
          />
          <div className="menu-container">
-            <SearchResultsMenu users={result} open={open} fetching={fetching} />
+            <SearchResultsMenu
+               users={result}
+               open={open}
+               fetching={fetching}
+               onClick={handleUserClick}
+            />
          </div>
       </React.Fragment>
    );
