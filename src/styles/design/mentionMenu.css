@@ -12,3 +12,9 @@
    overflow-y: auto;
    z-index: 4;
 }
+
+.mention-menu .no-results {
+   color: #fff;
+   padding: 15px;
+   border-bottom: 1px solid var(--border-color);
+}

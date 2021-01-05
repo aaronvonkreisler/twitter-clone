@@ -16,6 +16,7 @@
     "draft-js-linkify-plugin": "^2.0.2",
     "draft-js-plugins-editor": "2.1.1",
     "draftjs-to-html": "^0.9.1",
+    "emoji-picker-react": "^3.2.4",
     "formik": "^2.2.5",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",

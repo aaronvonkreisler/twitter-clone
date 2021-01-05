@@ -128,29 +128,6 @@
    position: relative;
 }
 
-.textEditor .public-DraftEditorPlaceholder-root {
-   width: 100%;
-}
-.textEditor__root .textEditor .public-DraftEditorPlaceholder-inner {
-   position: absolute;
-   pointer-events: none;
-   color: var(--text-gray);
-}
-
-.textEditor .DraftEditor-root {
-   width: 100%;
-}
-
-.DraftEditor-editorContainer,
-.DraftEditor-root,
-.public-DraftEditor-content {
-   height: inherit;
-   text-align: initial;
-   min-height: inherit;
-   max-height: inherit;
-   overflow: auto;
-}
-
 .toolbar__root {
    display: flex;
    flex-direction: row;
@@ -191,10 +168,6 @@
    opacity: 0.5 !important;
 }
 
-.textEditor .public-DraftStyleDefault-block {
-   overflow: hidden;
-}
-
 .tweetForm .tweetForm__bottom-border {
    border-top: 1px solid var(--border-color);
    border-bottom: 1px solid var(--border-color);
@@ -210,49 +183,10 @@
    margin-bottom: auto;
 }
 
-button.draftJsEmojiPlugin__emojiSelectButton__3sPol,
-.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
-   color: var(--twitter-color);
-   background: none;
-   width: 37px;
-   height: 37px;
-   border-radius: 9999px;
-   border: none;
-   vertical-align: center;
-   font-weight: 700;
-   line-height: 37px;
-   margin-bottom: 4px;
-}
-
 .imageUpload .MuiIconButton-root {
    padding: 8px;
    margin-left: 5px;
    color: var(--twitter-color);
-}
-
-div.draftJsEmojiPlugin__emojiSelect__34S1B {
-   font-size: 1.5rem;
-}
-
-.draftJsEmojiPlugin__emojiSelectButton__3sPol:hover,
-.draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover,
-.imageUpload .MuiIconButton-root:hover {
-   background: var(--twitter-button-hover);
-}
-div.draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {
-   background: var(--background-dark);
-   border-radius: 16px;
-   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
-      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
-   border: none;
-   font-size: 14px;
-   z-index: 2000;
-}
-
-h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
-   font-size: 19px;
-   font-weight: 700;
-   color: #fff;
 }
 
 .textEditor .tweet-form-textarea {
@@ -266,4 +200,118 @@ h3.draftJsEmojiPlugin__emojiSelectPopoverTitle__3tpXz {
    display: block;
    color: #fff;
    overflow: hidden;
+}
+
+.tweetForm .bottom-wrapper {
+   position: relative;
+}
+
+/* Emoji Picker Style Overrides */
+.tweetForm .bottom-wrapper aside.emoji-picker-react {
+   position: absolute;
+   left: 0;
+   z-index: 2;
+   background: var(--background-dark);
+   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
+      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px !important;
+
+   border: 1px solid var(--background-dark);
+}
+.tweetForm .bottom-wrapper .emoji-picker-react input.emoji-search {
+   background-color: var(--input-color);
+   color: #fff;
+   border: 1px solid transparent;
+   font-family: inherit;
+}
+.tweetForm .bottom-wrapper .emoji-picker-react input.emoji-search::placeholder {
+   content: 'Whatsup';
+}
+.tweetForm .bottom-wrapper .emoji-picker-react .emoji-group:before {
+   background: var(--background-dark);
+   color: #fff;
+   text-transform: capitalize;
+   font-size: 15px;
+   font-weight: 700;
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji.has-skin-variation:before {
+   background: none;
+}
+
+/* Overrides for the header buttons in emoji component */
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-smileys_people {
+   color: var(--text-gray);
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f600.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-animals_nature {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f43b.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-food_drink {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f354.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-travel_places {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f698.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-activities {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/26bd.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-objects {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f4a1.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-symbols {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f523.svg);
+}
+
+.tweetForm
+   .bottom-wrapper
+   .emoji-picker-react
+   .emoji-categories
+   button.icn-flags {
+   background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f6a9.svg);
+}
+
+.tweetForm .bottom-wrapper .emoji-picker-react .emoji-categories button {
+   opacity: 0.5;
+   filter: grayscale(100%) contrast(80%);
+}
+.tweetForm .bottom-wrapper .emoji-picker-react .emoji-categories button:hover {
+   filter: none;
+   opacity: 1;
 }

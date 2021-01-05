@@ -4,20 +4,29 @@ import Spinner from './Spinner';
 import SmallUserPreview from './SmallUserPreview';
 import '../../styles/design/mentionMenu.css';
 
-const MentionMenu = ({ users, fetching, onClick }) => {
+const MentionMenu = ({ users, fetching, onClick, open }) => {
    return (
-      <div className="mention-menu" role="listbox">
-         {fetching && <Spinner />}
-         {!fetching &&
-            users.length > 0 &&
-            users.map((user) => (
-               <SmallUserPreview
-                  user={user}
-                  key={user._id}
-                  onClick={() => onClick(user)}
-               />
-            ))}
-      </div>
+      <React.Fragment>
+         {open && (
+            <div className="mention-menu" role="listbox">
+               {fetching && <Spinner />}
+               {!fetching &&
+                  users.length > 0 &&
+                  users.map((user) => (
+                     <SmallUserPreview
+                        user={user}
+                        key={user._id}
+                        onClick={() => onClick(user)}
+                     />
+                  ))}
+               {!fetching && users.length === 0 && (
+                  <div className="no-results">
+                     <span>No results found</span>
+                  </div>
+               )}
+            </div>
+         )}
+      </React.Fragment>
    );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
    Avatar,
    Button,
@@ -7,29 +8,32 @@ import {
    Input,
    IconButton,
 } from '@material-ui/core';
+import Picker from 'emoji-picker-react';
 
 import { FiImage } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
-import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
+import { FiSmile } from 'react-icons/fi';
+import { getBase64 } from '../../utils/imageService';
+import { extractMentions, extractHashtags } from '../../utils/tweet';
 import { photoUploadError } from '../../actions/tweets';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
 import MentionMenu from '../layout/MentionMenu';
 
-import PropTypes from 'prop-types';
 import '../../styles/design/tweetForm.css';
 
 const TweetFormV2 = React.memo(
    ({
       auth: { user, loading },
-      placeholder,
       bottomBorder,
       onFormSubmit,
       photoUploadError,
    }) => {
       const [disabled, setDisabled] = useState(true);
+      const [submitting, setSubbmitting] = useState(false);
       const [mention, setMention] = useState(false);
       const [imagePreview, setImagePreview] = useState(null);
       const [tweetLength, setTweetLength] = useState(0);
+      const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
       const [tweet, setTweet] = useState({
          content: '',
          image: null,
@@ -60,6 +64,7 @@ const TweetFormV2 = React.memo(
 
       const handleFileChange = (e) => {
          const regex = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
+
          if (e.target.files[0].type.match(regex)) {
             getBase64(e.target.files[0]).then((data) => setImagePreview(data));
             setTweet({ ...tweet, image: e.target.files[0] });
@@ -79,12 +84,13 @@ const TweetFormV2 = React.memo(
                //set the result to empty so it shows loader
                setResult([]);
                handleSearchDebouncedRef(mention);
-               console.log(result);
+
                return mention;
             });
          } else {
             setResult(null);
          }
+
          setTweet({
             ...tweet,
             content: e.target.value,
@@ -92,8 +98,27 @@ const TweetFormV2 = React.memo(
          setTweetLength(e.target.value.length);
       };
 
+      const onEmojiClick = (event, emojiObject) => {
+         const { emoji } = emojiObject;
+         let currentTweetValue = tweetInputRef.current.value;
+         currentTweetValue += emoji;
+         setTweet({
+            ...tweet,
+            content: currentTweetValue,
+         });
+         setDisabled(false);
+         tweetInputRef.current.focus();
+      };
+
       const handleTweetSubmit = (e) => {
-         console.log(tweet);
+         const mentions = extractMentions(tweet.content);
+         const hashtags = extractHashtags(tweet.content);
+         setTweet({
+            ...tweet,
+            mentions,
+            hashtags,
+         });
+         setSubbmitting(true);
       };
 
       const handleRemoveImage = () => {
@@ -105,6 +130,21 @@ const TweetFormV2 = React.memo(
          const disableButton = tweetLength === 0 || tweetLength > 280;
          setDisabled(disableButton);
       }, [tweetLength]);
+
+      useEffect(() => {
+         if (submitting) {
+            console.log(tweet);
+            setSubbmitting(false);
+            setTweet({
+               content: '',
+               image: null,
+               mentions: [],
+               hashtags: [],
+            });
+            setImagePreview(null);
+            setTweetLength(0);
+         }
+      }, [submitting, tweet]);
 
       return (
          <div className="tweetForm">
@@ -137,19 +177,20 @@ const TweetFormV2 = React.memo(
                            {result && (
                               <MentionMenu
                                  users={result}
+                                 open={mention}
                                  fetching={fetching}
                                  username={mention}
                                  onClick={(user) => {
                                     let currentTweetValue =
                                        tweetInputRef.current.value;
 
-                                    const username = currentTweetValue.replace(
+                                    const updatedValue = currentTweetValue.replace(
                                        /@\b(\w+)$/,
                                        `@${user.screen_name}`
                                     );
                                     setTweet({
                                        ...tweet,
-                                       content: username,
+                                       content: updatedValue,
                                     });
 
                                     tweetInputRef.current.focus();
@@ -183,49 +224,68 @@ const TweetFormV2 = React.memo(
                            </div>
                         </div>
                      )}
-                     <div className="toolbar__root">
-                        <div className="toolbar__addOns">
-                           <div className="imageUpload">
-                              <input
-                                 type="file"
-                                 accept="image/*"
-                                 id="imageUpload"
-                                 style={{ display: 'none' }}
-                                 onChange={handleFileChange}
-                              />
-                              <label htmlFor="imageUpload">
+                     <div className="bottom-wrapper">
+                        <div className="toolbar__root">
+                           <div className="toolbar__addOns">
+                              <div className="imageUpload">
+                                 <input
+                                    type="file"
+                                    accept="image/*"
+                                    id="imageUpload"
+                                    style={{ display: 'none' }}
+                                    onChange={handleFileChange}
+                                 />
+                                 <label htmlFor="imageUpload">
+                                    <IconButton
+                                       aria-label="upload picture"
+                                       component="span"
+                                       className="uploadButton"
+                                    >
+                                       <FiImage />
+                                    </IconButton>
+                                 </label>
+                              </div>
+                              <div className="imageUpload">
                                  <IconButton
-                                    aria-label="upload picture"
+                                    aria-label="Open emoji menu"
                                     component="span"
                                     className="uploadButton"
+                                    onClick={() =>
+                                       setEmojiMenuOpen(!emojiMenuOpen)
+                                    }
                                  >
-                                    <FiImage />
+                                    <FiSmile />
                                  </IconButton>
-                              </label>
+                              </div>
+                           </div>
+                           <div className="toolbar__submit">
+                              <div className="counter">
+                                 <CircularProgress
+                                    value={normalizeLength(tweetLength)}
+                                    variant="static"
+                                    size={tweetLength > 280 ? 30 : 20}
+                                    thickness={2.2}
+                                    style={
+                                       tweetLength > 280
+                                          ? { color: spinnerColors.red }
+                                          : { color: spinnerColors.blue }
+                                    }
+                                 />
+                              </div>
+                              <Button
+                                 className="tweetForm__button"
+                                 onClick={handleTweetSubmit}
+                                 disabled={disabled}
+                              >
+                                 Tweet
+                              </Button>
                            </div>
                         </div>
-                        <div className="toolbar__submit">
-                           <div className="counter">
-                              <CircularProgress
-                                 value={normalizeLength(tweetLength)}
-                                 variant="static"
-                                 size={tweetLength > 280 ? 30 : 20}
-                                 thickness={2.2}
-                                 style={
-                                    tweetLength > 280
-                                       ? { color: spinnerColors.red }
-                                       : { color: spinnerColors.blue }
-                                 }
-                              />
+                        {emojiMenuOpen && (
+                           <div className="emoji-wrapper">
+                              <Picker onEmojiClick={onEmojiClick} />
                            </div>
-                           <Button
-                              className="tweetForm__button"
-                              onClick={handleTweetSubmit}
-                              disabled={disabled}
-                           >
-                              Tweet
-                           </Button>
-                        </div>
+                        )}
                      </div>
                   </form>
                </div>
@@ -239,7 +299,6 @@ const TweetFormV2 = React.memo(
 TweetFormV2.propTypes = {
    auth: PropTypes.object.isRequired,
    bottomBorder: PropTypes.bool,
-   placeholder: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
