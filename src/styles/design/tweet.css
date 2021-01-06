@@ -30,6 +30,13 @@
    flex-grow: 1;
    padding-bottom: 10px;
 }
+.tweet__content .styled-link {
+   color: var(--twitter-color);
+   cursor: pointer;
+}
+.tweet__content .styled-link:hover {
+   text-decoration: underline;
+}
 
 .tweet__name {
    margin-bottom: 2px;

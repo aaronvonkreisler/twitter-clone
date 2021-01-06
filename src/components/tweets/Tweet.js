@@ -29,8 +29,10 @@ import {
 } from '../../actions/tweets';
 
 import { openModal, setTweetInModal } from '../../actions/modal';
-
 import '../../styles/design/tweet.css';
+
+mention(linkify);
+hashtag(linkify);
 
 const Tweet = ({
    tweet,
@@ -84,6 +86,13 @@ const Tweet = ({
          favoriteTweet(tweet._id);
          setTweetLiked(true);
       }
+   };
+
+   let linkProps = {
+      onClick: (e) => {
+         e.preventDefault();
+         console.log('Hi');
+      },
    };
 
    return (
@@ -195,11 +204,7 @@ const Tweet = ({
                            </span>
                         </div>
                      )}
-                     <Link
-                        to={`/${tweet.user.screen_name}/status/${tweet._id}`}
-                     >
-                        {tweet.content}
-                     </Link>
+                     <Linkify options={linkifyOptions}>{tweet.content}</Linkify>
 
                      {/* IMAGE PREVIEW COMPONENT GOES HERE */}
                      {tweet.image && (
