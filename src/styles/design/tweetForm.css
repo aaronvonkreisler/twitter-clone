@@ -206,6 +206,12 @@
    position: relative;
 }
 
+/* Emoji Picker wrapper */
+/* .tweetForm .bottom-wrapper .emoji-wrapper {
+   width: 280px;
+   height: 320px;
+   display: inline-block;
+} */
 /* Emoji Picker Style Overrides */
 .tweetForm .bottom-wrapper aside.emoji-picker-react {
    position: absolute;
@@ -223,9 +229,7 @@
    border: 1px solid transparent;
    font-family: inherit;
 }
-.tweetForm .bottom-wrapper .emoji-picker-react input.emoji-search::placeholder {
-   content: 'Whatsup';
-}
+
 .tweetForm .bottom-wrapper .emoji-picker-react .emoji-group:before {
    background: var(--background-dark);
    color: #fff;
