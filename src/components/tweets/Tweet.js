@@ -11,7 +11,7 @@ import { AiOutlineRetweet } from 'react-icons/ai';
 import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
 import { BiPin } from 'react-icons/bi';
-import ViewOnlyEditor from '../layout/ViewOnlyEditor';
+
 import TweetMenu from './TweetMenu';
 import ToolbarMenu from './ToolbarMenu';
 import ImageDisplay from './ImageDisplay';
@@ -23,11 +23,6 @@ import {
 } from '../../actions/tweets';
 
 import { openModal, setTweetInModal } from '../../actions/modal';
-
-import {
-   convertToEditorState,
-   viewOnlyPlugins,
-} from '../../utils/draftEditorSetup';
 
 import '../../styles/design/tweet.css';
 
@@ -197,10 +192,7 @@ const Tweet = ({
                      <Link
                         to={`/${tweet.user.screen_name}/status/${tweet._id}`}
                      >
-                        <ViewOnlyEditor
-                           editorState={convertToEditorState(tweet.content)}
-                           plugins={viewOnlyPlugins}
-                        />
+                        {tweet.content}
                      </Link>
 
                      {/* IMAGE PREVIEW COMPONENT GOES HERE */}

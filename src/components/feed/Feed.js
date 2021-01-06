@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Tweet from '../tweets/TweetV2';
+import Tweet from '../tweets/Tweet';
 import Spinner from '../layout/Spinner';
 
 import '../../styles/design/feed.css';

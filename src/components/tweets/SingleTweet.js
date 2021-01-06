@@ -11,7 +11,6 @@ import { AiOutlineRetweet } from 'react-icons/ai';
 import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
 
-import ViewOnlyEditor from '../layout/ViewOnlyEditor';
 import ImageDisplay from './ImageDisplay';
 import TweetMenu from './TweetMenu';
 import {
@@ -22,11 +21,6 @@ import {
    retweet,
    pinTweetToProfile,
 } from '../../actions/tweets';
-
-import {
-   viewOnlyPlugins,
-   convertToEditorState,
-} from '../../utils/draftEditorSetup';
 
 import '../../styles/design/tweet.css';
 import '../../styles/design/singleTweet.css';
@@ -128,12 +122,7 @@ const SingleTweet = ({
                   </div>
                </div>
                {/* Content goes here */}
-               <div className="singleTweet__content-root">
-                  <ViewOnlyEditor
-                     editorState={convertToEditorState(tweet.content)}
-                     plugins={viewOnlyPlugins}
-                  />
-               </div>
+               <div className="singleTweet__content-root">{tweet.content}</div>
                {tweet.image && <ImageDisplay image={tweet.image} />}
                <div className="singleTweet__time-data">
                   <Moment format="h:mm A • MMM D, YYYY">

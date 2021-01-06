@@ -10,7 +10,7 @@ import {
    useTheme,
 } from '@material-ui/core';
 import { addTweet } from '../../actions/tweets';
-import TweetForm from '../feed/TweetForm';
+import TweetFormWrapper from './TweetFormWrapper';
 import '../../styles/design/replyModal.css';
 
 const ComposeModal = ({ addTweet, open, setOpen }) => {
@@ -42,9 +42,8 @@ const ComposeModal = ({ addTweet, open, setOpen }) => {
                </div>
             </DialogTitle>
             <DialogContent>
-               <TweetForm
-                  placeholder="What's happening?"
-                  onFormSubmit={onFormSubmit}
+               <TweetFormWrapper
+                  onTweetSubmit={onFormSubmit}
                   bottomBorder={false}
                />
             </DialogContent>
