@@ -9,11 +9,19 @@
 
    border: 1px solid var(--background-dark);
 }
+
+.tweetForm .bottom-wrapper aside.emoji-picker-react .content-wrapper {
+   border: 1px solid var(--background-dark);
+}
 .tweetForm .bottom-wrapper .emoji-picker-react input.emoji-search {
    background-color: var(--input-color);
    color: #fff;
-   border: 1px solid transparent;
+   border: 1px solid var(--background-dark);
    font-family: inherit;
+}
+
+.tweetForm .bottom-wrapper .emoji-picker-react input.emoji-search:focus {
+   border: 1px solid var(--twitter-color);
 }
 
 .tweetForm .bottom-wrapper .emoji-picker-react .emoji-group:before {

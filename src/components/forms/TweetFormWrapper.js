@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64 } from '../../utils/imageService';
+import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
 import { extractMentions, extractHashtags } from '../../utils/tweet';
 import { photoUploadError } from '../../actions/tweets';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
@@ -12,20 +12,21 @@ import '../../styles/design/tweetForm.css';
 const TweetFormWrapper = React.memo(function TweetFormWrapper({
    auth: { user, loading },
    bottomBorder,
-   onFormSubmit,
+   onTweetSubmit,
    photoUploadError,
 }) {
    const [disabled, setDisabled] = useState(true);
    const [submitting, setSubbmitting] = useState(false);
    const [mention, setMention] = useState(false);
    const [imagePreview, setImagePreview] = useState(null);
+   const [imageFile, setImageFile] = useState(null);
    const [tweetLength, setTweetLength] = useState(0);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
    const [tweet, setTweet] = useState({
       content: '',
       image: null,
       mentions: [],
-      hashtags: [],
+      hashtag: [],
    });
 
    let {
@@ -45,11 +46,12 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    };
 
    const handleFileChange = (e) => {
+      const file = e.target.files[0];
       const regex = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
 
-      if (e.target.files[0].type.match(regex)) {
-         getBase64(e.target.files[0]).then((data) => setImagePreview(data));
-         setTweet({ ...tweet, image: e.target.files[0] });
+      if (file.type.match(regex)) {
+         getBase64(file).then((data) => setImagePreview(data));
+         setImageFile(file);
       } else {
          handleRemoveImage();
          photoUploadError();
@@ -103,19 +105,20 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
       setSubbmitting(true);
    };
 
-   const handleRemoveImage = () => {
+   const handleRemoveImage = useCallback(() => {
       setImagePreview(null);
+      setImageFile(null);
       setTweet({ ...tweet, image: null });
-   };
+   }, [tweet]);
 
-   const handleEmojiClose = (e) => {
+   const handleEmojiClose = useCallback((e) => {
       if (emojiPickerRef.current.contains(e.target)) {
          return;
       } else {
          setEmojiMenuOpen(false);
          document.removeEventListener('mousedown', handleEmojiClose);
       }
-   };
+   }, []);
 
    useEffect(() => {
       const disableButton = tweetLength === 0 || tweetLength > 280;
@@ -124,7 +127,7 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
 
    useEffect(() => {
       if (submitting) {
-         console.log(tweet);
+         onTweetSubmit(tweet);
          setSubbmitting(false);
          setTweet({
             content: '',
@@ -135,13 +138,32 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
          setImagePreview(null);
          setTweetLength(0);
       }
-   }, [submitting, tweet]);
+   }, [submitting, tweet, onTweetSubmit]);
 
    useEffect(() => {
       if (emojiMenuOpen) {
          document.addEventListener('mousedown', handleEmojiClose);
       }
-   }, [emojiMenuOpen]);
+   }, [emojiMenuOpen, handleEmojiClose]);
+
+   useEffect(() => {
+      async function uploadImageToDb() {
+         const validImage = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
+
+         if (imageFile !== null) {
+            if (imageFile.type.match(validImage)) {
+               const imagePath = await uploadPhotoForTweet(imageFile);
+               setTweet({ ...tweet, image: imagePath });
+               setImageFile(null);
+            } else {
+               handleRemoveImage();
+               photoUploadError();
+            }
+         }
+      }
+
+      uploadImageToDb();
+   }, [handleRemoveImage, imageFile, photoUploadError, tweet]);
 
    return (
       <TweetForm

@@ -46,9 +46,9 @@ const Home = ({
       [hasMore, fetching]
    );
 
-   // const onFormSubmit = (content, image) => {
-   //    addTweet({ content, image });
-   // };
+   const onTweetSubmit = (tweet) => {
+      addTweet(tweet);
+   };
 
    return (
       <React.Fragment>
@@ -67,7 +67,7 @@ const Home = ({
                   bottomBorder
                   onFormSubmit={onFormSubmit}
                /> */}
-               <TweetFormWrapper bottomBorder />
+               <TweetFormWrapper bottomBorder onTweetSubmit={onTweetSubmit} />
                <Feed />
             </React.Fragment>
          )}
