@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
-import { extractMentions, extractHashtags } from '../../utils/tweet';
+
 import { photoUploadError } from '../../actions/tweets';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
 import TweetForm from './TweetForm';
@@ -16,7 +16,7 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    photoUploadError,
 }) {
    const [disabled, setDisabled] = useState(true);
-   const [submitting, setSubbmitting] = useState(false);
+
    const [mention, setMention] = useState(false);
    const [imagePreview, setImagePreview] = useState(null);
    const [imageFile, setImageFile] = useState(null);
@@ -95,14 +95,15 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    };
 
    const handleTweetSubmit = (e) => {
-      const mentions = extractMentions(tweet.content);
-      const hashtags = extractHashtags(tweet.content);
+      onTweetSubmit(tweet);
       setTweet({
-         ...tweet,
-         mentions,
-         hashtags,
+         content: '',
+         image: null,
+         mentions: [],
+         hashtags: [],
       });
-      setSubbmitting(true);
+      setImagePreview(null);
+      setTweetLength(0);
    };
 
    const handleRemoveImage = useCallback(() => {
@@ -124,21 +125,6 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
       const disableButton = tweetLength === 0 || tweetLength > 280;
       setDisabled(disableButton);
    }, [tweetLength]);
-
-   useEffect(() => {
-      if (submitting) {
-         onTweetSubmit(tweet);
-         setSubbmitting(false);
-         setTweet({
-            content: '',
-            image: null,
-            mentions: [],
-            hashtags: [],
-         });
-         setImagePreview(null);
-         setTweetLength(0);
-      }
-   }, [submitting, tweet, onTweetSubmit]);
 
    useEffect(() => {
       if (emojiMenuOpen) {

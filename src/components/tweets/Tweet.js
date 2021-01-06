@@ -12,6 +12,12 @@ import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
 import { BiPin } from 'react-icons/bi';
 
+import Linkify from 'linkifyjs/react';
+import * as linkify from 'linkifyjs';
+import mention from 'linkifyjs/plugins/mention';
+import hashtag from 'linkifyjs/plugins/hashtag';
+import { linkifyOptions } from '../../utils/linkifyOptions';
+
 import TweetMenu from './TweetMenu';
 import ToolbarMenu from './ToolbarMenu';
 import ImageDisplay from './ImageDisplay';

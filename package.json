@@ -11,6 +11,7 @@
     "axios": "^0.21.0",
     "emoji-picker-react": "^3.2.4",
     "formik": "^2.2.5",
+    "linkifyjs": "^2.1.9",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "react": "^17.0.1",
