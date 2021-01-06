@@ -42,7 +42,7 @@ const Home = ({
             fetchTimelineTweetsStart(tweets.length);
          }
       },
-      feedEl,
+      null,
       [hasMore, fetching]
    );
 
