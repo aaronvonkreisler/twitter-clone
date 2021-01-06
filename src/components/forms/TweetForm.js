@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import MentionMenu from '../layout/MentionMenu';
 import '../../styles/design/tweetForm.css';
+import '../../styles/design/emojiPicker.css';
+
 const TweetForm = ({
    user,
    loading,
