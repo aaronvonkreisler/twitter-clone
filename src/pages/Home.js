@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../components/layout/Header';
 import { addTweet } from '../actions/tweets';
-import TweetForm from '../components/feed/TweetForm';
+
 import TweetFormWrapper from '../components/forms/TweetFormWrapper';
 import Feed from '../components/feed/Feed';
 import NoTweets from '../components/tweets/NoTweets';

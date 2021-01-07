@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
@@ -54,8 +54,9 @@ const Tweet = ({
    const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
    const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
-
    const [retweeted, setRetweeted] = useState(false);
+
+   let history = useHistory();
 
    useEffect(() => {
       const isLiked =
@@ -86,13 +87,6 @@ const Tweet = ({
          favoriteTweet(tweet._id);
          setTweetLiked(true);
       }
-   };
-
-   let linkProps = {
-      onClick: (e) => {
-         e.preventDefault();
-         console.log('Hi');
-      },
    };
 
    return (
@@ -143,10 +137,20 @@ const Tweet = ({
 
                <article className="tweet__wrapper flex flex-row">
                   <div className=" tweet__avatar flex flex-col">
-                     <Avatar
-                        src={tweet.user.avatar}
-                        style={{ height: '49px', width: '49px' }}
-                     />
+                     <span
+                        style={{ height: '100%' }}
+                        onClick={() =>
+                           history.push(
+                              `/${tweet.user.screen_name}/status/${tweet._id}`
+                           )
+                        }
+                     >
+                        <Avatar
+                           src={tweet.user.avatar}
+                           style={{ height: '49px', width: '49px' }}
+                        />
+                     </span>
+
                      {replyView && <div className="reply-line" />}
                   </div>
                   <div className="tweet__content flex flex-col justify-between">
@@ -184,6 +188,7 @@ const Tweet = ({
                            <div
                               className="top-right__actionArea"
                               onClick={openActionMenu}
+                              role="button"
                            >
                               <div className="flex flex-row justify-start top-right-icon">
                                  <div className="d-inline-flex">
@@ -196,28 +201,40 @@ const Tweet = ({
                      </div>
 
                      {/* Content goes here */}
-                     {replyingTo && (
-                        <div className="replying_to">
-                           Replying to{' '}
-                           <span className="reply_screen_name">
-                              <Link to="/profile">@{replyingToUserName}</Link>
-                           </span>
-                        </div>
-                     )}
-                     <Linkify options={linkifyOptions}>{tweet.content}</Linkify>
+                     <span
+                        onClick={(e) => {
+                           if (e.target.tagName !== 'A') {
+                              history.push(
+                                 `/${tweet.user.screen_name}/status/${tweet._id}`
+                              );
+                           }
+                        }}
+                     >
+                        <div className="tweet-body">
+                           {replyingTo && (
+                              <div className="replying_to" role="button">
+                                 Replying to{' '}
+                                 <span className="reply_screen_name">
+                                    <Link to="/profile">
+                                       @{replyingToUserName}
+                                    </Link>
+                                 </span>
+                              </div>
+                           )}
 
-                     {/* IMAGE PREVIEW COMPONENT GOES HERE */}
-                     {tweet.image && (
-                        <ImageDisplay
-                           image={tweet.image}
-                           path={`/${tweet.user.screen_name}/status/${tweet._id}`}
-                        />
-                     )}
+                           <Linkify options={linkifyOptions}>
+                              {tweet.content}
+                           </Linkify>
+
+                           {/* IMAGE PREVIEW COMPONENT GOES HERE */}
+                           {tweet.image && <ImageDisplay image={tweet.image} />}
+                        </div>
+                     </span>
 
                      {/* Toolbar area - like, retweet, comment buttons */}
                      {displayActions && (
                         <div className="tweet__bottom-actionArea flex flex-row justify-between">
-                           <div className="tweetAction-item">
+                           <div className="tweetAction-item" role="button">
                               <div className="flex flex-col justify-center">
                                  <div
                                     className="action-wrapper comment_wrapper"
@@ -244,7 +261,10 @@ const Tweet = ({
                                  </div>
                               </div>
                            </div>
-                           <div className="tweetAction-item ml-15">
+                           <div
+                              className="tweetAction-item ml-15"
+                              role="button"
+                           >
                               <div className="flex flex-col justify-center">
                                  <div
                                     className="action-wrapper retweet_wrapper"
@@ -254,7 +274,10 @@ const Tweet = ({
                                     }}
                                  >
                                     <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay retweet_display" />
+                                       <div
+                                          className="iconBackgroundDisplay retweet_display"
+                                          role="button"
+                                       />
                                        <AiOutlineRetweet
                                           className={
                                              retweeted ? 'retweet__active' : ''
@@ -275,14 +298,17 @@ const Tweet = ({
                                  </div>
                               </div>
                            </div>
-                           <div className="tweetAction-item">
+                           <div className="tweetAction-item" role="button">
                               <div className="flex flex-col justify-center">
                                  <div
                                     className="action-wrapper favorites_wrapper"
                                     onClick={handleLikeOrUnlike}
                                  >
                                     <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay favorites_display" />
+                                       <div
+                                          className="iconBackgroundDisplay favorites_display"
+                                          role="button"
+                                       />
                                        {tweetLiked ? (
                                           <BsHeartFill
                                              style={{
@@ -306,13 +332,16 @@ const Tweet = ({
                                  </div>
                               </div>
                            </div>
-                           <div className="tweetAction-item">
+                           <div className="tweetAction-item" role="button">
                               <div className="flex flex-col justify-center">
                                  <div
                                     className="action-wrapper comment_wrapper"
                                     onClick={openToolbarMenu}
                                  >
-                                    <div className="d-inline-flex buttonDisplay">
+                                    <div
+                                       className="d-inline-flex buttonDisplay"
+                                       role="button"
+                                    >
                                        <div className="iconBackgroundDisplay comment_display" />
                                        <BsUpload />
                                     </div>

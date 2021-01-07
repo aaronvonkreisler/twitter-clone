@@ -1,17 +1,21 @@
+import { Link } from 'react-router-dom';
+
 export const linkifyOptions = {
-   formatHref: function (href, type) {
-      if (type === 'hashtag') {
-         href = '/explore/hashtag/' + href.substring(1);
-      }
-      if (type === 'mention') {
-         href = '/profile/' + href.substring(1);
-      }
-      return href;
+   tagName: {
+      mention: () => Link,
+      hashtag: () => Link,
    },
    className: 'styled-link',
-   attributes: {
-      target: {
-         url: '_blank',
-      },
+   attributes: (href, type) => {
+      if (type === 'hashtag') {
+         return {
+            to: '/expore/hashtag/' + href.substring(1),
+         };
+      }
+      if (type === 'mention') {
+         return {
+            to: '/profile/' + href.substring(1),
+         };
+      }
    },
 };
