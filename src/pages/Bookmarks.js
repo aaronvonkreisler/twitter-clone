@@ -45,8 +45,7 @@ const Bookmarks = ({
             onClose={handleClose}
          />
          <div className="feed">
-            {loading && <Spinner />}
-            {!loading && user !== null && bookmarks.tweets ? (
+            {!loading && user !== null ? (
                bookmarks.tweets.length > 0 ? (
                   bookmarks.tweets.map((tweet) => (
                      <Tweet
