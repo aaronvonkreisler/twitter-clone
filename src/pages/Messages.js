@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/layout/Header';
-import { FiMail } from 'react-icons/fi';
+import Inbox from '../components/messages/Inbox';
+import MessageDisplay from '../components/messages/MessageDisplay';
+import NewMessageModal from '../components/messages/NewMessageModal';
+import '../styles/design/messagePage.css';
 
-const iconStyle = {
-   fill: 'none',
-};
 const Messages = (props) => {
+   const [modalOpen, setModalOpen] = useState(false);
    useEffect(() => {
       document.title = 'Messages / Tweeter';
    });
    return (
-      <React.Fragment>
-         <Header
-            text="Messages"
-            rightIcon
-            IconComponent={FiMail}
-            overrideStyle={iconStyle}
-         />
-      </React.Fragment>
+      <Fragment>
+         <NewMessageModal open={modalOpen} setOpen={setModalOpen} />
+         <div className="message-page">
+            <div className="message-inbox">
+               <Inbox setModalOpen={setModalOpen} />
+            </div>
+            <div className="message-view">
+               <MessageDisplay setModalOpen={setModalOpen} />
+            </div>
+         </div>
+      </Fragment>
    );
 };
 

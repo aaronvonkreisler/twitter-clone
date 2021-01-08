@@ -4,7 +4,8 @@
    top: 0;
    padding-top: 5px;
    background-color: var(--background-dark);
-   width: 350px;
+   /* width: 350px; */
+   width: 100%;
 }
 
 .search-bar .search-box {
@@ -48,10 +49,4 @@
    overflow: visible;
    line-height: 1;
    color: var(--text-gray);
-}
-
-@media (min-width: 1005px) and (max-width: 1094px) {
-   .search-bar {
-      width: 290px;
-   }
 }

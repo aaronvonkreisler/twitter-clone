@@ -5,6 +5,7 @@ import Searchbar from '../layout/Searchbar';
 import SearchResultsMenu from './SearchResultsMenu';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
 import '../../styles/design/searchResultsMenu.css';
+
 const SearchUsers = ({ setResult }) => {
    const [query, setQuery] = useState('');
    const [open, setOpen] = useState(false);
@@ -42,14 +43,18 @@ const SearchUsers = ({ setResult }) => {
 
    return (
       <React.Fragment>
-         <Searchbar
-            value={query}
-            onChange={(e) => {
-               handleSearchDebouncedRef(e.target.value);
-               setQuery(e.target.value);
-               e.target.value && setFetching(true);
-            }}
-         />
+         <div className="searchbar-wrapper">
+            <Searchbar
+               value={query}
+               onChange={(e) => {
+                  handleSearchDebouncedRef(e.target.value);
+                  setQuery(e.target.value);
+                  e.target.value && setFetching(true);
+               }}
+               placeholder="Search Tweeter"
+            />
+         </div>
+
          <div className="menu-container">
             <SearchResultsMenu
                users={result}

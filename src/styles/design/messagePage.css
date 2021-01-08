@@ -1,0 +1,63 @@
+/* Responsive Variables */
+/* $break1:    "(max-width:499px)";
+$break2:    "(min-width:500px) and (max-width:1004px)";
+$break2open:"(min-width:500px)";
+$break3:    "(min-width:1005px) and (max-width:1094px)";
+$break3open:"(min-width:1005px)";
+$break4:    "(min-width:1095px) and (max-width:1281px)";
+$break4open:"(min-width:1095px)";
+$break5open:"(min-width:1282px)"; */
+
+.message-page {
+   display: flex;
+   flex-direction: row;
+   height: 100vh;
+   width: 100%;
+}
+
+.message-page .message-inbox {
+   display: flex;
+   flex-direction: column;
+   overflow-y: auto;
+
+   /* flex: 0.4; */
+   /* border-right: 1px solid var(--border-color); */
+   overflow: hidden;
+}
+
+.message-page .message-view {
+   display: flex;
+   flex-direction: column;
+
+   /* width: 100%; */
+   /* flex: 0.6; */
+
+   overflow: hidden;
+}
+
+.message-page .message-view .no-selection-view {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   align-items: center;
+   justify-content: center;
+}
+
+@media (max-width: 499px), (min-width: 500px) and (max-width: 1004px) {
+   .message-page .message-view {
+      display: none;
+   }
+   .message-page .message-inbox {
+      width: 100%;
+   }
+}
+
+@media (min-width: 1005px) {
+   .message-page .message-inbox {
+      border-right: 1px solid var(--border-color);
+      flex: 0.4;
+   }
+   .message-page .message-view {
+      flex: 0.6;
+   }
+}
