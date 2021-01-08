@@ -163,7 +163,10 @@ const Tweet = ({
                   </div>
                   <div className="body">
                      <header className="tweet-info">
-                        <span href="#!" className="tweet-info-user">
+                        <Link
+                           to={`/profile/${tweet.user.screen_name}`}
+                           className="tweet-info-user"
+                        >
                            <span className="name">{tweet.user.name}</span>
                            <span className="screen-name">
                               @{tweet.user.screen_name}
@@ -172,7 +175,7 @@ const Tweet = ({
                            <span className="verified-badge">
                               {tweet.user.verified && <GoVerified />}
                            </span>
-                        </span>
+                        </Link>
                         <div className="tweet-menu" onClick={openActionMenu}>
                            <div className="icon-border" />
                            <button className="icon-button">
@@ -216,6 +219,7 @@ const Tweet = ({
                            favorites={tweet.favorites}
                            replies={tweet.replies}
                            retweets={tweet.retweetUsers}
+                           overrideStyle={{ justifyContent: 'space-between' }}
                         />
                      </div>
                   </div>

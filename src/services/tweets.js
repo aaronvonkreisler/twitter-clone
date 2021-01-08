@@ -72,9 +72,9 @@ export const unfavorite = async (id) => {
    }
 };
 
-export const submitReply = async (id, content) => {
+export const submitReply = async (id, reply) => {
    try {
-      const res = await api.post(`/api/tweets/comment/${id}`, content);
+      const res = await api.post(`/api/tweets/comment/${id}`, reply);
       return res.data;
    } catch (err) {
       throw new Error(err.response.data);

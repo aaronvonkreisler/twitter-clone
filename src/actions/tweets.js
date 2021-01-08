@@ -146,9 +146,9 @@ export const removeFavorite = (id) => async (dispatch) => {
    }
 };
 
-export const replyToTweet = (id, content, location) => async (dispatch) => {
+export const replyToTweet = (id, reply, location) => async (dispatch) => {
    try {
-      const response = await submitReply(id, content);
+      const response = await submitReply(id, reply);
       if (location.pathname === '/home') {
          dispatch({
             type: REPLY_TO_TWEET_FROM_HOME,

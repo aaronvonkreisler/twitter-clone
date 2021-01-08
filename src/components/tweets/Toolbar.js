@@ -17,9 +17,10 @@ function Toolbar({
    replies,
    retweets,
    withNumbers,
+   overrideStyle,
 }) {
    return (
-      <ul className="toolbar-wrapper">
+      <ul className="toolbar-wrapper" style={overrideStyle}>
          <li className="toolbar-item hover-blue">
             <button className="icon-button" onClick={onCommentClick}>
                <BsChat />

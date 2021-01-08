@@ -6,6 +6,7 @@ import {
    DELETE_TWEET,
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
+   RETWEET_SUCCESS,
    ADD_TWEET,
 } from '../actions/types';
 
@@ -60,6 +61,15 @@ export default function (state = initialState, action) {
                        ...tweet,
                        favorites: payload.favorites,
                     }
+                  : tweet
+            ),
+         };
+      case RETWEET_SUCCESS:
+         return {
+            ...state,
+            tweets: state.tweets.map((tweet) =>
+               tweet._id === payload.id
+                  ? { ...tweet, retweetUsers: payload.users }
                   : tweet
             ),
          };

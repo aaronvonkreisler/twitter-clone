@@ -20,9 +20,10 @@ const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
    const theme = useTheme();
    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
    let history = useHistory();
-   const handleTweetReply = (content, image) => {
+   const handleTweetReply = (reply) => {
       const { location } = history;
-      replyToTweet(tweet._id, { content, image }, location);
+      replyToTweet(tweet._id, reply, location);
+
       setTimeout(() => {
          closeModal();
       }, 250);

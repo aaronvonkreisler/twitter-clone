@@ -64,10 +64,13 @@
 .tweet-info-user {
    display: flex;
    flex-direction: row;
-   align-items: space-between;
+   justify-content: space-between;
    overflow-wrap: break-word;
+   color: #fff;
 }
-
+.tweet-info-user:hover .name {
+   text-decoration: underline;
+}
 .tweet-info-user .name {
    font-size: 15px;
    font-weight: 700;
