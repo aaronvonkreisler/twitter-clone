@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Avatar } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
-import { BsChat } from 'react-icons/bs';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { AiOutlineRetweet } from 'react-icons/ai';
-import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
+import { AiOutlineRetweet } from 'react-icons/ai';
 import { BiPin } from 'react-icons/bi';
 
 import Linkify from 'linkifyjs/react';
@@ -18,9 +15,11 @@ import mention from 'linkifyjs/plugins/mention';
 import hashtag from 'linkifyjs/plugins/hashtag';
 import { linkifyOptions } from '../../utils/linkifyOptions';
 
+import Toolbar from './Toolbar';
 import TweetMenu from './TweetMenu';
 import ToolbarMenu from './ToolbarMenu';
 import ImageDisplay from './ImageDisplay';
+
 import {
    deleteTweet,
    favoriteTweet,
@@ -71,6 +70,16 @@ const Tweet = ({
       setTweetMenuAnchorEl(e.currentTarget);
    };
 
+   const onCommentClick = () => {
+      setTweetInModal(tweet);
+      openModal();
+   };
+
+   const onRetweetClick = () => {
+      retweet(tweet._id);
+      setRetweeted(!retweeted);
+   };
+
    const openToolbarMenu = (e) => {
       setToolbarMenuAnchorEl(e.currentTarget);
    };
@@ -90,7 +99,7 @@ const Tweet = ({
    };
 
    return (
-      <div className={bottomBorder ? 'tweet__root border' : 'tweet__root'}>
+      <React.Fragment>
          {displayActions && (
             <React.Fragment>
                <TweetMenu
@@ -113,7 +122,7 @@ const Tweet = ({
             </React.Fragment>
          )}
          {tweet && (
-            <div className="flex flex-col">
+            <div className="tweet-wrapper">
                {retweetedBy && (
                   <div className="retweetedByDisplay">
                      <div className="retweetIcon__col">
@@ -134,74 +143,45 @@ const Tweet = ({
                      </div>
                   </div>
                )}
-
-               <article className="tweet__wrapper flex flex-row">
-                  <div className=" tweet__avatar flex flex-col">
-                     <span
-                        style={{ height: '100%' }}
-                        onClick={() =>
-                           history.push(
-                              `/${tweet.user.screen_name}/status/${tweet._id}`
-                           )
-                        }
-                     >
-                        <Avatar
-                           src={tweet.user.avatar}
-                           style={{ height: '49px', width: '49px' }}
-                        />
-                     </span>
-
+               <article
+                  className={bottomBorder ? 'tweet bottom-border' : 'tweet'}
+               >
+                  <div
+                     className="image"
+                     onClick={() =>
+                        history.push(
+                           `/${tweet.user.screen_name}/status/${tweet._id}`
+                        )
+                     }
+                  >
+                     <Avatar
+                        className="profile-image"
+                        src={tweet.user.avatar}
+                        alt=""
+                     />
                      {replyView && <div className="reply-line" />}
                   </div>
-                  <div className="tweet__content flex flex-col justify-between">
-                     <div className="flex flex-row justify-between tweet__name">
-                        <div className="flex flex-row justify-between align-start names__display">
-                           <div className="flex flex-row justify-between">
-                              <span className="display_name">
-                                 <Link
-                                    to={`/profile/${tweet.user.screen_name}`}
-                                 >
-                                    {tweet.user.name}
-                                 </Link>
-                              </span>
-                              {tweet.user.verified && (
-                                 <span className="verified-badge">
-                                    <GoVerified />
-                                 </span>
-                              )}
-                              <span className="screen_name">
-                                 <Link
-                                    to={`/profile/${tweet.user.screen_name}`}
-                                 >
-                                    @{tweet.user.screen_name}
-                                 </Link>
-                              </span>
-                              <span className="time_stamp">
-                                 •{' '}
-                                 <Moment fromNow ago>
-                                    {tweet.created_at}
-                                 </Moment>
-                              </span>
-                           </div>
-                        </div>
-                        {displayActions && (
-                           <div
-                              className="top-right__actionArea"
-                              onClick={openActionMenu}
-                              role="button"
-                           >
-                              <div className="flex flex-row justify-start top-right-icon">
-                                 <div className="d-inline-flex">
-                                    <div className="icon__border"></div>
-                                    <CgMore />
-                                 </div>
-                              </div>
-                           </div>
-                        )}
-                     </div>
+                  <div className="body">
+                     <header className="tweet-info">
+                        <span href="#!" className="tweet-info-user">
+                           <span className="name">{tweet.user.name}</span>
+                           <span className="screen-name">
+                              @{tweet.user.screen_name}
+                           </span>
 
-                     {/* Content goes here */}
-                     <span
+                           <span className="verified-badge">
+                              {tweet.user.verified && <GoVerified />}
+                           </span>
+                        </span>
+                        <div className="tweet-menu" onClick={openActionMenu}>
+                           <div className="icon-border" />
+                           <button className="icon-button">
+                              <CgMore />
+                           </button>
+                        </div>
+                     </header>
+                     <div
+                        className="content"
                         onClick={(e) => {
                            if (e.target.tagName !== 'A') {
                               history.push(
@@ -210,152 +190,39 @@ const Tweet = ({
                            }
                         }}
                      >
-                        <div className="tweet-body">
-                           {replyingTo && (
-                              <div className="replying_to" role="button">
-                                 Replying to{' '}
-                                 <span className="reply_screen_name">
-                                    <Link to="/profile">
-                                       @{replyingToUserName}
-                                    </Link>
-                                 </span>
-                              </div>
-                           )}
-
-                           <Linkify options={linkifyOptions}>
-                              {tweet.content}
-                           </Linkify>
-
-                           {/* IMAGE PREVIEW COMPONENT GOES HERE */}
-                           {tweet.image && <ImageDisplay image={tweet.image} />}
-                        </div>
-                     </span>
-
-                     {/* Toolbar area - like, retweet, comment buttons */}
-                     {displayActions && (
-                        <div className="tweet__bottom-actionArea flex flex-row justify-between">
-                           <div className="tweetAction-item" role="button">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper comment_wrapper"
-                                    onClick={() => {
-                                       setTweetInModal(tweet);
-                                       openModal();
-                                    }}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay comment_display" />
-                                       <BsChat />
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.replies.length > 0 && (
-                                                <span>
-                                                   {' '}
-                                                   {tweet.replies.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
+                        {replyingTo && (
+                           <div className="replying_to" role="button">
+                              Replying to{' '}
+                              <span className="reply_screen_name">
+                                 <Link to="/profile">
+                                    @{replyingToUserName}
+                                 </Link>
+                              </span>
                            </div>
-                           <div
-                              className="tweetAction-item ml-15"
-                              role="button"
-                           >
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper retweet_wrapper"
-                                    onClick={() => {
-                                       retweet(tweet._id);
-                                       setRetweeted(!retweeted);
-                                    }}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div
-                                          className="iconBackgroundDisplay retweet_display"
-                                          role="button"
-                                       />
-                                       <AiOutlineRetweet
-                                          className={
-                                             retweeted ? 'retweet__active' : ''
-                                          }
-                                       />
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.retweetUsers.length > 0 && (
-                                                <span>
-                                                   {' '}
-                                                   {tweet.retweetUsers.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tweetAction-item" role="button">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper favorites_wrapper"
-                                    onClick={handleLikeOrUnlike}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div
-                                          className="iconBackgroundDisplay favorites_display"
-                                          role="button"
-                                       />
-                                       {tweetLiked ? (
-                                          <BsHeartFill
-                                             style={{
-                                                color: 'rgb(224, 36, 94)',
-                                             }}
-                                          />
-                                       ) : (
-                                          <BsHeart />
-                                       )}
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.favorites.length > 0 && (
-                                                <span>
-                                                   {tweet.favorites.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tweetAction-item" role="button">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper comment_wrapper"
-                                    onClick={openToolbarMenu}
-                                 >
-                                    <div
-                                       className="d-inline-flex buttonDisplay"
-                                       role="button"
-                                    >
-                                       <div className="iconBackgroundDisplay comment_display" />
-                                       <BsUpload />
-                                    </div>
-                                    <div className="metrics"></div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     )}
+                        )}
+                        <Linkify options={linkifyOptions}>
+                           {tweet.content}
+                        </Linkify>
+                        {tweet.image && <ImageDisplay image={tweet.image} />}
+                     </div>
+                     <div className="toolbar">
+                        <Toolbar
+                           isLiked={tweetLiked}
+                           isRetweeted={retweeted}
+                           onCommentClick={onCommentClick}
+                           onFavoriteClick={handleLikeOrUnlike}
+                           onRetweetClick={onRetweetClick}
+                           onToolbarMenuClick={openToolbarMenu}
+                           favorites={tweet.favorites}
+                           replies={tweet.replies}
+                           retweets={tweet.retweetUsers}
+                        />
+                     </div>
                   </div>
                </article>
             </div>
          )}
-      </div>
+      </React.Fragment>
    );
 };
 

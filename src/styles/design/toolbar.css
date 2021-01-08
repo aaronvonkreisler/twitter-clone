@@ -1,0 +1,62 @@
+.toolbar-wrapper {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   width: 100%;
+   padding-bottom: 5px;
+}
+
+.toolbar-item .text {
+   padding: 0px 10px;
+   color: var(--text-gray);
+   font-size: 14px;
+}
+
+.toolbar-item .icon-button {
+   height: 40px;
+   width: 40px;
+   border-radius: 50%;
+   transition: background-color 0.2s ease-in;
+}
+
+.toolbar-item .icon-button svg {
+   color: var(--text-gray);
+   vertical-align: text-bottom;
+   height: 1.25em;
+   width: 1.25em;
+   fill: currentColor;
+}
+
+.hover-blue:hover .icon-button {
+   background-color: rgba(29, 161, 242, 0.1);
+}
+.hover-blue:hover .icon-button svg,
+.hover-blue:hover .text {
+   color: var(--twitter-color);
+}
+
+.hover-green:hover .icon-button {
+   background-color: rgba(23, 191, 99, 0.1);
+}
+.hover-green:hover .icon-button svg,
+.hover-green:hover .text {
+   color: rgb(23, 191, 99);
+}
+
+.hover-red:hover .icon-button {
+   background-color: rgba(224, 36, 94, 0.1);
+}
+
+.hover-red:hover .icon-button svg,
+.hover-red:hover .text {
+   color: rgb(224, 36, 94);
+}
+
+.icon-button.heart .liked {
+   fill: rgb(224, 36, 94);
+}
+
+.icon-button.retweet .retweeted {
+   color: rgb(23, 191, 99);
+   fill: rgb(23, 191, 99);
+}
