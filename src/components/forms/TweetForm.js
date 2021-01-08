@@ -38,6 +38,8 @@ const TweetForm = ({
    handleTweetSubmit,
    bottomBorder,
    emojiPickerRef,
+   withEmojiMenuAbove,
+   withMultipleRows,
 }) => {
    const spinnerColors = {
       blue: 'rgb(29, 161, 242, 1)',
@@ -71,6 +73,7 @@ const TweetForm = ({
                            placeholder="What's happening?"
                            className="tweet-form-textarea"
                            inputRef={tweetInputRef}
+                           rows={withMultipleRows ? 5 : null}
                         />
                         {result && (
                            <MentionMenu
@@ -174,15 +177,23 @@ const TweetForm = ({
                               Tweet
                            </Button>
                         </div>
+                        {emojiMenuOpen && (
+                           <div
+                              className="emoji-wrapper"
+                              ref={emojiPickerRef}
+                              style={
+                                 withEmojiMenuAbove
+                                    ? { bottom: '101%' }
+                                    : { top: '101%' }
+                              }
+                           >
+                              <Picker
+                                 onEmojiClick={onEmojiClick}
+                                 className="aaron"
+                              />
+                           </div>
+                        )}
                      </div>
-                     {emojiMenuOpen && (
-                        <div className="emoji-wrapper" ref={emojiPickerRef}>
-                           <Picker
-                              onEmojiClick={onEmojiClick}
-                              stle={{ color: 'red' }}
-                           />
-                        </div>
-                     )}
                   </div>
                </form>
             </div>

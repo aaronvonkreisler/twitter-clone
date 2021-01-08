@@ -14,6 +14,8 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    bottomBorder,
    onTweetSubmit,
    photoUploadError,
+   withEmojiMenuAbove,
+   withMultipleRows,
 }) {
    const [disabled, setDisabled] = useState(true);
 
@@ -175,6 +177,8 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
          disabled={disabled}
          handleTweetSubmit={handleTweetSubmit}
          bottomBorder={bottomBorder}
+         withEmojiMenuAbove={withEmojiMenuAbove}
+         withMultipleRows={withMultipleRows}
       />
    );
 });

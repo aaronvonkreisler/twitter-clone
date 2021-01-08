@@ -202,6 +202,10 @@
    overflow: hidden;
 }
 
-.tweetForm .bottom-wrapper {
+/* .tweetForm .bottom-wrapper {
+   position: relative;
+} */
+
+.tweetForm .toolbar__root {
    position: relative;
 }

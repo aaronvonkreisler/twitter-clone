@@ -45,6 +45,7 @@ const ComposeModal = ({ addTweet, open, setOpen }) => {
                <TweetFormWrapper
                   onTweetSubmit={onFormSubmit}
                   bottomBorder={false}
+                  withMultipleRows
                />
             </DialogContent>
          </Dialog>

@@ -72,6 +72,7 @@ const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
                <TweetFormWrapper
                   onTweetSubmit={handleTweetReply}
                   placeholder="Tweet your reply"
+                  withEmojiMenuAbove
                />
             </DialogContent>
          </Dialog>
