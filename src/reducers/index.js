@@ -8,7 +8,7 @@ import bookmarks from './bookmarksReducer';
 import modal from './modalReducer';
 import suggestions from './suggestionsReducer';
 import timeline from './timelineReducer';
-
+import chats from './messagesReducer';
 export default combineReducers({
    alerts,
    auth,
@@ -19,4 +19,5 @@ export default combineReducers({
    timeline,
    modal,
    suggestions,
+   chats,
 });
