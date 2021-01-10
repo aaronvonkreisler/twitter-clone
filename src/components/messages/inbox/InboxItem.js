@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { Avatar } from '@material-ui/core';
@@ -7,7 +7,7 @@ import { AvatarGroup } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import '../../../styles/design/inboxItem.css';
 
-const InboxItem = ({ chat, authId, onClick }) => {
+const InboxItem = memo(function InboxItem({ chat, authId, onClick }) {
    const { _id, isGroupChat, users, updatedAt } = chat;
    const [multipleUsers, setMultipleUsers] = useState(false);
    const [otherUsers, setOtherUsers] = useState(null);
@@ -66,7 +66,7 @@ const InboxItem = ({ chat, authId, onClick }) => {
          </div>
       )
    );
-};
+});
 
 InboxItem.propTypes = {
    chat: PropTypes.object.isRequired,

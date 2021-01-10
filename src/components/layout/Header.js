@@ -12,8 +12,14 @@ const Header = ({
    IconComponent,
    onRightIconClick,
    overrideStyle,
+   overrideBackButton,
+   overrideFunc,
+   ...props
 }) => {
    let history = useHistory();
+   const onBackButtonClick = () => {
+      history.goBack();
+   };
    return (
       <React.Fragment>
          {rightIcon && (
@@ -48,7 +54,11 @@ const Header = ({
                      <div className="icon__hover-box">
                         <div
                            className="left-icon__wrapper"
-                           onClick={() => history.goBack()}
+                           onClick={
+                              overrideBackButton
+                                 ? overrideFunc
+                                 : onBackButtonClick
+                           }
                         >
                            <HiArrowLeft />
                         </div>

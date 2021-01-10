@@ -1,20 +1,29 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
 import { HiArrowLeft } from 'react-icons/hi';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { clearSelectedChat } from '../../../actions/chats';
 import '../../../styles/design/chatHeader.css';
 
-const ChatHeader = ({ users, backIcon }) => {
+const ChatHeader = ({
+   participants,
+   withBackIcon,
+   clearSelectedChat,
+   onInfoButtonClick,
+}) => {
    const [singleUser, setSingleUser] = useState(null);
+   let history = useHistory();
 
    useEffect(() => {
-      if (users.length === 1) {
-         setSingleUser(users[0]);
+      if (participants.length === 1) {
+         setSingleUser(participants[0]);
       } else {
          setSingleUser(null);
       }
-   }, [users]);
+   }, [participants]);
 
    const renderMultipleNames = (arrayOfUsers) => {
       const names = arrayOfUsers.map((user, index, arr) => {
@@ -27,11 +36,15 @@ const ChatHeader = ({ users, backIcon }) => {
 
       return names;
    };
+   const handleBackButtonClick = () => {
+      clearSelectedChat();
+      history.push('/messages');
+   };
    return (
       <div className="chat-header">
-         {backIcon && (
+         {withBackIcon && (
             <div className="left-icon">
-               <button className="icon-button">
+               <button className="icon-button" onClick={handleBackButtonClick}>
                   <HiArrowLeft />
                </button>
             </div>
@@ -59,13 +72,13 @@ const ChatHeader = ({ users, backIcon }) => {
                <Fragment>
                   <div className="avatar" />
                   <div className="group-names">
-                     <h2>{renderMultipleNames(users)}</h2>
+                     <h2>{renderMultipleNames(participants)}</h2>
                   </div>
                </Fragment>
             )}
          </div>
          <div className="right-icon">
-            <button className="icon-button">
+            <button className="icon-button" onClick={onInfoButtonClick}>
                <AiOutlineInfoCircle />
             </button>
          </div>
@@ -74,7 +87,8 @@ const ChatHeader = ({ users, backIcon }) => {
 };
 
 ChatHeader.propTypes = {
-   backIcon: PropTypes.bool.isRequired,
+   backIcon: PropTypes.bool,
+   clearSelectedChat: PropTypes.func.isRequired,
 };
 
-export default ChatHeader;
+export default connect(null, { clearSelectedChat })(ChatHeader);

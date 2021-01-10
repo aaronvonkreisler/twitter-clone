@@ -12,10 +12,9 @@ import Messages from '../pages/Messages';
 import AlertDisplay from '../components/layout/AlertDisplay';
 
 import Main from '../components/layout/Main';
-
 import ProfileFollowing from '../components/profile/ProfileFollowing';
-
 import ReplyModal from '../components/forms/ReplyModal';
+import MessageDisplay from '../components/messages/display/MessageDisplay';
 
 const Routes = (props) => {
    return (

@@ -5,6 +5,7 @@ import {
    CREATE_NEW_CHAT,
    CHAT_ERROR,
    SELECT_CHAT,
+   CLEAR_SELECTED_CHAT,
 } from './types';
 import { setAlert } from './alerts';
 import { fetchChats, createNewChat } from '../services/chats';
@@ -33,7 +34,7 @@ export const startNewChat = (userIds, history) => async (dispatch) => {
          type: CREATE_NEW_CHAT,
          payload: response,
       });
-      history.push('/home');
+      history.push(`/messages/${response._id}`);
    } catch (err) {
       dispatch({
          type: CHAT_ERROR,
@@ -46,4 +47,8 @@ export const startNewChat = (userIds, history) => async (dispatch) => {
 export const selectChat = (chat) => ({
    type: SELECT_CHAT,
    payload: chat,
+});
+
+export const clearSelectedChat = () => ({
+   type: CLEAR_SELECTED_CHAT,
 });

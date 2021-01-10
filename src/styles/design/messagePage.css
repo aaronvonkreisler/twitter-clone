@@ -19,20 +19,13 @@ $break5open:"(min-width:1282px)"; */
    display: flex;
    flex-direction: column;
    overflow-y: auto;
-
-   /* flex: 0.4; */
-   /* border-right: 1px solid var(--border-color); */
-   overflow: hidden;
 }
 
 .message-page .message-view {
    display: flex;
    flex-direction: column;
 
-   /* width: 100%; */
-   /* flex: 0.6; */
-
-   overflow: hidden;
+   overflow-y: auto;
 }
 
 .message-page .message-view .no-selection-view {
@@ -43,10 +36,14 @@ $break5open:"(min-width:1282px)"; */
    justify-content: center;
 }
 
+.message-page .message-room {
+   width: 100%;
+}
+
 @media (max-width: 499px), (min-width: 500px) and (max-width: 1004px) {
-   .message-page .message-view {
+   /* .message-page .message-view {
       display: none;
-   }
+   } */
    .message-page .message-inbox {
       width: 100%;
    }

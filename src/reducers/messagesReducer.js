@@ -5,6 +5,7 @@ import {
    CREATE_NEW_CHAT,
    CHAT_ERROR,
    SELECT_CHAT,
+   CLEAR_SELECTED_CHAT,
 } from '../actions/types';
 
 const initialState = {
@@ -43,8 +44,13 @@ export default function (state = initialState, action) {
       case CHAT_ERROR:
          return {
             ...state,
-            selectedChat: {},
+            selectedChat: null,
             error: payload,
+         };
+      case CLEAR_SELECTED_CHAT:
+         return {
+            ...state,
+            selectedChat: null,
          };
       default:
          return state;
