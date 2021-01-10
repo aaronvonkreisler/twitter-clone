@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+
 import { clearSelectedChat } from '../../../actions/chats';
 import PropTypes from 'prop-types';
 import NoSelection from './NoSelection';
@@ -14,11 +14,6 @@ const MessageDisplay = ({
    withBackIcon,
    clearSelectedChat,
 }) => {
-   useEffect(() => {
-      if (selectedChat === null) {
-         return <Redirect to="/messages" />;
-      }
-   }, [selectedChat]);
    return (
       <Fragment>
          {user !== null && (

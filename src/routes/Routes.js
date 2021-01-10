@@ -50,8 +50,8 @@ const Routes = (props) => {
                />
                <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
                <PrivateRoute exact path="/connect" component={Connect} />
-               <PrivateRoute exact path="/messages" component={Messages} />
                <PrivateRoute path="/messages/:id" component={Messages} />
+               <PrivateRoute exact path="/messages" component={Messages} />
             </Main>
          </Switch>
       </React.Fragment>

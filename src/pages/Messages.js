@@ -1,5 +1,4 @@
 import React, { useEffect, Fragment, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUsersChats, startNewChat } from '../actions/chats';
@@ -9,13 +8,7 @@ import MessageDisplay from '../components/messages/display/MessageDisplay';
 import NewMessageModal from '../components/messages/NewMessageModal';
 import '../styles/design/messagePage.css';
 
-const Messages = ({
-   getUsersChats,
-   startNewChat,
-
-   chats,
-   auth: { user },
-}) => {
+const Messages = ({ getUsersChats, startNewChat, chats, auth: { user } }) => {
    const [modalOpen, setModalOpen] = useState(false);
    const fullScreen = useMediaQuery('(min-width:1005px)');
 
