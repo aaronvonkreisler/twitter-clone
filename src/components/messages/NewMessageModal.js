@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Dialog, LinearProgress } from '@material-ui/core';
 import { FiSearch } from 'react-icons/fi';
@@ -10,11 +11,11 @@ import SmallUserPreview from '../layout/SmallUserPreview';
 import UserPill from './UserPill';
 import '../../styles/design/newMessageModal.css';
 
-const NewMessageModal = ({ open, setOpen }) => {
+const NewMessageModal = ({ open, setOpen, startNewChat }) => {
    const [searchQuery, setSearchQuery] = useState('');
    const [selectedUsers, setSelectedUsers] = useState([]);
    const [buttonDisabled, setButtonDisabled] = useState(true);
-
+   let history = useHistory();
    const fullScreen = useMediaQuery('(max-width: 500px)');
 
    const {
@@ -37,8 +38,6 @@ const NewMessageModal = ({ open, setOpen }) => {
       } else {
          setButtonDisabled(true);
       }
-
-      console.log(selectedUsers.length);
    }, [selectedUsers]);
 
    const handleRemoveUser = (user) => {
@@ -61,6 +60,12 @@ const NewMessageModal = ({ open, setOpen }) => {
       setResult([]);
    };
 
+   const handleSubmit = () => {
+      const userIds = selectedUsers.map((user) => user._id);
+      startNewChat({ users: userIds }, history);
+      setOpen(false);
+   };
+
    return (
       <Dialog
          open={open}
@@ -78,7 +83,7 @@ const NewMessageModal = ({ open, setOpen }) => {
             <div className="header-right">
                <span className="title">New Message </span>
                <button
-                  onClick={() => alert('Next')}
+                  onClick={handleSubmit}
                   className="next-button"
                   disabled={buttonDisabled}
                >
@@ -133,6 +138,8 @@ const NewMessageModal = ({ open, setOpen }) => {
    );
 };
 
-NewMessageModal.propTypes = {};
+NewMessageModal.propTypes = {
+   startNewChat: PropTypes.func.isRequired,
+};
 
 export default NewMessageModal;

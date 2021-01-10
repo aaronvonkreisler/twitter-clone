@@ -11,7 +11,9 @@ import '../../styles/design/main.css';
 const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
    const [modalOpen, setModalOpen] = useState(false);
    let location = useLocation();
-   const isMessagesPageRendered = location.pathname === '/messages';
+   const isMessagesPageRendered =
+      location.pathname === '/messages' ||
+      location.pathname.split('/')[1] === 'messages';
    const gridClassName = isMessagesPageRendered
       ? 'main-messages-grid'
       : 'main-grid';

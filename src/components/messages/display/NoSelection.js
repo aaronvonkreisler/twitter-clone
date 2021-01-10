@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/design/noSelection.css';
+import '../../../styles/design/noSelection.css';
 
 const NoSelection = ({ setModalOpen }) => {
    return (

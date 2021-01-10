@@ -57,6 +57,13 @@
    text-overflow: ellipsis;
 }
 
+.details__top .names .displayName .verified-badge {
+   margin-left: 3px;
+}
+.details__top .names .displayName .verified-badge svg {
+   vertical-align: text-bottom;
+}
+
 .details__top .names .screenName {
    display: flex;
    flex-direction: row;
