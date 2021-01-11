@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTweet, getTweetsReplies, clearTweetState } from '../actions/tweets';
+import {
+   getTweet,
+   getTweetsReplies,
+   clearTweetState,
+   getTweetsLikedUsers,
+   clearLikes,
+} from '../actions/tweets';
 import { setTweetInModal, openModal } from '../actions/modal';
 import Spinner from '../components/layout/Spinner';
 import Header from '../components/layout/Header';
@@ -15,6 +21,7 @@ const Status = ({
    auth: { user },
    getTweet,
    getTweetsReplies,
+   getTweetsLikedUsers,
    clearTweetState,
    setTweetInModal,
    openModal,
@@ -41,6 +48,10 @@ const Status = ({
       setTweetInModal(tweet);
       openModal();
    };
+
+   const handleGetLikes = (tweetId) => {
+      getTweetsLikedUsers(tweetId);
+   };
    return (
       <React.Fragment>
          <Header text="Tweet" leftIcon />
@@ -56,6 +67,7 @@ const Status = ({
                         onCommentClick={handleCommentClick}
                         authId={user._id}
                         hasReplies={replies.length > 0}
+                        handleGetLikes={handleGetLikes}
                      />
 
                      {fetchingReplies ? (
@@ -101,4 +113,6 @@ export default connect(mapStateToProps, {
    clearTweetState,
    setTweetInModal,
    openModal,
+   clearLikes,
+   getTweetsLikedUsers,
 })(Status);

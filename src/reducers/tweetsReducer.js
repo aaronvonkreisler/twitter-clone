@@ -8,12 +8,17 @@ import {
    REPLY_TO_TWEET_FROM_STATUS,
    RETWEET_SUCCESS,
    LOG_OUT,
+   FETCH_LIKES_SUCCESS,
+   FETCH_LIKES_START,
+   CLEAR_LIKES,
 } from '../actions/types';
 
 const initialState = {
    tweet: null,
    replies: [],
    fetchingReplies: true,
+   likes: [],
+   fetchingLikes: false,
    loading: true,
    tweetReady: false,
    error: {},
@@ -89,6 +94,23 @@ export default function (state = initialState, action) {
             fetchingReplies: true,
             loading: true,
             tweet: null,
+         };
+      case FETCH_LIKES_START:
+         return {
+            ...state,
+            fetchingLikes: true,
+         };
+      case FETCH_LIKES_SUCCESS:
+         return {
+            ...state,
+            fetchingLikes: false,
+            likes: payload,
+         };
+      case CLEAR_LIKES:
+         return {
+            ...state,
+            fetchingLikes: false,
+            likes: [],
          };
       case LOG_OUT:
          return {

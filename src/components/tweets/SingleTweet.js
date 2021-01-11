@@ -45,6 +45,7 @@ const SingleTweet = ({
    pinTweetToProfile,
    replies,
    hasReplies,
+   handleGetLikes,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
@@ -170,7 +171,10 @@ const SingleTweet = ({
                         </div>
                      )}
                      {tweet.favorites.length > 0 && (
-                        <div className="number-item">
+                        <div
+                           className="number-item"
+                           onClick={() => handleGetLikes(tweet._id)}
+                        >
                            <span className="number">
                               {tweet.favorites.length}
                            </span>

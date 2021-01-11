@@ -1,11 +1,5 @@
 import api from '../utils/api';
 
-/**
- * @function submitTweet
- * @param {content} content - The content and (optional) image to send to db
- * @returns {array} The tweet
- */
-
 export const submitTweet = async (tweet) => {
    try {
       const res = await api.post('/api/tweets', tweet);
@@ -84,6 +78,15 @@ export const submitReply = async (id, reply) => {
 export const pinTweet = async (id) => {
    try {
       const res = await api.put(`/api/tweets/pin-tweet/${id}`);
+      return res.data;
+   } catch (err) {
+      throw new Error(err.response.data);
+   }
+};
+
+export const getLikedUsers = async (id) => {
+   try {
+      const res = await api.get(`/api/tweets/${id}/likes`);
       return res.data;
    } catch (err) {
       throw new Error(err.response.data);

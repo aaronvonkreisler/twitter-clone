@@ -10,6 +10,7 @@ import {
    unfavorite,
    submitReply,
    pinTweet,
+   getLikedUsers,
 } from '../services/tweets';
 import {
    GET_TWEET,
@@ -22,10 +23,12 @@ import {
    REPLY_TO_TWEET_FROM_STATUS,
    CLEAR_TWEET_STATE,
    GET_TWEETS_REPLIES,
-   GET_TWEETS_LIKED_USERS,
    PHOTO_UPLOAD_ERROR,
    REMOVE_PINNED_TWEET,
    PIN_TWEET_TO_PROFILE,
+   FETCH_LIKES_START,
+   FETCH_LIKES_SUCCESS,
+   CLEAR_LIKES,
 } from './types';
 
 export const photoUploadError = () => async (dispatch) => {
@@ -214,6 +217,24 @@ export const clearTweetState = () => ({
    type: CLEAR_TWEET_STATE,
 });
 
-// export const getTweetsLikedUsers = (tweetId) => async (dispatch) => {
+export const getTweetsLikedUsers = (tweetId) => async (dispatch) => {
+   try {
+      dispatch({
+         type: FETCH_LIKES_START,
+      });
+      const response = await getLikedUsers(tweetId);
+      dispatch({
+         type: FETCH_LIKES_SUCCESS,
+         payload: response,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: err.message,
+      });
+   }
+};
 
-// }
+export const clearLikes = () => ({
+   type: CLEAR_LIKES,
+});
