@@ -1,14 +1,24 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUsersChats, startNewChat } from '../actions/chats';
+import {
+   getUsersChats,
+   startNewChat,
+   clearSelectedChat,
+} from '../actions/chats';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import Inbox from '../components/messages/inbox/Inbox';
 import MessageDisplay from '../components/messages/display/MessageDisplay';
 import NewMessageModal from '../components/messages/NewMessageModal';
 import '../styles/design/messagePage.css';
 
-const Messages = ({ getUsersChats, startNewChat, chats, auth: { user } }) => {
+const Messages = ({
+   getUsersChats,
+   startNewChat,
+   clearSelectedChat,
+   chats,
+   auth: { user },
+}) => {
    const [modalOpen, setModalOpen] = useState(false);
    const fullScreen = useMediaQuery('(min-width:1005px)');
 
@@ -16,6 +26,12 @@ const Messages = ({ getUsersChats, startNewChat, chats, auth: { user } }) => {
       document.title = 'Messages / Tweeter';
       getUsersChats();
    }, [getUsersChats]);
+
+   useEffect(() => {
+      return () => {
+         clearSelectedChat();
+      };
+   }, [clearSelectedChat]);
 
    return (
       <Fragment>
@@ -73,4 +89,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
    getUsersChats,
    startNewChat,
+   clearSelectedChat,
 })(Messages);

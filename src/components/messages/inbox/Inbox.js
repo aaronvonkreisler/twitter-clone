@@ -27,7 +27,7 @@ const Inbox = memo(function Inbox({
 
    const onInboxItemClick = (chat) => {
       selectChat(chat);
-      history.push(`/messages/${chat._id}`);
+      // history.push(`/messages/${chat._id}`);
    };
 
    const handleSearch = (e) => {
