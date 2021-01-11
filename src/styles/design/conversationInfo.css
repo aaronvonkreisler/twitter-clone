@@ -1,0 +1,25 @@
+.leave-chat {
+   width: 100%;
+}
+
+.leave-chat .border {
+   border-bottom: 1px solid var(--border-color);
+   height: 10px;
+   background-color: rgb(25, 39, 52);
+}
+
+.leave-chat .leave-button {
+   width: 100%;
+   color: var(--text-error);
+   padding: 15px;
+   transition: background-color 0.2s ease-in-out;
+   min-height: 49px;
+}
+
+.leave-button .text {
+   font-size: 15px;
+}
+
+.leave-button:hover {
+   background-color: rgba(226, 34, 94, 0.1);
+}

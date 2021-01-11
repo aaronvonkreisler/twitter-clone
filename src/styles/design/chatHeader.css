@@ -30,6 +30,7 @@
    flex-grow: 1;
    justify-content: flex-start;
    align-items: center;
+   min-width: 0;
 }
 
 .middle-area .avatar {
@@ -43,8 +44,7 @@
    flex-direction: column;
 }
 
-.middle-area .single-name .name h2,
-.middle-area .group-names {
+.middle-area .single-name .name h2 {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
@@ -53,6 +53,19 @@
    font-size: 19px;
    line-height: 1.3125;
    max-width: 100%;
+   min-width: 0;
+}
+.middle-area .group-names {
+   min-width: 0;
+   white-space: nowrap;
+}
+.middle-area .group-names h2 {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   font-weight: 800;
+   color: #fff;
+   font-size: 19px;
+   line-height: 1.3125;
 }
 .middle-area .single-name .screen-name {
    color: var(--text-gray);

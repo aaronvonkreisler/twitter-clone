@@ -43,29 +43,25 @@
    align-items: flex-start;
    flex-grow: 1;
    width: 100%;
+   min-width: 0;
 }
 
 .details .top .names-display {
    margin-right: 10px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 .details .top .name {
    font-size: 15px;
    font-weight: 800;
-
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
 }
 
 .details .top .screen-name {
    margin-left: 5px;
    color: var(--text-gray);
    font-size: 15px;
-
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
 }
 .details .top .date {
    color: var(--text-gray);

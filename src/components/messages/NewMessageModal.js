@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { Dialog, LinearProgress } from '@material-ui/core';
 import { FiSearch } from 'react-icons/fi';
@@ -15,7 +15,7 @@ const NewMessageModal = ({ open, setOpen, startNewChat }) => {
    const [searchQuery, setSearchQuery] = useState('');
    const [selectedUsers, setSelectedUsers] = useState([]);
    const [buttonDisabled, setButtonDisabled] = useState(true);
-   let history = useHistory();
+
    const fullScreen = useMediaQuery('(max-width: 500px)');
 
    const {
@@ -62,7 +62,7 @@ const NewMessageModal = ({ open, setOpen, startNewChat }) => {
 
    const handleSubmit = () => {
       const userIds = selectedUsers.map((user) => user._id);
-      startNewChat({ users: userIds }, history);
+      startNewChat({ users: userIds });
       setOpen(false);
    };
 

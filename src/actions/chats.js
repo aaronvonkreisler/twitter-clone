@@ -27,14 +27,13 @@ export const getUsersChats = () => async (dispatch) => {
    }
 };
 
-export const startNewChat = (userIds, history) => async (dispatch) => {
+export const startNewChat = (userIds) => async (dispatch) => {
    try {
       const response = await createNewChat(userIds);
       dispatch({
          type: CREATE_NEW_CHAT,
          payload: response,
       });
-      history.push(`/messages/${response._id}`);
    } catch (err) {
       dispatch({
          type: CHAT_ERROR,

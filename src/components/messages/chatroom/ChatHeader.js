@@ -70,7 +70,6 @@ const ChatHeader = ({
                </Fragment>
             ) : (
                <Fragment>
-                  <div className="avatar" />
                   <div className="group-names">
                      <h2>{renderMultipleNames(participants)}</h2>
                   </div>
