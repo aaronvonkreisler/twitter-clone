@@ -21,10 +21,10 @@ import ToolbarMenu from './ToolbarMenu';
 import ImageDisplay from './ImageDisplay';
 
 import {
-   deleteTweet,
-   favoriteTweet,
-   removeFavorite,
-   retweet,
+  deleteTweet,
+  favoriteTweet,
+  removeFavorite,
+  retweet,
 } from '../../actions/tweets';
 
 import { openModal, setTweetInModal } from '../../actions/modal';
@@ -34,230 +34,226 @@ mention(linkify);
 hashtag(linkify);
 
 const Tweet = ({
-   tweet,
-   authId,
-   favoriteTweet,
-   retweet,
-   retweetedBy,
-   removeFavorite,
-   displayNumbers,
-   displayActions,
-   replyView,
-   replyingTo,
-   replyingToUserName,
-   bottomBorder,
-   pinnedTweet,
-   openModal,
-   setTweetInModal,
+  tweet,
+  authId,
+  favoriteTweet,
+  retweet,
+  retweetedBy,
+  removeFavorite,
+  displayNumbers,
+  displayActions,
+  replyView,
+  replyingTo,
+  replyingToUserName,
+  bottomBorder,
+  pinnedTweet,
+  openModal,
+  setTweetInModal,
 }) => {
-   const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
-   const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
-   const [tweetLiked, setTweetLiked] = useState(false);
-   const [retweeted, setRetweeted] = useState(false);
+  const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
+  const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
+  const [tweetLiked, setTweetLiked] = useState(false);
+  const [retweeted, setRetweeted] = useState(false);
 
-   let history = useHistory();
+  let history = useHistory();
 
-   useEffect(() => {
-      const isLiked =
-         tweet.favorites.filter((fav) => fav.user === authId).length > 0;
-      const isRetweeted = tweet.retweetUsers.includes(authId);
+  useEffect(() => {
+    const isLiked =
+      tweet.favorites.filter((fav) => fav.user === authId).length > 0;
+    const isRetweeted = tweet.retweetUsers.includes(authId);
 
-      setTweetLiked(isLiked);
-      setRetweeted(isRetweeted);
-   }, [authId, tweet]);
+    setTweetLiked(isLiked);
+    setRetweeted(isRetweeted);
+  }, [authId, tweet]);
 
-   const openActionMenu = (e) => {
-      setTweetMenuAnchorEl(e.currentTarget);
-   };
+  const openActionMenu = (e) => {
+    setTweetMenuAnchorEl(e.currentTarget);
+  };
 
-   const onCommentClick = () => {
-      setTweetInModal(tweet);
-      openModal();
-   };
+  const onCommentClick = () => {
+    setTweetInModal(tweet);
+    openModal();
+  };
 
-   const onRetweetClick = () => {
-      retweet(tweet._id);
-      setRetweeted(!retweeted);
-   };
+  const onRetweetClick = () => {
+    retweet(tweet._id);
+    setRetweeted(!retweeted);
+  };
 
-   const openToolbarMenu = (e) => {
-      setToolbarMenuAnchorEl(e.currentTarget);
-   };
-   const handleClose = () => {
-      setTweetMenuAnchorEl(null);
-      setToolbarMenuAnchorEl(null);
-   };
+  const openToolbarMenu = (e) => {
+    setToolbarMenuAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setTweetMenuAnchorEl(null);
+    setToolbarMenuAnchorEl(null);
+  };
 
-   const handleLikeOrUnlike = () => {
-      if (tweetLiked) {
-         removeFavorite(tweet._id);
-         setTweetLiked(false);
-      } else {
-         favoriteTweet(tweet._id);
-         setTweetLiked(true);
-      }
-   };
+  const handleLikeOrUnlike = () => {
+    if (tweetLiked) {
+      removeFavorite(tweet._id);
+      setTweetLiked(false);
+    } else {
+      favoriteTweet(tweet._id);
+      setTweetLiked(true);
+    }
+  };
 
-   return (
-      <React.Fragment>
-         {displayActions && (
-            <React.Fragment>
-               <TweetMenu
-                  anchorEl={tweetMenuAnchorEl}
-                  setAnchorEl={setTweetMenuAnchorEl}
-                  onClose={handleClose}
-                  tweetOwner={tweet.user._id}
-                  currentUser={authId}
-                  tweetId={tweet._id}
-                  pinnedTweet={pinnedTweet}
-               />
-               <ToolbarMenu
-                  anchorEl={toolbarMenuAnchorEl}
-                  setAnchorEl={setToolbarMenuAnchorEl}
-                  onClose={handleClose}
-                  bookmarkedBy={tweet.bookmarkedBy}
-                  currentUser={authId}
-                  tweetId={tweet._id}
-               />
-            </React.Fragment>
-         )}
-         {tweet && (
-            <div className="tweet-wrapper">
-               {retweetedBy && (
-                  <div className="retweetedByDisplay">
-                     <div className="retweetIcon__col">
-                        <AiOutlineRetweet />
-                     </div>
-                     <div className="retweetedBy__col">
-                        <span>{retweetedBy} Retweeted</span>
-                     </div>
-                  </div>
-               )}
-               {pinnedTweet && (
-                  <div className="retweetedByDisplay">
-                     <div className="retweetIcon__col">
-                        <BiPin />
-                     </div>
-                     <div className="retweetedBy__col">
-                        <span>Pinned Tweet</span>
-                     </div>
-                  </div>
-               )}
-               <article
-                  className={bottomBorder ? 'tweet bottom-border' : 'tweet'}
-               >
-                  <div
-                     className="image"
-                     onClick={() =>
-                        history.push(
-                           `/${tweet.user.screen_name}/status/${tweet._id}`
-                        )
-                     }
-                  >
-                     <Avatar
-                        className="profile-image"
-                        src={tweet.user.avatar}
-                        alt=""
-                     />
-                     {replyView && <div className="reply-line" />}
-                  </div>
-                  <div className="body">
-                     <header className="tweet-info">
-                        <Link
-                           to={`/profile/${tweet.user.screen_name}`}
-                           className="tweet-info-user"
-                        >
-                           <span className="name">{tweet.user.name}</span>
-                           <span className="screen-name">
-                              @{tweet.user.screen_name}
-                           </span>
-
-                           <span className="verified-badge">
-                              {tweet.user.verified && <GoVerified />}
-                           </span>
-                        </Link>
-                        <div className="tweet-menu" onClick={openActionMenu}>
-                           <div className="icon-border" />
-                           <button className="icon-button">
-                              <CgMore />
-                           </button>
-                        </div>
-                     </header>
-                     <div
-                        className="content"
-                        onClick={(e) => {
-                           if (e.target.tagName !== 'A') {
-                              history.push(
-                                 `/${tweet.user.screen_name}/status/${tweet._id}`
-                              );
-                           }
-                        }}
-                     >
-                        {replyingTo && (
-                           <div className="replying_to" role="button">
-                              Replying to{' '}
-                              <span className="reply_screen_name">
-                                 <Link to="/profile">
-                                    @{replyingToUserName}
-                                 </Link>
-                              </span>
-                           </div>
-                        )}
-                        <Linkify options={linkifyOptions}>
-                           {tweet.content}
-                        </Linkify>
-                        {tweet.image && <ImageDisplay image={tweet.image} />}
-                     </div>
-                     <div className="toolbar">
-                        <Toolbar
-                           isLiked={tweetLiked}
-                           isRetweeted={retweeted}
-                           onCommentClick={onCommentClick}
-                           onFavoriteClick={handleLikeOrUnlike}
-                           onRetweetClick={onRetweetClick}
-                           onToolbarMenuClick={openToolbarMenu}
-                           favorites={tweet.favorites}
-                           replies={tweet.replies}
-                           retweets={tweet.retweetUsers}
-                           overrideStyle={{ justifyContent: 'space-between' }}
-                        />
-                     </div>
-                  </div>
-               </article>
+  return (
+    <React.Fragment>
+      {displayActions && (
+        <React.Fragment>
+          <TweetMenu
+            anchorEl={tweetMenuAnchorEl}
+            setAnchorEl={setTweetMenuAnchorEl}
+            onClose={handleClose}
+            tweetOwner={tweet.user._id}
+            currentUser={authId}
+            tweetId={tweet._id}
+            pinnedTweet={pinnedTweet}
+          />
+          <ToolbarMenu
+            anchorEl={toolbarMenuAnchorEl}
+            setAnchorEl={setToolbarMenuAnchorEl}
+            onClose={handleClose}
+            bookmarkedBy={tweet.bookmarkedBy}
+            currentUser={authId}
+            tweetId={tweet._id}
+          />
+        </React.Fragment>
+      )}
+      {tweet && (
+        <div className="tweet-wrapper">
+          {retweetedBy && (
+            <div className="retweetedByDisplay">
+              <div className="retweetIcon__col">
+                <AiOutlineRetweet />
+              </div>
+              <div className="retweetedBy__col">
+                <span>{retweetedBy} Retweeted</span>
+              </div>
             </div>
-         )}
-      </React.Fragment>
-   );
+          )}
+          {pinnedTweet && (
+            <div className="retweetedByDisplay">
+              <div className="retweetIcon__col">
+                <BiPin />
+              </div>
+              <div className="retweetedBy__col">
+                <span>Pinned Tweet</span>
+              </div>
+            </div>
+          )}
+          <article className={bottomBorder ? 'tweet bottom-border' : 'tweet'}>
+            <div
+              className="image"
+              onClick={() =>
+                history.push(`/${tweet.user.screen_name}/status/${tweet._id}`)
+              }
+            >
+              <Avatar
+                className="profile-image"
+                src={tweet.user.avatar}
+                alt=""
+              />
+              {replyView && <div className="reply-line" />}
+            </div>
+            <div className="body">
+              <header className="tweet-info">
+                <Link
+                  to={`/profile/${tweet.user.screen_name}`}
+                  className="tweet-info-user"
+                >
+                  <span className="name">{tweet.user.name}</span>
+                  <span className="screen-name">@{tweet.user.screen_name}</span>
+
+                  <span className="verified-badge">
+                    {tweet.user.verified && <GoVerified />}
+                  </span>
+                  <span className="date">
+                    <span className="bullet">·</span>
+                    <Moment fromNow ago>
+                      {tweet.created_at}
+                    </Moment>
+                  </span>
+                </Link>
+                <div className="tweet-menu" onClick={openActionMenu}>
+                  <div className="icon-border" />
+                  <button className="icon-button">
+                    <CgMore />
+                  </button>
+                </div>
+              </header>
+              <div
+                className="content"
+                onClick={(e) => {
+                  if (e.target.tagName !== 'A') {
+                    history.push(
+                      `/${tweet.user.screen_name}/status/${tweet._id}`
+                    );
+                  }
+                }}
+              >
+                {replyingTo && (
+                  <div className="replying_to" role="button">
+                    Replying to{' '}
+                    <span className="reply_screen_name">
+                      <Link to="/profile">@{replyingToUserName}</Link>
+                    </span>
+                  </div>
+                )}
+                <Linkify options={linkifyOptions}>{tweet.content}</Linkify>
+                {tweet.image && <ImageDisplay image={tweet.image} />}
+              </div>
+              <div className="toolbar">
+                <Toolbar
+                  isLiked={tweetLiked}
+                  isRetweeted={retweeted}
+                  onCommentClick={onCommentClick}
+                  onFavoriteClick={handleLikeOrUnlike}
+                  onRetweetClick={onRetweetClick}
+                  onToolbarMenuClick={openToolbarMenu}
+                  favorites={tweet.favorites}
+                  replies={tweet.replies}
+                  retweets={tweet.retweetUsers}
+                  overrideStyle={{ justifyContent: 'space-between' }}
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
+    </React.Fragment>
+  );
 };
 
 Tweet.propTypes = {
-   tweet: PropTypes.object.isRequired,
+  tweet: PropTypes.object.isRequired,
 
-   deleteTweet: PropTypes.func,
-   favoriteTweet: PropTypes.func,
-   retweet: PropTypes.func,
-   retweetedBy: PropTypes.string,
-   removeFavorite: PropTypes.func,
-   displayActions: PropTypes.bool,
-   replyView: PropTypes.bool,
-   bottomBorder: PropTypes.bool,
-   replyingTo: PropTypes.bool,
-   replyingToUserName: PropTypes.string,
-   pinnedTweet: PropTypes.bool,
+  deleteTweet: PropTypes.func,
+  favoriteTweet: PropTypes.func,
+  retweet: PropTypes.func,
+  retweetedBy: PropTypes.string,
+  removeFavorite: PropTypes.func,
+  displayActions: PropTypes.bool,
+  replyView: PropTypes.bool,
+  bottomBorder: PropTypes.bool,
+  replyingTo: PropTypes.bool,
+  replyingToUserName: PropTypes.string,
+  pinnedTweet: PropTypes.bool,
 };
 
 Tweet.defaultProps = {
-   displayActions: true,
-   replyView: false,
-   bottomBorder: true,
-   pinnedTweet: false,
+  displayActions: true,
+  replyView: false,
+  bottomBorder: true,
+  pinnedTweet: false,
 };
 
 export default connect(null, {
-   deleteTweet,
-   favoriteTweet,
-   removeFavorite,
-   retweet,
-   openModal,
-   setTweetInModal,
+  deleteTweet,
+  favoriteTweet,
+  removeFavorite,
+  retweet,
+  openModal,
+  setTweetInModal,
 })(Tweet);
