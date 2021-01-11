@@ -1,6 +1,6 @@
 :root {
    --twitter-color: rgb(29, 161, 242, 1);
-   --twitter-background: #e6ecf0;
+
    --tweet-hover: rgba(255, 255, 255, 0.03);
    --twitter-button-hover: rgb(29, 161, 242, 0.1);
    --twitter-button-darken: rgb(26, 145, 218);
@@ -8,6 +8,9 @@
    --border-color: rgb(56, 68, 78);
    --text-gray: rgb(136, 153, 166);
    --text-error: rgb(224, 36, 94);
+   --input-color: rgb(37, 51, 65);
+   --card-color: rgb(25, 39, 52);
+   --blue-hover: rgba(29, 161, 242, 0.1);
    margin: 0;
    font-family: 'Roboto', sans-serif;
 
@@ -16,7 +19,27 @@
 
    background-color: rgb(22, 32, 42);
 }
-
+/* Resets */
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+:focus {
+   outline: none;
+}
+button {
+   background-color: transparent;
+   color: inherit;
+   border-width: 0;
+   padding: 0;
+   margin: 0;
+   cursor: pointer;
+}
+ul,
+li {
+   list-style: none;
+}
 a {
    text-decoration: none;
    color: inherit;
@@ -25,11 +48,113 @@ a {
 button:hover {
    cursor: pointer;
 }
-
-.app {
-   height: 100%;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-size: 100%;
+   font: inherit;
+   vertical-align: baseline;
 }
 
+.app {
+   background-color: var(--background-dark);
+}
+
+.MuiMenu-paper {
+   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
+      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px !important;
+}
+.MuiMenu-list {
+   color: #fff !important;
+}
+.MuiMenu-paper {
+   background-color: var(--background-dark) !important;
+   min-height: 30px !important;
+   max-height: 480px !important;
+   min-width: 260px !important;
+   max-width: 360px !important;
+}
 /* .app {
    display: flex;
    height: 100vh;

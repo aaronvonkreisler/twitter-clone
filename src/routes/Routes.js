@@ -1,18 +1,26 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
-import LoginPage from '../components/pages/LoginPage';
+import LoginPage from '../pages/LoginPage';
+import UserProfile from '../pages/UserProfile';
+import Status from '../pages/Status';
+import Home from '../pages/Home';
+import Bookmarks from '../pages/Bookmarks';
+import SelectedProfile from '../pages/SelectedProfile';
+import Connect from '../pages/Connect';
+import Messages from '../pages/Messages';
 import AlertDisplay from '../components/layout/AlertDisplay';
-import Status from '../components/pages/Status';
+
 import Main from '../components/layout/Main';
-import UserProfile from '../components/profile/UserProfile';
-import SelectedProfile from '../components/profile/SelectedProfile';
 import ProfileFollowing from '../components/profile/ProfileFollowing';
-import Home from '../components/pages/Home';
+import ReplyModal from '../components/forms/ReplyModal';
+import MessageDisplay from '../components/messages/display/MessageDisplay';
+
 const Routes = (props) => {
    return (
       <React.Fragment>
          <AlertDisplay />
+         <ReplyModal />
          <Switch>
             <Route exact path="/login" component={LoginPage} />
             <Main>
@@ -40,6 +48,10 @@ const Routes = (props) => {
                   key="users-following"
                   component={ProfileFollowing}
                />
+               <PrivateRoute exact path="/bookmarks" component={Bookmarks} />
+               <PrivateRoute exact path="/connect" component={Connect} />
+
+               <PrivateRoute exact path="/messages" component={Messages} />
             </Main>
          </Switch>
       </React.Fragment>

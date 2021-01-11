@@ -1,0 +1,45 @@
+.no-selection {
+   padding: 39px 20px 39px 20px;
+}
+
+.no-selection .primary-text {
+   margin-bottom: 10px;
+   font-weight: 700;
+   font-size: 19px;
+   color: #fff;
+   overflow-wrap: break-word;
+   text-align: center;
+}
+
+.no-selection .secondary-text {
+   white-space: pre-line;
+   font-size: 15px;
+   color: var(--text-gray);
+   text-align: center;
+}
+
+.no-selection .action {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   margin-top: 20px;
+}
+
+.no-selection .action .message-button {
+   background-color: var(--twitter-color);
+   color: #fff;
+   min-height: 39px;
+   min-width: calc(62.79px);
+   padding: 0 15px;
+   border-radius: 9999px;
+   transition: background-color 0.2s ease-in;
+}
+.action .message-button .button-text {
+   font-weight: 700;
+   font-size: 15px;
+}
+
+.no-selection .action .message-button:hover {
+   background-color: var(--twitter-button-darken);
+}

@@ -1,0 +1,59 @@
+.card {
+   background-color: var(--card-color);
+   border-radius: 16px;
+   margin-bottom: 15px;
+   margin-top: 10px;
+}
+
+.transparent-card {
+   background-color: transparent;
+   border-radius: 16px;
+   margin-bottom: 15px;
+   border: 1px solid var(--border-color);
+   margin-top: 10px;
+}
+
+.card .card-header,
+.transparent-card .card-header {
+   display: flex !important;
+   padding: 10px 15px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.card .card-header .title,
+.transparent-card .card-header .title {
+   font-size: 19px;
+   font-weight: 800;
+   color: #fff;
+}
+
+.card .card-more,
+.transparent-card .card-more {
+   display: block;
+   padding: 10px 15px;
+   color: var(--twitter-color);
+   border-radius: 0 0 16px 16px;
+}
+
+.card .card-more:hover {
+   background-color: var(--tweet-hover);
+}
+
+.transparent-card .footer {
+   display: block;
+   padding: 10px 15px;
+   border-radius: 0 0 16px 16px;
+}
+
+.card .skeleton-loader {
+   height: 70px;
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .card {
+      width: 290px;
+   }
+   .transparent-card {
+      width: 290px;
+   }
+}

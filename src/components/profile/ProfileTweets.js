@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 const ProfileTweets = ({
    getProfileTweets,
    userId,
-   profiles: { tweetsLoading, tweets },
+   authId,
+   onCommentClick,
+   profiles: { tweetsLoading, tweets, pinnedTweet },
 }) => {
    useEffect(() => {
       getProfileTweets(userId);
@@ -21,9 +23,27 @@ const ProfileTweets = ({
          {tweetsLoading ? (
             <Spinner />
          ) : (
-            tweets.map((tweet) => (
-               <Tweet tweet={tweet} key={tweet._id} displayActions={false} />
-            ))
+            <React.Fragment>
+               {pinnedTweet && (
+                  <Tweet
+                     tweet={pinnedTweet}
+                     key={pinnedTweet.user._id}
+                     displayActions={true}
+                     authId={authId}
+                     pinnedTweet
+                     onCommentClick={onCommentClick}
+                  />
+               )}
+               {tweets.map((tweet) => (
+                  <Tweet
+                     tweet={tweet}
+                     key={tweet._id}
+                     displayActions={true}
+                     authId={authId}
+                     onCommentClick={onCommentClick}
+                  />
+               ))}
+            </React.Fragment>
          )}
       </React.Fragment>
    );

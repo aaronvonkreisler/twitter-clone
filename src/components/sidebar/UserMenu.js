@@ -5,8 +5,8 @@ import { Avatar, Menu, MenuItem } from '@material-ui/core';
 import { BsCheck } from 'react-icons/bs';
 import { MdMoreHoriz } from 'react-icons/md';
 import { logout } from '../../actions/auth';
-import './styles/UserMenu.css';
-import '../../styles/design/utils.css';
+
+import '../../styles/design/userMenu.css';
 
 const UserMenu = ({ auth: { user, loading }, logout }) => {
    const [anchorEl, setAnchorEl] = useState(null);
@@ -25,39 +25,40 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
    return (
       !loading &&
       user !== null && (
-         <div className="sidebar__userMenu">
+         <div className="sidebar__user-menu">
             <Menu
                anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'center',
                }}
+               transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+               }}
+               getContentAnchorEl={null}
                anchorEl={anchorEl}
                keepMounted
                open={Boolean(anchorEl)}
                onClose={handleClose}
                id="sidebar-menu"
             >
-               <MenuItem>
-                  <div className="list-item__root">
-                     <div className="flex flex-row">
-                        <div className="list-item__avatar">
-                           <div className="list-item__avatar-holder">
-                              <Avatar src={user.avatar} alt="" />
-                           </div>
+               <MenuItem disableGutters>
+                  <div className="list-item">
+                     <div className="avatar">
+                        <Avatar src={user.avatar} />
+                     </div>
+                     <div className="names">
+                        <div className="display-name">
+                           <span>{user.name}</span>
                         </div>
-                        <div className="list-item__right-side">
-                           <div className="flex flex-row justify-between align-center">
-                              <div className="flex flex-col flex-shrink w-max-100">
-                                 <div className="w-max-100 list-item__name">
-                                    <span>{user.name}</span>
-                                 </div>
-                                 <div className="w-max-100 list-item__handle">
-                                    <span>@{user.screen_name}</span>
-                                 </div>
-                              </div>
-                              <BsCheck className="list-item__icon" />
-                           </div>
+                        <div className="screen-name">
+                           <span>@{user.screen_name}</span>
                         </div>
+                     </div>
+                     <div className="menu-icon">
+                        <span className="icon">
+                           <BsCheck />
+                        </span>
                      </div>
                   </div>
                </MenuItem>
@@ -67,25 +68,22 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
                </MenuItem>
             </Menu>
 
-            <div className="user-menu__root">
-               <div className="user-menu__wrapper" onClick={handleClick}>
-                  <div className="user-menu__avatar">
-                     <Avatar src={user.avatar} />
+            <div className="user-menu" onClick={handleClick}>
+               <div className="avatar">
+                  <Avatar src={user.avatar} />
+               </div>
+               <div className="names">
+                  <div className="display-name">
+                     <span>{user.name}</span>
                   </div>
-
-                  <div className="user-menu__name">
-                     <div className="user-menu__name__container">
-                        <div className="user-menu__display-name">
-                           <span>{user.name}</span>
-                        </div>
-                        <div className="user-menu__handle-name">
-                           <span>@{user.screen_name}</span>
-                        </div>
-                     </div>
+                  <div className="screen-name">
+                     <span>@{user.screen_name}</span>
                   </div>
-                  <div className="user-menu__action">
+               </div>
+               <div className="menu-icon">
+                  <span className="icon">
                      <MdMoreHoriz />
-                  </div>
+                  </span>
                </div>
             </div>
          </div>

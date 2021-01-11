@@ -11,26 +11,28 @@ import {
 import { CgClose } from 'react-icons/cg';
 import PropTypes from 'prop-types';
 import Tweet from '../tweets/Tweet';
-import TweetForm from '../feed/TweetForm';
+import TweetFormWrapper from './TweetFormWrapper';
 import { replyToTweet } from '../../actions/tweets';
+import { closeModal } from '../../actions/modal';
 import '../../styles/design/replyModal.css';
 
-const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
+const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
    const theme = useTheme();
    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
    let history = useHistory();
-   const handleTweetReply = (content) => {
+   const handleTweetReply = (reply) => {
       const { location } = history;
-      replyToTweet(tweet._id, { content }, location);
+      replyToTweet(tweet._id, reply, location);
+
       setTimeout(() => {
-         setOpen(false);
+         closeModal();
       }, 250);
    };
    return (
       <div className="replyModal">
          <Dialog
             open={open}
-            onClose={() => setOpen(false)}
+            onClose={() => closeModal()}
             fullWidth
             fullScreen={fullScreen}
             scroll="body"
@@ -38,10 +40,7 @@ const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
             <DialogTitle disableTypography>
                <div className="flex flex-row align-center justify-start close-icon">
                   <div className="d-inline-flex">
-                     <div
-                        className="icon__border"
-                        onClick={() => setOpen(false)}
-                     >
+                     <div className="icon__border" onClick={() => closeModal()}>
                         <CgClose />
                      </div>
                   </div>
@@ -60,7 +59,7 @@ const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
                      <div className="line-display"></div>
                   </div>
                   <div className="replying_to">
-                     {tweet !== null && (
+                     {tweet !== null && open && (
                         <span>
                            Replying to{' '}
                            <span className="display_name">
@@ -70,9 +69,10 @@ const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
                      )}
                   </div>
                </div>
-               <TweetForm
-                  onFormSubmit={handleTweetReply}
+               <TweetFormWrapper
+                  onTweetSubmit={handleTweetReply}
                   placeholder="Tweet your reply"
+                  withEmojiMenuAbove
                />
             </DialogContent>
          </Dialog>
@@ -83,6 +83,14 @@ const ReplyModal = ({ tweet, open, setOpen, replyToTweet }) => {
 ReplyModal.propTypes = {
    tweet: PropTypes.object,
    replyToTweet: PropTypes.func.isRequired,
+   open: PropTypes.bool,
 };
 
-export default connect(null, { replyToTweet })(ReplyModal);
+const mapStateToProps = (state) => ({
+   modal: state.modal,
+});
+
+export default connect(mapStateToProps, {
+   replyToTweet,
+   closeModal,
+})(ReplyModal);

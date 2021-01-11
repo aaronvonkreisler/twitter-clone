@@ -1,7 +1,18 @@
 import api from '../utils/api';
 import { setAlert } from './alerts';
 import {
-   GET_TIMELINE_TWEETS,
+   submitTweet,
+   fetchReplies,
+   fetchTweet,
+   submitRetweet,
+   removeTweet,
+   favorite,
+   unfavorite,
+   submitReply,
+   pinTweet,
+   getLikedUsers,
+} from '../services/tweets';
+import {
    GET_TWEET,
    ADD_TWEET,
    RETWEET_SUCCESS,
@@ -10,76 +21,89 @@ import {
    UPDATE_FAVORITES,
    REPLY_TO_TWEET_FROM_HOME,
    REPLY_TO_TWEET_FROM_STATUS,
+   CLEAR_TWEET_STATE,
+   GET_TWEETS_REPLIES,
+   PHOTO_UPLOAD_ERROR,
+   REMOVE_PINNED_TWEET,
+   PIN_TWEET_TO_PROFILE,
+   FETCH_LIKES_START,
+   FETCH_LIKES_SUCCESS,
+   CLEAR_LIKES,
 } from './types';
 
-export const getTimelineTweets = () => async (dispatch) => {
-   try {
-      const res = await api.get('/api/tweets');
+export const photoUploadError = () => async (dispatch) => {
+   dispatch({ type: PHOTO_UPLOAD_ERROR });
+   dispatch(setAlert('This file type is not supported', 'info'));
+};
 
+export const getTweetsReplies = (id) => async (dispatch) => {
+   try {
+      const response = await fetchReplies(id);
       dispatch({
-         type: GET_TIMELINE_TWEETS,
-         payload: res.data,
+         type: GET_TWEETS_REPLIES,
+         payload: response,
       });
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
-      setAlert('There was an error getting your timeline tweets', 'info');
    }
 };
 
 export const getTweet = (id) => async (dispatch) => {
    try {
-      const res = await api.get(`/api/tweets/${id}`);
+      const response = await fetchTweet(id);
       dispatch({
          type: GET_TWEET,
-         payload: res.data,
+         payload: response,
       });
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
-export const addTweet = (content) => async (dispatch) => {
+export const addTweet = (tweet) => async (dispatch) => {
    try {
-      const res = await api.post('/api/tweets', content);
+      const response = await submitTweet(tweet);
 
       dispatch({
          type: ADD_TWEET,
-         payload: res.data,
+         payload: response,
       });
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
+// TODO -- dispatching getTimeLineTweets is expensive. Rather than doing this,
+// the API response needs to send the actual retweet that has the "retweetData" key,
+// so that we can push the response to the tweets state rather than re rendering everything.
 export const retweet = (id) => async (dispatch) => {
    try {
-      const res = await api.post(`/api/tweets/${id}/retweet`);
+      const response = await submitRetweet(id);
 
       dispatch({
          type: RETWEET_SUCCESS,
-         payload: res.data.retweetUsers,
+         payload: { id, users: response.retweetUsers },
       });
-      dispatch(getTimelineTweets());
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
 export const deleteTweet = (id) => async (dispatch) => {
    try {
-      await api.delete(`/api/tweets/${id}`);
+      await removeTweet(id);
 
       dispatch({
          type: DELETE_TWEET,
@@ -89,61 +113,61 @@ export const deleteTweet = (id) => async (dispatch) => {
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
 export const favoriteTweet = (id) => async (dispatch) => {
    try {
-      const res = await api.put(`/api/tweets/like/${id}`);
+      const response = await favorite(id);
       dispatch({
          type: UPDATE_FAVORITES,
-         payload: { id, favorites: res.data },
+         payload: { id, favorites: response },
       });
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
 export const removeFavorite = (id) => async (dispatch) => {
    try {
-      let res = await api.put(`/api/tweets/unlike/${id}`);
+      const response = await unfavorite(id);
 
       dispatch({
          type: UPDATE_FAVORITES,
-         payload: { id, favorites: res.data },
+         payload: { id, favorites: response },
       });
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
    }
 };
 
-export const replyToTweet = (id, content, location) => async (dispatch) => {
+export const replyToTweet = (id, reply, location) => async (dispatch) => {
    try {
-      let res = await api.post(`/api/tweets/comment/${id}`, content);
+      const response = await submitReply(id, reply);
       if (location.pathname === '/home') {
          dispatch({
             type: REPLY_TO_TWEET_FROM_HOME,
-            payload: { id, replies: res.data },
+            payload: { id, replies: response },
          });
          dispatch(setAlert('Reply sent', 'info'));
       } else {
          dispatch({
             type: REPLY_TO_TWEET_FROM_STATUS,
-            payload: res.data,
+            payload: response,
          });
       }
    } catch (err) {
       dispatch({
          type: TWEETS_ERROR,
-         payload: { msg: err.response.statusText, status: err.response.status },
+         payload: err.message,
       });
 
       dispatch(
@@ -155,3 +179,62 @@ export const replyToTweet = (id, content, location) => async (dispatch) => {
 export const reportTweet = () => async (dispatch) => {
    dispatch(setAlert('Tweet successfully reported', 'info'));
 };
+
+export const pinTweetToProfile = (tweetId) => async (dispatch) => {
+   try {
+      const response = await pinTweet(tweetId);
+      dispatch({
+         type: PIN_TWEET_TO_PROFILE,
+         payload: response,
+      });
+      dispatch(setAlert('Tweet pinned to your profile', 'info'));
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: { msg: err.response.statusText, status: err.response.status },
+      });
+
+      dispatch(setAlert('There was an error pinning your tweet.', 'info'));
+   }
+};
+
+export const removePinnedTweetFromProfile = () => async (dispatch) => {
+   try {
+      await api.put('/api/tweets/remove-pin');
+
+      dispatch({
+         type: REMOVE_PINNED_TWEET,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: err.message,
+      });
+   }
+};
+
+export const clearTweetState = () => ({
+   type: CLEAR_TWEET_STATE,
+});
+
+export const getTweetsLikedUsers = (tweetId) => async (dispatch) => {
+   try {
+      dispatch({
+         type: FETCH_LIKES_START,
+      });
+      const response = await getLikedUsers(tweetId);
+      dispatch({
+         type: FETCH_LIKES_SUCCESS,
+         payload: response,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: err.message,
+      });
+   }
+};
+
+export const clearLikes = () => ({
+   type: CLEAR_LIKES,
+});

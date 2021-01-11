@@ -1,180 +1,128 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { convertFromRaw, EditorState, CompositeDecorator } from 'draft-js';
-import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
-import createLinkifyPlugin from 'draft-js-linkify-plugin';
-import createHashtagPlugin from 'draft-js-hashtag-plugin';
-import omit from 'lodash/omit';
 import Moment from 'react-moment';
-import {
-   Avatar,
-   Menu,
-   MenuItem,
-   ListItemIcon,
-   ListItemText,
-} from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import { GoVerified } from 'react-icons/go';
-import { BsChat } from 'react-icons/bs';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
-import { AiOutlineRetweet } from 'react-icons/ai';
-import { BsUpload } from 'react-icons/bs';
 import { CgMore } from 'react-icons/cg';
-import { HiOutlineTrash } from 'react-icons/hi';
+import { AiOutlineRetweet } from 'react-icons/ai';
 import { BiPin } from 'react-icons/bi';
-import ViewOnlyEditor from '../layout/ViewOnlyEditor';
+
+import Linkify from 'linkifyjs/react';
+import * as linkify from 'linkifyjs';
+import mention from 'linkifyjs/plugins/mention';
+import hashtag from 'linkifyjs/plugins/hashtag';
+import { linkifyOptions } from '../../utils/linkifyOptions';
+
+import Toolbar from './Toolbar';
+import TweetMenu from './TweetMenu';
+import ToolbarMenu from './ToolbarMenu';
+import ImageDisplay from './ImageDisplay';
+
 import {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
    retweet,
-   reportTweet,
 } from '../../actions/tweets';
+
+import { openModal, setTweetInModal } from '../../actions/modal';
 import '../../styles/design/tweet.css';
 
-//--------------- Draft.js Editor config ---------------------------------
-const linkifyPlugin = createLinkifyPlugin({
-   target: '_blank',
-   // eslint-disable-next-line jsx-a11y/anchor-has-content
-   component: (params) => <a {...omit(params, ['blockKey'])} />,
-});
-const hashtagPlugin = createHashtagPlugin();
-const viewOnlyPlugins = [linkifyPlugin, hashtagPlugin];
-
-const getPluginDecoratorArray = () => {
-   let decorators = [];
-   let plugin;
-   // check each plugin that will be used in the editor for decorators
-   // (retrieve listOfPlugins however makes sense in your code)
-   for (plugin of viewOnlyPlugins) {
-      if (plugin.decorators !== null && plugin.decorators !== undefined) {
-         // if the plugin has any decorators, add them to a list of all decorators from all plugins
-         decorators = decorators.concat(plugin.decorators);
-      }
-   }
-   return decorators;
-};
-
-const grabAllPluginDecorators = () => {
-   return new MultiDecorator([
-      new CompositeDecorator(getPluginDecoratorArray()),
-   ]);
-};
-
-const convertToEditorState = (editorContent) => {
-   let decorator = grabAllPluginDecorators();
-   const content = convertFromRaw(JSON.parse(editorContent));
-   const newEditorState = EditorState.createWithContent(content, decorator);
-   return newEditorState;
-};
-
-//--------------- End Draft.js Editor config ---------------------------------
+mention(linkify);
+hashtag(linkify);
 
 const Tweet = ({
    tweet,
-   auth,
-   deleteTweet,
+   authId,
    favoriteTweet,
    retweet,
    retweetedBy,
    removeFavorite,
    displayNumbers,
    displayActions,
-   onCommentClick,
    replyView,
    replyingTo,
    replyingToUserName,
    bottomBorder,
-   reportTweet,
+   pinnedTweet,
+   openModal,
+   setTweetInModal,
 }) => {
-   const [anchorEl, setAnchorEl] = useState(null);
+   const [tweetMenuAnchorEl, setTweetMenuAnchorEl] = useState(null);
+   const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
+   const [tweetLiked, setTweetLiked] = useState(false);
+   const [retweeted, setRetweeted] = useState(false);
 
-   const retweetActiveClass = tweet.retweetUsers.includes(auth.user._id)
-      ? 'retweet__active'
-      : '';
+   let history = useHistory();
 
-   const open = Boolean(anchorEl);
+   useEffect(() => {
+      const isLiked =
+         tweet.favorites.filter((fav) => fav.user === authId).length > 0;
+      const isRetweeted = tweet.retweetUsers.includes(authId);
+
+      setTweetLiked(isLiked);
+      setRetweeted(isRetweeted);
+   }, [authId, tweet]);
 
    const openActionMenu = (e) => {
-      setAnchorEl(e.currentTarget);
+      setTweetMenuAnchorEl(e.currentTarget);
+   };
+
+   const onCommentClick = () => {
+      setTweetInModal(tweet);
+      openModal();
+   };
+
+   const onRetweetClick = () => {
+      retweet(tweet._id);
+      setRetweeted(!retweeted);
+   };
+
+   const openToolbarMenu = (e) => {
+      setToolbarMenuAnchorEl(e.currentTarget);
    };
    const handleClose = () => {
-      setAnchorEl(null);
+      setTweetMenuAnchorEl(null);
+      setToolbarMenuAnchorEl(null);
    };
 
    const handleLikeOrUnlike = () => {
-      if (
-         tweet.favorites.filter((fav) => fav.user === auth.user._id).length > 0
-      ) {
+      if (tweetLiked) {
          removeFavorite(tweet._id);
+         setTweetLiked(false);
       } else {
          favoriteTweet(tweet._id);
+         setTweetLiked(true);
       }
    };
 
-   const renderFavoriteButton = () => {
-      if (auth.isAuthenticated) {
-         if (
-            tweet.favorites.filter((fav) => fav.user === auth.user._id).length >
-            0
-         ) {
-            return <BsHeartFill style={{ color: 'rgb(224, 36, 94)' }} />;
-         }
-      }
-      return <BsHeart />;
-   };
-
-   const renderMenuItems = () => {
-      if (auth.isAuthenticated && tweet.user !== undefined) {
-         return (
-            <div>
-               {!auth.loading && tweet.user._id === auth.user._id ? (
-                  <React.Fragment>
-                     <MenuItem
-                        className="delete_tweet"
-                        onClick={() => deleteTweet(tweet._id)}
-                     >
-                        <ListItemIcon>
-                           <HiOutlineTrash />
-                        </ListItemIcon>
-                        <ListItemText primary="Delete" />
-                     </MenuItem>
-                     <MenuItem className="pin-to-profile">
-                        <ListItemIcon>
-                           <BiPin />
-                        </ListItemIcon>
-                        <ListItemText primary="Pin to your profile" />
-                     </MenuItem>
-                  </React.Fragment>
-               ) : (
-                  <MenuItem onClick={() => reportTweet()}>
-                     Report Tweet
-                  </MenuItem>
-               )}
-            </div>
-         );
-      }
-      <MenuItem>Loading...</MenuItem>;
-   };
    return (
-      <div className={bottomBorder ? 'tweet__root border' : 'tweet__root'}>
+      <React.Fragment>
          {displayActions && (
-            <Menu
-               anchorEl={anchorEl}
-               open={open}
-               onClose={handleClose}
-               getContentAnchorEl={null}
-               anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-               }}
-            >
-               {renderMenuItems()}
-            </Menu>
+            <React.Fragment>
+               <TweetMenu
+                  anchorEl={tweetMenuAnchorEl}
+                  setAnchorEl={setTweetMenuAnchorEl}
+                  onClose={handleClose}
+                  tweetOwner={tweet.user._id}
+                  currentUser={authId}
+                  tweetId={tweet._id}
+                  pinnedTweet={pinnedTweet}
+               />
+               <ToolbarMenu
+                  anchorEl={toolbarMenuAnchorEl}
+                  setAnchorEl={setToolbarMenuAnchorEl}
+                  onClose={handleClose}
+                  bookmarkedBy={tweet.bookmarkedBy}
+                  currentUser={authId}
+                  tweetId={tweet._id}
+               />
+            </React.Fragment>
          )}
          {tweet && (
-            <div className="flex flex-col">
+            <div className="tweet-wrapper">
                {retweetedBy && (
                   <div className="retweetedByDisplay">
                      <div className="retweetIcon__col">
@@ -185,178 +133,106 @@ const Tweet = ({
                      </div>
                   </div>
                )}
-
-               <article className="tweet__wrapper flex flex-row">
-                  <div className=" tweet__avatar flex flex-col">
+               {pinnedTweet && (
+                  <div className="retweetedByDisplay">
+                     <div className="retweetIcon__col">
+                        <BiPin />
+                     </div>
+                     <div className="retweetedBy__col">
+                        <span>Pinned Tweet</span>
+                     </div>
+                  </div>
+               )}
+               <article
+                  className={bottomBorder ? 'tweet bottom-border' : 'tweet'}
+               >
+                  <div
+                     className="image"
+                     onClick={() =>
+                        history.push(
+                           `/${tweet.user.screen_name}/status/${tweet._id}`
+                        )
+                     }
+                  >
                      <Avatar
+                        className="profile-image"
                         src={tweet.user.avatar}
-                        style={{ height: '49px', width: '49px' }}
+                        alt=""
                      />
                      {replyView && <div className="reply-line" />}
                   </div>
-                  <div className="tweet__content flex flex-col justify-between">
-                     <div className="flex flex-row justify-between tweet__name">
-                        <div className="flex flex-row justify-between align-start names__display">
-                           <div className="flex flex-row justify-between">
-                              <span className="display_name">
-                                 <Link
-                                    to={`/profile/${tweet.user.screen_name}`}
-                                 >
-                                    {tweet.user.name}
-                                 </Link>
-                              </span>
-                              {tweet.user.verified && (
-                                 <span className="verified-badge">
-                                    <GoVerified />
-                                 </span>
-                              )}
-                              <span className="screen_name">
-                                 <Link
-                                    to={`/profile/${tweet.user.screen_name}`}
-                                 >
-                                    @{tweet.user.screen_name}
-                                 </Link>
-                              </span>
-                              <span className="time_stamp">
-                                 •{' '}
-                                 <Moment fromNow ago>
-                                    {tweet.created_at}
-                                 </Moment>
-                              </span>
-                           </div>
+                  <div className="body">
+                     <header className="tweet-info">
+                        <Link
+                           to={`/profile/${tweet.user.screen_name}`}
+                           className="tweet-info-user"
+                        >
+                           <span className="name">{tweet.user.name}</span>
+                           <span className="screen-name">
+                              @{tweet.user.screen_name}
+                           </span>
+
+                           <span className="verified-badge">
+                              {tweet.user.verified && <GoVerified />}
+                           </span>
+                        </Link>
+                        <div className="tweet-menu" onClick={openActionMenu}>
+                           <div className="icon-border" />
+                           <button className="icon-button">
+                              <CgMore />
+                           </button>
                         </div>
-                        {displayActions && (
-                           <div
-                              className="top-right__actionArea"
-                              onClick={openActionMenu}
-                           >
-                              <div className="flex flex-row justify-start top-right-icon">
-                                 <div className="d-inline-flex">
-                                    <div className="icon__border"></div>
-                                    <CgMore />
-                                 </div>
-                              </div>
+                     </header>
+                     <div
+                        className="content"
+                        onClick={(e) => {
+                           if (e.target.tagName !== 'A') {
+                              history.push(
+                                 `/${tweet.user.screen_name}/status/${tweet._id}`
+                              );
+                           }
+                        }}
+                     >
+                        {replyingTo && (
+                           <div className="replying_to" role="button">
+                              Replying to{' '}
+                              <span className="reply_screen_name">
+                                 <Link to="/profile">
+                                    @{replyingToUserName}
+                                 </Link>
+                              </span>
                            </div>
                         )}
+                        <Linkify options={linkifyOptions}>
+                           {tweet.content}
+                        </Linkify>
+                        {tweet.image && <ImageDisplay image={tweet.image} />}
                      </div>
-
-                     {/* Content goes here */}
-                     {replyingTo && (
-                        <div className="replying_to">
-                           Replying to{' '}
-                           <span className="reply_screen_name">
-                              <Link to="/profile">@{replyingToUserName}</Link>
-                           </span>
-                        </div>
-                     )}
-                     <Link
-                        to={`/${tweet.user.screen_name}/status/${tweet._id}`}
-                     >
-                        <ViewOnlyEditor
-                           editorState={convertToEditorState(tweet.content)}
-                           plugins={viewOnlyPlugins}
+                     <div className="toolbar">
+                        <Toolbar
+                           isLiked={tweetLiked}
+                           isRetweeted={retweeted}
+                           onCommentClick={onCommentClick}
+                           onFavoriteClick={handleLikeOrUnlike}
+                           onRetweetClick={onRetweetClick}
+                           onToolbarMenuClick={openToolbarMenu}
+                           favorites={tweet.favorites}
+                           replies={tweet.replies}
+                           retweets={tweet.retweetUsers}
+                           overrideStyle={{ justifyContent: 'space-between' }}
                         />
-                     </Link>
-                     {/* Toolbar area - like, retweet, comment buttons */}
-                     {displayActions && (
-                        <div className="tweet__bottom-actionArea flex flex-row justify-between">
-                           <div className="tweetAction-item">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper comment_wrapper"
-                                    onClick={() => onCommentClick(tweet)}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay comment_display" />
-                                       <BsChat />
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.replies.length > 0 && (
-                                                <span>
-                                                   {' '}
-                                                   {tweet.replies.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tweetAction-item ml-15">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper retweet_wrapper"
-                                    onClick={() => retweet(tweet._id)}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay retweet_display" />
-                                       <AiOutlineRetweet
-                                          className={retweetActiveClass}
-                                       />
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.retweetUsers.length > 0 && (
-                                                <span>
-                                                   {' '}
-                                                   {tweet.retweetUsers.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tweetAction-item">
-                              <div className="flex flex-col justify-center">
-                                 <div
-                                    className="action-wrapper favorites_wrapper"
-                                    onClick={handleLikeOrUnlike}
-                                 >
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay favorites_display" />
-                                       {renderFavoriteButton()}
-                                    </div>
-                                    <div className="metrics">
-                                       <span className="metrics__item">
-                                          {displayNumbers &&
-                                             tweet.favorites.length > 0 && (
-                                                <span>
-                                                   {tweet.favorites.length}
-                                                </span>
-                                             )}
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tweetAction-item">
-                              <div className="flex flex-col justify-center">
-                                 <div className="action-wrapper comment_wrapper">
-                                    <div className="d-inline-flex buttonDisplay">
-                                       <div className="iconBackgroundDisplay comment_display" />
-                                       <BsUpload />
-                                    </div>
-                                    <div className="metrics"></div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     )}
+                     </div>
                   </div>
                </article>
             </div>
          )}
-      </div>
+      </React.Fragment>
    );
 };
 
 Tweet.propTypes = {
    tweet: PropTypes.object.isRequired,
-   auth: PropTypes.object.isRequired,
+
    deleteTweet: PropTypes.func,
    favoriteTweet: PropTypes.func,
    retweet: PropTypes.func,
@@ -367,21 +243,21 @@ Tweet.propTypes = {
    bottomBorder: PropTypes.bool,
    replyingTo: PropTypes.bool,
    replyingToUserName: PropTypes.string,
+   pinnedTweet: PropTypes.bool,
 };
 
 Tweet.defaultProps = {
    displayActions: true,
    replyView: false,
    bottomBorder: true,
+   pinnedTweet: false,
 };
 
-const mapStateToProps = (state) => ({
-   auth: state.auth,
-});
-export default connect(mapStateToProps, {
+export default connect(null, {
    deleteTweet,
    favoriteTweet,
    removeFavorite,
    retweet,
-   reportTweet,
+   openModal,
+   setTweetInModal,
 })(Tweet);

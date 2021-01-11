@@ -1,0 +1,211 @@
+.tweetForm {
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+}
+
+.rightSide__wrapper > form {
+   display: block;
+   max-width: 100%;
+   width: 100%;
+}
+
+.tweetForm__wrapper {
+   display: flex;
+   flex-direction: row;
+   padding-left: 15px;
+   padding-right: 15px;
+}
+
+.tweetForm__wrapper .avatar__wrapper {
+   display: flex;
+   flex-direction: column;
+   flex-basis: 40px;
+   flex-grow: 0;
+   align-items: stretch;
+   margin-right: 10px;
+   padding-top: 5px;
+}
+
+.tweetForm__wrapper .rightSide__wrapper {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   justify-content: center;
+   align-items: flex-start;
+   padding-top: 5px;
+}
+
+.tweetForm__wrapper .rightSide__wrapper .image__container {
+   margin-top: 5px;
+   overflow: hidden;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   z-index: 1;
+   width: 100%;
+   height: 285px;
+   border-radius: 16px;
+   margin-bottom: 15px;
+   position: relative;
+}
+
+.image__container .image__button {
+   position: absolute;
+   top: 5px;
+   left: 5px;
+   background-color: rgba(0, 0, 0, 0.77);
+   min-height: 30px;
+   min-width: 30px;
+   border-radius: 50%;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+}
+
+.image__container .image__button > svg {
+   font-size: 20px;
+   vertical-align: text-bottom;
+   color: #fff;
+}
+
+.image__container .image__button:hover {
+   background-color: rgba(26, 26, 26, 0.77);
+   transition: background-color 0.2s ease-in;
+}
+.rightSide__wrapper .image__container .image__wrapper {
+   height: 100%;
+   z-index: 0;
+   width: 100%;
+   overflow: hidden;
+   display: block;
+   position: relative;
+}
+.image__container .image__wrapper .presentation {
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center center;
+   z-index: -1;
+   background-color: rgba(0, 0, 0, 0);
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+}
+
+.image__container .image__wrapper .image {
+   inset: 0px;
+   height: 100%;
+   opacity: 0;
+   position: absolute;
+   width: 100%;
+   z-index: -1;
+}
+
+.rightSide__wrapper .textEditor__root {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: stretch;
+   overflow-wrap: break-word;
+   white-space: pre-wrap;
+   font-size: 18px;
+   color: #fff;
+   width: 100%;
+}
+
+.textEditor__root .textEditor {
+   display: inline-flex;
+   width: 100%;
+   padding: 10px;
+   position: relative;
+}
+
+.toolbar__root {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   margin-left: 2px;
+   margin-right: 2px;
+}
+
+.toolbar__addOns {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 10px;
+}
+
+.toolbar__submit {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   margin-top: 10px;
+}
+
+.tweetForm__button {
+   background-color: var(--twitter-color) !important;
+   color: white !important;
+   border: none !important;
+   font-weight: 900;
+   text-transform: inherit !important;
+   border-radius: 30px !important;
+   height: 40px !important;
+   width: 80px;
+}
+.tweetForm__button:disabled {
+   opacity: 0.5 !important;
+}
+
+.tweetForm .tweetForm__bottom-border {
+   border-top: 1px solid var(--border-color);
+   border-bottom: 1px solid var(--border-color);
+   height: 10px;
+   background-color: rgb(25, 39, 52);
+   width: 100%;
+   margin-top: 15px;
+}
+
+.toolbar__root .counter {
+   margin-right: 10px;
+   margin-top: auto;
+   margin-bottom: auto;
+}
+
+.imageUpload .MuiIconButton-root {
+   padding: 8px;
+   margin-left: 5px;
+   color: var(--twitter-color);
+}
+
+.textEditor .tweet-form-textarea {
+   resize: none;
+   border: none;
+   outline: none;
+   font-family: inherit;
+   font-size: 1.25rem;
+   width: 100%;
+   background-color: transparent;
+   display: block;
+   color: #fff;
+   overflow: hidden;
+}
+
+/* .tweetForm .bottom-wrapper {
+   position: relative;
+} */
+
+.tweetForm .toolbar__root {
+   position: relative;
+}

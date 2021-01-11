@@ -1,64 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Grid, makeStyles, Hidden } from '@material-ui/core';
-import { loadUser } from '../../actions/auth';
+import { useLocation } from 'react-router-dom';
 import { getCurrentUsersProfile } from '../../actions/profile';
 import Sidebar from '../sidebar/Sidebar';
-import Widgets from '../widgets/Widgets';
-
-const useStyles = makeStyles((theme) => ({
-   root: {
-      backgroundColor: 'rgb(21, 32, 42)',
-      color: '#fff',
-      height: '100%',
-   },
-   feed: {
-      borderRight: '1px solid rgb(56,68,77)',
-      borderLeft: '1px solid rgb(56,68,77)',
-      height: '100%',
-   },
-   sidebarRoot: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-end',
-      justifyContent: 'space-between',
-      height: '100%',
-   },
-}));
+import WidgetWrapper from '../widgets/WidgetWrapper';
+import ComposeModal from '../forms/ComposeModal';
+import MessagesPage from '../../pages/Messages';
+import '../../styles/design/main.css';
 
 const Main = ({ children, loadUser, getCurrentUsersProfile }) => {
-   const classes = useStyles();
-
+   const [modalOpen, setModalOpen] = useState(false);
+   let location = useLocation();
+   const isMessagesPageRendered =
+      location.pathname === '/messages' ||
+      location.pathname.split('/')[1] === 'messages';
+   const gridClassName = isMessagesPageRendered
+      ? 'main-messages-grid'
+      : 'main-grid';
    useEffect(() => {
-      loadUser();
       getCurrentUsersProfile();
    }, [loadUser, getCurrentUsersProfile]);
    return (
-      <Grid container className={classes.root}>
-         <Grid item xs={false} sm={2} md={2} lg={2} xl={4}>
-            <Hidden xsDown>
-               <header className={classes.sidebarRoot}>
-                  <Sidebar />
-               </header>
-            </Hidden>
-         </Grid>
-
-         <Grid
-            item
-            xs={12}
-            sm={8}
-            md={6}
-            lg={6}
-            xl={4}
-            className={classes.feed}
-         >
-            {children}
-         </Grid>
-         <Grid item xs={false} sm={2} md={4} lg={4} xl={4}>
-            <Widgets />
-         </Grid>
-      </Grid>
+      <React.Fragment>
+         <ComposeModal open={modalOpen} setOpen={setModalOpen} />
+         <div className={gridClassName}>
+            <nav className="main-nav">
+               <Sidebar setModalOpen={setModalOpen} />
+            </nav>
+            <main className="main-content">{children}</main>
+            {!isMessagesPageRendered && (
+               <aside className="main-side">
+                  <WidgetWrapper />
+               </aside>
+            )}
+         </div>
+      </React.Fragment>
    );
 };
 
-export default connect(null, { loadUser, getCurrentUsersProfile })(Main);
+export default connect(null, { getCurrentUsersProfile })(Main);

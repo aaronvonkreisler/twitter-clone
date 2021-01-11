@@ -1,0 +1,232 @@
+.main-nav-list {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+.menu-button__link {
+   text-decoration: none;
+   color: #fff;
+}
+
+.menu-button__active {
+   color: var(--twitter-color) !important;
+   fill: var(currentColor);
+}
+
+.nav-logo {
+   display: block;
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   margin: 2px 0;
+   font-size: 24px;
+   line-height: 50px;
+   text-decoration: none;
+   text-align: center;
+   color: #fff;
+}
+
+.nav-logo .icon {
+   display: block;
+}
+
+.nav-logo .icon > svg {
+   height: 2rem;
+   width: 1.5em;
+   vertical-align: text-bottom;
+}
+
+.nav-logo:hover,
+.nav-logo:focus {
+   background-color: var(--twitter-button-hover);
+}
+
+.main-nav-item {
+   padding: 7px 0;
+   list-style: none;
+}
+
+.menu-item {
+   display: flex;
+   align-items: center;
+   flex-direction: row;
+   width: fit-content;
+   padding: 10px;
+   border-radius: 9999px;
+   font-weight: 700;
+   font-size: 20px;
+   color: #fff;
+}
+
+.menu-item .icon {
+   width: 26px;
+   height: 26px;
+   line-height: 26px;
+   text-align: center;
+   font-size: 25px;
+}
+
+.menu-item .text {
+   color: inherit;
+   padding-right: 15px;
+   margin-left: 20px;
+}
+
+.main-nav-item:hover .menu-item {
+   background-color: var(--twitter-button-hover);
+   transition: background-color 0.2s ease-in;
+}
+.main-nav-item:hover .text,
+.main-nav-item:hover .icon {
+   color: var(--twitter-color);
+}
+.main-nav-item:hover .common-button .icon-tweet,
+.main-nav-item:hover .common-button .text {
+   color: #fff !important;
+}
+
+.common-button {
+   height: 40px;
+   padding: 0 15px;
+   background-color: var(--twitter-color);
+   border-radius: calc(40px / 2) / 50%;
+   color: #fff;
+   font-size: 15px;
+   font-weight: 700;
+}
+
+.common-button:hover {
+   background-color: var(--twitter-button-darken);
+}
+
+.common-button.full-width {
+   width: 100%;
+   display: block;
+}
+
+.common-button.large-height {
+   height: 50px;
+}
+
+.common-button .icon-tweet {
+   font-size: 24px;
+   text-align: center;
+}
+.common-button .icon-tweet > svg {
+   vertical-align: text-bottom;
+}
+
+@media (max-width: 499px) {
+   .main-nav-list {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 15px;
+   }
+
+   .nav-logo {
+      display: none;
+   }
+
+   .nav-tweet-button {
+      position: fixed;
+      left: auto;
+      right: 15px;
+      bottom: 75px;
+   }
+
+   .nav-tweet-button .common-button {
+      width: auto;
+      box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 8px,
+         rgba(101, 119, 134, 0.25) 0px 1px 3px 1px;
+      border-radius: 50%;
+   }
+   .nav-tweet-button .common-button .text {
+      display: none;
+   }
+}
+
+@media (max-width: 499px) {
+   .main-nav-item .menu-item .text {
+      display: none;
+   }
+   .nav-tweet-button .common-button .text {
+      display: none;
+   }
+   .hide-small {
+      display: none !important;
+   }
+}
+
+@media (min-width: 500px) and (max-width: 1004px) {
+   .main-nav-item .menu-item .text {
+      display: none;
+   }
+   .nav-tweet-button .common-button {
+      padding: 0;
+      border-radius: 50%;
+   }
+   .nav-tweet-button .common-button .text {
+      display: none;
+   }
+
+   .hide-medium {
+      display: none !important;
+   }
+
+   .main-nav-item {
+      padding: 4px 0;
+   }
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .main-nav-item .menu-item .text {
+      display: none;
+   }
+   .nav-tweet-button .common-button {
+      padding: 0;
+      border-radius: 50%;
+   }
+   .nav-tweet-button .common-button .text {
+      display: none;
+   }
+   .hide-medium {
+      display: none !important;
+   }
+   .main-nav-item {
+      padding: 4px 0;
+   }
+}
+
+@media (min-width: 1095px) and (max-width: 1281px) {
+   .main-nav-item .menu-item .text {
+      display: none;
+   }
+   .nav-tweet-button .common-button {
+      padding: 0;
+      border-radius: 50%;
+   }
+   .nav-tweet-button .common-button .text {
+      display: none;
+   }
+   .main-nav-item {
+      padding: 4px 0;
+   }
+   .hide-medium {
+      display: none !important;
+   }
+}
+
+@media (min-width: 1282px) {
+   .common-button .icon {
+      display: none;
+   }
+}
+/* Responsive Variables */
+/* $break1:    "(max-width:499px)";
+$break2:    "(min-width:500px) and (max-width:1004px)";
+$break2open:"(min-width:500px)";
+$break3:    "(min-width:1005px) and (max-width:1094px)";
+$break3open:"(min-width:1005px)";
+$break4:    "(min-width:1095px) and (max-width:1281px)";
+$break4open:"(min-width:1095px)";
+$break5open:"(min-width:1282px)"; */

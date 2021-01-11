@@ -1,0 +1,10 @@
+.inbox-search {
+   padding: 3px 10px 8px 10px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.empty-placeholder {
+   height: 100%;
+   width: 100%;
+   min-height: 100px;
+}

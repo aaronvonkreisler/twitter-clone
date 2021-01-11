@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState, memo } from 'react';
+import { Link } from 'react-router-dom';
 import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
 import { BiHomeCircle } from 'react-icons/bi';
@@ -11,104 +11,99 @@ import { BiBookmark } from 'react-icons/bi';
 import { RiQuillPenLine } from 'react-icons/ri';
 import { CgMoreO } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
-import { useMediaQuery, Fab, Button } from '@material-ui/core';
-import ComposeModal from '../forms/ComposeModal';
 
-import './styles/Sidebar.css';
-import '../../styles/design/utils.css';
+import MoreMenu from './MoreMenu';
+import '../../styles/design/navbar.css';
 
-// The width of the root div needs to be 275px on large and up.
-// on md and down it needs to be 88px
-const Sidebar = (props) => {
-   const [modalOpen, setModalOpen] = useState(false);
-   const large = useMediaQuery('(min-width: 1920px)');
+const Sidebar = memo(function Sidebar({ setModalOpen }) {
+   const [anchorEl, setAnchorEl] = useState(null);
+
    const navItems = [
-      {
-         text: '',
-         path: '/home',
-         icon: FaTwitter,
-      },
       { text: 'Home', path: '/home', icon: BiHomeCircle },
       {
          text: 'Explore',
          path: '/explore',
          icon: BiHash,
+         hideSmall: true,
       },
       {
          text: 'Notifications',
          path: '/notifications',
          icon: FaRegBell,
+         hideSmall: false,
+         hideMedium: false,
       },
       {
          text: 'Messages',
          path: '/messages',
          icon: FiMail,
+         hideSmall: false,
+         hideMedium: false,
       },
       {
          text: 'Bookmarks',
          path: '/bookmarks',
          icon: BiBookmark,
+         hideSmall: true,
+         hideMedium: true,
       },
 
       {
          text: 'Profile',
          path: '/profile',
          icon: BsPerson,
-      },
-      {
-         text: 'More',
-         path: '/more',
-         icon: CgMoreO,
+         hideSmall: false,
+         hideMedium: false,
       },
    ];
    return (
       <React.Fragment>
-         <ComposeModal open={modalOpen} setOpen={setModalOpen} />
-         <div className="sidebar__container">
-            <div className="sidebar__root">
-               <div className="sidebar__wrapper">
-                  <div className="sidebar__items__wrapper">
-                     {/* User Avatar needs to go in the bottom of this div for alignment to work out.  */}
-                     <div className="h-100">
-                        {navItems.map((item, index) => (
-                           <MenuButton
-                              key={index}
-                              path={item.path}
-                              Icon={item.icon}
-                              text={item.text}
-                              large={large}
-                           />
-                        ))}
-                        {large ? (
-                           <div className="button-wrapper">
-                              <div className="button-subWrapper">
-                                 <Button
-                                    className="tweet-button"
-                                    type="submit"
-                                    fullWidth
-                                    onClick={() => setModalOpen(true)}
-                                 >
-                                    Tweet
-                                 </Button>
-                              </div>
-                           </div>
-                        ) : (
-                           <div className="actions">
-                              <Fab onClick={() => setModalOpen(true)}>
-                                 <RiQuillPenLine />
-                              </Fab>
-                           </div>
-                        )}
-                     </div>
-                  </div>
-               </div>
-               <div className="sidebar__userMenu">
-                  <UserMenu />
-               </div>
-            </div>
+         <div className="main-nav-wrapper">
+            <Link to="/home" className="nav-logo">
+               <span className="icon">
+                  <FaTwitter />
+               </span>
+            </Link>
+            <ul className="main-nav-list">
+               {navItems.map((item, index) => (
+                  <MenuButton
+                     key={index}
+                     path={item.path}
+                     Icon={item.icon}
+                     text={item.text}
+                     hideSmall={item.hideSmall}
+                     hideMedium={item.hideMedium}
+                  />
+               ))}
+               <MoreMenu
+                  open={Boolean(anchorEl)}
+                  setAnchorEl={setAnchorEl}
+                  anchorEl={anchorEl}
+               />
+               <MenuButton
+                  text="More"
+                  link={false}
+                  Icon={CgMoreO}
+                  hideSmall={true}
+                  hideMedium={false}
+                  onClick={(e) => setAnchorEl(e.currentTarget)}
+               />
+               <li className="main-nav-item nav-tweet-button">
+                  <button
+                     className="common-button full-width large-height"
+                     onClick={() => setModalOpen(true)}
+                  >
+                     <span className="icon icon-tweet">
+                        <RiQuillPenLine />
+                     </span>
+                     <span className="text">Tweet</span>
+                  </button>
+               </li>
+            </ul>
          </div>
+         <UserMenu />
       </React.Fragment>
    );
-};
+});
 
-export default Sidebar;
+export default React.memo(Sidebar);

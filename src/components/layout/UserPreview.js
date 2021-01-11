@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar } from '@material-ui/core';
@@ -10,30 +10,51 @@ import { followUser, unfollowUser } from '../../actions/profile';
 import '../../styles/design/userPreview.css';
 
 const UserPreview = ({
-   user: { avatar, name, screen_name, _id, verified, followers },
+   user: { avatar, name, screen_name, _id, verified, followers, bio },
    auth,
    showBio,
    followUser,
    unfollowUser,
+   bottomBorder,
 }) => {
-   const [isOwnProfile] = useState(() => auth.user._id === _id);
-   const [isFollowing, setIsFollowing] = useState(() =>
-      followers.some((follow) => follow.user === auth.user._id)
-   );
+   const [isOwnProfile, setIsOwnProfile] = useState(false);
+   const [isFollowing, setIsFollowing] = useState(false);
+   const borderClass = bottomBorder ? 'bottom-border' : '';
+   let history = useHistory();
 
+   useEffect(() => {
+      if (auth.user !== null && followers !== null) {
+         const ownProfile = auth.user._id === _id;
+         const following = followers.some(
+            (follow) => follow.user === auth.user._id
+         );
+         setIsOwnProfile(ownProfile);
+         setIsFollowing(following);
+      }
+   }, [_id, auth, followers]);
+
+   const handleClick = (e) => {
+      const buttonClick = e.target.className.includes('Mui');
+      if (!buttonClick) {
+         history.push(`/profile/${screen_name}`);
+      }
+   };
    return (
-      <div className="userPreview">
+      <div className={`userPreview ${borderClass}`} onClick={handleClick}>
          <div className="userPreview__avatar">
-            <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
+            <Link to={`/profile/${screen_name}`}>
+               <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
+            </Link>
          </div>
+         <Link to={`/profile/${screen_name}`}></Link>
          <div className="userPreview__details">
             {/* Top Row -- includes 2 columns - Col1. names, Col2. Following Button */}
+
             <div className="details__top">
                <div className="names">
                   <div className="displayName">
-                     <Link to={`/profile/${screen_name}`}>
-                        <span>{name}</span>
-                     </Link>
+                     <span>{name}</span>
+
                      {verified && (
                         <span className="verified-badge">
                            <GoVerified />
@@ -41,11 +62,10 @@ const UserPreview = ({
                      )}
                   </div>
                   <div className="screenName">
-                     <Link to={`/profile/${screen_name}`}>
-                        <span>@{screen_name}</span>
-                     </Link>
+                     <span>@{screen_name}</span>
                   </div>
                </div>
+
                <div className="actions">
                   {isOwnProfile ? (
                      <OutlineButton
@@ -72,13 +92,11 @@ const UserPreview = ({
                   )}
                </div>
             </div>
+
             {/* Bottom row. Includes optional bio */}
-            {showBio && (
+            {showBio && bio && (
                <div className="details__bottom">
-                  <span>
-                     This is where the bio will go if someone has one so in the
-                     mean time here is some dummy text to fill up the area yay.
-                  </span>
+                  <span>{bio}</span>
                </div>
             )}
          </div>
@@ -89,10 +107,12 @@ const UserPreview = ({
 UserPreview.propTypes = {
    user: PropTypes.object.isRequired,
    showBio: PropTypes.bool,
+   bottomBorder: PropTypes.bool,
 };
 
 UserPreview.defaultProps = {
    showBio: true,
+   bottomBorder: true,
 };
 
 const mapStateToProps = (state) => ({

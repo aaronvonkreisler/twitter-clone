@@ -1,34 +1,51 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import './styles/MenuButton.css';
 
-const MenuButton = ({ text, path, Icon, large }) => {
+const MenuButton = ({
+   text,
+   path,
+   Icon,
+   hideSmall,
+   hideMedium,
+   link,
+   ...props
+}) => {
+   const small = hideSmall ? 'hide-small' : '';
+   const medium = hideMedium ? 'hide-medium' : '';
    return (
-      <NavLink
-         exact
-         to={path}
-         className="menu-button__link"
-         activeClassName="menu-button__active"
-      >
-         <div className="menu-button__root">
-            <div className="menu-button__wrapper">
-               <div className="menu-button__icon">
+      <li className={`main-nav-item ${small} ${medium}`}>
+         {link && (
+            <NavLink
+               exact
+               to={path}
+               className="menu-button__link menu-item"
+               activeClassName="menu-button__active"
+            >
+               <span className="icon">
                   <Icon />
-               </div>
-               {large && (
-                  <div className="menu-button__text">
-                     <span>{text}</span>
-                  </div>
-               )}
+               </span>
+               <span className="text">{text}</span>
+            </NavLink>
+         )}
+         {!link && (
+            <div className="menu-item" {...props}>
+               <span className="icon">
+                  <Icon />
+               </span>
+               <span className="text">{text}</span>
             </div>
-         </div>
-      </NavLink>
+         )}
+      </li>
    );
 };
 
+MenuButton.defaultProps = {
+   link: true,
+};
 MenuButton.propTypes = {
-   path: PropTypes.string.isRequired,
+   path: PropTypes.string,
+   link: PropTypes.bool,
 };
 
 export default MenuButton;

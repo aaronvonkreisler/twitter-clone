@@ -1,0 +1,31 @@
+.menu-container {
+   position: relative;
+}
+
+.search-menu {
+   min-height: 100px;
+   max-height: calc(80vh - 53px);
+   box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px,
+      rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
+   background-color: var(--background-dark);
+   overflow-y: auto;
+   position: absolute;
+   top: 0;
+   right: 0;
+   left: 0;
+   overscroll-behavior: contain;
+   border-radius: 4px;
+   z-index: 4;
+}
+
+.search-menu .no-results {
+   color: #fff;
+   padding: 15px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .search-menu {
+      width: 290px;
+   }
+}

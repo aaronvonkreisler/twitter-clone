@@ -1,0 +1,144 @@
+/* Modal Header */
+.modal-header {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   border-bottom: 1px solid var(--border-color);
+   padding: 10px 10px 5px 10px;
+}
+
+.modal-header .header-left {
+   display: flex;
+   flex-direction: row;
+   flex-grow: 0;
+}
+
+.modal-header .header-right {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   flex-grow: 1;
+}
+.header-right .title {
+   font-size: 19px;
+   color: #fff;
+   font-weight: 800;
+   margin-left: 20px;
+}
+
+.modal-header .close-button {
+   font-size: 22px;
+   color: var(--twitter-color);
+   height: 35px;
+   width: 35px;
+   border-radius: 50%;
+   text-align: center;
+}
+
+.modal-header .next-button {
+   background-color: var(--twitter-color);
+   min-height: 30px;
+
+   padding: 0 15px;
+   border-radius: 9999px;
+}
+
+.modal-header .next-button:disabled {
+   opacity: 0.5;
+}
+.next-button .button-text {
+   font-size: 15px;
+   font-weight: 700;
+   color: #fff;
+}
+
+.modal-header .close-button svg {
+   vertical-align: text-bottom;
+}
+
+.modal-header .close-button:hover {
+   background-color: var(--twitter-button-hover);
+}
+.modal-header .next-button:hover {
+   background-color: var(--twitter-button-darken);
+}
+
+/* Modal Search bar */
+
+.modal-search {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   background-color: rgb(37, 51, 65);
+}
+
+.modal-search .search-icon {
+   display: flex;
+   flex-grow: 0;
+   color: var(--text-gray);
+}
+.modal-search .search-input {
+   display: flex;
+   flex-grow: 1;
+   flex-direction: row;
+   align-items: stretch;
+   font-size: 18px;
+}
+.modal-search .search-icon svg {
+   min-width: 30px;
+
+   padding-left: 10px;
+   height: 1.25em;
+   vertical-align: text-bottom;
+   display: inline-block;
+}
+.modal-search .search-input input {
+   padding: 10px;
+   font-size: inherit;
+   width: 100%;
+   appearance: none;
+   -webkit-appearance: none;
+   border: 1px solid transparent;
+   color: #fff;
+   background-color: transparent;
+}
+
+.modal-search:focus-within .search-icon {
+   color: var(--twitter-color);
+}
+
+.modal-search input::-webkit-input-placeholder,
+.modal-search input::-moz-placeholder {
+   font-size: 15px;
+   overflow: visible;
+   line-height: 1;
+   color: var(--text-gray);
+}
+
+/* Selected Users */
+.selected-users {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   padding: 5px;
+   width: 100%;
+   background-color: rgb(37, 51, 65);
+}
+/* Modal Content */
+
+.modal-content {
+   width: 100%;
+   min-height: 300px;
+   overflow-y: auto;
+}
+
+.modal-content .MuiLinearProgress-colorPrimary {
+   background-color: var(--background-dark) !important;
+}
+
+.modal-content .MuiLinearProgress-barColorPrimary {
+   background-color: var(--twitter-color) !important;
+}

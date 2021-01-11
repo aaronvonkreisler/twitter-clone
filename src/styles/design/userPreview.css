@@ -3,7 +3,9 @@
    flex-direction: row;
    padding: 10px 15px;
    cursor: pointer;
-   width: 100%;
+}
+
+.userPreview.bottom-border {
    border-bottom: 1px solid var(--border-color);
 }
 
@@ -55,6 +57,13 @@
    text-overflow: ellipsis;
 }
 
+.details__top .names .displayName .verified-badge {
+   margin-left: 3px;
+}
+.details__top .names .displayName .verified-badge svg {
+   vertical-align: text-bottom;
+}
+
 .details__top .names .screenName {
    display: flex;
    flex-direction: row;
@@ -73,8 +82,10 @@
    display: flex;
    flex-direction: column;
    margin-left: 10px;
-   min-width: 101px;
+
+   max-width: 101px;
    max-height: 30px;
+   flex-grow: 1;
 }
 
 .userPreview__details .details__bottom {
@@ -84,4 +95,10 @@
    color: #fff;
    overflow-wrap: break-word;
    line-height: 1.3125;
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .userPreview__details .details__top .actions {
+      display: none;
+   }
 }

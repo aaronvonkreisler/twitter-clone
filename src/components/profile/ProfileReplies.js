@@ -7,8 +7,10 @@ import Tweet from '../tweets/Tweet';
 
 const ProfileReplies = ({
    userId,
+   authId,
    getProfileReplies,
-   profiles: { repliesLoading, replies },
+   onCommentClick,
+   profiles: { repliesLoading, replies, pinnedTweet },
 }) => {
    useEffect(() => {
       getProfileReplies(userId);
@@ -18,9 +20,27 @@ const ProfileReplies = ({
          {repliesLoading ? (
             <Spinner />
          ) : (
-            replies.map((reply) => (
-               <Tweet tweet={reply} displayActions={false} key={reply._id} />
-            ))
+            <React.Fragment>
+               {pinnedTweet && (
+                  <Tweet
+                     tweet={pinnedTweet}
+                     key={pinnedTweet.user._id}
+                     authId={authId}
+                     displayActions
+                     onCommentClick={onCommentClick}
+                     pinnedTweet
+                  />
+               )}
+               {replies.map((reply) => (
+                  <Tweet
+                     tweet={reply}
+                     displayActions
+                     key={reply._id}
+                     authId={authId}
+                     onCommentClick={onCommentClick}
+                  />
+               ))}
+            </React.Fragment>
          )}
       </React.Fragment>
    );

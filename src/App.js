@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+
 import { loadUser } from './actions/auth';
 
 import { LOG_OUT } from './actions/types';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
-import Landing from './components/pages/Landing';
+import Landing from './pages/Landing';
 
 import './App.css';
 
@@ -29,7 +29,6 @@ const App = () => {
       <Provider store={store}>
          <Router>
             <div className="app">
-               <CssBaseline />
                <Switch>
                   <Route exact path="/" component={Landing} />
                   <Route component={Routes} />

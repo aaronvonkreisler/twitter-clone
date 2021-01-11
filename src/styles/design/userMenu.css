@@ -1,0 +1,112 @@
+.sidebar__user-menu {
+   margin-bottom: 10px;
+   cursor: pointer;
+}
+
+.sidebar__user-menu:hover .user-menu {
+   background-color: var(--twitter-button-hover);
+   transition: background-color 0.1s ease-in;
+}
+.user-menu {
+   padding: 10px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   border-radius: 9999px;
+}
+
+.list-item {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   width: 100%;
+   padding: 0 10px;
+}
+
+.user-menu .avatar,
+.list-item .avatar {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   flex-basis: 40px;
+}
+
+.user-menu .names,
+.list-item .names {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   margin-right: 10px;
+   margin-left: 10px;
+   white-space: nowrap;
+   overflow-wrap: break-word;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}
+
+.user-menu .menu-icon,
+.list-item .menu-icon {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   align-items: flex-end;
+   justify-content: center;
+}
+
+.user-menu .names .display-name,
+.list-item .display-name {
+   color: #fff;
+   font-size: 15px;
+   font-weight: 700;
+}
+
+.user-menu .names .screen-name,
+.list-item .screen-name {
+   color: var(--text-gray);
+   font-size: 15px;
+   font-weight: 400;
+}
+
+.user-menu .menu-icon .icon {
+   color: #fff;
+   font-size: 20px;
+}
+
+.list-item .menu-icon .icon {
+   color: var(--twitter-color);
+   font-size: 20px;
+}
+
+@media (max-width: 499px) {
+   .sidebar__user-menu {
+      display: none !important;
+   }
+}
+@media (min-width: 1095px) and (max-width: 1281px),
+   (min-width: 1005px) and (max-width: 1094px),
+   (min-width: 500px) and (max-width: 1004px) {
+   .user-menu .names {
+      display: none !important;
+   }
+   .user-menu .icon {
+      display: none !important;
+   }
+
+   .user-menu {
+      display: block;
+      margin-right: 10px;
+      padding: 10px;
+   }
+
+   .sidebar__user-menu {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+   }
+}

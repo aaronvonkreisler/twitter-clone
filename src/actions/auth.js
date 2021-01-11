@@ -1,4 +1,5 @@
 import api from '../utils/api';
+import { getCurrentUser, registerUser, signIn } from '../services/auth';
 import {
    REGISTER_FAIL,
    REGISTER_SUCCESS,
@@ -12,11 +13,11 @@ import { setAlert } from './alerts';
 
 export const loadUser = () => async (dispatch) => {
    try {
-      const res = await api.get('/api/user/current');
+      const response = await getCurrentUser();
 
       dispatch({
          type: USER_LOADED,
-         payload: res.data,
+         payload: response,
       });
    } catch (err) {
       dispatch({
@@ -26,10 +27,10 @@ export const loadUser = () => async (dispatch) => {
 };
 export const register = (formData) => async (dispatch) => {
    try {
-      const res = await api.post('/auth/register', formData);
+      const response = await registerUser(formData);
       dispatch({
          type: REGISTER_SUCCESS,
-         payload: res.data,
+         payload: response,
       });
    } catch (err) {
       const errors = err.response.data.errors;
@@ -45,17 +46,19 @@ export const register = (formData) => async (dispatch) => {
 };
 
 export const loginUser = (email, password) => async (dispatch) => {
-   const body = { email, password };
+   const loginInfo = { email, password };
 
    try {
-      const res = await api.post('/auth/signin', body);
+      const response = await signIn(loginInfo);
+
       dispatch({
          type: LOGIN_SUCCESS,
-         payload: res.data,
+         payload: response,
       });
       dispatch(loadUser());
    } catch (err) {
       const errors = err.response.data.errors;
+
       if (errors) {
          errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
       }

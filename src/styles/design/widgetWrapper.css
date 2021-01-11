@@ -1,0 +1,11 @@
+.widget-wrapper {
+   display: block;
+   position: sticky !important;
+   top: 0;
+}
+
+@media (min-width: 1005px) and (max-width: 1094px) {
+   .widget-wrapper .searchbar-wrapper {
+      width: 290px;
+   }
+}

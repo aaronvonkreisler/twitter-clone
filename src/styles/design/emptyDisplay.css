@@ -1,0 +1,30 @@
+.emptyDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.emptyDisplay .emptyDisplay__wrapper {
+  padding: 39px 20px 39px 20px;
+}
+
+.emptyDisplay .emptyDisplay__wrapper .mainText {
+  margin-bottom: 10px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  overflow-wrap: break-word;
+  text-align: center;
+  white-space: pre-wrap;
+  line-height: 1.3125;
+}
+
+.emptyDisplay .emptyDisplay__wrapper .secondaryText {
+  color: var(--text-gray);
+  white-space: pre-line;
+  font-weight: 400;
+  font-size: 15px;
+  overflow-wrap: break-word;
+  text-align: center;
+  line-height: 1.3125;
+}

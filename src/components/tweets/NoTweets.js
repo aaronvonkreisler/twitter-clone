@@ -1,13 +1,13 @@
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import '../../styles/design/noTweets.css';
 
 const NoTweets = (props) => {
+   let history = useHistory();
+
    const handleClick = () => {
-      alert(
-         'This needs to be a link to /connect which shows suggestions of who to follow'
-      );
+      history.push('/connect');
    };
    return (
       <div className="noTweets__root">

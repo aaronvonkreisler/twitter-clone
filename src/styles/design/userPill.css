@@ -1,0 +1,45 @@
+.pill {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   margin: 5px;
+   padding: 0 10px 0 3px;
+   border-radius: 9999px;
+   overflow: hidden;
+   min-height: 30px;
+   background-color: rgb(21, 32, 43);
+   max-width: calc(100% - 15px);
+   border: 1px solid rgb(61, 84, 102);
+   cursor: pointer;
+   transition: background-color 0.2s ease-in;
+}
+
+.pill:hover {
+   background-color: rgba(29, 161, 242, 0.1);
+}
+.pill .avatar {
+   margin-right: 5px;
+   width: 24px;
+   height: 24px;
+   overflow: hidden;
+}
+
+.pill .name {
+   color: #fff;
+   font-size: 15px;
+   font-weight: 700;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   max-width: 100%;
+}
+
+.pill .icon {
+   color: var(--twitter-color);
+   margin-left: 10px;
+}
+
+.pill .icon svg {
+   vertical-align: text-bottom;
+   height: 1.25em;
+}
