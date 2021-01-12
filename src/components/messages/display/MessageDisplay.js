@@ -23,13 +23,13 @@ const MessageDisplay = ({
                      <NoSelection setModalOpen={setModalOpen} />
                   </div>
                ) : (
-                  <div className="chat-room-display">
+                  <Fragment>
                      <ChatRoom
                         chat={selectedChat}
                         authId={user._id}
                         withBackIcon={withBackIcon}
                      />
-                  </div>
+                  </Fragment>
                )}
             </div>
          )}

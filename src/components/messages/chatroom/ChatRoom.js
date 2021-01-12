@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import ChatHeader from './ChatHeader';
+import ChatBody from './ChatBody';
+import ChatFormWrapper from './form/ChatFormWrapper';
 import ConversationInfo from './ConversationInfo';
 
 const ChatRoom = ({ chat, authId, withBackIcon }) => {
@@ -19,11 +21,15 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
    return (
       <Fragment>
          {participants.length !== 0 && !renderChatInfo && (
-            <ChatHeader
-               participants={participants}
-               withBackIcon={withBackIcon}
-               onInfoButtonClick={onInfoButtonClick}
-            />
+            <Fragment>
+               <ChatHeader
+                  participants={participants}
+                  withBackIcon={withBackIcon}
+                  onInfoButtonClick={onInfoButtonClick}
+               />
+               <ChatBody />
+               <ChatFormWrapper />
+            </Fragment>
          )}
          {renderChatInfo && (
             <ConversationInfo

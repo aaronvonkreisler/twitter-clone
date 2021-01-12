@@ -42,6 +42,7 @@
 .middle-area .single-name {
    display: flex;
    flex-direction: column;
+   min-width: 0;
 }
 
 .middle-area .single-name .name h2 {
@@ -75,6 +76,7 @@
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   min-width: 0;
 }
 /* Buttons  */
 .chat-header .icon-button {
