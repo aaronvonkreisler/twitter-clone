@@ -187,10 +187,7 @@ const TweetForm = ({
                                     : { top: '101%' }
                               }
                            >
-                              <Picker
-                                 onEmojiClick={onEmojiClick}
-                                 className="aaron"
-                              />
+                              <Picker onEmojiClick={onEmojiClick} />
                            </div>
                         )}
                      </div>

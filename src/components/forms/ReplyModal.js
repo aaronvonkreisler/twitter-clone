@@ -1,24 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-   Dialog,
-   DialogContent,
-   DialogTitle,
-   useMediaQuery,
-   useTheme,
-} from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { CgClose } from 'react-icons/cg';
 import PropTypes from 'prop-types';
 import Tweet from '../tweets/Tweet';
 import TweetFormWrapper from './TweetFormWrapper';
 import { replyToTweet } from '../../actions/tweets';
 import { closeModal } from '../../actions/modal';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import '../../styles/design/replyModal.css';
 
 const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
-   const theme = useTheme();
-   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+   const fullScreen = useMediaQuery('(max-width: 500px)');
    let history = useHistory();
    const handleTweetReply = (reply) => {
       const { location } = history;

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { clearSelectedChat } from '../../../actions/chats';
 import PropTypes from 'prop-types';
 import NoSelection from './NoSelection';
 import ChatRoom from '../chatroom/ChatRoom';
@@ -12,7 +11,6 @@ const MessageDisplay = ({
    selectedChat,
    auth: { user },
    withBackIcon,
-   clearSelectedChat,
 }) => {
    return (
       <Fragment>
@@ -47,4 +45,4 @@ const mapStateToProps = (state) => ({
    auth: state.auth,
 });
 
-export default connect(mapStateToProps, { clearSelectedChat })(MessageDisplay);
+export default connect(mapStateToProps)(MessageDisplay);

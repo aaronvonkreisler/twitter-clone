@@ -192,7 +192,7 @@ const SingleTweet = ({
                      onFavoriteClick={handleLikeOrUnlike}
                      onRetweetClick={handleRetweet}
                      onToolbarMenuClick={openToolbarMenu}
-                     overrideStyle={{ justifyContent: 'space-evenly' }}
+                     overrideStyle={{ justifyContent: 'space-around' }}
                   />
                   {/**----------------------------------------------------------------------------- */}
                </article>

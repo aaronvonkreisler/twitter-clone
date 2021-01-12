@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
 import { HiArrowLeft } from 'react-icons/hi';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { BsInfoCircle } from 'react-icons/bs';
 import { clearSelectedChat } from '../../../actions/chats';
 import '../../../styles/design/chatHeader.css';
 
@@ -78,7 +78,7 @@ const ChatHeader = ({
          </div>
          <div className="right-icon">
             <button className="icon-button" onClick={onInfoButtonClick}>
-               <AiOutlineInfoCircle />
+               <BsInfoCircle />
             </button>
          </div>
       </div>

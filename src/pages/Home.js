@@ -13,72 +13,67 @@ import { getSidebarSuggestions } from '../actions/suggestions';
 import useScrollPosition from '../hooks/useScrollPosition';
 
 const Home = ({
-  addTweet,
-  fetchTimelineTweetsStart,
-  clearTimeline,
-  getSidebarSuggestions,
-  timeline: { fetching, hasMore, tweets },
+   addTweet,
+   fetchTimelineTweetsStart,
+   clearTimeline,
+   getSidebarSuggestions,
+   timeline: { fetching, hasMore, tweets },
 }) => {
-  useEffect(() => {
-    document.title = 'Home / Tweeter';
+   useEffect(() => {
+      document.title = 'Home / Tweeter';
 
-    fetchTimelineTweetsStart();
+      fetchTimelineTweetsStart();
 
-    return function cleanup() {
-      clearTimeline();
-    };
-  }, [fetchTimelineTweetsStart, clearTimeline]);
+      return function cleanup() {
+         clearTimeline();
+      };
+   }, [fetchTimelineTweetsStart, clearTimeline]);
 
-  useEffect(() => {
-    getSidebarSuggestions(3);
-  }, [getSidebarSuggestions]);
+   useEffect(() => {
+      getSidebarSuggestions(3);
+   }, [getSidebarSuggestions]);
 
-  useScrollPosition(
-    ({ atBottom }) => {
-      if (atBottom && hasMore && !fetching) {
-        fetchTimelineTweetsStart(tweets.length);
-      }
-    },
-    null,
-    [hasMore, fetching]
-  );
+   useScrollPosition(
+      ({ atBottom }) => {
+         if (atBottom && hasMore && !fetching) {
+            fetchTimelineTweetsStart(tweets.length);
+         }
+      },
+      null,
+      [hasMore, fetching]
+   );
 
-  const onTweetSubmit = (tweet) => {
-    addTweet(tweet);
-  };
+   const onTweetSubmit = (tweet) => {
+      addTweet(tweet);
+   };
 
-  return (
-    <React.Fragment>
-      <Header
-        text="Home"
-        rightIcon
-        IconComponent={HiOutlineSparkles}
-        onRightIconClick={() => alert('TODO')}
-      />
-      {!fetching && tweets.length === 0 ? (
-        <NoTweets />
-      ) : (
-        <React.Fragment>
-          {/* <TweetForm
-                  placeholder="What's happening?"
-                  bottomBorder
-                  onFormSubmit={onFormSubmit}
-               /> */}
-          <TweetFormWrapper bottomBorder onTweetSubmit={onTweetSubmit} />
-          <Feed />
-        </React.Fragment>
-      )}
-    </React.Fragment>
-  );
+   return (
+      <React.Fragment>
+         <Header
+            text="Home"
+            rightIcon
+            IconComponent={HiOutlineSparkles}
+            onRightIconClick={() => alert('TODO')}
+         />
+         {!fetching && tweets.length === 0 ? (
+            <NoTweets />
+         ) : (
+            <React.Fragment>
+               <TweetFormWrapper bottomBorder onTweetSubmit={onTweetSubmit} />
+               <Feed />
+            </React.Fragment>
+         )}
+      </React.Fragment>
+   );
 };
 
 const mapStateToProps = (state) => ({
-  timeline: state.timeline,
+   timeline: state.timeline,
 });
 
 export default connect(mapStateToProps, {
-  addTweet,
-  fetchTimelineTweetsStart,
-  getSidebarSuggestions,
-  clearTimeline,
+   addTweet,
+   fetchTimelineTweetsStart,
+   getSidebarSuggestions,
+   clearTimeline,
 })(Home);
