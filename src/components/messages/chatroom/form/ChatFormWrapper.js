@@ -1,10 +1,17 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, {
+   useState,
+   useRef,
+   useCallback,
+   useEffect,
+   Fragment,
+} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal } from '../../../../actions/modal';
 import ChatFormDisplay from './ChatFormDisplay';
+import GifModal from '../../../forms/GifModal';
 
 const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
@@ -29,7 +36,9 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
          }
       }
    };
-
+   const handleGifClick = (gif) => {
+      console.log('Success', gif);
+   };
    const handleRemoveImage = () => {
       setImageBlob(null);
       setDisplayImageButtons(true);
@@ -75,22 +84,26 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
    }, [textValue]);
 
    return (
-      <ChatFormDisplay
-         imageBlob={imageBlob}
-         displayImageButtons={displayImageButtons}
-         textInputRef={textInputRef}
-         textValue={textValue}
-         handleTextChange={handleTextChange}
-         handleSubmit={handleSubmit}
-         emojiMenuOpen={emojiMenuOpen}
-         setEmojiMenuOpen={setEmojiMenuOpen}
-         emojiPickerRef={emojiPickerRef}
-         onEmojiClick={onEmojiClick}
-         sendDisabled={sendDisabled}
-         handleFileChange={handleFileChange}
-         handleRemoveImage={handleRemoveImage}
-         openGifModal={openGifModal}
-      />
+      <Fragment>
+         <GifModal handleGifClick={handleGifClick} />
+         <ChatFormDisplay
+            imageBlob={imageBlob}
+            displayImageButtons={displayImageButtons}
+            textInputRef={textInputRef}
+            textValue={textValue}
+            handleTextChange={handleTextChange}
+            handleSubmit={handleSubmit}
+            emojiMenuOpen={emojiMenuOpen}
+            setEmojiMenuOpen={setEmojiMenuOpen}
+            emojiPickerRef={emojiPickerRef}
+            onEmojiClick={onEmojiClick}
+            sendDisabled={sendDisabled}
+            handleFileChange={handleFileChange}
+            handleRemoveImage={handleRemoveImage}
+            openGifModal={openGifModal}
+            handleGifClick={handleGifClick}
+         />
+      </Fragment>
    );
 };
 

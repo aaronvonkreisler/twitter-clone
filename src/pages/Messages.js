@@ -10,7 +10,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import Inbox from '../components/messages/inbox/Inbox';
 import MessageDisplay from '../components/messages/display/MessageDisplay';
 import NewMessageModal from '../components/messages/NewMessageModal';
-import GifModal from '../components/forms/GifModal';
+
 import '../styles/design/messagePage.css';
 
 const Messages = ({
@@ -41,7 +41,7 @@ const Messages = ({
             setOpen={setModalOpen}
             startNewChat={startNewChat}
          />
-         <GifModal />
+
          <div className="message-page">
             {user !== null && fullScreen && (
                <Fragment>

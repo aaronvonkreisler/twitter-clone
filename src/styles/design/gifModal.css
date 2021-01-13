@@ -55,8 +55,7 @@
    overflow-y: scroll;
    display: flex;
    flex-direction: column;
-   min-height: 300px;
-   max-height: 600px;
+   height: 400px;
 }
 
 /* Giphy component overrides */

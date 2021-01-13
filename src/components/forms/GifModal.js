@@ -1,4 +1,12 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, {
+   Fragment,
+   useState,
+   useContext,
+   useEffect,
+   useCallback,
+   useLayoutEffect,
+   useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { Dialog } from '@material-ui/core';
 import { CgClose } from 'react-icons/cg';
@@ -8,26 +16,57 @@ import {
    SearchContext,
    SearchContextManager,
 } from '@giphy/react-components';
-import { GiphyFetch } from '@giphy/js-fetch-api';
+
 import { closeGifModal } from '../../actions/modal';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import Searchbar from '../layout/Searchbar';
+
 import '../../styles/design/gifModal.css';
+import initialGifs from '../../gifs.json';
 
-const giphyFetch = new GiphyFetch(process.env.REACT_APP_GIPHY);
+const GifComponents = ({ handleGifClick, closeGifModal }) => {
+   const [showInitialGifs, setShowInitialGifs] = useState(initialGifs);
+   const [width, setWidth] = useState(0);
+   const { fetchGifs, searchKey, term } = useContext(SearchContext);
+   const fullScreen = useMediaQuery('(max-width: 500px)');
 
-const GifComponents = () => {
-   const { fetchGifs, searchKey } = useContext(SearchContext);
+   const modalRef = useRef();
+
+   useLayoutEffect(() => {
+      setWidth(modalRef.current.clientWidth);
+   }, []);
+
+   const handleResize = useCallback(() => {
+      if (modalRef.current) {
+         setWidth(modalRef.current.clientWidth);
+      }
+
+      console.log(modalRef.current);
+      console.log(width);
+   }, [width]);
+
+   useEffect(() => {
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+         window.removeEventListener('resize', handleResize);
+      };
+   }, [handleResize]);
+
+   useEffect(() => {
+      if (showInitialGifs !== null) {
+         setShowInitialGifs(null);
+      }
+   }, [term, showInitialGifs]);
 
    const onGifClick = (gif, e) => {
       e.preventDefault();
-      console.log(gif);
+      handleGifClick(gif);
    };
    return (
       <Fragment>
          <div className="header">
             <div className="header-left">
-               <button className="icon-button">
+               <button className="icon-button" onClick={() => closeGifModal()}>
                   <CgClose />
                </button>
             </div>
@@ -36,45 +75,40 @@ const GifComponents = () => {
                <SearchBar placeholder="Search for GIFs" />
             </div>
          </div>
-         <div className="gif-body">
+         <div
+            className="gif-body"
+            style={fullScreen ? { height: '90vh' } : null}
+            ref={modalRef}
+         >
             <Grid
                key={searchKey}
                columns={3}
-               width={580}
+               width={width}
                fetchGifs={fetchGifs}
                onGifClick={onGifClick}
+               initialGifs={showInitialGifs}
             />
          </div>
       </Fragment>
    );
 };
 
-const GifModal = ({ modal: { gifOpen }, closeGifModal }) => {
-   const [searchTerm, setSearchTerm] = useState('');
+const GifModal = ({ modal: { gifOpen }, closeGifModal, handleGifClick }) => {
    const fullScreen = useMediaQuery('(max-width: 500px)');
-
-   const handleInputChange = (e) => {
-      setSearchTerm(e.target.value);
-      console.log(searchTerm);
-   };
-
-   const fetchGifs = (offset) => giphyFetch.trending({ offset, limit: 10 });
-
-   const onGifClick = (gif, e) => {
-      e.preventDefault();
-      console.log(gif);
-   };
    return (
       <Dialog
          open={gifOpen}
          onClose={() => closeGifModal()}
          fullWidth
          fullScreen={fullScreen}
-         scroll="paper"
+         scroll="body"
       >
          <Fragment>
             <SearchContextManager apiKey={process.env.REACT_APP_GIPHY}>
-               <GifComponents />
+               <GifComponents
+                  handleGifClick={handleGifClick}
+                  closeGifModal={closeGifModal}
+               />
             </SearchContextManager>
          </Fragment>
       </Dialog>
