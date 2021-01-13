@@ -16,12 +16,12 @@ import ProfilePictureModal from '../components/forms/ProfilePictureModal';
 import BackgroundPictureModal from '../components/forms/BackgroundPictureModal';
 import EditProfileModal from '../components/forms/EditProfileModal';
 import { getProfilePinnedTweet } from '../actions/profile';
-import { prepareProfileData } from '../actions/profileData';
+
 import '../styles/design/profile.css';
 
 const UserProfile = ({
    profiles: { currentProfile, loading },
-   prepareProfileData,
+
    getProfilePinnedTweet,
    auth: { user },
 }) => {
@@ -36,9 +36,8 @@ const UserProfile = ({
    }, [currentProfile]);
 
    useEffect(() => {
-      prepareProfileData(currentProfile);
       getProfilePinnedTweet(currentProfile.screen_name);
-   }, [prepareProfileData, currentProfile, getProfilePinnedTweet]);
+   }, [currentProfile, getProfilePinnedTweet]);
    return (
       <React.Fragment>
          {loading || currentProfile === null || user === null ? (
@@ -197,6 +196,5 @@ const mapStateToProps = (state) => ({
    profiles: state.profiles,
 });
 export default connect(mapStateToProps, {
-   prepareProfileData,
    getProfilePinnedTweet,
 })(UserProfile);

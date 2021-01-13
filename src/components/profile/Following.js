@@ -9,11 +9,12 @@ import UserPreview from '../layout/UserPreview';
 import EmptyDisplay from '../layout/EmptyDisplay';
 
 const Following = ({
-   profileData: { following, followingLoading, screenName, match },
+   profileData: { following, followingLoading, id },
    getUsersFollowing,
+   authId,
 }) => {
    const { username } = useParams();
-   console.log(username);
+
    useEffect(() => {
       getUsersFollowing(username);
    }, [getUsersFollowing, username]);
@@ -24,21 +25,38 @@ const Following = ({
             <Spinner />
          ) : (
             <div className="feed">
-               {following.length === 0 ? (
+               {following.length > 0 &&
+                  following.map((user) => (
+                     <UserPreview user={user.user} key={user._id} height30 />
+                  ))}
+               {following.length === 0 && authId === id && (
                   <EmptyDisplay
                      primaryText="You aren't following anyone yet"
                      secondaryText="When you follow someone, you'll see them here."
                   />
-               ) : (
-                  following.map((user) => (
-                     <UserPreview user={user.user} key={user._id} height30 />
-                  ))
+               )}
+               {following.length === 0 && authId !== id && (
+                  <EmptyDisplay
+                     primaryText="They aren't following anyone yet"
+                     secondaryText="When they do, you'll see them here."
+                  />
                )}
             </div>
          )}
       </React.Fragment>
    );
 };
+
+// {following.length === 0 ? (
+//    <EmptyDisplay
+//       primaryText="You aren't following anyone yet"
+//       secondaryText="When you follow someone, you'll see them here."
+//    />
+// ) : (
+//    following.map((user) => (
+//       <UserPreview user={user.user} key={user._id} height30 />
+//    ))
+// )}
 
 Following.propTypes = {
    following: PropTypes.array,
