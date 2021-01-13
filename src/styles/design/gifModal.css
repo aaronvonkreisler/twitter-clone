@@ -4,7 +4,8 @@
    justify-content: flex-start;
    align-items: center;
    border-bottom: 1px solid var(--border-color);
-   padding: 5px 10px;
+   padding: 0 15px;
+   height: 53px;
    position: sticky;
    z-index: 4;
 }
@@ -47,14 +48,38 @@
    align-items: stretch;
    justify-content: center;
    flex-grow: 1;
+   height: 100%;
 }
 
 .gif-body {
    overflow-y: scroll;
    display: flex;
    flex-direction: column;
+   min-height: 300px;
+   max-height: 600px;
 }
 
-.gif-body .css-1fhfb81 {
+/* Giphy component overrides */
+.header .css-1fhfb81 {
    display: none;
+}
+
+.search .css-1p3nsop {
+   background-color: transparent;
+}
+
+.search .giphy-search-bar {
+   background: var(--input-color);
+   border-radius: 9999px;
+   height: 100%;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   border: 1px solid transparent;
+}
+.search .giphy-search-bar:focus-within {
+   border: 1px solid var(--twitter-color);
+}
+
+.search .giphy-search-bar input {
+   color: #fff;
 }

@@ -7,7 +7,6 @@ import {
    SearchBar,
    SearchContext,
    SearchContextManager,
-   SuggestionBar,
 } from '@giphy/react-components';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { closeGifModal } from '../../actions/modal';
@@ -26,15 +25,26 @@ const GifComponents = () => {
    };
    return (
       <Fragment>
-         <SearchBar placeholder="Search for GIFs" />
+         <div className="header">
+            <div className="header-left">
+               <button className="icon-button">
+                  <CgClose />
+               </button>
+            </div>
 
-         <Grid
-            key={searchKey}
-            columns={3}
-            width={580}
-            fetchGifs={fetchGifs}
-            onGifClick={onGifClick}
-         />
+            <div className="search" onFocus={(e) => console.log(e.target)}>
+               <SearchBar placeholder="Search for GIFs" />
+            </div>
+         </div>
+         <div className="gif-body">
+            <Grid
+               key={searchKey}
+               columns={3}
+               width={580}
+               fetchGifs={fetchGifs}
+               onGifClick={onGifClick}
+            />
+         </div>
       </Fragment>
    );
 };
@@ -63,36 +73,9 @@ const GifModal = ({ modal: { gifOpen }, closeGifModal }) => {
          scroll="paper"
       >
          <Fragment>
-            <div className="header">
-               <div className="header-left">
-                  <button
-                     className="icon-button"
-                     onClick={() => closeGifModal()}
-                  >
-                     <CgClose />
-                  </button>
-               </div>
-               <div className="search">
-                  <Searchbar
-                     value={searchTerm}
-                     onChange={handleInputChange}
-                     placeholder="Search for GIFs"
-                  />
-               </div>
-            </div>
-            <div className="gif-body">
-               {/*  <Grid
-                  onGifClick={onGifClick}
-                  fetchGifs={fetchGifs}
-                  columns={3}
-                  gutter={3}
-                  width={580}
-             />  */}
-
-               <SearchContextManager apiKey={process.env.REACT_APP_GIPHY}>
-                  <GifComponents />
-               </SearchContextManager>
-            </div>
+            <SearchContextManager apiKey={process.env.REACT_APP_GIPHY}>
+               <GifComponents />
+            </SearchContextManager>
          </Fragment>
       </Dialog>
    );
