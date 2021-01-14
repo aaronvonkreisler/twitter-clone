@@ -6,9 +6,14 @@ import {
    CHAT_ERROR,
    SELECT_CHAT,
    CLEAR_SELECTED_CHAT,
+   GET_CHAT_WITH_SPECIFIC_USER,
 } from './types';
 import { setAlert } from './alerts';
-import { fetchChats, createNewChat } from '../services/chats';
+import {
+   fetchChats,
+   createNewChat,
+   getChatWithSpecificUser,
+} from '../services/chats';
 
 export const getUsersChats = () => async (dispatch) => {
    try {
@@ -40,6 +45,23 @@ export const startNewChat = (userIds) => async (dispatch) => {
          payload: err.message,
       });
       dispatch(setAlert('Please try again later', 'info'));
+   }
+};
+
+export const getOrCreateChat = (userId, history) => async (dispatch) => {
+   try {
+      const response = await getChatWithSpecificUser(userId);
+      dispatch({
+         type: GET_CHAT_WITH_SPECIFIC_USER,
+         payload: response,
+      });
+      history.push('/messages');
+   } catch (err) {
+      console.error(err.message);
+      dispatch({
+         type: CHAT_ERROR,
+         payload: err.message,
+      });
    }
 };
 

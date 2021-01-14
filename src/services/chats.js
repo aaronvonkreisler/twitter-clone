@@ -19,3 +19,13 @@ export const createNewChat = async (users) => {
       throw new Error(err.response.data);
    }
 };
+
+export const getChatWithSpecificUser = async (userId) => {
+   try {
+      const res = await api.get(`/api/chats/user/${userId}`);
+
+      return res.data;
+   } catch (err) {
+      throw new Error(err.response.data);
+   }
+};

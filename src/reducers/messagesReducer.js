@@ -6,6 +6,7 @@ import {
    CHAT_ERROR,
    SELECT_CHAT,
    CLEAR_SELECTED_CHAT,
+   GET_CHAT_WITH_SPECIFIC_USER,
 } from '../actions/types';
 
 const initialState = {
@@ -36,7 +37,13 @@ export default function (state = initialState, action) {
             error: payload,
          };
       case CREATE_NEW_CHAT:
+         return {
+            ...state,
+            selectedChat: payload,
+            inbox: [payload, ...state.inbox],
+         };
       case SELECT_CHAT:
+      case GET_CHAT_WITH_SPECIFIC_USER:
          return {
             ...state,
             selectedChat: payload,

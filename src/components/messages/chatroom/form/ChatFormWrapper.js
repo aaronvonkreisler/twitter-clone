@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
-import { openGifModal } from '../../../../actions/modal';
+import { openGifModal, closeGifModal } from '../../../../actions/modal';
 import ChatFormDisplay from './ChatFormDisplay';
 import GifModal from '../../../forms/GifModal';
 
-const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
+const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
    const [sendDisabled, setSendDisabled] = useState(true);
@@ -37,7 +37,12 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
       }
    };
    const handleGifClick = (gif) => {
-      console.log('Success', gif);
+      console.log(gif);
+      setImageBlob(gif.images.downsized_medium.url);
+      if (displayImageButtons) {
+         setDisplayImageButtons(false);
+      }
+      closeGifModal();
    };
    const handleRemoveImage = () => {
       setImageBlob(null);
@@ -79,9 +84,9 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal }) => {
    }, [emojiMenuOpen, handleEmojiClose]);
 
    useEffect(() => {
-      const disabled = textValue.length === 0;
+      const disabled = textValue.length === 0 && imageBlob === null;
       setSendDisabled(disabled);
-   }, [textValue]);
+   }, [textValue, imageBlob]);
 
    return (
       <Fragment>
@@ -111,6 +116,6 @@ ChatFormWrapper.propTypes = {
    photoUploadError: PropTypes.func.isRequired,
 };
 
-export default connect(null, { photoUploadError, openGifModal })(
+export default connect(null, { photoUploadError, openGifModal, closeGifModal })(
    ChatFormWrapper
 );

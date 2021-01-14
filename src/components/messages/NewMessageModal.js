@@ -64,6 +64,7 @@ const NewMessageModal = ({ open, setOpen, startNewChat }) => {
       const userIds = selectedUsers.map((user) => user._id);
       startNewChat({ users: userIds });
       setOpen(false);
+      handleModalClose();
    };
 
    return (

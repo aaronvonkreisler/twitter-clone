@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
@@ -14,6 +14,7 @@ import {
    clearProfileState,
    getProfilePinnedTweet,
 } from '../actions/profile';
+import { getOrCreateChat } from '../actions/chats';
 
 import Header from '../components/layout/Header';
 import Spinner from '../components/layout/Spinner';
@@ -22,7 +23,6 @@ import ProfileTweets from '../components/profile/ProfileTweets';
 import ProfileReplies from '../components/profile/ProfileReplies';
 import ProfileLikes from '../components/profile/ProfileLikes';
 import FollowingButton from '../components/layout/FollowingButton';
-import OutlineButton from '../components/layout/OutlineButton';
 import ReplyModal from '../components/forms/ReplyModal';
 
 import '../styles/design/profile.css';
@@ -32,10 +32,8 @@ const SelectedProfile = ({
    getUserByUsername,
    clearProfileState,
    getProfilePinnedTweet,
-
    unfollowUser,
    followUser,
-   match,
    profiles: {
       profile,
       loading,
@@ -45,13 +43,16 @@ const SelectedProfile = ({
       followingCount,
    },
    auth: { user },
+   getOrCreateChat,
 }) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [tweetForModal, setTweetForModal] = useState(null);
+   const { username } = useParams();
+   let history = useHistory();
 
    useEffect(() => {
-      getUserByUsername(match.params.username, user._id);
-      getProfilePinnedTweet(match.params.username);
+      getUserByUsername(username, user._id);
+      getProfilePinnedTweet(username);
 
       return function cleanup() {
          clearProfileState();
@@ -59,15 +60,13 @@ const SelectedProfile = ({
    }, [
       getUserByUsername,
       getProfilePinnedTweet,
-      match.params.username,
+      username,
       user._id,
       clearProfileState,
    ]);
 
-   if (profile !== null && user !== null) {
-      if (profile.screen_name === user.screen_name) {
-         return <Redirect to="/profile" />;
-      }
+   if (isOwnProfile) {
+      return <Redirect to="/profile" />;
    }
 
    const handleCommentClick = (tweet) => {
@@ -103,36 +102,27 @@ const SelectedProfile = ({
                   </div>
                   <div className="profileTop__container ">
                      <div className="profileButtons__container">
-                        {isOwnProfile ? (
-                           <div>
-                              <OutlineButton
-                                 role="link"
-                                 path="/profile"
-                                 text="Edit Profile"
+                        <button
+                           className="icon-button"
+                           onClick={() => getOrCreateChat(profile._id, history)}
+                        >
+                           <FiMail />
+                        </button>
+                        <div className="follow__button">
+                           {isFollowing ? (
+                              <FollowingButton
+                                 onClick={() => unfollowUser(profile._id)}
                               />
-                           </div>
-                        ) : (
-                           <React.Fragment>
-                              <Link to={`/messages/${profile._id}`}>
-                                 <FiMail />
-                              </Link>
-                              <div className="follow__button">
-                                 {isFollowing ? (
-                                    <FollowingButton
-                                       onClick={() => unfollowUser(profile._id)}
-                                    />
-                                 ) : (
-                                    <Button
-                                       className="tweet-button-outline"
-                                       fullWidth
-                                       onClick={() => followUser(profile._id)}
-                                    >
-                                       Follow
-                                    </Button>
-                                 )}
-                              </div>
-                           </React.Fragment>
-                        )}
+                           ) : (
+                              <Button
+                                 className="tweet-button-outline"
+                                 fullWidth
+                                 onClick={() => followUser(profile._id)}
+                              >
+                                 Follow
+                              </Button>
+                           )}
+                        </div>
                      </div>
                      <div className="userDetailsContainer">
                         <div className="user__name">
@@ -256,4 +246,5 @@ export default connect(mapStateToProps, {
    unfollowUser,
    clearProfileState,
    getProfilePinnedTweet,
+   getOrCreateChat,
 })(SelectedProfile);

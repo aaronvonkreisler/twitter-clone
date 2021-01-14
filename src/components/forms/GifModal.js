@@ -28,7 +28,6 @@ const GifComponents = ({ handleGifClick, closeGifModal }) => {
    const [width, setWidth] = useState(0);
    const { fetchGifs, searchKey, term } = useContext(SearchContext);
    const fullScreen = useMediaQuery('(max-width: 500px)');
-
    const modalRef = useRef();
 
    useLayoutEffect(() => {
@@ -39,10 +38,7 @@ const GifComponents = ({ handleGifClick, closeGifModal }) => {
       if (modalRef.current) {
          setWidth(modalRef.current.clientWidth);
       }
-
-      console.log(modalRef.current);
-      console.log(width);
-   }, [width]);
+   }, []);
 
    useEffect(() => {
       window.addEventListener('resize', handleResize);
@@ -71,7 +67,7 @@ const GifComponents = ({ handleGifClick, closeGifModal }) => {
                </button>
             </div>
 
-            <div className="search" onFocus={(e) => console.log(e.target)}>
+            <div className="search">
                <SearchBar placeholder="Search for GIFs" />
             </div>
          </div>

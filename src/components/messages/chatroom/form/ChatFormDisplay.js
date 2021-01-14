@@ -64,14 +64,16 @@ const ChatFormDisplay = ({
             <div className="input-field">
                {imageBlob !== null && (
                   <div className="image-container">
-                     <div className="image__wrapper">
-                        <div
-                           style={{
-                              backgroundImage: `url(${imageBlob})`,
-                           }}
-                           className="presentation"
-                        />
-                        <img src={imageBlob} alt="" className="image" />
+                     <div className="image-body">
+                        <div className="image__wrapper">
+                           <div
+                              style={{
+                                 backgroundImage: `url(${imageBlob})`,
+                              }}
+                              className="presentation"
+                           />
+                           <img src={imageBlob} alt="" className="media" />
+                        </div>
                      </div>
                      <div className="close-button" onClick={handleRemoveImage}>
                         <CgClose />
