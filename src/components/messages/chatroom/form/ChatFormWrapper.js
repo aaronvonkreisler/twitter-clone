@@ -49,7 +49,7 @@ const ChatFormWrapper = ({
       }
    };
    const handleGifClick = (gif) => {
-      const gifURL = gif.images.downsized_medium.url;
+      const gifURL = gif.images.fixed_height.webp;
       setImageBlob(gifURL);
       setMessage({
          ...message,

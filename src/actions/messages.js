@@ -16,7 +16,7 @@ export const sendDirectMessage = (content) => async (dispatch) => {
       const response = await postMessage(content);
       dispatch({
          type: SEND_DM_SUCCESS,
-         payload: response,
+         payload: { chatId: response.chat, message: response },
       });
    } catch (err) {
       dispatch({
@@ -39,7 +39,13 @@ export const getMessagesForChat = (chatId) => async (dispatch) => {
          type: FETCH_MESSAGES_SUCCESS,
          payload: response,
       });
-   } catch (error) {}
+   } catch (err) {
+      dispatch({
+         type: DM_ERROR,
+         payload: err.message,
+      });
+      dispatch(setAlert('Could not get messages. Please try later', 'info'));
+   }
 };
 
 export const clearMessages = () => ({

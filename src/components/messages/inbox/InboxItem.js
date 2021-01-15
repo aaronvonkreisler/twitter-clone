@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import '../../../styles/design/inboxItem.css';
 
 const InboxItem = memo(function InboxItem({ chat, authId, onClick }) {
-   const { users, updatedAt } = chat;
+   const { users, updatedAt, lastMessage } = chat;
    const [multipleUsers, setMultipleUsers] = useState(false);
    const [otherUsers, setOtherUsers] = useState(null);
 
@@ -73,8 +73,7 @@ const InboxItem = memo(function InboxItem({ chat, authId, onClick }) {
                </div>
                <div className="last-message">
                   <span className="message-text">
-                     This is the most recent message asdf asdf asdf asdf asdf
-                     adsf{' '}
+                     {lastMessage ? lastMessage.content : ''}
                   </span>
                </div>
             </div>

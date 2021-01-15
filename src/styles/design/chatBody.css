@@ -1,0 +1,68 @@
+.chat-body {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   flex-grow: 1;
+   width: 100%;
+   border-bottom: 1px solid var(--border-color);
+   overflow-y: scroll;
+}
+
+.chat-container {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   width: 100%;
+   color: #fff;
+
+   padding: 0 15px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.message {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-start;
+   padding-bottom: 20px;
+   color: white;
+   flex-shrink: 0;
+}
+
+.message-container {
+   display: flex;
+   flex-direction: column;
+   max-width: 65%;
+}
+
+.message.mine {
+   flex-direction: row-reverse;
+}
+
+.message.mine .message-body {
+   align-self: flex-end;
+}
+
+.message.theirs {
+   justify-content: flex-start;
+}
+
+.message.theirs .message-body {
+   align-self: flex-start;
+}
+
+.message .message-body {
+   background-color: rgb(61, 84, 102);
+   padding: 10px 15px;
+   border-radius: 16px;
+   font-size: 14px;
+}
+
+.message.mine .message-body {
+   background-color: var(--twitter-color);
+}
+.message .message-body .text {
+   color: #fff;
+}

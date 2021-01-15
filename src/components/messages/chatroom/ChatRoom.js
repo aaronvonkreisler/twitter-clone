@@ -6,7 +6,13 @@ import ChatBody from './ChatBody';
 import ChatFormWrapper from './form/ChatFormWrapper';
 import ConversationInfo from './ConversationInfo';
 
-const ChatRoom = ({ chat, authId, withBackIcon }) => {
+const ChatRoom = ({
+   chat,
+   authId,
+   withBackIcon,
+   messages,
+   fetchingMessages,
+}) => {
    const [participants, setParticipants] = useState([]);
    const [renderChatInfo, setRenderChatInfo] = useState(false);
 
@@ -18,9 +24,7 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
    const onInfoButtonClick = () => {
       setRenderChatInfo(true);
    };
-   // useEffect(() => {
-   //    console.log('Fetching new messages');
-   // }, [chat]);
+
    return (
       <Fragment>
          {participants.length !== 0 && !renderChatInfo && (
@@ -30,7 +34,11 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
                   withBackIcon={withBackIcon}
                   onInfoButtonClick={onInfoButtonClick}
                />
-               <ChatBody />
+               <ChatBody
+                  messages={messages}
+                  fetchingMessages={fetchingMessages}
+                  authId={authId}
+               />
                <ChatFormWrapper chatId={chat._id} />
             </Fragment>
          )}

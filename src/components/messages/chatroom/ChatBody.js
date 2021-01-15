@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../../styles/design/messageDisplay.css';
+import Spinner from '../../layout/Spinner';
+import MessageItem from './MessageItem';
+import '../../../styles/design/chatBody.css';
 
-const ChatBody = (props) => {
+const ChatBody = ({ messages, fetchingMessages, authId }) => {
    return (
-      <div className="chat-body" style={{ color: 'white', fontSize: '20px' }}>
-         Chat Body Area
+      <div className="chat-body">
+         {fetchingMessages && <Spinner />}
+         {!fetchingMessages && messages.length > 0 && (
+            <div className="chat-container">
+               {messages.map((message) => (
+                  <MessageItem
+                     key={message._id}
+                     message={message}
+                     authId={authId}
+                  />
+               ))}
+            </div>
+         )}
       </div>
    );
 };
 
-ChatBody.propTypes = {};
+ChatBody.propTypes = {
+   fetchingMessages: PropTypes.bool,
+   messages: PropTypes.array,
+};
 
 export default ChatBody;

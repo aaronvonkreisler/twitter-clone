@@ -6,16 +6,6 @@
    justify-content: flex-start;
 }
 
-.chat-body {
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
-   flex-grow: 1;
-   width: 100%;
-   border-bottom: 1px solid var(--border-color);
-}
-
 .chat-form {
    display: flex;
    flex-direction: row;

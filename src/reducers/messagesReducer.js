@@ -49,7 +49,18 @@ export default function (state = initialState, action) {
          return {
             ...state,
             sendingMessage: false,
-            messages: [payload, ...state.messages],
+            messages: [...state.messages, payload.message],
+            inbox: state.inbox.map((item) =>
+               item._id === payload.chatId
+                  ? {
+                       ...item,
+                       lastMessage: {
+                          ...item.lastMessage,
+                          content: payload.message.content,
+                       },
+                    }
+                  : item
+            ),
          };
       }
       case FETCH_INBOX_ERROR:
@@ -93,6 +104,7 @@ export default function (state = initialState, action) {
          return {
             ...state,
             selectedChat: null,
+            messages: [],
          };
       case FETCH_MESSAGES_START:
          return {

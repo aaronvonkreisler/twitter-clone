@@ -7,7 +7,7 @@ import '../../../styles/design/messageDisplay.css';
 
 const MessageDisplay = ({
    setModalOpen,
-   selectedChat,
+   chats: { selectedChat, messages, fetchingMessages },
    auth: { user },
    withBackIcon,
 }) => {
@@ -25,6 +25,8 @@ const MessageDisplay = ({
                         chat={selectedChat}
                         authId={user._id}
                         withBackIcon={withBackIcon}
+                        messages={messages}
+                        fetchingMessages={fetchingMessages}
                      />
                   </Fragment>
                )}
@@ -40,8 +42,8 @@ MessageDisplay.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-   selectedChat: state.chats.selectedChat,
    auth: state.auth,
+   chats: state.chats,
 });
 
 export default connect(mapStateToProps)(MessageDisplay);
