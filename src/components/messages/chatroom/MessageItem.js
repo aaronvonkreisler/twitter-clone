@@ -22,6 +22,9 @@ const MessageItem = ({ message, authId }) => {
    );
 };
 
-MessageItem.propTypes = {};
+MessageItem.propTypes = {
+   message: PropTypes.object.isRequired,
+   authid: PropTypes.string.isRequired,
+};
 
 export default MessageItem;
