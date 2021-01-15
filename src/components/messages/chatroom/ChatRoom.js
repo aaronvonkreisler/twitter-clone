@@ -2,9 +2,17 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import ChatHeader from './ChatHeader';
+import ChatBody from './ChatBody';
+import ChatFormWrapper from './form/ChatFormWrapper';
 import ConversationInfo from './ConversationInfo';
 
-const ChatRoom = ({ chat, authId, withBackIcon }) => {
+const ChatRoom = ({
+   chat,
+   authId,
+   withBackIcon,
+   messages,
+   fetchingMessages,
+}) => {
    const [participants, setParticipants] = useState([]);
    const [renderChatInfo, setRenderChatInfo] = useState(false);
 
@@ -16,14 +24,23 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
    const onInfoButtonClick = () => {
       setRenderChatInfo(true);
    };
+
    return (
       <Fragment>
          {participants.length !== 0 && !renderChatInfo && (
-            <ChatHeader
-               participants={participants}
-               withBackIcon={withBackIcon}
-               onInfoButtonClick={onInfoButtonClick}
-            />
+            <Fragment>
+               <ChatHeader
+                  participants={participants}
+                  withBackIcon={withBackIcon}
+                  onInfoButtonClick={onInfoButtonClick}
+               />
+               <ChatBody
+                  messages={messages}
+                  fetchingMessages={fetchingMessages}
+                  authId={authId}
+               />
+               <ChatFormWrapper chatId={chat._id} />
+            </Fragment>
          )}
          {renderChatInfo && (
             <ConversationInfo

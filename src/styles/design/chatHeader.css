@@ -9,8 +9,8 @@
    border-bottom: 1px solid var(--border-color);
    background-color: var(--background-dark);
    color: #fff;
-   padding-left: 15px;
-   padding-right: 15px;
+   padding: 10px 15px;
+
    max-width: 600px;
    width: 100%;
 }
@@ -42,6 +42,7 @@
 .middle-area .single-name {
    display: flex;
    flex-direction: column;
+   min-width: 0;
 }
 
 .middle-area .single-name .name h2 {
@@ -75,6 +76,7 @@
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   min-width: 0;
 }
 /* Buttons  */
 .chat-header .icon-button {

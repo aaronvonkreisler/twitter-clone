@@ -1,0 +1,84 @@
+.header {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   border-bottom: 1px solid var(--border-color);
+   padding: 0 15px;
+   height: 53px;
+   position: sticky;
+   z-index: 4;
+}
+
+.header-left {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-self: stretch;
+   align-items: flex-start;
+   min-width: 59px;
+   min-height: 30px;
+}
+
+.header-left .icon-button {
+   padding-top: 5px;
+   height: 39px;
+   width: 39px;
+   font-size: 20px;
+   font-weight: 700;
+   color: var(--twitter-color);
+   background-color: transparent;
+   border-radius: 50%;
+   transition: background-color 0.2s ease-in-out;
+}
+
+.header-left .icon-button:hover {
+   background-color: var(--twitter-button-hover);
+}
+
+.header-left .icon-button svg {
+   height: 1.25em;
+   width: 1.25em;
+   vertical-align: text-bottom;
+}
+
+.header .search {
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   justify-content: center;
+   flex-grow: 1;
+   height: 100%;
+}
+
+.gif-body {
+   overflow-y: scroll;
+   display: flex;
+   flex-direction: column;
+   height: 400px;
+}
+
+/* Giphy component overrides */
+.header .css-1fhfb81 {
+   display: none;
+}
+
+.search .css-1p3nsop {
+   background-color: transparent;
+}
+
+.search .giphy-search-bar {
+   background: var(--input-color);
+   border-radius: 9999px;
+   height: 100%;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   border: 1px solid transparent;
+}
+.search .giphy-search-bar:focus-within {
+   border: 1px solid var(--twitter-color);
+}
+
+.search .giphy-search-bar input {
+   color: #fff;
+}

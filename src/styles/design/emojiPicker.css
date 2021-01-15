@@ -1,9 +1,7 @@
-/* Emoji Picker Style Overrides */
-
-.tweetForm .emoji-wrapper {
+.emoji-wrapper {
    position: absolute;
 }
-.tweetForm .emoji-wrapper aside.emoji-picker-react {
+.emoji-wrapper aside.emoji-picker-react {
    /* position: absolute; */
    left: 0;
 
@@ -14,21 +12,21 @@
    border: 1px solid var(--background-dark);
 }
 
-.tweetForm .emoji-wrapper aside.emoji-picker-react .content-wrapper {
+.emoji-wrapper aside.emoji-picker-react .content-wrapper {
    border: 1px solid var(--background-dark);
 }
-.tweetForm .emoji-wrapper .emoji-picker-react input.emoji-search {
+.emoji-wrapper .emoji-picker-react input.emoji-search {
    background-color: var(--input-color);
    color: #fff;
    border: 1px solid var(--background-dark);
    font-family: inherit;
 }
 
-.tweetForm .emoji-wrapper .emoji-picker-react input.emoji-search:focus {
+.emoji-wrapper .emoji-picker-react input.emoji-search:focus {
    border: 1px solid var(--twitter-color);
 }
 
-.tweetForm .emoji-wrapper .emoji-picker-react .emoji-group:before {
+.emoji-wrapper .emoji-picker-react .emoji-group:before {
    background: var(--background-dark);
    color: #fff;
    text-transform: capitalize;
@@ -36,81 +34,50 @@
    font-weight: 700;
 }
 
-.tweetForm .emoji-wrapper .emoji-picker-react .emoji.has-skin-variation:before {
+.emoji-wrapper .emoji-picker-react .emoji.has-skin-variation:before {
    background: none;
 }
 
 /* Overrides for the header buttons in emoji component */
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-smileys_people {
+
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-smileys_people {
    color: var(--text-gray);
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f600.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-animals_nature {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-animals_nature {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f43b.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-food_drink {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-food_drink {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f354.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-travel_places {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-travel_places {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f698.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-activities {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-activities {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/26bd.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-objects {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-objects {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f4a1.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-symbols {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-symbols {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f523.svg);
 }
 
-.tweetForm
-   .emoji-wrapper
-   .emoji-picker-react
-   .emoji-categories
-   button.icn-flags {
+.emoji-wrapper .emoji-picker-react .emoji-categories button.icn-flags {
    background-image: url(https://abs-0.twimg.com/emoji/v2/svg/1f6a9.svg);
 }
 
-.tweetForm .emoji-wrapper .emoji-picker-react .emoji-categories button {
+.emoji-wrapper .emoji-picker-react .emoji-categories button {
    opacity: 0.5;
    filter: grayscale(100%) contrast(80%);
 }
-.tweetForm .emoji-wrapper .emoji-picker-react .emoji-categories button:hover {
+.emoji-wrapper .emoji-picker-react .emoji-categories button:hover {
    filter: none;
    opacity: 1;
 }

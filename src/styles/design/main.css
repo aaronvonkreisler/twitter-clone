@@ -73,7 +73,7 @@ $break5open:"(min-width:1282px)"; */
 @media (max-width: 499px) {
    .main-nav {
       position: fixed;
-      z-index: 4;
+      z-index: 6;
       left: 0;
       right: 0;
       bottom: 0;

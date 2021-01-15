@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-
-import { clearSelectedChat } from '../../../actions/chats';
 import PropTypes from 'prop-types';
 import NoSelection from './NoSelection';
 import ChatRoom from '../chatroom/ChatRoom';
@@ -9,10 +7,9 @@ import '../../../styles/design/messageDisplay.css';
 
 const MessageDisplay = ({
    setModalOpen,
-   selectedChat,
+   chats: { selectedChat, messages, fetchingMessages },
    auth: { user },
    withBackIcon,
-   clearSelectedChat,
 }) => {
    return (
       <Fragment>
@@ -23,13 +20,15 @@ const MessageDisplay = ({
                      <NoSelection setModalOpen={setModalOpen} />
                   </div>
                ) : (
-                  <div className="chat-room-display">
+                  <Fragment>
                      <ChatRoom
                         chat={selectedChat}
                         authId={user._id}
                         withBackIcon={withBackIcon}
+                        messages={messages}
+                        fetchingMessages={fetchingMessages}
                      />
-                  </div>
+                  </Fragment>
                )}
             </div>
          )}
@@ -43,8 +42,8 @@ MessageDisplay.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-   selectedChat: state.chats.selectedChat,
    auth: state.auth,
+   chats: state.chats,
 });
 
-export default connect(mapStateToProps, { clearSelectedChat })(MessageDisplay);
+export default connect(mapStateToProps)(MessageDisplay);

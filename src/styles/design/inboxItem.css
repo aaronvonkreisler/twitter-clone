@@ -7,6 +7,7 @@
    cursor: pointer;
    border-bottom: 1px solid var(--border-color);
    transition: background-color 0.2s ease-in;
+   width: 100%;
 }
 
 .inbox-item:hover {
@@ -33,7 +34,7 @@
    justify-content: center;
    align-items: flex-start;
    color: #fff;
-   width: 100%;
+   overflow: hidden;
 }
 
 .details .top {
@@ -44,6 +45,9 @@
    flex-grow: 1;
    width: 100%;
    min-width: 0;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 .details .top .names-display {
@@ -72,8 +76,17 @@
 .details .last-message {
    display: flex;
    flex-direction: row;
-   justify-content: center;
-   align-items: flex-start;
+   justify-content: flex-start;
+   align-items: center;
    color: var(--text-gray);
    font-size: 14px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 100%;
+}
+.details .last-message .message-text {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }

@@ -6,16 +6,19 @@ import {
    startNewChat,
    clearSelectedChat,
 } from '../actions/chats';
+import { getMessagesForChat } from '../actions/messages';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import Inbox from '../components/messages/inbox/Inbox';
 import MessageDisplay from '../components/messages/display/MessageDisplay';
 import NewMessageModal from '../components/messages/NewMessageModal';
+
 import '../styles/design/messagePage.css';
 
 const Messages = ({
    getUsersChats,
    startNewChat,
    clearSelectedChat,
+   getMessagesForChat,
    chats,
    auth: { user },
 }) => {
@@ -26,6 +29,12 @@ const Messages = ({
       document.title = 'Messages / Tweeter';
       getUsersChats();
    }, [getUsersChats]);
+
+   useEffect(() => {
+      if (chats.selectedChat !== null) {
+         getMessagesForChat(chats.selectedChat._id);
+      }
+   }, [chats.selectedChat, getMessagesForChat]);
 
    useEffect(() => {
       return () => {
@@ -40,6 +49,7 @@ const Messages = ({
             setOpen={setModalOpen}
             startNewChat={startNewChat}
          />
+
          <div className="message-page">
             {user !== null && fullScreen && (
                <Fragment>
@@ -90,4 +100,5 @@ export default connect(mapStateToProps, {
    getUsersChats,
    startNewChat,
    clearSelectedChat,
+   getMessagesForChat,
 })(Messages);

@@ -1,5 +1,5 @@
 :root {
-   --twitter-color: rgb(29, 161, 242, 1);
+   --twitter-color: rgb(29, 161, 242);
 
    --tweet-hover: rgba(255, 255, 255, 0.03);
    --twitter-button-hover: rgb(29, 161, 242, 0.1);
@@ -155,14 +155,7 @@ video {
    min-width: 260px !important;
    max-width: 360px !important;
 }
-/* .app {
-   display: flex;
-   height: 100vh;
-   max-width: 1300px;
-   margin-left: auto;
-   margin-right: auto;
-   padding: 0 10px;
-   background-color: var(--background-dark);
-} */
+
+/* Emoji Picker Style Overrides */
 
 @import './styles/design/utils.css';
