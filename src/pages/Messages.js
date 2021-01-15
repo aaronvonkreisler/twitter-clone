@@ -6,6 +6,7 @@ import {
    startNewChat,
    clearSelectedChat,
 } from '../actions/chats';
+import { getMessagesForChat } from '../actions/messages';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import Inbox from '../components/messages/inbox/Inbox';
 import MessageDisplay from '../components/messages/display/MessageDisplay';
@@ -17,6 +18,7 @@ const Messages = ({
    getUsersChats,
    startNewChat,
    clearSelectedChat,
+   getMessagesForChat,
    chats,
    auth: { user },
 }) => {
@@ -27,6 +29,12 @@ const Messages = ({
       document.title = 'Messages / Tweeter';
       getUsersChats();
    }, [getUsersChats]);
+
+   useEffect(() => {
+      if (chats.selectedChat !== null) {
+         getMessagesForChat(chats.selectedChat._id);
+      }
+   }, [chats.selectedChat, getMessagesForChat]);
 
    useEffect(() => {
       return () => {
@@ -92,4 +100,5 @@ export default connect(mapStateToProps, {
    getUsersChats,
    startNewChat,
    clearSelectedChat,
+   getMessagesForChat,
 })(Messages);

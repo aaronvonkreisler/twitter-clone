@@ -8,3 +8,12 @@ export const postMessage = async (content) => {
       throw new Error(err.message);
    }
 };
+
+export const fetchMessages = async (chatId) => {
+   try {
+      const res = await api.get(`/api/messages/${chatId}`);
+      return res.data;
+   } catch (err) {
+      throw new Error(err.message);
+   }
+};

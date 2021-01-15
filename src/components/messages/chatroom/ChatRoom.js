@@ -18,6 +18,9 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
    const onInfoButtonClick = () => {
       setRenderChatInfo(true);
    };
+   // useEffect(() => {
+   //    console.log('Fetching new messages');
+   // }, [chat]);
    return (
       <Fragment>
          {participants.length !== 0 && !renderChatInfo && (

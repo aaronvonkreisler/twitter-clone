@@ -27,7 +27,7 @@ const ChatFormWrapper = ({
    const [fileToUpload, setFileToUpload] = useState(null);
    const [message, setMessage] = useState({
       content: '',
-      image: '',
+      image: null,
       chatId,
    });
    const [imageBlob, setImageBlob] = useState(null);

@@ -10,6 +10,9 @@ import {
    SEND_DM_SUCCESS,
    SEND_DM_START,
    DM_ERROR,
+   CLEAR_MESSAGES,
+   FETCH_MESSAGES_SUCCESS,
+   FETCH_MESSAGES_START,
 } from '../actions/types';
 
 const initialState = {
@@ -18,6 +21,7 @@ const initialState = {
    selectedChat: null,
    messages: [],
    sendingMessage: false,
+   fetchingMessages: false,
    error: {},
 };
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -89,6 +93,22 @@ export default function (state = initialState, action) {
          return {
             ...state,
             selectedChat: null,
+         };
+      case FETCH_MESSAGES_START:
+         return {
+            ...state,
+            fetchingMessages: true,
+         };
+      case FETCH_MESSAGES_SUCCESS:
+         return {
+            ...state,
+            fetchingMessages: false,
+            messages: payload,
+         };
+      case CLEAR_MESSAGES:
+         return {
+            ...state,
+            messages: [],
          };
       default:
          return state;
