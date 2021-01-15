@@ -10,14 +10,26 @@ import PropTypes from 'prop-types';
 import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal, closeGifModal } from '../../../../actions/modal';
+import { sendDirectMessage } from '../../../../actions/messages';
 import ChatFormDisplay from './ChatFormDisplay';
 import GifModal from '../../../forms/GifModal';
 
-const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
+const ChatFormWrapper = ({
+   photoUploadError,
+   sendDirectMessage,
+   openGifModal,
+   closeGifModal,
+   chatId,
+}) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
    const [sendDisabled, setSendDisabled] = useState(true);
-   const [textValue, setTextValue] = useState('');
+   const [fileToUpload, setFileToUpload] = useState(null);
+   const [message, setMessage] = useState({
+      content: '',
+      image: '',
+      chatId,
+   });
    const [imageBlob, setImageBlob] = useState(null);
    const textInputRef = useRef();
    const emojiPickerRef = useRef();
@@ -29,7 +41,7 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
          if (file.type.match(regex)) {
             getBase64(file).then((data) => setImageBlob(data));
             setDisplayImageButtons(false);
-            // setImageFile(file);
+            setFileToUpload(file);
          } else {
             handleRemoveImage();
             photoUploadError();
@@ -37,33 +49,48 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
       }
    };
    const handleGifClick = (gif) => {
-      console.log(gif);
-      setImageBlob(gif.images.downsized_medium.url);
+      const gifURL = gif.images.downsized_medium.url;
+      setImageBlob(gifURL);
+      setMessage({
+         ...message,
+         image: gifURL,
+      });
       if (displayImageButtons) {
          setDisplayImageButtons(false);
       }
       closeGifModal();
    };
    const handleRemoveImage = () => {
+      setMessage({
+         ...message,
+         image: null,
+      });
       setImageBlob(null);
+      setFileToUpload(null);
       setDisplayImageButtons(true);
    };
 
    const handleTextChange = (e) => {
-      setTextValue(e.target.value);
+      setMessage({ ...message, content: e.target.value });
    };
 
-   const handleSubmit = () => {
-      console.log(textValue);
-      setTextValue('');
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      sendDirectMessage(message);
+      setMessage({
+         content: '',
+         image: null,
+         chatId,
+      });
       setImageBlob(null);
+      setDisplayImageButtons(true);
    };
 
    const onEmojiClick = (e, emojiObject) => {
       const { emoji } = emojiObject;
       let currentMessage = textInputRef.current.value;
       currentMessage += emoji;
-      setTextValue(currentMessage);
+      setMessage({ ...message, content: currentMessage });
       setSendDisabled(false);
       textInputRef.current.focus();
    };
@@ -84,9 +111,23 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
    }, [emojiMenuOpen, handleEmojiClose]);
 
    useEffect(() => {
-      const disabled = textValue.length === 0 && imageBlob === null;
-      setSendDisabled(disabled);
-   }, [textValue, imageBlob]);
+      const noContent = message.content.length === 0 && imageBlob === null;
+      const emptyMessage = message.content.trim() === '' && imageBlob === null;
+
+      const shouldDisable = noContent || emptyMessage;
+      setSendDisabled(shouldDisable);
+   }, [message, imageBlob]);
+
+   useEffect(() => {
+      async function uploadImageToDb() {
+         if (fileToUpload !== null) {
+            const imagePath = await uploadPhotoForTweet(fileToUpload);
+            setMessage({ ...message, image: imagePath });
+            setFileToUpload(null);
+         }
+      }
+      uploadImageToDb();
+   }, [fileToUpload, message]);
 
    return (
       <Fragment>
@@ -95,7 +136,7 @@ const ChatFormWrapper = ({ photoUploadError, openGifModal, closeGifModal }) => {
             imageBlob={imageBlob}
             displayImageButtons={displayImageButtons}
             textInputRef={textInputRef}
-            textValue={textValue}
+            textValue={message.content}
             handleTextChange={handleTextChange}
             handleSubmit={handleSubmit}
             emojiMenuOpen={emojiMenuOpen}
@@ -116,6 +157,9 @@ ChatFormWrapper.propTypes = {
    photoUploadError: PropTypes.func.isRequired,
 };
 
-export default connect(null, { photoUploadError, openGifModal, closeGifModal })(
-   ChatFormWrapper
-);
+export default connect(null, {
+   photoUploadError,
+   openGifModal,
+   closeGifModal,
+   sendDirectMessage,
+})(ChatFormWrapper);

@@ -107,8 +107,8 @@ const ChatFormDisplay = ({
             <div className="send">
                <div className="icon">
                   <button
-                     className="icon-button"
                      onClick={handleSubmit}
+                     className="icon-button"
                      disabled={sendDisabled}
                   >
                      <AiOutlineSend />

@@ -28,7 +28,7 @@ const ChatRoom = ({ chat, authId, withBackIcon }) => {
                   onInfoButtonClick={onInfoButtonClick}
                />
                <ChatBody />
-               <ChatFormWrapper />
+               <ChatFormWrapper chatId={chat._id} />
             </Fragment>
          )}
          {renderChatInfo && (

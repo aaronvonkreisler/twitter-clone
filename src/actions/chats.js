@@ -37,7 +37,7 @@ export const startNewChat = (userIds) => async (dispatch) => {
       const response = await createNewChat(userIds);
       dispatch({
          type: CREATE_NEW_CHAT,
-         payload: response,
+         payload: { id: response._id, chat: response },
       });
    } catch (err) {
       dispatch({

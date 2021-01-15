@@ -76,8 +76,8 @@
 .details .last-message {
    display: flex;
    flex-direction: row;
-   justify-content: center;
-   align-items: flex-start;
+   justify-content: flex-start;
+   align-items: center;
    color: var(--text-gray);
    font-size: 14px;
    overflow: hidden;

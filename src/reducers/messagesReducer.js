@@ -7,12 +7,17 @@ import {
    SELECT_CHAT,
    CLEAR_SELECTED_CHAT,
    GET_CHAT_WITH_SPECIFIC_USER,
+   SEND_DM_SUCCESS,
+   SEND_DM_START,
+   DM_ERROR,
 } from '../actions/types';
 
 const initialState = {
    inbox: [],
    fetchingInbox: false,
    selectedChat: null,
+   messages: [],
+   sendingMessage: false,
    error: {},
 };
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -25,24 +30,50 @@ export default function (state = initialState, action) {
             ...state,
             fetchingInbox: true,
          };
+      case SEND_DM_START:
+         return {
+            ...state,
+            sendingMessage: true,
+         };
       case FETCH_INBOX_SUCCESS:
          return {
             ...state,
             inbox: payload,
             fetchingInbox: false,
          };
+      case SEND_DM_SUCCESS: {
+         return {
+            ...state,
+            sendingMessage: false,
+            messages: [payload, ...state.messages],
+         };
+      }
       case FETCH_INBOX_ERROR:
+      case DM_ERROR:
          return {
             ...state,
             error: payload,
          };
       case CREATE_NEW_CHAT:
+         const alreadyExists = state.inbox.some(
+            (chat) => chat._id === payload.id
+         );
+         if (alreadyExists) {
+            return {
+               ...state,
+               selectedChat: payload.chat,
+            };
+         }
+         return {
+            ...state,
+            selectedChat: payload.chat,
+            inbox: [payload.chat, ...state.inbox],
+         };
+      case SELECT_CHAT:
          return {
             ...state,
             selectedChat: payload,
-            inbox: [payload, ...state.inbox],
          };
-      case SELECT_CHAT:
       case GET_CHAT_WITH_SPECIFIC_USER:
          return {
             ...state,
