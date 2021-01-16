@@ -116,3 +116,28 @@
 .message.theirs.last:not(.first) .message-body {
    border-top-left-radius: 0;
 }
+
+.message .message-container .time-stamp {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   min-width: 0;
+}
+.message .message-container .time-stamp .text {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   min-width: 0;
+   color: var(--text-gray);
+   font-size: 14px;
+}
+
+.message.mine .message-container .time-stamp {
+   justify-content: flex-end;
+}
+.message.theirs .message-container .time-stamp {
+   justify-content: flex-start;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 import '../../../styles/design/chatBody.css';
 
@@ -43,6 +44,13 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
                   <span className="text">{message.content}</span>
                )}
             </div>
+            {isLast && (
+               <div className="time-stamp">
+                  <Moment className="text" fromNow>
+                     {message.createdAt}
+                  </Moment>
+               </div>
+            )}
          </div>
       </div>
    );
