@@ -9,6 +9,13 @@ const api = axios.create({
    },
 });
 
+export const multipartApi = axios.create({
+   baseURL: 'https://tweeter-v1-api.herokuapp.com/',
+   headers: {
+      'Content-Type': 'multipart/form-data',
+   },
+});
+
 // Intercept any unauthorized error responses to the API
 // and check if the token has expired and log out the user
 

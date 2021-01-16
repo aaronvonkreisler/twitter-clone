@@ -7,13 +7,37 @@ import {
    CLEAR_MESSAGES,
 } from './types';
 import { setAlert } from './alerts';
-import { postMessage, fetchMessages } from '../services/messages';
+import {
+   postMessage,
+   fetchMessages,
+   postMessageWithImage,
+} from '../services/messages';
 
 export const sendDirectMessage = (content) => async (dispatch) => {
    try {
       dispatch({ type: SEND_DM_START });
 
       const response = await postMessage(content);
+      dispatch({
+         type: SEND_DM_SUCCESS,
+         payload: { chatId: response.chat, message: response },
+      });
+   } catch (err) {
+      dispatch({
+         type: DM_ERROR,
+         payload: err.message,
+      });
+      dispatch(
+         setAlert('Could not send your message. Please try later', 'info')
+      );
+   }
+};
+
+export const sendDirectMessageWithImage = (formData) => async (dispatch) => {
+   try {
+      dispatch({ type: SEND_DM_START });
+
+      const response = await postMessageWithImage(formData);
       dispatch({
          type: SEND_DM_SUCCESS,
          payload: { chatId: response.chat, message: response },

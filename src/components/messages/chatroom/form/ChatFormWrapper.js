@@ -10,13 +10,17 @@ import PropTypes from 'prop-types';
 import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal, closeGifModal } from '../../../../actions/modal';
-import { sendDirectMessage } from '../../../../actions/messages';
+import {
+   sendDirectMessage,
+   sendDirectMessageWithImage,
+} from '../../../../actions/messages';
 import ChatFormDisplay from './ChatFormDisplay';
 import GifModal from '../../../forms/GifModal';
 
 const ChatFormWrapper = ({
    photoUploadError,
    sendDirectMessage,
+   sendDirectMessageWithImage,
    openGifModal,
    closeGifModal,
    chatId,
@@ -76,14 +80,32 @@ const ChatFormWrapper = ({
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      sendDirectMessage(message);
-      setMessage({
-         content: '',
-         image: null,
-         chatId,
-      });
-      setImageBlob(null);
-      setDisplayImageButtons(true);
+      if (fileToUpload !== null) {
+         const formData = new FormData();
+         formData.append('image', fileToUpload);
+         formData.set('content', message.content);
+         formData.set('chatId', message.chatId);
+
+         // Send message to route that handles files
+         sendDirectMessageWithImage(formData);
+         setMessage({
+            content: '',
+            image: null,
+            chatId,
+         });
+         setImageBlob(null);
+         setFileToUpload(null);
+         setDisplayImageButtons(true);
+      } else {
+         sendDirectMessage(message);
+         setMessage({
+            content: '',
+            image: null,
+            chatId,
+         });
+         setImageBlob(null);
+         setDisplayImageButtons(true);
+      }
    };
 
    const onEmojiClick = (e, emojiObject) => {
@@ -118,16 +140,16 @@ const ChatFormWrapper = ({
       setSendDisabled(shouldDisable);
    }, [message, imageBlob]);
 
-   useEffect(() => {
-      async function uploadImageToDb() {
-         if (fileToUpload !== null) {
-            const imagePath = await uploadPhotoForTweet(fileToUpload);
-            setMessage({ ...message, image: imagePath });
-            setFileToUpload(null);
-         }
-      }
-      uploadImageToDb();
-   }, [fileToUpload, message]);
+   // useEffect(() => {
+   //    async function uploadImageToDb() {
+   //       if (fileToUpload !== null) {
+   //          const imagePath = await uploadPhotoForTweet(fileToUpload);
+   //          setMessage({ ...message, image: imagePath });
+   //          setFileToUpload(null);
+   //       }
+   //    }
+   //    uploadImageToDb();
+   // }, [fileToUpload, message]);
 
    return (
       <Fragment>
@@ -162,4 +184,5 @@ export default connect(null, {
    openGifModal,
    closeGifModal,
    sendDirectMessage,
+   sendDirectMessageWithImage,
 })(ChatFormWrapper);

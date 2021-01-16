@@ -6,17 +6,31 @@ import { CgClose } from 'react-icons/cg';
 import PropTypes from 'prop-types';
 import Tweet from '../tweets/Tweet';
 import TweetFormWrapper from './TweetFormWrapper';
-import { replyToTweet } from '../../actions/tweets';
+import { replyToTweet, replyToTweetWithImage } from '../../actions/tweets';
 import { closeModal } from '../../actions/modal';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import '../../styles/design/replyModal.css';
 
-const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
+const ReplyModal = ({
+   modal: { tweet, open },
+   replyToTweet,
+   closeModal,
+   replyToTweetWithImage,
+}) => {
    const fullScreen = useMediaQuery('(max-width: 500px)');
    let history = useHistory();
    const handleTweetReply = (reply) => {
       const { location } = history;
       replyToTweet(tweet._id, reply, location);
+
+      setTimeout(() => {
+         closeModal();
+      }, 250);
+   };
+
+   const handleTweetReplyWithImage = (formData) => {
+      const { location } = history;
+      replyToTweetWithImage(tweet._id, formData, location);
 
       setTimeout(() => {
          closeModal();
@@ -65,6 +79,7 @@ const ReplyModal = ({ modal: { tweet, open }, replyToTweet, closeModal }) => {
                </div>
                <TweetFormWrapper
                   onTweetSubmit={handleTweetReply}
+                  onTweetWithImageSubmit={handleTweetReplyWithImage}
                   placeholder="Tweet your reply"
                   withEmojiMenuAbove
                />
@@ -87,4 +102,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
    replyToTweet,
    closeModal,
+   replyToTweetWithImage,
 })(ReplyModal);
