@@ -63,8 +63,13 @@ export default function (state = initialState, action) {
             ),
          };
       }
-      case FETCH_INBOX_ERROR:
       case DM_ERROR:
+         return {
+            ...state,
+            error: payload,
+            sendingMessage: false,
+         };
+      case FETCH_INBOX_ERROR:
          return {
             ...state,
             error: payload,

@@ -3,7 +3,7 @@ import Picker from 'emoji-picker-react';
 import { FiImage, FiSmile } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
 import { AiOutlineSend, AiOutlineGif } from 'react-icons/ai';
-import { Input } from '@material-ui/core';
+import { Input, LinearProgress } from '@material-ui/core';
 import { useMediaQuery } from '../../../../hooks/useMediaQuery';
 import '../../../../styles/design/messageDisplay.css';
 import '../../../../styles/design/emojiPicker.css';
@@ -23,6 +23,7 @@ const ChatFormDisplay = ({
    handleFileChange,
    handleRemoveImage,
    openGifModal,
+   sendingMessage,
 }) => {
    const smallDevice = useMediaQuery('(max-width: 500px)');
    return (
@@ -36,7 +37,9 @@ const ChatFormDisplay = ({
                <Picker onEmojiClick={onEmojiClick} />
             </div>
          )}
-         <div className="progress-bar"></div>
+         <div className="progress-bar">
+            {sendingMessage && <LinearProgress variant="indeterminate" />}
+         </div>
          <div className="chat-form-row">
             {displayImageButtons && (
                <div className="picture-buttons">

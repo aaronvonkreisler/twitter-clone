@@ -10,13 +10,19 @@ const ChatBody = ({ messages, fetchingMessages, authId }) => {
          {fetchingMessages && <Spinner />}
          {!fetchingMessages && messages.length > 0 && (
             <div className="chat-container">
-               {messages.map((message) => (
-                  <MessageItem
-                     key={message._id}
-                     message={message}
-                     authId={authId}
-                  />
-               ))}
+               {messages.map((message, index, messages) => {
+                  const nextMessage = messages[index + 1];
+                  const lastMessage = messages[index - 1];
+                  return (
+                     <MessageItem
+                        key={message._id}
+                        message={message}
+                        authId={authId}
+                        nextMessage={nextMessage}
+                        lastMessage={lastMessage}
+                     />
+                  );
+               })}
             </div>
          )}
       </div>

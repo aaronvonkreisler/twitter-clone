@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
+import { getBase64 } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal, closeGifModal } from '../../../../actions/modal';
 import {
@@ -24,6 +24,7 @@ const ChatFormWrapper = ({
    openGifModal,
    closeGifModal,
    chatId,
+   chats: { sendingMessage },
 }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
@@ -140,17 +141,6 @@ const ChatFormWrapper = ({
       setSendDisabled(shouldDisable);
    }, [message, imageBlob]);
 
-   // useEffect(() => {
-   //    async function uploadImageToDb() {
-   //       if (fileToUpload !== null) {
-   //          const imagePath = await uploadPhotoForTweet(fileToUpload);
-   //          setMessage({ ...message, image: imagePath });
-   //          setFileToUpload(null);
-   //       }
-   //    }
-   //    uploadImageToDb();
-   // }, [fileToUpload, message]);
-
    return (
       <Fragment>
          <GifModal handleGifClick={handleGifClick} />
@@ -170,6 +160,7 @@ const ChatFormWrapper = ({
             handleRemoveImage={handleRemoveImage}
             openGifModal={openGifModal}
             handleGifClick={handleGifClick}
+            sendingMessage={sendingMessage}
          />
       </Fragment>
    );
@@ -179,7 +170,11 @@ ChatFormWrapper.propTypes = {
    photoUploadError: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+   chats: state.chats,
+});
+
+export default connect(mapStateToProps, {
    photoUploadError,
    openGifModal,
    closeGifModal,
