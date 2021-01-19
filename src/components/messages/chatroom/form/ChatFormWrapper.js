@@ -24,6 +24,9 @@ const ChatFormWrapper = ({
    openGifModal,
    closeGifModal,
    chatId,
+   setIsTyping,
+   updateTypingIndicator,
+   endTypingIndicatorOnSend,
    chats: { sendingMessage },
 }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
@@ -89,6 +92,7 @@ const ChatFormWrapper = ({
 
          // Send message to route that handles files
          sendDirectMessageWithImage(formData);
+         endTypingIndicatorOnSend();
          setMessage({
             content: '',
             image: null,
@@ -99,6 +103,7 @@ const ChatFormWrapper = ({
          setDisplayImageButtons(true);
       } else {
          sendDirectMessage(message);
+         endTypingIndicatorOnSend();
          setMessage({
             content: '',
             image: null,
@@ -126,6 +131,22 @@ const ChatFormWrapper = ({
          document.removeEventListener('mousedown', handleEmojiClose);
       }
    }, []);
+
+   // Listen for typing to notify other user
+   const handleKeyPress = useCallback(
+      (e) => {
+         updateTypingIndicator();
+      },
+      [updateTypingIndicator]
+   );
+
+   useEffect(() => {
+      document.addEventListener('keydown', handleKeyPress);
+
+      return () => {
+         document.removeEventListener('keydown', handleKeyPress);
+      };
+   }, [handleKeyPress]);
 
    useEffect(() => {
       if (emojiMenuOpen) {

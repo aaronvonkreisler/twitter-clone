@@ -9,6 +9,8 @@ import modal from './modalReducer';
 import suggestions from './suggestionsReducer';
 import timeline from './timelineReducer';
 import chats from './messagesReducer';
+import socket from './socketReducer';
+
 export default combineReducers({
    alerts,
    auth,
@@ -20,4 +22,5 @@ export default combineReducers({
    modal,
    suggestions,
    chats,
+   socket,
 });

@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../../layout/Spinner';
 import MessageItem from './MessageItem';
+import typingIndicator from '../../../styles/assets/dots.gif';
 import '../../../styles/design/chatBody.css';
 
 const ChatBody = ({ messages, fetchingMessages, authId }) => {
+   const messagesEnd = useRef();
+
+   const scrollToBottom = () => {
+      messagesEnd.current.scrollIntoView({ behavior: 'auto' });
+   };
+
+   useEffect(() => {
+      if (messages && messagesEnd.current) {
+         scrollToBottom();
+      }
+   }, [messages]);
+
    return (
       <div className="chat-body">
          {fetchingMessages && <Spinner />}
@@ -23,6 +36,15 @@ const ChatBody = ({ messages, fetchingMessages, authId }) => {
                      />
                   );
                })}
+               <div className="typing-container">
+                  <div className="typing-dots" id="typing-dots">
+                     <div className="dots"></div>
+                     <div className="dots"></div>
+                     <div className="dots"></div>
+                  </div>
+               </div>
+
+               <div className="bottom" ref={messagesEnd} />
             </div>
          )}
       </div>

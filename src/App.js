@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { loadUser } from './actions/auth';
-
+import { connectSocket } from './actions/socket';
 import { LOG_OUT } from './actions/types';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
@@ -20,11 +20,12 @@ const App = () => {
          setAuthToken(localStorage.token);
       }
       store.dispatch(loadUser());
-
+      store.dispatch(connectSocket());
       window.addEventListener('storage', () => {
          if (!localStorage.token) store.dispatch({ type: LOG_OUT });
       });
    }, []);
+
    return (
       <Provider store={store}>
          <Router>

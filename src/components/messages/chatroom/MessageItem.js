@@ -1,12 +1,12 @@
 import React from 'react';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
+import { Avatar } from '@material-ui/core';
 import '../../../styles/design/chatBody.css';
 
 const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
    const isMine = message.sender._id === authId;
    let messageOwnerClass = isMine ? 'mine' : 'theirs';
-   const senderName = message.sender.name;
 
    const sender = message.sender;
 
@@ -33,6 +33,21 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
 
    return (
       <div className={`message ${messageOwnerClass}`}>
+         {!isMine && (
+            <div className="avatar-container">
+               {isLast && (
+                  <Avatar
+                     src={message.sender.avatar}
+                     style={{
+                        height: '100%',
+                        width: '100%',
+                        verticalAlign: 'bottom',
+                     }}
+                  />
+               )}
+            </div>
+         )}
+
          <div className="message-container">
             {message.image && (
                <div className="image-container">

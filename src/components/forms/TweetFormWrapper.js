@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
+import { getBase64 } from '../../utils/imageService';
 
 import { photoUploadError } from '../../actions/tweets';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
