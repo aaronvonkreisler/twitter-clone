@@ -127,7 +127,7 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    }, [tweet]);
 
    const handleEmojiClose = useCallback((e) => {
-      if (emojiPickerRef.current.contains(e.target)) {
+      if (emojiPickerRef.current && emojiPickerRef.current.contains(e.target)) {
          return;
       } else {
          setEmojiMenuOpen(false);

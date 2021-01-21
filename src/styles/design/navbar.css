@@ -110,11 +110,12 @@
 }
 
 .common-button .icon-tweet {
-   font-size: 24px;
    text-align: center;
 }
 .common-button .icon-tweet > svg {
    vertical-align: text-bottom;
+   width: 1.5em;
+   height: 1.5em;
 }
 
 @media (max-width: 499px) {
@@ -136,7 +137,8 @@
    }
 
    .nav-tweet-button .common-button {
-      width: auto;
+      width: 59px;
+      height: 59px;
       box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 8px,
          rgba(101, 119, 134, 0.25) 0px 1px 3px 1px;
       border-radius: 50%;
@@ -156,6 +158,10 @@
    .hide-small {
       display: none !important;
    }
+
+   .main-nav-item .menu-item {
+      color: var(--text-gray);
+   }
 }
 
 @media (min-width: 500px) and (max-width: 1004px) {
@@ -165,6 +171,7 @@
    .nav-tweet-button .common-button {
       padding: 0;
       border-radius: 50%;
+      width: 50px;
    }
    .nav-tweet-button .common-button .text {
       display: none;
