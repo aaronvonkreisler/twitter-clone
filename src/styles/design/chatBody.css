@@ -6,7 +6,7 @@
    flex-grow: 1;
    width: 100%;
    border-bottom: 1px solid var(--border-color);
-   overflow-y: scroll;
+   overflow-y: auto;
 }
 
 .chat-container {

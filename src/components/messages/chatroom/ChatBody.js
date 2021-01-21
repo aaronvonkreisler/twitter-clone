@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../../layout/Spinner';
 import MessageItem from './MessageItem';
-import typingIndicator from '../../../styles/assets/dots.gif';
+
 import '../../../styles/design/chatBody.css';
 
 const ChatBody = ({ messages, fetchingMessages, authId }) => {

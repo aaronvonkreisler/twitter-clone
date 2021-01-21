@@ -13,6 +13,11 @@ export default function (state = initialState, action) {
             ...state,
             socket: payload,
          };
+      case DISCONNECT_SOCKET:
+         return {
+            ...state,
+            socket: null,
+         };
       default:
          return state;
    }
