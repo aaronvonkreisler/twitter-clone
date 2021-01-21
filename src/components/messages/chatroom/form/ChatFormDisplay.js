@@ -2,7 +2,8 @@ import React from 'react';
 import Picker from 'emoji-picker-react';
 import { FiImage, FiSmile } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
-import { AiOutlineSend, AiOutlineGif } from 'react-icons/ai';
+import { AiOutlineSend } from 'react-icons/ai';
+import { MdGif } from 'react-icons/md';
 import { Input, LinearProgress } from '@material-ui/core';
 import { useMediaQuery } from '../../../../hooks/useMediaQuery';
 import '../../../../styles/design/messageDisplay.css';
@@ -59,7 +60,7 @@ const ChatFormDisplay = ({
                      className="icon-button gif"
                      onClick={() => openGifModal()}
                   >
-                     <AiOutlineGif />
+                     <MdGif />
                   </button>
                </div>
             )}
