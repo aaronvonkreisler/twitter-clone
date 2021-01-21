@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dialog, LinearProgress } from '@material-ui/core';
 import { FiSearch } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
-
+import { closeMessageModal } from '../../actions/modal';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
 import SmallUserPreview from '../layout/SmallUserPreview';
 import UserPill from './UserPill';
 import '../../styles/design/newMessageModal.css';
 
-const NewMessageModal = ({ open, setOpen, startNewChat }) => {
+const NewMessageModal = ({ startNewChat, open, closeMessageModal }) => {
    const [searchQuery, setSearchQuery] = useState('');
    const [selectedUsers, setSelectedUsers] = useState([]);
    const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -54,7 +54,7 @@ const NewMessageModal = ({ open, setOpen, startNewChat }) => {
    };
 
    const handleModalClose = () => {
-      setOpen(false);
+      closeMessageModal();
       setSearchQuery('');
       setSelectedUsers([]);
       setResult([]);
@@ -63,7 +63,7 @@ const NewMessageModal = ({ open, setOpen, startNewChat }) => {
    const handleSubmit = () => {
       const userIds = selectedUsers.map((user) => user._id);
       startNewChat({ users: userIds });
-      setOpen(false);
+
       handleModalClose();
    };
 
@@ -143,4 +143,7 @@ NewMessageModal.propTypes = {
    startNewChat: PropTypes.func.isRequired,
 };
 
-export default NewMessageModal;
+const mapStateToProps = (state) => ({
+   open: state.modal.messageOpen,
+});
+export default connect(mapStateToProps, { closeMessageModal })(NewMessageModal);

@@ -11,11 +11,16 @@ import { BiBookmark } from 'react-icons/bi';
 import { RiQuillPenLine } from 'react-icons/ri';
 import { CgMoreO } from 'react-icons/cg';
 import { BsPerson } from 'react-icons/bs';
+import { HiOutlineMail } from 'react-icons/hi';
 
 import MoreMenu from './MoreMenu';
 import '../../styles/design/navbar.css';
 
-const Sidebar = memo(function Sidebar({ setModalOpen }) {
+const Sidebar = memo(function Sidebar({
+   setModalOpen,
+   withMessages,
+   openMessageModal,
+}) {
    const [anchorEl, setAnchorEl] = useState(null);
 
    const navItems = [
@@ -91,10 +96,19 @@ const Sidebar = memo(function Sidebar({ setModalOpen }) {
                <li className="main-nav-item nav-tweet-button">
                   <button
                      className="common-button full-width large-height"
-                     onClick={() => setModalOpen(true)}
+                     onClick={
+                        // withMessages ? openMessageModal() : setModalOpen(true)
+                        () => {
+                           if (withMessages) {
+                              openMessageModal();
+                           } else {
+                              setModalOpen(true);
+                           }
+                        }
+                     }
                   >
                      <span className="icon icon-tweet">
-                        <RiQuillPenLine />
+                        {withMessages ? <HiOutlineMail /> : <RiQuillPenLine />}
                      </span>
                      <span className="text">Tweet</span>
                   </button>

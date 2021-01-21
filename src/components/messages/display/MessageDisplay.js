@@ -6,10 +6,10 @@ import ChatRoom from '../chatroom/ChatRoom';
 import '../../../styles/design/messageDisplay.css';
 
 const MessageDisplay = ({
-   setModalOpen,
    chats: { selectedChat, messages, fetchingMessages },
    auth: { user },
    withBackIcon,
+   openMessageModal,
 }) => {
    return (
       <Fragment>
@@ -17,7 +17,7 @@ const MessageDisplay = ({
             <div className="message-display">
                {selectedChat === null ? (
                   <div className="no-selection-view">
-                     <NoSelection setModalOpen={setModalOpen} />
+                     <NoSelection openMessageModal={openMessageModal} />
                   </div>
                ) : (
                   <Fragment>
