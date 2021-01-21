@@ -5,15 +5,17 @@ import {
    FETCH_MESSAGES_START,
    FETCH_MESSAGES_SUCCESS,
    CLEAR_MESSAGES,
+   UPDATE_MESSAGES,
 } from './types';
 import { setAlert } from './alerts';
+import { socket } from '../services/socketService';
 import {
    postMessage,
    fetchMessages,
    postMessageWithImage,
 } from '../services/messages';
 
-export const sendDirectMessage = (content) => async (dispatch) => {
+export const sendDirectMessage = (content, chat) => async (dispatch) => {
    try {
       dispatch({ type: SEND_DM_START });
 
@@ -22,6 +24,8 @@ export const sendDirectMessage = (content) => async (dispatch) => {
          type: SEND_DM_SUCCESS,
          payload: { chatId: response.chat, message: response },
       });
+
+      socket.emit('new message', chat);
    } catch (err) {
       dispatch({
          type: DM_ERROR,
@@ -33,7 +37,9 @@ export const sendDirectMessage = (content) => async (dispatch) => {
    }
 };
 
-export const sendDirectMessageWithImage = (formData) => async (dispatch) => {
+export const sendDirectMessageWithImage = (formData, chat) => async (
+   dispatch
+) => {
    try {
       dispatch({ type: SEND_DM_START });
 
@@ -42,6 +48,7 @@ export const sendDirectMessageWithImage = (formData) => async (dispatch) => {
          type: SEND_DM_SUCCESS,
          payload: { chatId: response.chat, message: response },
       });
+      socket.emit('new message', chat);
    } catch (err) {
       dispatch({
          type: DM_ERROR,
@@ -74,4 +81,9 @@ export const getMessagesForChat = (chatId) => async (dispatch) => {
 
 export const clearMessages = () => ({
    type: CLEAR_MESSAGES,
+});
+
+export const updateMessages = (message) => ({
+   type: UPDATE_MESSAGES,
+   payload: message,
 });

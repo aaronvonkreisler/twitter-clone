@@ -24,10 +24,9 @@ const ChatFormWrapper = ({
    openGifModal,
    closeGifModal,
    chatId,
-   setIsTyping,
    updateTypingIndicator,
    endTypingIndicatorOnSend,
-   chats: { sendingMessage },
+   chats: { sendingMessage, selectedChat },
 }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
@@ -91,7 +90,7 @@ const ChatFormWrapper = ({
          formData.set('chatId', message.chatId);
 
          // Send message to route that handles files
-         sendDirectMessageWithImage(formData);
+         sendDirectMessageWithImage(formData, selectedChat);
          endTypingIndicatorOnSend();
          setMessage({
             content: '',
@@ -102,7 +101,7 @@ const ChatFormWrapper = ({
          setFileToUpload(null);
          setDisplayImageButtons(true);
       } else {
-         sendDirectMessage(message);
+         sendDirectMessage(message, selectedChat);
          endTypingIndicatorOnSend();
          setMessage({
             content: '',
