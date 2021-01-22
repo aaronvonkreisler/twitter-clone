@@ -9,6 +9,7 @@ import BookmarksPage from '../pages/BookmarksPage';
 import SelectedProfilePage from '../pages/SelectedProfilePage';
 import ConnectPage from '../pages/ConnectPage';
 import MessagesPage from '../pages/MessagesPage';
+import NotificationsPage from '../pages/NotificationsPage';
 import AlertDisplay from '../components/layout/AlertDisplay';
 
 import Main from '../components/layout/Main';
@@ -55,6 +56,11 @@ const Routes = (props) => {
                <PrivateRoute exact path="/connect" component={ConnectPage} />
 
                <PrivateRoute exact path="/messages" component={MessagesPage} />
+               <PrivateRoute
+                  exact
+                  path="/notifications"
+                  component={NotificationsPage}
+               />
             </Main>
          </Switch>
       </React.Fragment>

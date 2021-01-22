@@ -15,10 +15,9 @@ import {
    getProfilePinnedTweet,
 } from '../actions/profile';
 import { getOrCreateChat } from '../actions/chats';
-
 import Header from '../components/layout/Header';
 import Spinner from '../components/layout/Spinner';
-import ProfileTabs from '../components/profile/ProfileTabs';
+import TabsDisplay from '../components/layout/TabsDisplay';
 import ProfileTweets from '../components/profile/ProfileTweets';
 import ProfileReplies from '../components/profile/ProfileReplies';
 import ProfileLikes from '../components/profile/ProfileLikes';
@@ -45,10 +44,14 @@ const SelectedProfilePage = ({
    auth: { user },
    getOrCreateChat,
 }) => {
-   const [modalOpen, setModalOpen] = useState(false);
-   const [tweetForModal, setTweetForModal] = useState(null);
    const { username } = useParams();
    let history = useHistory();
+
+   useEffect(() => {
+      profile !== null
+         ? (document.title = `${profile.name} (@${profile.screen_name})`)
+         : (document.title = 'Tweeter');
+   }, [profile]);
 
    useEffect(() => {
       getUserByUsername(username, user._id);
@@ -69,9 +72,25 @@ const SelectedProfilePage = ({
       return <Redirect to="/profile" />;
    }
 
-   const handleCommentClick = (tweet) => {
-      setTweetForModal(tweet);
-      setModalOpen(true);
+   const renderTabs = () => {
+      const tabsRenderProps = [
+         {
+            label: 'Tweets',
+            component: <ProfileTweets userId={profile._id} authId={user._id} />,
+         },
+         {
+            label: 'Tweets & replies',
+            component: (
+               <ProfileReplies userId={profile._id} authId={user._id} />
+            ),
+         },
+         {
+            label: 'Likes',
+            component: <ProfileLikes userId={profile._id} authId={user._id} />,
+         },
+      ];
+
+      return <TabsDisplay renderProps={tabsRenderProps} />;
    };
 
    return (
@@ -80,11 +99,7 @@ const SelectedProfilePage = ({
             <Spinner />
          ) : (
             <React.Fragment>
-               <ReplyModal
-                  tweet={tweetForModal}
-                  open={modalOpen}
-                  setOpen={setModalOpen}
-               />
+               <ReplyModal />
                <Header leftIcon text={profile.name} />
                <div className="profileWrapper ">
                   <div className="coverPhoto__section">
@@ -193,34 +208,7 @@ const SelectedProfilePage = ({
                         </div>
                      </div>
                   </div>
-                  <div className="profile__tabs feed">
-                     <ProfileTabs
-                        tab1={
-                           <ProfileTweets
-                              userId={profile._id}
-                              onCommentClick={handleCommentClick}
-                              authId={user._id}
-                           />
-                        }
-                        tab2={
-                           <ProfileReplies
-                              userId={profile._id}
-                              onCommentClick={handleCommentClick}
-                              authId={user._id}
-                           />
-                        }
-                        tab3={
-                           <ProfileLikes
-                              userId={profile._id}
-                              onCommentClick={handleCommentClick}
-                              authId={user._id}
-                           />
-                        }
-                        tab1Text="Tweets"
-                        tab2Text="Tweets & replies"
-                        tab3Text="Likes"
-                     />
-                  </div>
+                  <div className="profile__tabs feed">{renderTabs()}</div>
                </div>
             </React.Fragment>
          )}
