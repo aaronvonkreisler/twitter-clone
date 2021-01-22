@@ -15,7 +15,7 @@ import NewMessageModal from '../components/messages/NewMessageModal';
 
 import '../styles/design/messagePage.css';
 
-const Messages = ({
+const MessagesPage = ({
    getUsersChats,
    startNewChat,
    clearSelectedChat,
@@ -85,7 +85,7 @@ const Messages = ({
    );
 };
 
-Messages.propTypes = {
+MessagesPage.propTypes = {
    getUsersChats: PropTypes.func.isRequired,
    chats: PropTypes.object.isRequired,
 };
@@ -100,4 +100,4 @@ export default connect(mapStateToProps, {
    clearSelectedChat,
    getMessagesForChat,
    openMessageModal,
-})(Messages);
+})(MessagesPage);

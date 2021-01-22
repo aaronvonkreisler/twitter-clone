@@ -147,7 +147,13 @@ const SingleTweet = ({
                      <Linkify options={linkifyOptions}>{tweet.content}</Linkify>
                   </div>
                   <div className="single-tweet-media">
-                     {tweet.image && <ImageDisplay image={tweet.image} />}
+                     {tweet.image && (
+                        <ImageDisplay
+                           image={tweet.image}
+                           fullDisplay
+                           withPreview={false}
+                        />
+                     )}
                   </div>
                   <div className="single-tweet-info">
                      <Moment format="h:MM A · MMM D, YYYY">

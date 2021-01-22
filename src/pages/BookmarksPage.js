@@ -10,7 +10,7 @@ import BookmarksMenu from '../components/bookmarks/BoomarksMenu';
 
 import { getUserBookmarks, clearBookmarkState } from '../actions/bookmarks';
 
-const Bookmarks = ({
+const BookmarksPage = ({
    bookmarks: { bookmarks, loading },
    auth: { user },
    getUserBookmarks,
@@ -70,7 +70,7 @@ const Bookmarks = ({
    );
 };
 
-Bookmarks.propTypes = {
+BookmarksPage.propTypes = {
    getUserBookmarks: PropTypes.func.isRequired,
 };
 
@@ -82,4 +82,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
    getUserBookmarks,
    clearBookmarkState,
-})(Bookmarks);
+})(BookmarksPage);

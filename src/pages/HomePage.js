@@ -12,7 +12,7 @@ import { fetchTimelineTweetsStart, clearTimeline } from '../actions/timeline';
 import { getSidebarSuggestions } from '../actions/suggestions';
 import useScrollPosition from '../hooks/useScrollPosition';
 
-const Home = ({
+const HomePage = ({
    addTweet,
    fetchTimelineTweetsStart,
    clearTimeline,
@@ -86,4 +86,4 @@ export default connect(mapStateToProps, {
    getSidebarSuggestions,
    clearTimeline,
    addTweetWithImage,
-})(Home);
+})(HomePage);
