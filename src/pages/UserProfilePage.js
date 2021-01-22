@@ -19,7 +19,7 @@ import { getProfilePinnedTweet } from '../actions/profile';
 
 import '../styles/design/profile.css';
 
-const UserProfile = ({
+const UserProfilePage = ({
    profiles: { currentProfile, loading },
 
    getProfilePinnedTweet,
@@ -197,4 +197,4 @@ const mapStateToProps = (state) => ({
 });
 export default connect(mapStateToProps, {
    getProfilePinnedTweet,
-})(UserProfile);
+})(UserProfilePage);

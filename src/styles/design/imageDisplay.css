@@ -2,9 +2,6 @@
    border-radius: 16px;
    margin-top: 10px;
    border: 1px solid var(--border-color);
-}
-
-.content-image img {
    display: block;
    max-width: 100%;
 }

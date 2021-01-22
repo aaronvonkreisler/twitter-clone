@@ -28,7 +28,7 @@ import ReplyModal from '../components/forms/ReplyModal';
 import '../styles/design/profile.css';
 import '../styles/design/utils.css';
 
-const SelectedProfile = ({
+const SelectedProfilePage = ({
    getUserByUsername,
    clearProfileState,
    getProfilePinnedTweet,
@@ -228,7 +228,7 @@ const SelectedProfile = ({
    );
 };
 
-SelectedProfile.propTypes = {
+SelectedProfilePage.propTypes = {
    getUserByUsername: PropTypes.func.isRequired,
    followUser: PropTypes.func.isRequired,
    unfollowUser: PropTypes.func.isRequired,
@@ -247,4 +247,4 @@ export default connect(mapStateToProps, {
    clearProfileState,
    getProfilePinnedTweet,
    getOrCreateChat,
-})(SelectedProfile);
+})(SelectedProfilePage);

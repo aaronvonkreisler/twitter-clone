@@ -6,7 +6,7 @@ import { connectSocket } from './actions/socket';
 import { LOG_OUT } from './actions/types';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
-import Landing from './pages/Landing';
+import LandingPage from './pages/LandingPage';
 
 import './App.css';
 
@@ -31,7 +31,7 @@ const App = () => {
          <Router>
             <div className="app">
                <Switch>
-                  <Route exact path="/" component={Landing} />
+                  <Route exact path="/" component={LandingPage} />
                   <Route component={Routes} />
                </Switch>
             </div>
