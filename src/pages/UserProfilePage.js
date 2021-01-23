@@ -8,7 +8,7 @@ import Moment from 'react-moment';
 
 import Header from '../components/layout/Header';
 import Spinner from '../components/layout/Spinner';
-import ProfileTabs from '../components/profile/ProfileTabs';
+
 import ProfileTweets from '../components/profile/ProfileTweets';
 import ProfileReplies from '../components/profile/ProfileReplies';
 import ProfileLikes from '../components/profile/ProfileLikes';
@@ -18,8 +18,9 @@ import EditProfileModal from '../components/forms/EditProfileModal';
 import { getProfilePinnedTweet } from '../actions/profile';
 
 import '../styles/design/profile.css';
+import TabsDisplay from '../components/layout/TabsDisplay';
 
-const UserProfile = ({
+const UserProfilePage = ({
    profiles: { currentProfile, loading },
 
    getProfilePinnedTweet,
@@ -38,6 +39,31 @@ const UserProfile = ({
    useEffect(() => {
       getProfilePinnedTweet(currentProfile.screen_name);
    }, [currentProfile, getProfilePinnedTweet]);
+
+   const renderTabs = () => {
+      const tabsRenderProps = [
+         {
+            label: 'Tweets',
+            component: (
+               <ProfileTweets userId={currentProfile._id} authId={user._id} />
+            ),
+         },
+         {
+            label: 'Tweets & replies',
+            component: (
+               <ProfileReplies userId={currentProfile._id} authId={user._id} />
+            ),
+         },
+         {
+            label: 'Likes',
+            component: (
+               <ProfileLikes userId={currentProfile._id} authId={user._id} />
+            ),
+         },
+      ];
+
+      return <TabsDisplay renderProps={tabsRenderProps} />;
+   };
    return (
       <React.Fragment>
          {loading || currentProfile === null || user === null ? (
@@ -159,31 +185,7 @@ const UserProfile = ({
                         </div>
                      </div>
                   </div>
-                  <div className="profile__tabs feed">
-                     <ProfileTabs
-                        tab1={
-                           <ProfileTweets
-                              userId={currentProfile._id}
-                              authId={user._id}
-                           />
-                        }
-                        tab2={
-                           <ProfileReplies
-                              userId={currentProfile._id}
-                              authId={user._id}
-                           />
-                        }
-                        tab3={
-                           <ProfileLikes
-                              userId={currentProfile._id}
-                              authId={user._id}
-                           />
-                        }
-                        tab1Text="Tweets"
-                        tab2Text="Tweets & replies"
-                        tab3Text="Likes"
-                     />
-                  </div>
+                  <div className="profile__tabs feed">{renderTabs()}</div>
                </div>
             </React.Fragment>
          )}
@@ -197,4 +199,4 @@ const mapStateToProps = (state) => ({
 });
 export default connect(mapStateToProps, {
    getProfilePinnedTweet,
-})(UserProfile);
+})(UserProfilePage);

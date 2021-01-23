@@ -2,20 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CgClose } from 'react-icons/cg';
-import {
-   Dialog,
-   DialogTitle,
-   DialogContent,
-   useMediaQuery,
-   useTheme,
-} from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import { addTweet } from '../../actions/tweets';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import TweetFormWrapper from './TweetFormWrapper';
 import '../../styles/design/replyModal.css';
 
 const ComposeModal = ({ addTweet, open, setOpen }) => {
-   const theme = useTheme();
-   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+   const fullScreen = useMediaQuery('(max-width: 500px)');
 
    const onFormSubmit = (content) => {
       addTweet({ content });
@@ -41,12 +35,13 @@ const ComposeModal = ({ addTweet, open, setOpen }) => {
                   </div>
                </div>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent style={{ overflowY: 'initial' }}>
                <TweetFormWrapper
                   onTweetSubmit={onFormSubmit}
                   bottomBorder={false}
                   withMultipleRows
                />
+               {fullScreen && <div style={{ minHeight: '100px' }}></div>}
             </DialogContent>
          </Dialog>
       </div>

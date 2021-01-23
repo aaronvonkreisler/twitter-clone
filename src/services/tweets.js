@@ -1,9 +1,18 @@
 import api from '../utils/api';
-
+import { multipartApi } from '../utils/api';
 export const submitTweet = async (tweet) => {
    try {
       const res = await api.post('/api/tweets', tweet);
 
+      return res.data;
+   } catch (err) {
+      throw new Error(err.response.data);
+   }
+};
+
+export const submitImageTweet = async (formData) => {
+   try {
+      const res = await multipartApi.post('/api/tweets/image', formData);
       return res.data;
    } catch (err) {
       throw new Error(err.response.data);
@@ -69,6 +78,15 @@ export const unfavorite = async (id) => {
 export const submitReply = async (id, reply) => {
    try {
       const res = await api.post(`/api/tweets/comment/${id}`, reply);
+      return res.data;
+   } catch (err) {
+      throw new Error(err.response.data);
+   }
+};
+
+export const submitImageReply = async (id, formData) => {
+   try {
+      const res = await api.post(`/api/tweets/comment/${id}/image`, formData);
       return res.data;
    } catch (err) {
       throw new Error(err.response.data);

@@ -42,6 +42,7 @@ const ProfileReplies = ({
                ))}
             </React.Fragment>
          )}
+         <div style={{ width: '100%', minHeight: '500px' }} />
       </React.Fragment>
    );
 };

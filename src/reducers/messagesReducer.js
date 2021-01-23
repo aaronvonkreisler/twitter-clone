@@ -13,6 +13,7 @@ import {
    CLEAR_MESSAGES,
    FETCH_MESSAGES_SUCCESS,
    FETCH_MESSAGES_START,
+   UPDATE_MESSAGES,
 } from '../actions/types';
 
 const initialState = {
@@ -63,8 +64,18 @@ export default function (state = initialState, action) {
             ),
          };
       }
-      case FETCH_INBOX_ERROR:
+      case UPDATE_MESSAGES:
+         return {
+            ...state,
+            messages: [...state.messages, payload],
+         };
       case DM_ERROR:
+         return {
+            ...state,
+            error: payload,
+            sendingMessage: false,
+         };
+      case FETCH_INBOX_ERROR:
          return {
             ...state,
             error: payload,

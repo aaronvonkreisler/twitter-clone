@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import Header from '../components/layout/Header';
-import { addTweet } from '../actions/tweets';
+import { addTweet, addTweetWithImage } from '../actions/tweets';
 
 import TweetFormWrapper from '../components/forms/TweetFormWrapper';
 import Feed from '../components/feed/Feed';
@@ -12,11 +12,12 @@ import { fetchTimelineTweetsStart, clearTimeline } from '../actions/timeline';
 import { getSidebarSuggestions } from '../actions/suggestions';
 import useScrollPosition from '../hooks/useScrollPosition';
 
-const Home = ({
+const HomePage = ({
    addTweet,
    fetchTimelineTweetsStart,
    clearTimeline,
    getSidebarSuggestions,
+   addTweetWithImage,
    timeline: { fetching, hasMore, tweets },
 }) => {
    useEffect(() => {
@@ -47,6 +48,10 @@ const Home = ({
       addTweet(tweet);
    };
 
+   const onTweetWithImageSubmit = (formData) => {
+      addTweetWithImage(formData);
+   };
+
    return (
       <React.Fragment>
          <Header
@@ -59,7 +64,11 @@ const Home = ({
             <NoTweets />
          ) : (
             <React.Fragment>
-               <TweetFormWrapper bottomBorder onTweetSubmit={onTweetSubmit} />
+               <TweetFormWrapper
+                  bottomBorder
+                  onTweetSubmit={onTweetSubmit}
+                  onTweetWithImageSubmit={onTweetWithImageSubmit}
+               />
                <Feed />
             </React.Fragment>
          )}
@@ -76,4 +85,5 @@ export default connect(mapStateToProps, {
    fetchTimelineTweetsStart,
    getSidebarSuggestions,
    clearTimeline,
-})(Home);
+   addTweetWithImage,
+})(HomePage);

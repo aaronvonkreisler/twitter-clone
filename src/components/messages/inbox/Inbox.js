@@ -9,9 +9,10 @@ import Spinner from '../../layout/Spinner';
 import InboxItem from './InboxItem';
 import '../../../styles/design/inbox.css';
 import { selectChat, clearSelectedChat } from '../../../actions/chats';
+import { openMessageModal } from '../../../actions/modal';
 
 const Inbox = memo(function Inbox({
-   setModalOpen,
+   openMessageModal,
    inbox,
    fetching,
    authId,
@@ -51,7 +52,7 @@ const Inbox = memo(function Inbox({
             rightIcon
             IconComponent={FiMail}
             overrideStyle={iconStyle}
-            onRightIconClick={() => setModalOpen(true)}
+            onRightIconClick={() => openMessageModal()}
          />
          <div className="inbox-search">
             <Searchbar
@@ -80,10 +81,14 @@ const Inbox = memo(function Inbox({
 });
 
 Inbox.propTypes = {
-   setModalOpen: PropTypes.func.isRequired,
+   openMessageModal: PropTypes.func.isRequired,
    inbox: PropTypes.array.isRequired,
    fetching: PropTypes.bool.isRequired,
    clearSelectedChat: PropTypes.func.isRequired,
 };
 
-export default connect(null, { selectChat, clearSelectedChat })(Inbox);
+export default connect(null, {
+   selectChat,
+   clearSelectedChat,
+   openMessageModal,
+})(Inbox);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64, uploadPhotoForTweet } from '../../utils/imageService';
+import { getBase64 } from '../../utils/imageService';
 
 import { photoUploadError } from '../../actions/tweets';
 import { useDebouncedSearch } from '../../hooks/useDebouncedSearch';
@@ -13,6 +13,7 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    auth: { user, loading },
    bottomBorder,
    onTweetSubmit,
+   onTweetWithImageSubmit,
    photoUploadError,
    withEmojiMenuAbove,
    withMultipleRows,
@@ -21,14 +22,12 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
 
    const [mention, setMention] = useState(false);
    const [imagePreview, setImagePreview] = useState(null);
-   const [imageFile, setImageFile] = useState(null);
+   const [fileToUpload, setFileToUpload] = useState(null);
    const [tweetLength, setTweetLength] = useState(0);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
    const [tweet, setTweet] = useState({
       content: '',
       image: null,
-      mentions: [],
-      hashtag: [],
    });
 
    let {
@@ -53,7 +52,7 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
 
       if (file.type.match(regex)) {
          getBase64(file).then((data) => setImagePreview(data));
-         setImageFile(file);
+         setFileToUpload(file);
       } else {
          handleRemoveImage();
          photoUploadError();
@@ -97,25 +96,38 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
    };
 
    const handleTweetSubmit = (e) => {
-      onTweetSubmit(tweet);
-      setTweet({
-         content: '',
-         image: null,
-         mentions: [],
-         hashtags: [],
-      });
-      setImagePreview(null);
-      setTweetLength(0);
+      if (fileToUpload !== null) {
+         const formData = new FormData();
+         formData.set('content', tweet.content);
+         formData.append('image', fileToUpload);
+         onTweetWithImageSubmit(formData);
+         setTweet({
+            content: '',
+            image: null,
+         });
+         setImagePreview(null);
+         setTweetLength(0);
+         setFileToUpload(null);
+      } else {
+         onTweetSubmit(tweet);
+         setTweet({
+            content: '',
+            image: null,
+         });
+         setImagePreview(null);
+         setTweetLength(0);
+         setFileToUpload(null);
+      }
    };
 
    const handleRemoveImage = useCallback(() => {
       setImagePreview(null);
-      setImageFile(null);
+      setFileToUpload(null);
       setTweet({ ...tweet, image: null });
    }, [tweet]);
 
    const handleEmojiClose = useCallback((e) => {
-      if (emojiPickerRef.current.contains(e.target)) {
+      if (emojiPickerRef.current && emojiPickerRef.current.contains(e.target)) {
          return;
       } else {
          setEmojiMenuOpen(false);
@@ -134,24 +146,24 @@ const TweetFormWrapper = React.memo(function TweetFormWrapper({
       }
    }, [emojiMenuOpen, handleEmojiClose]);
 
-   useEffect(() => {
-      async function uploadImageToDb() {
-         const validImage = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
+   // useEffect(() => {
+   //    async function uploadImageToDb() {
+   //       const validImage = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
 
-         if (imageFile !== null) {
-            if (imageFile.type.match(validImage)) {
-               const imagePath = await uploadPhotoForTweet(imageFile);
-               setTweet({ ...tweet, image: imagePath });
-               setImageFile(null);
-            } else {
-               handleRemoveImage();
-               photoUploadError();
-            }
-         }
-      }
+   //       if (imageFile !== null) {
+   //          if (imageFile.type.match(validImage)) {
+   //             const imagePath = await uploadPhotoForTweet(imageFile);
+   //             setTweet({ ...tweet, image: imagePath });
+   //             setImageFile(null);
+   //          } else {
+   //             handleRemoveImage();
+   //             photoUploadError();
+   //          }
+   //       }
+   //    }
 
-      uploadImageToDb();
-   }, [handleRemoveImage, imageFile, photoUploadError, tweet]);
+   //    uploadImageToDb();
+   // }, [handleRemoveImage, imageFile, photoUploadError, tweet]);
 
    return (
       <TweetForm

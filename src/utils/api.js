@@ -2,10 +2,24 @@ import axios from 'axios';
 // import store from '../store/store';
 // import { LOG_OUT } from '../actions/types';
 
+let endpoint;
+
+if (process.env.NODE_ENV === 'development') {
+   endpoint = 'http://localhost:5000';
+} else {
+   endpoint = 'https://tweeter-v1-api.herokuapp.com/';
+}
 const api = axios.create({
-   baseURL: 'https://tweeter-v1-api.herokuapp.com/',
+   baseURL: endpoint,
    headers: {
       'Content-Type': 'application/json',
+   },
+});
+
+export const multipartApi = axios.create({
+   baseURL: endpoint,
+   headers: {
+      'Content-Type': 'multipart/form-data',
    },
 });
 

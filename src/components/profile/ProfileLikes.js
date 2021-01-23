@@ -30,6 +30,7 @@ const ProfileLikes = ({
                />
             ))
          )}
+         <div style={{ width: '100%', minHeight: '500px' }} />
       </React.Fragment>
    );
 };

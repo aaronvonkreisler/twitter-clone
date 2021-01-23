@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getProfileTweets } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import Tweet from '../tweets/Tweet';
-
 import PropTypes from 'prop-types';
 
 const ProfileTweets = ({
@@ -45,6 +44,7 @@ const ProfileTweets = ({
                ))}
             </React.Fragment>
          )}
+         <div style={{ width: '100%', minHeight: '500px' }} />
       </React.Fragment>
    );
 };

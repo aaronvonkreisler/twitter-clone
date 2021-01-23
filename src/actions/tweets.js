@@ -11,6 +11,8 @@ import {
    submitReply,
    pinTweet,
    getLikedUsers,
+   submitImageTweet,
+   submitImageReply,
 } from '../services/tweets';
 import {
    GET_TWEET,
@@ -82,9 +84,20 @@ export const addTweet = (tweet) => async (dispatch) => {
    }
 };
 
-// TODO -- dispatching getTimeLineTweets is expensive. Rather than doing this,
-// the API response needs to send the actual retweet that has the "retweetData" key,
-// so that we can push the response to the tweets state rather than re rendering everything.
+export const addTweetWithImage = (formData) => async (dispatch) => {
+   try {
+      const response = await submitImageTweet(formData);
+      dispatch({
+         type: ADD_TWEET,
+         payload: response,
+      });
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: err.message,
+      });
+   }
+};
 export const retweet = (id) => async (dispatch) => {
    try {
       const response = await submitRetweet(id);
@@ -152,6 +165,36 @@ export const removeFavorite = (id) => async (dispatch) => {
 export const replyToTweet = (id, reply, location) => async (dispatch) => {
    try {
       const response = await submitReply(id, reply);
+      if (location.pathname === '/home') {
+         dispatch({
+            type: REPLY_TO_TWEET_FROM_HOME,
+            payload: { id, replies: response },
+         });
+         dispatch(setAlert('Reply sent', 'info'));
+      } else {
+         dispatch({
+            type: REPLY_TO_TWEET_FROM_STATUS,
+            payload: response,
+         });
+      }
+   } catch (err) {
+      dispatch({
+         type: TWEETS_ERROR,
+         payload: err.message,
+      });
+
+      dispatch(
+         setAlert('There was an error sending your reply. Try again.', 'info')
+      );
+   }
+};
+
+export const replyToTweetWithImage = (id, formData, location) => async (
+   dispatch
+) => {
+   try {
+      const response = await submitImageReply(id, formData);
+
       if (location.pathname === '/home') {
          dispatch({
             type: REPLY_TO_TWEET_FROM_HOME,

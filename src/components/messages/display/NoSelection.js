@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../styles/design/noSelection.css';
 
-const NoSelection = ({ setModalOpen }) => {
+const NoSelection = ({ openMessageModal }) => {
    return (
       <div className="no-selection">
          <div className="primary-text">
@@ -15,7 +15,7 @@ const NoSelection = ({ setModalOpen }) => {
          <div className="action">
             <button
                className="message-button"
-               onClick={() => setModalOpen(true)}
+               onClick={() => openMessageModal()}
             >
                <span className="button-text">New message</span>
             </button>

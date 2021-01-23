@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -6,6 +6,7 @@ import {
    startNewChat,
    clearSelectedChat,
 } from '../actions/chats';
+import { openMessageModal } from '../actions/modal';
 import { getMessagesForChat } from '../actions/messages';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import Inbox from '../components/messages/inbox/Inbox';
@@ -14,15 +15,15 @@ import NewMessageModal from '../components/messages/NewMessageModal';
 
 import '../styles/design/messagePage.css';
 
-const Messages = ({
+const MessagesPage = ({
    getUsersChats,
    startNewChat,
    clearSelectedChat,
    getMessagesForChat,
+   openMessageModal,
    chats,
    auth: { user },
 }) => {
-   const [modalOpen, setModalOpen] = useState(false);
    const fullScreen = useMediaQuery('(min-width:1005px)');
 
    useEffect(() => {
@@ -44,25 +45,20 @@ const Messages = ({
 
    return (
       <Fragment>
-         <NewMessageModal
-            open={modalOpen}
-            setOpen={setModalOpen}
-            startNewChat={startNewChat}
-         />
+         <NewMessageModal startNewChat={startNewChat} />
 
          <div className="message-page">
             {user !== null && fullScreen && (
                <Fragment>
                   <section className="message-inbox">
                      <Inbox
-                        setModalOpen={setModalOpen}
                         inbox={chats.inbox}
                         fetching={chats.fetchingInbox}
                         authId={user._id}
                      />
                   </section>
                   <section className="message-view">
-                     <MessageDisplay setModalOpen={setModalOpen} />
+                     <MessageDisplay openMessageModal={openMessageModal} />
                   </section>
                </Fragment>
             )}
@@ -71,7 +67,6 @@ const Messages = ({
                (chats.selectedChat === null ? (
                   <section className="message-inbox">
                      <Inbox
-                        setModalOpen={setModalOpen}
                         inbox={chats.inbox}
                         fetching={chats.fetchingInbox}
                         authId={user._id}
@@ -79,7 +74,10 @@ const Messages = ({
                   </section>
                ) : (
                   <section className="message-room">
-                     <MessageDisplay setModalOpen={setModalOpen} withBackIcon />
+                     <MessageDisplay
+                        openMessageModal={openMessageModal}
+                        withBackIcon
+                     />
                   </section>
                ))}
          </div>
@@ -87,7 +85,7 @@ const Messages = ({
    );
 };
 
-Messages.propTypes = {
+MessagesPage.propTypes = {
    getUsersChats: PropTypes.func.isRequired,
    chats: PropTypes.object.isRequired,
 };
@@ -101,4 +99,5 @@ export default connect(mapStateToProps, {
    startNewChat,
    clearSelectedChat,
    getMessagesForChat,
-})(Messages);
+   openMessageModal,
+})(MessagesPage);

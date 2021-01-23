@@ -8,7 +8,7 @@
 
 .chat-form {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    align-items: center;
    justify-content: center;
    color: #fff;
@@ -17,6 +17,25 @@
    position: relative;
 }
 
+.chat-form .progress-bar {
+   display: flex;
+   flex-direction: row;
+   align-items: stretch;
+   justify-content: center;
+   width: 100%;
+}
+
+.chat-form .progress-bar .MuiLinearProgress-colorPrimary {
+   background-color: var(--background-dark) !important;
+   width: 100%;
+}
+
+.chat-form .progress-bar .MuiLinearProgress-barColorPrimary {
+   background-color: var(--twitter-color) !important;
+}
+.chat-form .progress-bar .MuiLinearProgress-root {
+   height: 2px !important;
+}
 .chat-form .emoji-wrapper {
    position: absolute;
    bottom: 101%;
@@ -87,7 +106,6 @@
    border-radius: 4px;
    height: 1.15em;
    width: 1.15em;
-   padding: 1px;
 }
 .chat-form-row .icon-button.emoji {
    height: 30px;

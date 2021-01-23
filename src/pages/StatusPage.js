@@ -16,7 +16,7 @@ import SingleTweet from '../components/tweets/SingleTweet';
 
 import Tweet from '../components/tweets/Tweet';
 
-const Status = ({
+const StatusPage = ({
    tweets: { tweet, loading, tweetReady, replies, fetchingReplies },
    auth: { user },
    getTweet,
@@ -94,7 +94,7 @@ const Status = ({
    );
 };
 
-Status.propTypes = {
+StatusPage.propTypes = {
    getTweet: PropTypes.func.isRequired,
    getTweetsReplies: PropTypes.func.isRequired,
    setTweetInModal: PropTypes.func.isRequired,
@@ -115,4 +115,4 @@ export default connect(mapStateToProps, {
    openModal,
    clearLikes,
    getTweetsLikedUsers,
-})(Status);
+})(StatusPage);

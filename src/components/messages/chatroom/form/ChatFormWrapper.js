@@ -7,19 +7,26 @@ import React, {
 } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64, uploadPhotoForTweet } from '../../../../utils/imageService';
+import { getBase64 } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal, closeGifModal } from '../../../../actions/modal';
-import { sendDirectMessage } from '../../../../actions/messages';
+import {
+   sendDirectMessage,
+   sendDirectMessageWithImage,
+} from '../../../../actions/messages';
 import ChatFormDisplay from './ChatFormDisplay';
 import GifModal from '../../../forms/GifModal';
 
 const ChatFormWrapper = ({
    photoUploadError,
    sendDirectMessage,
+   sendDirectMessageWithImage,
    openGifModal,
    closeGifModal,
    chatId,
+   updateTypingIndicator,
+   endTypingIndicatorOnSend,
+   chats: { sendingMessage, selectedChat },
 }) => {
    const [displayImageButtons, setDisplayImageButtons] = useState(true);
    const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
@@ -76,14 +83,34 @@ const ChatFormWrapper = ({
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      sendDirectMessage(message);
-      setMessage({
-         content: '',
-         image: null,
-         chatId,
-      });
-      setImageBlob(null);
-      setDisplayImageButtons(true);
+      if (fileToUpload !== null) {
+         const formData = new FormData();
+         formData.append('image', fileToUpload);
+         formData.set('content', message.content);
+         formData.set('chatId', message.chatId);
+
+         // Send message to route that handles files
+         sendDirectMessageWithImage(formData, selectedChat);
+         endTypingIndicatorOnSend();
+         setMessage({
+            content: '',
+            image: null,
+            chatId,
+         });
+         setImageBlob(null);
+         setFileToUpload(null);
+         setDisplayImageButtons(true);
+      } else {
+         sendDirectMessage(message, selectedChat);
+         endTypingIndicatorOnSend();
+         setMessage({
+            content: '',
+            image: null,
+            chatId,
+         });
+         setImageBlob(null);
+         setDisplayImageButtons(true);
+      }
    };
 
    const onEmojiClick = (e, emojiObject) => {
@@ -104,6 +131,22 @@ const ChatFormWrapper = ({
       }
    }, []);
 
+   // Listen for typing to notify other user
+   const handleKeyPress = useCallback(
+      (e) => {
+         updateTypingIndicator();
+      },
+      [updateTypingIndicator]
+   );
+
+   useEffect(() => {
+      document.addEventListener('keydown', handleKeyPress);
+
+      return () => {
+         document.removeEventListener('keydown', handleKeyPress);
+      };
+   }, [handleKeyPress]);
+
    useEffect(() => {
       if (emojiMenuOpen) {
          document.addEventListener('mousedown', handleEmojiClose);
@@ -117,17 +160,6 @@ const ChatFormWrapper = ({
       const shouldDisable = noContent || emptyMessage;
       setSendDisabled(shouldDisable);
    }, [message, imageBlob]);
-
-   useEffect(() => {
-      async function uploadImageToDb() {
-         if (fileToUpload !== null) {
-            const imagePath = await uploadPhotoForTweet(fileToUpload);
-            setMessage({ ...message, image: imagePath });
-            setFileToUpload(null);
-         }
-      }
-      uploadImageToDb();
-   }, [fileToUpload, message]);
 
    return (
       <Fragment>
@@ -148,6 +180,7 @@ const ChatFormWrapper = ({
             handleRemoveImage={handleRemoveImage}
             openGifModal={openGifModal}
             handleGifClick={handleGifClick}
+            sendingMessage={sendingMessage}
          />
       </Fragment>
    );
@@ -157,9 +190,14 @@ ChatFormWrapper.propTypes = {
    photoUploadError: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+   chats: state.chats,
+});
+
+export default connect(mapStateToProps, {
    photoUploadError,
    openGifModal,
    closeGifModal,
    sendDirectMessage,
+   sendDirectMessageWithImage,
 })(ChatFormWrapper);

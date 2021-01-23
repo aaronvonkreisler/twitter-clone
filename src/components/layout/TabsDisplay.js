@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { AppBar, Tabs, Tab, withStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const TabPanel = (props) => {
    const { children, value, index, ...other } = props;
@@ -64,7 +65,7 @@ const StyledTab = withStyles({
    },
 })((props) => <Tab disableRipple {...props} />);
 
-const ProfileTabs = ({ tab1, tab2, tab3, tab1Text, tab2Text, tab3Text }) => {
+const TabsDisplay = ({ renderProps }) => {
    const [value, setValue] = useState(0);
 
    const handleChange = (event, newValue) => {
@@ -83,24 +84,26 @@ const ProfileTabs = ({ tab1, tab2, tab3, tab1Text, tab2Text, tab3Text }) => {
                variant="fullWidth"
                aria-label="Profile tabs"
             >
-               <StyledTab label={tab1Text} {...a11yProps(0)} />
-               <StyledTab label={tab2Text} {...a11yProps(1)} />
-               <StyledTab label={tab3Text} {...a11yProps(2)} />
+               {renderProps.map((item, index) => (
+                  <StyledTab
+                     label={item.label}
+                     {...a11yProps(index)}
+                     key={item.label}
+                  />
+               ))}
             </TweeterTabs>
          </AppBar>
-         <TabPanel value={value} index={0}>
-            {tab1}
-         </TabPanel>
-         <TabPanel value={value} index={1}>
-            {tab2}
-         </TabPanel>
-         <TabPanel value={value} index={2}>
-            {tab3}
-         </TabPanel>
+         {renderProps.map((item, index) => (
+            <TabPanel value={value} index={index} key={index}>
+               {item.component}
+            </TabPanel>
+         ))}
       </div>
    );
 };
 
-ProfileTabs.propTypes = {};
+TabsDisplay.propTypes = {
+   renderProps: PropTypes.array.isRequired,
+};
 
-export default ProfileTabs;
+export default TabsDisplay;
