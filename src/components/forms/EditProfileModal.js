@@ -93,7 +93,7 @@ const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
                 </IconButton>
               </div>
               <div className="userImage__container">
-                <Avatar src={profile.avatar} alt="User profile" />
+                <Avatar src={profile.avatar} alt={profile.name} />
                 <IconButton
                   className="profilePictureButton"
                   onClick={() => setProfilePicOpen(true)}
@@ -112,7 +112,6 @@ const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
                 counter
                 maxLength={50}
                 count={formData.name.length}
-                style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
                 inputName="bio"
@@ -125,7 +124,6 @@ const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
                 count={formData.bio.length}
                 maxLength={160}
                 rows={3}
-                style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
                 inputName="location"
@@ -136,7 +134,6 @@ const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
                 counter
                 count={formData.location.length}
                 maxLength={30}
-                style={{ width: '100%', paddingLeft: '15px' }}
               />
               <TextBox
                 inputName="website"
@@ -147,7 +144,6 @@ const EditProfileModal = ({ open, setOpen, profile, editProfile }) => {
                 counter
                 count={formData.website.length}
                 maxLength={100}
-                style={{ width: '100%', paddingLeft: '15px' }}
               />
             </div>
           </div>

@@ -17,107 +17,109 @@ import MoreMenu from './MoreMenu';
 import '../../styles/design/navbar.css';
 
 const Sidebar = memo(function Sidebar({
-   setModalOpen,
-   withMessages,
-   openMessageModal,
+  setModalOpen,
+  withMessages,
+  openMessageModal,
 }) {
-   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-   const navItems = [
-      { text: 'Home', path: '/home', icon: BiHomeCircle },
-      {
-         text: 'Explore',
-         path: '/explore',
-         icon: BiHash,
-         hideSmall: true,
-      },
-      {
-         text: 'Notifications',
-         path: '/notifications',
-         icon: FaRegBell,
-         hideSmall: false,
-         hideMedium: false,
-      },
-      {
-         text: 'Messages',
-         path: '/messages',
-         icon: FiMail,
-         hideSmall: false,
-         hideMedium: false,
-      },
-      {
-         text: 'Bookmarks',
-         path: '/bookmarks',
-         icon: BiBookmark,
-         hideSmall: true,
-         hideMedium: true,
-      },
+  const navItems = [
+    { text: 'Home', path: '/home', icon: BiHomeCircle },
+    {
+      text: 'Explore',
+      path: '/explore',
+      icon: BiHash,
+      hideSmall: true,
+    },
+    {
+      text: 'Notifications',
+      path: '/notifications',
+      icon: FaRegBell,
+      hideSmall: false,
+      hideMedium: false,
+    },
+    {
+      text: 'Messages',
+      path: '/messages',
+      icon: FiMail,
+      hideSmall: false,
+      hideMedium: false,
+    },
+    {
+      text: 'Bookmarks',
+      path: '/bookmarks',
+      icon: BiBookmark,
+      hideSmall: true,
+      hideMedium: true,
+    },
 
-      {
-         text: 'Profile',
-         path: '/profile',
-         icon: BsPerson,
-         hideSmall: false,
-         hideMedium: false,
-      },
-   ];
-   return (
-      <React.Fragment>
-         <div className="main-nav-wrapper">
-            <Link to="/home" className="nav-logo">
-               <span className="icon">
-                  <FaTwitter />
-               </span>
-            </Link>
-            <ul className="main-nav-list">
-               {navItems.map((item, index) => (
-                  <MenuButton
-                     key={index}
-                     path={item.path}
-                     Icon={item.icon}
-                     text={item.text}
-                     hideSmall={item.hideSmall}
-                     hideMedium={item.hideMedium}
-                  />
-               ))}
-               <MoreMenu
-                  open={Boolean(anchorEl)}
-                  setAnchorEl={setAnchorEl}
-                  anchorEl={anchorEl}
-               />
-               <MenuButton
-                  text="More"
-                  link={false}
-                  Icon={CgMoreO}
-                  hideSmall={true}
-                  hideMedium={false}
-                  onClick={(e) => setAnchorEl(e.currentTarget)}
-               />
-               <li className="main-nav-item nav-tweet-button">
-                  <button
-                     className="common-button full-width large-height"
-                     onClick={
-                        // withMessages ? openMessageModal() : setModalOpen(true)
-                        () => {
-                           if (withMessages) {
-                              openMessageModal();
-                           } else {
-                              setModalOpen(true);
-                           }
-                        }
-                     }
-                  >
-                     <span className="icon icon-tweet">
-                        {withMessages ? <HiOutlineMail /> : <RiQuillPenLine />}
-                     </span>
-                     <span className="text">Tweet</span>
-                  </button>
-               </li>
-            </ul>
-         </div>
-         <UserMenu />
-      </React.Fragment>
-   );
+    {
+      text: 'Profile',
+      path: '/profile',
+      icon: BsPerson,
+      hideSmall: false,
+      hideMedium: false,
+    },
+  ];
+  return (
+    <React.Fragment>
+      <div className="main-nav-wrapper">
+        <Link to="/home" className="nav-logo">
+          <span className="icon">
+            <FaTwitter />
+          </span>
+        </Link>
+        <ul className="main-nav-list">
+          {navItems.map((item, index) => (
+            <MenuButton
+              key={index}
+              path={item.path}
+              Icon={item.icon}
+              text={item.text}
+              hideSmall={item.hideSmall}
+              hideMedium={item.hideMedium}
+            />
+          ))}
+          <MoreMenu
+            open={Boolean(anchorEl)}
+            setAnchorEl={setAnchorEl}
+            anchorEl={anchorEl}
+          />
+          <MenuButton
+            text="More"
+            link={false}
+            Icon={CgMoreO}
+            hideSmall={true}
+            hideMedium={false}
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+          />
+          <li className="main-nav-item nav-tweet-button">
+            <button
+              className="common-button full-width large-height"
+              onClick={
+                // withMessages ? openMessageModal() : setModalOpen(true)
+                () => {
+                  if (withMessages) {
+                    openMessageModal();
+                  } else {
+                    setModalOpen(true);
+                  }
+                }
+              }
+            >
+              <span className="icon icon-tweet">
+                {withMessages ? <HiOutlineMail /> : <RiQuillPenLine />}
+              </span>
+              <span className="text">
+                {withMessages ? 'New Message' : 'Tweet'}
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <UserMenu />
+    </React.Fragment>
+  );
 });
 
 export default React.memo(Sidebar);

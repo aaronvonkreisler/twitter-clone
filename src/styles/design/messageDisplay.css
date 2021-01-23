@@ -7,10 +7,11 @@
 }
 
 .chat-form {
-   /* display: flex;
+   display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: center; */
+   justify-content: center;
+   flex-shrink: 0;
    color: #fff;
    width: 100%;
    z-index: 4;
