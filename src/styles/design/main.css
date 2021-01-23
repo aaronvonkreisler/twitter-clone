@@ -12,6 +12,7 @@ $break5open:"(min-width:1282px)"; */
    display: grid;
    justify-content: center;
    min-height: 100vh;
+   min-height: -webkit-fill-available;
    margin: 0 auto;
 }
 
@@ -61,6 +62,7 @@ $break5open:"(min-width:1282px)"; */
    position: sticky;
    top: 0;
    max-height: 100vh;
+   max-height: -webkit-fill-available;
    overflow: auto;
    background-color: var(--background-dark);
    border-right: 1px solid var(--border-color);
