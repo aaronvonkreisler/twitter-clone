@@ -142,21 +142,40 @@
    border-radius: 16px;
 }
 
-.message.mine.first .message-body {
+.message.mine.first .message-body,
+.message.mine.first .image-container img {
    border-bottom-right-radius: 0;
 }
 
-.message.mine:not(.first):not(.last) .message-body {
+.message.mine:not(.first):not(.last) .message-body,
+.message.mine:not(.first):not(.last) .image-container.no-text img {
    border-bottom-right-radius: 0;
    border-top-right-radius: 0;
+}
+.message.mine.last .image-container.no-text img {
+   border-bottom-right-radius: 16px;
 }
 
 .message.mine.last .message-body {
    border-top-right-radius: 0;
    border-bottom-right-radius: 16px;
 }
+.message.mine.last .image-container img {
+   border-top-right-radius: 16px;
+   border-bottom-right-radius: 0px;
+}
 
-.message.mine.last:not(.first) .message-body {
+.message.theirs.last .image-container img {
+   border-top-left-radius: 0px;
+   border-bottom-left-radius: 0px;
+}
+
+.message.theirs.last .image-container.no-text img {
+   border-bottom-left-radius: 16px;
+}
+
+.message.mine.last:not(.first) .message-body,
+.message.mine.last .image-container img {
    border-top-right-radius: 0;
 }
 
@@ -165,7 +184,8 @@
    border-bottom-left-radius: 0;
 }
 
-.message.theirs:not(.first):not(.last) .message-body {
+.message.theirs:not(.first):not(.last) .message-body,
+.message.theirs:not(.first):not(.last) .image-container.no-text img {
    border-bottom-left-radius: 0;
    border-top-left-radius: 0;
 }

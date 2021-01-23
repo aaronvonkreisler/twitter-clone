@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { loadUser } from './actions/auth';
-import { connectSocket } from './actions/socket';
 import { LOG_OUT } from './actions/types';
 import setAuthToken from './utils/setAuthToken';
 import Routes from './routes/Routes';
@@ -13,6 +12,7 @@ import './App.css';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { socket } from './services/socketService';
 
 const App = () => {
    useEffect(() => {
@@ -20,7 +20,7 @@ const App = () => {
          setAuthToken(localStorage.token);
       }
       store.dispatch(loadUser());
-      store.dispatch(connectSocket());
+      socket.connect();
       window.addEventListener('storage', () => {
          if (!localStorage.token) store.dispatch({ type: LOG_OUT });
       });
