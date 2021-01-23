@@ -34,14 +34,18 @@ const ChatRoom = ({
    }, [chat]);
 
    useEffect(() => {
-      socket.on(
-         'typing',
-         () => (document.getElementById('typing-dots').style.display = 'block')
-      );
-      socket.on(
-         'stop typing',
-         () => (document.getElementById('typing-dots').style.display = 'none')
-      );
+      socket.on('typing', () => {
+         const typingDots = document.getElementById('typing-dots');
+         if (typingDots !== null) {
+            typingDots.style.display = 'block';
+         }
+      });
+      socket.on('stop typing', () => {
+         const typingDots = document.getElementById('typing-dots');
+         if (typingDots !== null) {
+            typingDots.style.display = 'none';
+         }
+      });
    }, []);
 
    const updateTypingIndicator = () => {

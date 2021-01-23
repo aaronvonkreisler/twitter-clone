@@ -9,5 +9,5 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export const socket = io(endpoint, {
-   query: { token: localStorage.getItem('token') },
+   autoConnect: false,
 });

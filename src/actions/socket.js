@@ -5,6 +5,7 @@ import store from '../store/store';
 import { updateMessages } from './messages';
 
 export const connectSocket = () => (dispatch) => {
+   socket.connect();
    dispatch({
       type: CONNECT_SOCKET,
       payload: socket,

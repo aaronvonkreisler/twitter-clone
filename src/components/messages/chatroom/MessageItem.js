@@ -7,7 +7,8 @@ import '../../../styles/design/chatBody.css';
 const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
    const isMine = message.sender._id === authId;
    let messageOwnerClass = isMine ? 'mine' : 'theirs';
-
+   let emptyTextClass =
+      message.content && message.content.length > 0 ? '' : 'no-text';
    const sender = message.sender;
 
    const currentSenderId = sender._id;
@@ -50,15 +51,15 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
 
          <div className="message-container">
             {message.image && (
-               <div className="image-container">
+               <div className={`image-container ${emptyTextClass}`}>
                   <img src={message.image} alt="" />
                </div>
             )}
-            <div className="message-body">
-               {message.content && (
+            {message.content && (
+               <div className="message-body">
                   <span className="text">{message.content}</span>
-               )}
-            </div>
+               </div>
+            )}
             {isLast && (
                <div className="time-stamp">
                   <Moment className="text" fromNow>
