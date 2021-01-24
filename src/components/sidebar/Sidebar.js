@@ -4,7 +4,6 @@ import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
 import { BiHomeCircle } from 'react-icons/bi';
 import { FaTwitter } from 'react-icons/fa';
-import { BiHash } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import { BiBookmark } from 'react-icons/bi';
