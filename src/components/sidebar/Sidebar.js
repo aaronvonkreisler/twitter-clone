@@ -4,7 +4,6 @@ import MenuButton from './MenuButton';
 import UserMenu from './UserMenu';
 import { BiHomeCircle } from 'react-icons/bi';
 import { FaTwitter } from 'react-icons/fa';
-import { BiHash } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import { BiBookmark } from 'react-icons/bi';
@@ -25,12 +24,7 @@ const Sidebar = memo(function Sidebar({
 
    const navItems = [
       { text: 'Home', path: '/home', icon: BiHomeCircle },
-      {
-         text: 'Explore',
-         path: '/explore',
-         icon: BiHash,
-         hideSmall: true,
-      },
+
       {
          text: 'Notifications',
          path: '/notifications',
@@ -50,7 +44,7 @@ const Sidebar = memo(function Sidebar({
          path: '/bookmarks',
          icon: BiBookmark,
          hideSmall: true,
-         hideMedium: true,
+         hideMedium: false,
       },
 
       {
@@ -110,7 +104,9 @@ const Sidebar = memo(function Sidebar({
                      <span className="icon icon-tweet">
                         {withMessages ? <HiOutlineMail /> : <RiQuillPenLine />}
                      </span>
-                     <span className="text">Tweet</span>
+                     <span className="text">
+                        {withMessages ? 'New Message' : 'Tweet'}
+                     </span>
                   </button>
                </li>
             </ul>

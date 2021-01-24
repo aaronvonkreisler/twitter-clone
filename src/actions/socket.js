@@ -5,7 +5,6 @@ import store from '../store/store';
 import { updateMessages } from './messages';
 
 export const connectSocket = () => (dispatch) => {
-   socket.connect();
    dispatch({
       type: CONNECT_SOCKET,
       payload: socket,
@@ -13,6 +12,10 @@ export const connectSocket = () => (dispatch) => {
 
    socket.on('connect', () => {
       console.log('socket connected', socket.connected);
+   });
+
+   socket.on('successful setup', () => {
+      console.log('socket setup successful');
    });
 
    socket.on('message received', (chat) => {

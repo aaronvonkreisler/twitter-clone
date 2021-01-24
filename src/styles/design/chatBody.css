@@ -2,8 +2,9 @@
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: center;
-   flex-grow: 1;
+   justify-content: flex-start;
+   flex: 1 0;
+   /* flex-grow: 1; */
    width: 100%;
    border-bottom: 1px solid var(--border-color);
    overflow-y: auto;
@@ -215,6 +216,16 @@
    min-width: 0;
    color: var(--text-gray);
    font-size: 14px;
+}
+
+.message .message-container .time-stamp .sent-icon {
+   color: var(--twitter-color);
+   padding-left: 2px;
+   font-weight: 700;
+}
+.message .message-container .time-stamp .sent-icon svg {
+   vertical-align: text-bottom;
+   height: 1rem;
 }
 
 .message.mine .message-container .time-stamp {

@@ -2,6 +2,8 @@ import React from 'react';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 import { Avatar } from '@material-ui/core';
+import { BsCheck } from 'react-icons/bs';
+
 import '../../../styles/design/chatBody.css';
 
 const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
@@ -31,6 +33,20 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
    if (isLast) {
       messageOwnerClass += ' last';
    }
+
+   const wasSentToday = (someDate) => {
+      const today = new Date();
+      const date = new Date(someDate);
+      return (
+         date.getDate() === today.getDate() &&
+         date.getMonth() === today.getMonth() &&
+         date.getFullYear() === today.getFullYear()
+      );
+   };
+
+   const isToday = wasSentToday(message.createdAt);
+
+   const timeFormat = isToday ? 'LT' : 'MMM DD, YYYY, LT';
 
    return (
       <div className={`message ${messageOwnerClass}`}>
@@ -62,9 +78,14 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
             )}
             {isLast && (
                <div className="time-stamp">
-                  <Moment className="text" fromNow>
+                  <Moment className="text" format={timeFormat}>
                      {message.createdAt}
                   </Moment>
+                  {isMine && (
+                     <span className="sent-icon">
+                        <BsCheck />
+                     </span>
+                  )}
                </div>
             )}
          </div>

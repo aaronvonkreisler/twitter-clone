@@ -83,6 +83,7 @@ const ChatFormWrapper = ({
 
    const handleSubmit = (e) => {
       e.preventDefault();
+      endTypingIndicatorOnSend();
       if (fileToUpload !== null) {
          const formData = new FormData();
          formData.append('image', fileToUpload);
@@ -91,7 +92,7 @@ const ChatFormWrapper = ({
 
          // Send message to route that handles files
          sendDirectMessageWithImage(formData, selectedChat);
-         endTypingIndicatorOnSend();
+
          setMessage({
             content: '',
             image: null,
@@ -102,7 +103,7 @@ const ChatFormWrapper = ({
          setDisplayImageButtons(true);
       } else {
          sendDirectMessage(message, selectedChat);
-         endTypingIndicatorOnSend();
+
          setMessage({
             content: '',
             image: null,

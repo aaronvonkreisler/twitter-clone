@@ -37,7 +37,9 @@ const UserProfilePage = ({
    }, [currentProfile]);
 
    useEffect(() => {
-      getProfilePinnedTweet(currentProfile.screen_name);
+      if (currentProfile) {
+         getProfilePinnedTweet(currentProfile.screen_name);
+      }
    }, [currentProfile, getProfilePinnedTweet]);
 
    const renderTabs = () => {

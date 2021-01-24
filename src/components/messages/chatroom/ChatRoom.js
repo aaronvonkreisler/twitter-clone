@@ -27,10 +27,6 @@ const ChatRoom = ({
    useEffect(() => {
       console.log('joining chat room');
       socket.emit('join room', chat._id);
-
-      return () => {
-         console.log('Leaving chat room');
-      };
    }, [chat]);
 
    useEffect(() => {

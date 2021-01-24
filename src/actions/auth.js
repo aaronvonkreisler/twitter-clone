@@ -74,4 +74,5 @@ export const loginUser = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
    dispatch({ type: LOG_OUT });
+   socket.disconnect();
 };

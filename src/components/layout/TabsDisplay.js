@@ -10,8 +10,8 @@ const TabPanel = (props) => {
       <div
          role="tabpanel"
          hidden={value !== index}
-         id={`profile-tabpanel-${index}`}
-         aria-labelledby={`profile-tab-${index}`}
+         id={`tabpanel-${index}`}
+         aria-labelledby={`tab-${index}`}
          {...other}
       >
          {value === index && <React.Fragment>{children}</React.Fragment>}
@@ -21,8 +21,8 @@ const TabPanel = (props) => {
 
 const a11yProps = (index) => {
    return {
-      id: `profile-tab-${index}`,
-      'aria-controls': `profile-tabpanel-${index}`,
+      id: `tab-${index}`,
+      'aria-controls': `tabpanel-${index}`,
    };
 };
 

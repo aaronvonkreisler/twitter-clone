@@ -1,92 +1,93 @@
 .inbox-item {
-   display: flex;
-   flex-direction: row;
-   align-items: flex-start;
-   justify-content: flex-start;
-   padding: 15px;
-   cursor: pointer;
-   border-bottom: 1px solid var(--border-color);
-   transition: background-color 0.2s ease-in;
-   width: 100%;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease-in;
+  width: 100%;
 }
 
 .inbox-item:hover {
-   background-color: var(--tweet-hover);
+  background-color: var(--tweet-hover);
 }
 .inbox-item .MuiAvatarGroup-avatar {
-   border: none;
+  border: none;
 }
 
 .inbox-item .profile-picture {
-   display: flex;
-   flex-direction: column;
-   flex-basis: 49px;
-   flex-grow: 0;
-   justify-content: center;
-   align-items: center;
-   margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 49px;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .inbox-item .details {
-   display: flex;
-   flex-direction: column;
-   flex-grow: 1;
-   justify-content: center;
-   align-items: flex-start;
-   color: #fff;
-   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: flex-start;
+  color: #fff;
+  overflow: hidden;
 }
 
 .details .top {
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: flex-start;
-   flex-grow: 1;
-   width: 100%;
-   min-width: 0;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 1;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .details .top .names-display {
-   margin-right: 10px;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+  margin-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .details .top .name {
-   font-size: 15px;
-   font-weight: 800;
+  font-size: 15px;
+  font-weight: 800;
 }
 
 .details .top .screen-name {
-   margin-left: 5px;
-   color: var(--text-gray);
-   font-size: 15px;
+  margin-left: 5px;
+  color: var(--text-gray);
+  font-size: 15px;
 }
 .details .top .date {
-   color: var(--text-gray);
-   font-size: 15px;
-   white-space: nowrap;
-   overflow-wrap: break-word;
+  color: var(--text-gray);
+  font-size: 15px;
+  white-space: nowrap;
+  overflow-wrap: break-word;
 }
 .details .last-message {
-   display: flex;
-   flex-direction: row;
-   justify-content: flex-start;
-   align-items: center;
-   color: var(--text-gray);
-   font-size: 14px;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--text-gray);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 .details .last-message .message-text {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

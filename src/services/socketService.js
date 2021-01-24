@@ -8,6 +8,4 @@ if (process.env.NODE_ENV === 'development') {
    endpoint = 'https://tweeter-v1-api.herokuapp.com/';
 }
 
-export const socket = io(endpoint, {
-   autoConnect: false,
-});
+export const socket = io(endpoint);

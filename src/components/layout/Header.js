@@ -14,6 +14,7 @@ const Header = ({
    overrideStyle,
    overrideBackButton,
    overrideFunc,
+   withNoIcon,
    ...props
 }) => {
    let history = useHistory();
@@ -23,21 +24,27 @@ const Header = ({
    return (
       <React.Fragment>
          {rightIcon && (
-            <div className="header__root">
+            <div
+               className={
+                  borderBottom ? 'header__root bottom-border' : 'header__root'
+               }
+            >
                <div className="header__items__right-icon">
-                  <span>{text}</span>
-                  <div className="rightIcon">
-                     <div className="icon__hover-box">
-                        <div
-                           className="right-icon__wrapper"
-                           onClick={onRightIconClick}
-                        >
-                           <IconComponent
-                              style={overrideStyle ? overrideStyle : null}
-                           />
+                  <h2>{text}</h2>
+                  {!withNoIcon && (
+                     <div className="rightIcon">
+                        <div className="icon__hover-box">
+                           <div
+                              className="right-icon__wrapper"
+                              onClick={onRightIconClick}
+                           >
+                              <IconComponent
+                                 style={overrideStyle ? overrideStyle : null}
+                              />
+                           </div>
                         </div>
                      </div>
-                  </div>
+                  )}
                </div>
             </div>
          )}
@@ -85,6 +92,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
    borderBottom: true,
+   withNoIcon: false,
 };
 
 export default Header;
