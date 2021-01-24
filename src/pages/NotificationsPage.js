@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/layout/Header';
 import TabsDisplay from '../components/layout/TabsDisplay';
-const NotificationsPage = () => {
+import { getNotifications } from '../actions/notifications';
+
+const NotificationsPage = ({ getNotifications }) => {
    const tabsRenderProps = [
       {
          label: 'All',
@@ -12,6 +15,10 @@ const NotificationsPage = () => {
          component: null,
       },
    ];
+
+   useEffect(() => {
+      getNotifications();
+   }, [getNotifications]);
    return (
       <div className="notification-page">
          <Header
@@ -25,4 +32,4 @@ const NotificationsPage = () => {
    );
 };
 
-export default NotificationsPage;
+export default connect(null, { getNotifications })(NotificationsPage);
