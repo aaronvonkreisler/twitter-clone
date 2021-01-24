@@ -10,6 +10,7 @@ import suggestions from './suggestionsReducer';
 import timeline from './timelineReducer';
 import chats from './messagesReducer';
 import socket from './socketReducer';
+import notifications from './notificationsReducer';
 
 export default combineReducers({
    alerts,
@@ -23,4 +24,5 @@ export default combineReducers({
    suggestions,
    chats,
    socket,
+   notifications,
 });
