@@ -16,7 +16,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import '../../styles/design/moreMenu.css';
 
 const MoreMenu = ({ open, anchorEl, setAnchorEl }) => {
-   const query = '(min-width: 500px) and (max-width: 1281px)';
+   const query = '(max-width: 500px)';
    const screenMatch = useMediaQuery(query);
    let history = useHistory();
 
@@ -28,7 +28,10 @@ const MoreMenu = ({ open, anchorEl, setAnchorEl }) => {
       {
          text: 'Settings and privacy',
          icon: FiSettings,
-         onClick: () => history.push('/settings'),
+         onClick: () => {
+            history.push('/settings');
+            handleClose();
+         },
       },
       {
          text: 'Help Center',
@@ -39,7 +42,10 @@ const MoreMenu = ({ open, anchorEl, setAnchorEl }) => {
       {
          text: 'Display',
          icon: BsBrush,
-         onClick: () => alert('TODO'),
+         onClick: () => {
+            alert('TODO');
+            handleClose();
+         },
       },
    ];
 
@@ -62,7 +68,12 @@ const MoreMenu = ({ open, anchorEl, setAnchorEl }) => {
             id="more-menu"
          >
             {screenMatch && (
-               <MenuItem onClick={() => history.push('/bookmarks')}>
+               <MenuItem
+                  onClick={() => {
+                     history.push('/bookmarks');
+                     handleClose();
+                  }}
+               >
                   <ListItemIcon className="more-menu-icon">
                      <BiBookmark />
                   </ListItemIcon>
