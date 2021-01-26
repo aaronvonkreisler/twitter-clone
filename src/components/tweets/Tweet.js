@@ -40,7 +40,7 @@ const Tweet = ({
    retweet,
    retweetedBy,
    removeFavorite,
-
+   user = tweet.user,
    displayActions,
    replyView,
    replyingTo,
@@ -54,7 +54,7 @@ const Tweet = ({
    const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
    const [retweeted, setRetweeted] = useState(false);
-
+   console.log(user);
    let history = useHistory();
 
    useEffect(() => {
@@ -106,7 +106,7 @@ const Tweet = ({
                   anchorEl={tweetMenuAnchorEl}
                   setAnchorEl={setTweetMenuAnchorEl}
                   onClose={handleClose}
-                  tweetOwner={tweet.user._id}
+                  tweetOwner={user._id}
                   currentUser={authId}
                   tweetId={tweet._id}
                   pinnedTweet={pinnedTweet}
@@ -149,14 +149,12 @@ const Tweet = ({
                   <div
                      className="image"
                      onClick={() =>
-                        history.push(
-                           `/${tweet.user.screen_name}/status/${tweet._id}`
-                        )
+                        history.push(`/${user.screen_name}/status/${tweet._id}`)
                      }
                   >
                      <Avatar
                         className="profile-image"
-                        src={tweet.user.avatar}
+                        src={user.avatar}
                         alt=""
                      />
                      {replyView && <div className="reply-line" />}
@@ -164,16 +162,16 @@ const Tweet = ({
                   <div className="body">
                      <header className="tweet-info">
                         <Link
-                           to={`/profile/${tweet.user.screen_name}`}
+                           to={`/profile/${user.screen_name}`}
                            className="tweet-info-user"
                         >
-                           <span className="name">{tweet.user.name}</span>
+                           <span className="name">{user.name}</span>
                            <span className="screen-name">
-                              @{tweet.user.screen_name}
+                              @{user.screen_name}
                            </span>
 
                            <span className="verified-badge">
-                              {tweet.user.verified && <GoVerified />}
+                              {user.verified && <GoVerified />}
                            </span>
                            <span className="date">
                               <span className="bullet">·</span>
@@ -196,7 +194,7 @@ const Tweet = ({
                         onClick={(e) => {
                            if (e.target.tagName !== 'A') {
                               history.push(
-                                 `/${tweet.user.screen_name}/status/${tweet._id}`
+                                 `/${user.screen_name}/status/${tweet._id}`
                               );
                            }
                         }}
