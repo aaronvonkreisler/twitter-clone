@@ -46,7 +46,7 @@ const BookmarksPage = ({
          />
          <div className="feed">
             {!loading && user !== null ? (
-               bookmarks.tweets.length > 0 ? (
+               bookmarks.tweets?.length > 0 ? (
                   bookmarks.tweets.map((tweet) => (
                      <Tweet
                         tweet={tweet}

@@ -65,14 +65,14 @@ const StyledTab = withStyles({
    },
 })((props) => <Tab disableRipple {...props} />);
 
-const TabsDisplay = ({ renderProps }) => {
+const TabsDisplay = ({ renderProps, overrideStyle }) => {
    const [value, setValue] = useState(0);
 
    const handleChange = (event, newValue) => {
       setValue(newValue);
    };
    return (
-      <div>
+      <div style={overrideStyle ? overrideStyle : null}>
          <AppBar
             position="static"
             style={{ backgroundColor: 'rgb(22, 32, 42)' }}

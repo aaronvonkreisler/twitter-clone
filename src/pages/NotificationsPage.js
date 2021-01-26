@@ -3,12 +3,21 @@ import { connect } from 'react-redux';
 import Header from '../components/layout/Header';
 import TabsDisplay from '../components/layout/TabsDisplay';
 import { getNotifications } from '../actions/notifications';
+import AllNotifications from '../components/notifications/AllNotifications';
 
-const NotificationsPage = ({ getNotifications }) => {
+const NotificationsPage = ({
+   getNotifications,
+   notifications: { fetching, notifications },
+}) => {
    const tabsRenderProps = [
       {
          label: 'All',
-         component: null,
+         component: (
+            <AllNotifications
+               fetching={fetching}
+               notifications={notifications}
+            />
+         ),
       },
       {
          label: 'Mentions',
@@ -32,4 +41,10 @@ const NotificationsPage = ({ getNotifications }) => {
    );
 };
 
-export default connect(null, { getNotifications })(NotificationsPage);
+const mapStateToProps = (state) => ({
+   notifications: state.notifications,
+});
+
+export default connect(mapStateToProps, { getNotifications })(
+   NotificationsPage
+);
