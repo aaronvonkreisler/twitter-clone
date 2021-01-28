@@ -54,7 +54,6 @@ const Tweet = ({
    const [toolbarMenuAnchorEl, setToolbarMenuAnchorEl] = useState(null);
    const [tweetLiked, setTweetLiked] = useState(false);
    const [retweeted, setRetweeted] = useState(false);
-   console.log(user);
    let history = useHistory();
 
    useEffect(() => {
@@ -203,7 +202,7 @@ const Tweet = ({
                            <div className="replying_to" role="button">
                               Replying to{' '}
                               <span className="reply_screen_name">
-                                 <Link to="/profile">
+                                 <Link to={`/profile/${replyingToUserName}`}>
                                     @{replyingToUserName}
                                  </Link>
                               </span>

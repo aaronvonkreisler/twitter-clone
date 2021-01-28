@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconNotification from './IconNotification';
+import Tweet from '../tweets/Tweet';
 
 const NotificationItem = ({ notification }) => {
-   const { notificationType } = notification;
+   const { notificationType, tweet, sender, receiver } = notification;
 
    return (
       <React.Fragment>
          {notificationType === 'like' || notificationType === 'retweet' ? (
             <IconNotification notification={notification} />
          ) : (
-            <div>{notification.sender.name}</div>
+            <Tweet
+               tweet={tweet}
+               user={sender}
+               authId={receiver._id}
+               replyingTo
+               replyingToUserName={receiver.screen_name}
+               displayActions={false}
+            />
          )}
       </React.Fragment>
    );

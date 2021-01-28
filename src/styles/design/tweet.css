@@ -176,6 +176,14 @@
    color: var(--text-gray);
    padding-bottom: 5px;
 }
+.replying_to .reply_screen_name {
+   color: var(--twitter-color);
+   cursor: pointer;
+}
+
+.replying_to .reply_screen_name:hover {
+   text-decoration: underline;
+}
 
 .retweetedByDisplay {
    color: var(--text-gray);
