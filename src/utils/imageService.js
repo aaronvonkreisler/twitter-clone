@@ -32,3 +32,16 @@ export const uploadPhotoForTweet = async (file) => {
       store.dispatch(setAlert('Photo upload unsuccessful.', 'info'));
    }
 };
+
+export const validateImage = async (file, errorCallback) => {
+   const regex = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
+
+   if (file !== undefined) {
+      if (file.type.match(regex)) {
+         const base64 = await getBase64(file);
+         return base64;
+      } else {
+         errorCallback();
+      }
+   }
+};

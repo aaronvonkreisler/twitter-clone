@@ -17,7 +17,7 @@ const ChatFormDisplay = ({
    textInputRef,
    handleSubmit,
    emojiMenuOpen,
-   setEmojiMenuOpen,
+   toggleEmojiMenu,
    emojiPickerRef,
    onEmojiClick,
    sendDisabled,
@@ -101,7 +101,7 @@ const ChatFormDisplay = ({
                   <div className="emoji-area">
                      <button
                         className="icon-button emoji"
-                        onClick={() => setEmojiMenuOpen(!emojiMenuOpen)}
+                        onClick={toggleEmojiMenu}
                      >
                         <FiSmile />
                      </button>

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getBase64 } from '../../../../utils/imageService';
+import { getBase64, validateImage } from '../../../../utils/imageService';
 import { photoUploadError } from '../../../../actions/tweets';
 import { openGifModal, closeGifModal } from '../../../../actions/modal';
 import {
@@ -17,7 +17,18 @@ import {
 } from '../../../../actions/messages';
 import ChatFormDisplay from './ChatFormDisplay';
 import GifModal from '../../../forms/GifModal';
-import { formReducer, UPDATE_TEXT } from './formReducer';
+import {
+   chatFormReducer,
+   UPDATE_TEXT,
+   UPLOAD_FILE,
+   ADD_GIF,
+   ADD_EMOJI,
+   REMOVE_IMAGE,
+   RESET_STATE,
+   CLOSE_EMOJI_MENU,
+   TOGGLE_EMOJI_MENU,
+   DISABLE_SEND,
+} from './chatFormReducer';
 
 const ChatFormWrapper = ({
    photoUploadError,
@@ -43,105 +54,72 @@ const ChatFormWrapper = ({
       chatId,
    };
 
-   const [state, dispatch] = useReducer(formReducer, initialState);
+   const [state, dispatch] = useReducer(chatFormReducer, initialState);
 
-   const [displayImageButtons, setDisplayImageButtons] = useState(true);
-   const [emojiMenuOpen, setEmojiMenuOpen] = useState(false);
-   const [sendDisabled, setSendDisabled] = useState(true);
-   const [fileToUpload, setFileToUpload] = useState(null);
-   const [message, setMessage] = useState({
-      content: '',
-      image: null,
-      chatId,
-   });
-   const [imageBlob, setImageBlob] = useState(null);
    const textInputRef = useRef();
    const emojiPickerRef = useRef();
 
-   // console.log(state);
-   console.log(message);
+   console.log(state);
 
    const handleFileChange = async (e) => {
       const file = e.target.files[0];
-      const regex = /(image\/jpg)|(image\/jpeg)|(image\/png)|(image\/gif)/i;
-      if (file !== undefined) {
-         if (file.type.match(regex)) {
-            //dispatch({type: UPLOAD_FILE, payload: {blob: data, file: file}})
-            const imageData = await getBase64(file);
-            setImageBlob(imageData);
-            setDisplayImageButtons(false);
-            setFileToUpload(file);
-         } else {
-            handleRemoveImage();
-            photoUploadError();
-         }
+      const imageData = await validateImage(file, () => {
+         handleRemoveImage();
+         photoUploadError();
+      });
+
+      if (imageData !== undefined) {
+         dispatch({
+            type: UPLOAD_FILE,
+            payload: { blob: imageData, file: file },
+         });
       }
    };
 
    const handleGifClick = (gif) => {
       const gifURL = gif.images.fixed_height.webp;
-      setImageBlob(gifURL);
-      setMessage({
-         ...message,
-         image: gifURL,
+      dispatch({
+         type: ADD_GIF,
+         payload: gifURL,
       });
-      if (displayImageButtons) {
-         setDisplayImageButtons(false);
-      }
       closeGifModal();
    };
+
    const handleRemoveImage = () => {
-      // dispatch({type: REMOVE_IMAGE})
-      setMessage({
-         ...message,
-         image: null,
-      });
-      setImageBlob(null);
-      setFileToUpload(null);
-      setDisplayImageButtons(true);
+      dispatch({ type: REMOVE_IMAGE });
    };
 
    const handleTextChange = (e) => {
-      // dispatch({ type: UPDATE_TEXT, payload: e.target.value });
-      setMessage({ ...message, content: e.target.value });
+      dispatch({ type: UPDATE_TEXT, payload: e.target.value });
    };
 
    const handleSubmit = (e) => {
       e.preventDefault();
       endTypingIndicatorOnSend();
-      if (fileToUpload !== null) {
+
+      const { message, chatId } = state;
+
+      const messageObject = {
+         content: message.content,
+         image: message.image,
+         chatId: chatId,
+      };
+      if (state.fileToUpload !== null) {
          const formData = new FormData();
-         formData.append('image', fileToUpload);
-         formData.set('content', message.content);
-         formData.set('chatId', message.chatId);
+         formData.append('image', state.fileToUpload);
+         formData.set('content', state.message.content);
+         formData.set('chatId', state.chatId);
 
-         // Send message to route that handles files
          sendDirectMessageWithImage(formData, selectedChat);
-
-         // reset state
-         // dispatch({ type: RESET_STATE})
-
-         setMessage({
-            content: '',
-            image: null,
-            chatId,
-         });
-         setImageBlob(null);
-         setFileToUpload(null);
-         setDisplayImageButtons(true);
+         dispatch({ type: RESET_STATE });
       } else {
-         sendDirectMessage(message, selectedChat);
-         // reset state
-         // dispatch({ type: RESET_STATE })
-
-         setMessage({
-            content: '',
-            image: null,
-            chatId,
-         });
-         setImageBlob(null);
-         setDisplayImageButtons(true);
+         sendDirectMessage(messageObject, selectedChat);
+         dispatch({ type: RESET_STATE });
       }
+   };
+
+   const toggleEmojiMenu = () => {
+      dispatch({ type: TOGGLE_EMOJI_MENU });
    };
 
    const onEmojiClick = (e, emojiObject) => {
@@ -149,9 +127,7 @@ const ChatFormWrapper = ({
       let currentMessage = textInputRef.current.value;
       currentMessage += emoji;
 
-      //dispatch({type: ADD_EMOJI, payload: currentMessage})
-      setMessage({ ...message, content: currentMessage });
-      setSendDisabled(false);
+      dispatch({ type: ADD_EMOJI, payload: currentMessage });
       textInputRef.current.focus();
    };
 
@@ -159,8 +135,7 @@ const ChatFormWrapper = ({
       if (emojiPickerRef.current.contains(e.target)) {
          return;
       } else {
-         //dispatch({ type: CLOSE_EMOJI_MENU})
-         setEmojiMenuOpen(false);
+         dispatch({ type: CLOSE_EMOJI_MENU });
          document.removeEventListener('mousedown', handleEmojiClose);
       }
    }, []);
@@ -182,34 +157,40 @@ const ChatFormWrapper = ({
    }, [handleKeyPress]);
 
    useEffect(() => {
-      if (emojiMenuOpen) {
+      if (state.emojiMenuOpen) {
          document.addEventListener('mousedown', handleEmojiClose);
       }
-   }, [emojiMenuOpen, handleEmojiClose]);
+   }, [state.emojiMenuOpen, handleEmojiClose]);
 
    useEffect(() => {
+      const { message, imageBlob } = state;
       const noContent = message.content.length === 0 && imageBlob === null;
       const emptyMessage = message.content.trim() === '' && imageBlob === null;
 
       const shouldDisable = noContent || emptyMessage;
-      setSendDisabled(shouldDisable);
-   }, [message, imageBlob]);
+
+      dispatch({
+         type: DISABLE_SEND,
+         payload: shouldDisable,
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [state.message, state.imageBlob]);
 
    return (
       <Fragment>
          <GifModal handleGifClick={handleGifClick} />
          <ChatFormDisplay
-            imageBlob={imageBlob}
-            displayImageButtons={displayImageButtons}
+            imageBlob={state.imageBlob}
+            displayImageButtons={state.displayImageButtons}
             textInputRef={textInputRef}
-            textValue={message.content}
+            textValue={state.message.content}
             handleTextChange={handleTextChange}
             handleSubmit={handleSubmit}
-            emojiMenuOpen={emojiMenuOpen}
-            setEmojiMenuOpen={setEmojiMenuOpen}
+            emojiMenuOpen={state.emojiMenuOpen}
+            toggleEmojiMenu={toggleEmojiMenu}
             emojiPickerRef={emojiPickerRef}
             onEmojiClick={onEmojiClick}
-            sendDisabled={sendDisabled}
+            sendDisabled={state.sendDisabled}
             handleFileChange={handleFileChange}
             handleRemoveImage={handleRemoveImage}
             openGifModal={openGifModal}

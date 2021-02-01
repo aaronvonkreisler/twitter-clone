@@ -5,21 +5,10 @@ export const RESET_STATE = 'RESET_STATE';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const ADD_EMOJI = 'ADD_EMOJI';
 export const CLOSE_EMOJI_MENU = 'CLOSE_EMOJI_MENU';
+export const TOGGLE_EMOJI_MENU = 'TOGGLE_EMOJI_MENU';
+export const DISABLE_SEND = 'DISABLE_SEND';
 
-// const initialState = {
-//    displayImageButtons: true,
-//    emojiMenuOpen: false,
-//    sendDisabled: true,
-//    fileToUpload: null,
-//    imageBlob: null,
-//    message: {
-//       content: '',
-//       image: null,
-//    },
-//    chatId: 'asdfsdf',
-// };
-
-export const formReducer = function (state = {}, action) {
+export const chatFormReducer = function (state = {}, action) {
    const { type, payload } = action;
 
    switch (type) {
@@ -28,10 +17,20 @@ export const formReducer = function (state = {}, action) {
             ...state,
             message: { ...state.message, content: payload },
          };
+      case DISABLE_SEND:
+         return {
+            ...state,
+            sendDisabled: payload,
+         };
       case ADD_EMOJI:
          return {
             ...state,
             message: { ...state.message, content: payload },
+         };
+      case TOGGLE_EMOJI_MENU:
+         return {
+            ...state,
+            emojiMenuOpen: !state.emojiMenuOpen,
          };
       case ADD_GIF:
          return {
