@@ -45,7 +45,7 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
                <MenuItem disableGutters>
                   <div className="list-item">
                      <div className="avatar">
-                        <Avatar src={user.avatar} />
+                        <Avatar src={user.avatarSmall} />
                      </div>
                      <div className="names">
                         <div className="display-name">
@@ -70,7 +70,7 @@ const UserMenu = ({ auth: { user, loading }, logout }) => {
 
             <div className="user-menu" onClick={handleClick}>
                <div className="avatar">
-                  <Avatar src={user.avatar} />
+                  <Avatar src={user.avatarSmall} />
                </div>
                <div className="names">
                   <div className="display-name">

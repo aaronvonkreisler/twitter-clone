@@ -53,7 +53,7 @@ const TweetForm = ({
             <div className="avatar__wrapper">
                {!loading && user !== null ? (
                   <Avatar
-                     src={user.avatar}
+                     src={user.avatarSmall}
                      style={{ height: '49px', width: '49px' }}
                   />
                ) : (

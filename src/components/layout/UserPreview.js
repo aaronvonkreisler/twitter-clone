@@ -10,7 +10,7 @@ import { followUser, unfollowUser } from '../../actions/profile';
 import '../../styles/design/userPreview.css';
 
 const UserPreview = ({
-   user: { avatar, name, screen_name, _id, verified, followers, bio },
+   user: { avatarSmall, name, screen_name, _id, verified, followers, bio },
    auth,
    showBio,
    followUser,
@@ -43,7 +43,10 @@ const UserPreview = ({
       <div className={`userPreview ${borderClass}`} onClick={handleClick}>
          <div className="userPreview__avatar">
             <Link to={`/profile/${screen_name}`}>
-               <Avatar src={avatar} style={{ height: '49px', width: '49px' }} />
+               <Avatar
+                  src={avatarSmall}
+                  style={{ height: '49px', width: '49px' }}
+               />
             </Link>
          </div>
          <Link to={`/profile/${screen_name}`}></Link>

@@ -54,7 +54,7 @@ const ChatHeader = ({
                   <div className="avatar">
                      <Link to={`/profile/${singleUser.screen_name}`}>
                         <Avatar
-                           src={singleUser.avatar}
+                           src={singleUser.avatarSmall}
                            style={{ height: '30px', width: '30px' }}
                         />
                      </Link>

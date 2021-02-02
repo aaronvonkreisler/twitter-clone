@@ -9,7 +9,7 @@ const UserPill = ({ user, onClick }) => {
       <div className="pill" onClick={() => onClick(user)}>
          <div className="avatar">
             <Avatar
-               src={user.avatar}
+               src={user.avatarSmall}
                style={{ height: '24px', width: '24px' }}
             />
          </div>

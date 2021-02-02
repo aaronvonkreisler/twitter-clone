@@ -153,7 +153,7 @@ const Tweet = ({
                   >
                      <Avatar
                         className="profile-image"
-                        src={user.avatar}
+                        src={user.avatarSmall}
                         alt=""
                      />
                      {replyView && <div className="reply-line" />}

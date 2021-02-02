@@ -112,7 +112,7 @@ const SingleTweet = ({
                      <div className="image">
                         <Link to={`/profile/${tweet.user.screen_name}`}>
                            <Avatar
-                              src={tweet.user.avatar}
+                              src={tweet.user.avatarSmall}
                               style={{ height: '49px', width: '49px' }}
                            />
                         </Link>

@@ -112,7 +112,7 @@ const SelectedProfilePage = ({
                         )}
                      </div>
                      <div className="userImage__container">
-                        <Avatar src={profile.avatar} alt="User profile" />
+                        <Avatar src={profile.avatarLarge} alt={profile.name} />
                      </div>
                   </div>
                   <div className="profileTop__container ">

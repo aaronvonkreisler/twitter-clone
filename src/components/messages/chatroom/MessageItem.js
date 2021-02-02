@@ -54,7 +54,7 @@ const MessageItem = ({ message, authId, nextMessage, lastMessage }) => {
             <div className="avatar-container">
                {isLast && (
                   <Avatar
-                     src={message.sender.avatar}
+                     src={message.sender.avatarSmall}
                      style={{
                         height: '100%',
                         width: '100%',

@@ -23,7 +23,7 @@ const InboxItem = memo(function InboxItem({ chat, authId, onClick }) {
          return (
             <AvatarGroup max={2}>
                {otherUsers.map((user) => (
-                  <Avatar src={user.avatar} key={user._id} />
+                  <Avatar src={user.avatarSmall} key={user._id} />
                ))}
             </AvatarGroup>
          );
@@ -31,7 +31,7 @@ const InboxItem = memo(function InboxItem({ chat, authId, onClick }) {
       if (!multipleUsers && otherUsers !== null) {
          return (
             <Avatar
-               src={otherUsers[0].avatar}
+               src={otherUsers[0].avatarSmall}
                style={{ height: '49px', width: '49px' }}
             />
          );

@@ -31,7 +31,7 @@ const IconNotification = ({ notification }) => {
             <div className="right-col">
                <div className="image-container">
                   <Avatar
-                     src={sender.avatar}
+                     src={sender.avatarSmall}
                      alt={sender.name}
                      style={{ height: '30px', width: '30px' }}
                   />

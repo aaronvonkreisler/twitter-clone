@@ -75,7 +75,7 @@ const UserProfilePage = ({
                <ProfilePictureModal
                   open={avatarModalOpen}
                   setOpen={setAvatarModalOpen}
-                  defaultPicture={currentProfile.avatar}
+                  defaultPicture={currentProfile.avatarSmall}
                   userId={user._id}
                />
                <BackgroundPictureModal
@@ -101,7 +101,7 @@ const UserProfilePage = ({
                      </div>
                      <div className="userImage__container">
                         <Avatar
-                           src={currentProfile.avatar}
+                           src={currentProfile.avatarLarge}
                            alt="User profile"
                         />
                      </div>
